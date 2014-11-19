@@ -1,0 +1,20 @@
+!!!
+%html{lang: "en", xmlns: "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{charset: "utf-8"}
+    %title MLaaS
+
+    - load staticfiles
+    %link{href: "{% static "css/bootstrap.css"%}", rel: "stylesheet"}
+    %script{src: "{% static "js/jquery-1.10.2.js"%}", type: "text/javascript"}
+
+    - block extrahead
+    - endblock
+
+  %body
+    .header
+      - include 'header.haml'
+    .contents
+      - include 'footer.haml'
+    .footer
+      - include 'footer.haml'
