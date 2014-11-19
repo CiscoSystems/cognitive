@@ -5,16 +5,17 @@
     %title MLaaS
 
     - load staticfiles
-    %link{href: "{% static "css/bootstrap.css"%}", rel: "stylesheet"}
-    %script{src: "{% static "js/jquery-1.10.2.js"%}", type: "text/javascript"}
+    
+    %link{href: "{{STATIC_URL}}css/bootstrap.min.css", rel: "stylesheet"}
+    %script{src: "{{STATIC_URL}}js/bootstrap.min.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}js/jquery-1.11.1.min.js", type: "text/javascript"}
 
-    - block extrahead
-    - endblock
+    - block 'extrahead'
 
   %body
     .header
       - include 'header.haml'
     .contents
-      - include 'footer.haml'
+      - block 'contents'
     .footer
       - include 'footer.haml'
