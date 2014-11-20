@@ -1,8 +1,84 @@
 - extends 'base.haml'
 - block 'extrahead'
   - load staticfiles
-  
+  %link{href: "{{STATIC_URL}}css/whiteboard.css", rel: "stylesheet"}
+  %script{src: "{{STATIC_URL}}js/whiteboard.js", type: "text/jsx"}
+  %script{src: "http://d3js.org/d3.v3.min.js", charset:"utf-8"}
+  %script{src: "{{STATIC_URL}}js/whiteboard_d3.js", type: "text/javascript"}
+  %script{src: "{{STATIC_URL}}js/jquery.csv-0.71.min.js", type: "text/javascript"}
 - block 'contents'
-  %button.btn.btn-material-deeppurple
-    aaaaa
-  %icon.icon-material-favorite
+  .row
+    #sidebar.col-md-2
+      %button.btn.btn-default.introduction{type:"button", style:"width:100%"} Introduction
+      %button.btn.btn-default.data_input{type:"button", style:"width:100%"} Input Data
+      %button.btn.btn-default.transform{type:"button", style:"width:100%"} Transform
+      .transform_category{style: "display:none"}
+        %button.btn.btn-default{type:"button", style:"width:100%"} Detail1
+        %button.btn.btn-default{type:"button", style:"width:100%"} Detail1
+        %button.btn.btn-default{type:"button", style:"width:100%"} Detail1
+
+      %button.btn.btn-default.metadata{type:"button", style:"width:100%"} MetaData
+      %button.btn.btn-default.formula{type:"button", style:"width:100%"} Formula
+      %button.btn.btn-default.filter{type:"button", style:"width:100%"} Filter
+      %button.btn.btn-default.data_output{type:"button", style:"width:100%"} OUTPUT
+      %button.btn.btn-default.run{type:"button", style:"width:100%"} Run
+
+    #component_arguments.col-md-3{style: "margin-top; 10px;"}
+      .detail_introduction{style: "display: none"}
+        .content
+          %h2 Introduction
+          %p{style:"font-size:14pt"} 
+            User can make any components shown in menu bar on left-side of this page.
+            The details corespond to the component you choose are specified in the
+            center of this page appeared after your click.
+            The most right-side column is for showing the history of your manupuration.
+            To get result, please don't forget click 'Run' button at the bottom of menu
+            bar.
+      .detail_data_input{style: "display: none"}
+        %fieldset
+          %legend Input
+          .form-group
+            %label.col-lg-2.control-label{for:"inputFile"} File
+            .col-lg-10
+              %input.form-control.floating-label{type:"text", readonly:"", placeholder:"Browse..."} 
+              %input#inputFile{type:"file", multiple:""}
+        %button.btn.btn-material-lightblue.add_btn{type:"button", style:"float:right"} ADD
+      .detail_transform{style: "display: none"}
+        %fieldset
+          %legend Transform
+          .form-group
+            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+        %button.btn.btn-material-lightblue.add_btn{type:"button", style:"float:right"} ADD
+      .detail_metadata{style: "display: none"}
+        %fieldset
+          %legend Metadata
+          .form-group
+            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+        %button.btn.btn-material-lightblue.add_btn{type:"button", style:"float:right"} ADD
+      .detail_formula{style: "display: none"}
+        %fieldset
+          %legend Formula
+          .form-group
+            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+        %button.btn.btn-material-lightblue.add_btn{type:"button", style:"float:right"} ADD
+      .detail_filter{style: "display: none"}
+        %fieldset
+          %legend Filtering
+          .form-group
+            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+        %button.btn.btn-material-lightblue.add_btn{type:"button", style:"float:right"} ADD
+      .detail_data_output{style: "display: none"}
+        %fieldset
+          %legend Output
+          .form-group
+            %label.col-lg-2.control-label{for:"data_output"} Name
+            .col-lg-10
+              %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+          .form-group
+            %label.col-lg-2.control-label{for:"data_output"} Type
+            .col-lg-10
+              %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+        %button.btn.btn-material-lightblue.add_btn{type:"button", style:"float:right"} ADD
+    #visualization.col-md-7
+      %svg.root{height:"500px", width:"100%"}
+      
