@@ -98,12 +98,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR+'/MLaaS/MLApp', "static"),
 )
 
-STATICFILES_FINDERS = (
-    'djangobower.finders.BowerFinder',
-)
+# STATICFILES_FINDERS = (
+#     'djangobower.finders.BowerFinder',
+# )
 
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR+'/MLaaS/MLApp/static', 'bower_components')
+# BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR+'/MLaaS/MLApp/static', 'bower_components')
 
-BOWER_INSTALLED_APPS = (
-    'bootstrap-material-design',
-)
+# BOWER_INSTALLED_APPS = (
+#     'bootstrap-material-design',
+# )
