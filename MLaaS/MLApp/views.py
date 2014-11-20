@@ -19,17 +19,21 @@ def whiteboard(request):
     return render_to_response('whiteboard.haml',
         context_instance=RequestContext(request))
 
-def send_response(method,serializer):
+def send_response(method, serializer):
     print "method",method
     if method == 'GET':
         return Response(serializer.data)
     elif method == 'POST':
         if serializer.is_valid():
-            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif method == 'PUT':
+        print "to be done"
+    elif method == 'DELETE':
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
         
 class UserViewSet(viewsets.ViewSet):
     """
@@ -48,8 +52,8 @@ class UserViewSet(viewsets.ViewSet):
     })
     """
     def list(self, request):
-        queryset = User.objects.all()
-        serializer = UserSerializer(queryset, many=True)
+        user = User.objects.all()
+        serializer = UserSerializer(user, many=True)
         return send_response(request.method,serializer)
 
     def retrieve(self, request, pk=None):
@@ -59,5 +63,13 @@ class UserViewSet(viewsets.ViewSet):
 
     def create(self,request):
         serializer = UserSerializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+        return send_response(request.method,serializer)
+    
+    def destroy(self, request, pk=None):
+        user = User.objects.get(pk=pk)
+        serializer = None
+        user.delete()
         return send_response(request.method,serializer)
         
