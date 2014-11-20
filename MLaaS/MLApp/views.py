@@ -30,7 +30,11 @@ def send_response(method, serializer):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif method == 'PUT':
-        print "to be done"
+        if serializer.is_valid():
+            return Response(serializer.data)
+        else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif method == 'DELETE':
         return Response(status=status.HTTP_204_NO_CONTENT)
         
@@ -67,6 +71,13 @@ class UserViewSet(viewsets.ViewSet):
             serializer.save()
         return send_response(request.method,serializer)
     
+    def update(self,request, pk=None):
+        user = User.objects.get(pk=pk)
+        serializer = UserSerializer(user,data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+        return send_response(request.method,serializer)
+
     def destroy(self, request, pk=None):
         user = User.objects.get(pk=pk)
         serializer = None
