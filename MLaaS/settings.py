@@ -47,6 +47,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+    'rest_framework',
+    'MLaaS.MLApp',
 )
 
 MIDDLEWARE_CLASSES = (
