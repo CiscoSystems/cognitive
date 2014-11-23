@@ -18,12 +18,12 @@ class Experiment(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=50)
     creator = models.CharField(max_length=50)
-    status = models.CharField(max_length=50,choices=EXPERIMENT_STATUS)
-    created_time = models.DateField()
-    modified_time = models.DateField()
-    execution_start_time = models.DateField()
-    execution_end_time = models.DateField()
-    component_start_id = models.IntegerField()
+    status = models.CharField(max_length=50,choices=EXPERIMENT_STATUS, default= 'Draft')
+    created_time = models.DateField(blank=True, null=True)
+    modified_time = models.DateField(blank=True, null=True)
+    execution_start_time = models.DateField(blank=True, null=True)
+    execution_end_time = models.DateField(blank=True, null=True)
+    component_start_id = models.IntegerField(blank=True, null=True)
     
 class Component(models.Model):
     COMPONENT_STATUS = (
@@ -35,10 +35,10 @@ class Component(models.Model):
     )
     
     experiment = models.ForeignKey(Experiment)
+    status = models.CharField(max_length=50,choices=COMPONENT_STATUS,default= 'Draft')
     function_type = models.CharField(max_length=50) 
-    status = models.CharField(max_length=50,choices=COMPONENT_STATUS)
-    created_time = models.DateField()
-    modified_time = models.DateField()
-    execution_start_time = models.DateField()
-    execution_end_time = models.DateField()
+    created_time = models.DateField(blank=True, null=True)
+    modified_time = models.DateField(blank=True, null=True)
+    execution_start_time = models.DateField(blank=True, null=True)
+    execution_end_time = models.DateField(blank=True, null=True)
     
