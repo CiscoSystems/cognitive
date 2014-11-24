@@ -12,8 +12,8 @@ class ExperimentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Experiment
-        fields = ('created_time', 'modified_time', 
-                'execution_start_time', 'execution_end_time', 'component_start_id') 
+        #fields = ('created_time', 'modified_time', 
+        #        'execution_start_time', 'execution_end_time', 'component_start_id') 
         #read_only_fields = ('created_time', 'modified_time', 
         #        'execution_start_time', 'execution_end_time', 'component_start_id') 
         #write_only_fields = ('created_time', 'modified_time',
