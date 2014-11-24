@@ -33,7 +33,6 @@ $(function(){
   } 
 
   $(".detail_introduction").toggle("slide", {direction: "left"}, 700);
-
   $(".detail_data_input").css("display", "none");
   $(".detail_transform").css("display", "none");
   $(".detail_metadata").css("display", "none");
@@ -41,13 +40,21 @@ $(function(){
   $(".detail_filter").css("display", "none");
   $(".detail_data_output").css("display", "none");
   
+  
   $(".introduction").css("background-color", "#ffeb3c");
   activate_menu_button($(".introduction"), "#ffeb3c");
 
   
-  $(".introduction").hover(
-    function(){ $(".introduction").css("background-color", intro_clr)},
-    function(){ $(".introduction").css("background-color", "#eeeeee")})
+  $(".introduction").on("mouseenter", "", function(evt){
+    $(".introduction").css("background-color", intro_clr)
+  }).on("mouseleave","", function(evt){
+    // console.log(selected_menu);
+    // console.log($(".introduction"));
+    // console.log($(".introduction").attr('class') === $(".introduction").attr('class'))
+    if ($(".introduction").attr('class') != $(".introduction").attr('class')) { $(".introduction").css("background-color", intro_clr) }
+  })
+    // function(){ $(".introduction").css("background-color", intro_clr)},
+    // function(){})
 
   $(".introduction").click(function(){
     activate_menu_button($(".introduction"), intro_clr);  
