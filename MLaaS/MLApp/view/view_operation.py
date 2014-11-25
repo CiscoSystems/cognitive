@@ -22,22 +22,69 @@ class OperationViewSet(viewsets.ViewSet):
 
     def create(self,request, operation):
         data = json.loads(JSONRenderer().render(request.DATA))
+        op = None
+        exp_id = int(data["experiment"])
+        print "Experiment ", exp_id, " Operation ", operation
+        exp = Experiment.objects.get(pk = exp_id)
         if operation == 'MathFormula':
-            print data["op_type"], data["op_constant"], data["component_type"], data["component_id"] ,data["experiment"]
+            print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
             op = Data_operation_type(function_type = 'Update', function_arg = data["component_type"],
                             function_subtype = data["op_type"], function_arg_id = data["component_id"] ,
                             function_subtype_arg = data["op_constant"])
             op.save()
-            exp_id = int(data["experiment"])
-            exp = Experiment.objects.get(pk = exp_id)
-            component = Component(experiment= exp, created_time=datetime.now(),
+                
+        elif operation == 'Normalization':
+            print data["component_type"], data["op_type"], data["component_id"]
+            op = Data_operation_type(function_type = 'Update', function_arg = data["component_type"],
+                            function_arg_id = data["component_id"] , function_subtype = 'Normalize',
+                            function_subtype_arg = data["op_type"])
+            op.save()
+
+        elif operation == 'Projection':
+            print data["component_id"]
+            op = Data_operation_type(function_type = 'Filter', function_arg = 'table', 
+                            function_arg_id = data["component_id"], function_subtype = 'Project')
+            op.save()
+        
+        elif operation == 'RemoveDuplicates':
+            print data["component_id"]
+            op = Data_operation_type(function_type = 'Filter', function_arg = 'table', 
+                            function_arg_id = data["component_id"], function_subtype = 'RemoveDup')
+            op.save()
+
+        elif operation == 'RemoveMissing':
+            print data["op_action"], data["experiment"] 
+            op = Data_operation_type(function_type = 'Filter', function_arg = 'table', 
+                            function_subtype = 'RemoveMissing', function_subtype_arg = data["op_action"])
+            op.save()
+        
+        elif operation == 'Metadata':
+            print data["column_type"]
+            op = Data_operation_type(function_type = 'Update',  function_arg = 'table', 
+                            function_subtype = 'Metadata', function_subtype_arg = data["column_type"]) 
+            op.save()
+         
+        elif operation == 'Row':
+            print data["row_values"]
+            op = Data_operation_type(function_type = 'Create',  function_arg = 'row', 
+                            function_subtype = 'Row', function_subtype_arg = data["row_values"]) 
+            op.save()
+        
+        elif operation == 'Input':
+            print data["data_values"], data["input_file"] , data["input_file_type"]
+            op = Data_operation_type(function_type = 'Create',  function_arg = 'table', 
+                            function_subtype = 'input', function_subtype_arg = data["data_values"]) 
+            op.save()
+             
+        component = Component(experiment= exp, created_time=datetime.now(),
                                 modified_time=datetime.now(), operation_type = op)
-            component.save()
-            comp_id= MAX_COMPONENTS_PER_EXP * exp_id + component.pk
-            component.component_id= comp_id
-            component.save()
-            serializer = ComponentSerializer(component)
-            return send_response("GET",serializer)
+        component.save()
+        comp_id= MAX_COMPONENTS_PER_EXP * exp_id + component.pk
+        component.component_id= comp_id
+        component.save()
+        serializer = ComponentSerializer(component)
+        return send_response("GET",serializer)
+            
     
     def update(self,request, operation, pk=None):
         user = User.objects.get(pk=pk)

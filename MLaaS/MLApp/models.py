@@ -33,13 +33,16 @@ class Data_operation_type(models.Model):
         ('RemoveDup', 'Remove duplicates'),
         ('RemoveMissing', 'Remove missing'),
         ('Metadata', 'Metadata editor'),
+        ('Row', 'Adding a new row'),
+        ('Input', 'Load input data'),
+        ('Output', 'Dump output data'),
     )
 
     function_type = models.CharField(max_length=50,choices=FUNCTION_TYPE)
-    function_arg = models.CharField(max_length=50,choices=FUNCTION_ARG, default='Table')
-    function_arg_id = models.CharField(max_length=50)
+    function_arg = models.CharField(max_length=50,choices=FUNCTION_ARG)
+    function_arg_id = models.CharField(max_length=50, blank=True, null=True)
     function_subtype = models.CharField(max_length=50,choices=FUNCTION_SUBTYPE)
-    function_subtype_arg = models.CharField(max_length=50)
+    function_subtype_arg = models.CharField(max_length=50, blank=True, null=True)
     
     def __str__(self):
         return self.function_type + " " + self.function_arg + " " + self.function_arg_id + \
@@ -62,7 +65,6 @@ class Experiment(models.Model):
     )
     user = models.ForeignKey(User)
     name = models.CharField(max_length=50)
-    creator = models.CharField(max_length=50)
     status = models.CharField(max_length=50,choices=EXPERIMENT_STATUS, default= 'Draft')
     created_time = models.DateField(blank=True, null=True)
     modified_time = models.DateField(blank=True, null=True)
