@@ -13,11 +13,7 @@ $(function(){
 
   
   $(".add_btn").click(function(){
-    
-    var component_name = "invalid";
-    
-    
-    console.log($(this).attr('class'));
+
     var node;
     if ($(this).hasClass('add_input')){
       
@@ -79,68 +75,6 @@ $(function(){
         output:0
       });
     } 
-
-
-    // var g = svg.append('g');
-
-    
-    // var _x = 100;
-    // var _y = 30 + nodes.length * 80;
-    // var node = g.append('rect')
-    //   .attr("x", _x)
-    //   .attr("y", _y)
-    //   .attr('width', 180)
-    //   .attr('height', 40)
-    //   .attr('class', "node")
-    //   .attr('fill', 'white')
-    //   .attr('stroke', "steelblue" )
-    //   .attr('stroke-width', "5" )
-    //   .attr('text',"aaaaaa" )
-    //   .attr('font-size', "20pt");
-    //   // .call(d3.behavior.drag().on("drag", move));
-    
-
-    // g.append('text')
-    //   .attr('x', _x + 90)
-    //   .attr('y', _y + 25)
-    //   .attr('fill', 'black')
-    //   .style('stroke-width', 1)
-    //   .style({"font-size":"14px","z-index":"9999999"} )
-    //   .style('text-anchor', "middle")
-    //   .text(component_name);
-
-    //   // g.call(d3.behavior.drag().on("drag", move));
-    
-    // if (num_of_input > 0){
-    //  g.append('circle')        
-    //     .attr('cx', _x + 90 )
-    //     .attr('cy', _y)
-    //     .attr('r', 6 )
-    //     .attr('fill', '#fd8d3c')
-    //     .style('stroke-width', 1);
- 
-    // }
-    // if (num_of_output) {
-    //   g.append('circle')        
-    //     .attr('cx', _x + 90 )
-    //     .attr('cy', _y + 40 )
-    //     .attr('r', 6 )
-    //     .attr('fill', '#5264ae')
-    //     .style('stroke-width', 1);
-    // }
-      
-    // g.attr('x', 0)
-    //  .attr('y', 0)
-    //  .attr('abs_x', _x)
-    //  .attr('abs_y', _y)
-    //  .attr('group_id', group_id++)
-    //  .call(d3.behavior.drag().on("drag", move))
-    //  .on("click", function(){ clicked(this); });
-     
-
-    
-    // nodes.push(g);
-    // console.log(g);
   });
 })
 
