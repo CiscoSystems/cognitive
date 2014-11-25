@@ -1,3 +1,5 @@
+var _previous_node;
+var _from;
 var Node = (function() {
 
   // constructor
@@ -94,27 +96,50 @@ var Node = (function() {
         .attr('transform', 'translate(' + sx + ',' + sy + ')');
   }
 
+  function set_input_connection(elm) {
+    this.input_connection = elm;
+  }
+
+  function set_output_connection(elm) {
+    this.out_connection = elm;
+  }
+
   function clicked(elm){
     if (d3.event.defaultPrevented) return;
-    this._selected = (this._selected) ? false:true;    
+    this._selected = (this._selected) ? true:false;
     
     node = d3.select(elm);
 
-    if (!this._selected) {
+    if (this._selected) {
       node.select('rect').attr('fill', 'white');
       node.classed('clicked', false);
+      _previous_node = null;
+      this._selected = false;
       return;
     }
+    this._selected = true;
 
     node.select('rect').attr('fill', '#ffd8ec');
     
-    var _previous_node = $(".clicked");
+    // グローバルは無理なので select で持ってくること
+    _previous_node = $(".clicked");
+
+    // そうしないとこの部分が動作しない
     if (_previous_node.length == 0) {
+      console.log("sssss  ")
       node.classed('clicked', true);
+      _previous_node = node;
       return;
     }
+    console.log("xxxxxxx");
+    // if(_previous_node === node){
+    //   node.select('rect').attr('fill', 'white');
+    //   node.classed('clicked', false);
+    //   _previous_node = null;
+    //   return;
+    // }
 
-    var _from = d3.select(_previous_node);
+    //_from = d3.select(_previous_node);//'.clicked');//_previous_node);
 
     // console.log(last_clicked_elm.attr('x'), last_clicked_elm.attr('y'));
     // console.log(node.attr('x'), node.attr('y'));
@@ -124,8 +149,8 @@ var Node = (function() {
     var svg = d3.selectAll("svg");
     var g = svg.append('g');
     line  = g.append("line")
-      .attr('x1',  parseInt(_from.attr('x')) +  parseInt(_from.attr('x')))
-      .attr('y1',  parseInt(_from.attr('y')) +  parseInt(_from.attr('y')))
+      .attr('x1',  parseInt(_previous_node.attr('x')) +  parseInt(_previous_node.attr('abs_x')))
+      .attr('y1',  parseInt(_previous_node.attr('y')) +  parseInt(_previous_node.attr('abs_y')))
       .attr('x2',  parseInt(node.attr('x')) +  parseInt(node.attr('abs_x')))
       .attr('y2',  parseInt(node.attr('y')) +  parseInt(node.attr('abs_y')))
       .attr('stroke', 'gray')
@@ -138,11 +163,18 @@ var Node = (function() {
     //   .attr('stroke', 'gray')
     //   .attr('stroke-width', 3);
     // // last_clicked_elm.append(line);
-  
+    
     // last_clicked_elm = null;
 
-    _previous_node[0].classed('clicked', false);
-    node.classed('clicked', true);
+    // _previous_node[0].classed('clicked', false);
+    _previous_node.attr('fill', 'white');
+    _previous_node.attr('class', '');
+    
+    node.classed('clicked', false);
+    node.select('rect').attr('fill', 'white');
+
+    //_previous_node = null;
+    // node.classed('clicked', true);
   }
 
   return Node;
