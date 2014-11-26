@@ -5,3 +5,58 @@ li.component {
   color: red;
 }
 
+#header{
+  margin-bottom:0; padding:0;
+  border-bottom: solid 1px #cccccc;
+  height:40px;
+  position: fixed;
+  left: 0;
+  top: 0; 
+  right: 0; 
+
+  background-color:white;
+}
+
+.whiteboard-flyout{
+  margin-bottom:0; padding:0;
+  border-right: solid 1px #cccccc;
+  position: fixed;
+  left: 0;
+  top: 50px; 
+  right: 0; 
+  height: 100%; 
+  width: 200px;
+  background-color:white;
+}
+
+.whiteboard-flyout ul {
+  list-style:none; padding:0; 
+}
+
+.whiteboard-flyout ul li{
+  width:100%; 
+  height:40px; 
+}
+
+.whiteboard-flyout ul li:hover{
+  background-color: #1e8cff;
+}
+#visualization{
+  float:right; 
+  background-color:white;
+  padding-left: 200px;
+  width:100%
+}
+.detail {
+  float:left; 
+  margin:0; 
+  padding:0; 
+  width: 30%; 
+  position: fixed; 
+  left: 200px; 
+  top:50px; 
+  background:white; 
+  display:none;
+  height: 100%;
+  border-right: solid 1px gray
+}

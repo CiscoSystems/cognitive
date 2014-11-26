@@ -9,104 +9,137 @@
   %script{src: "{{STATIC_URL}}js/whiteboard_d3.js", type: "text/javascript"}
   %script{src: "{{STATIC_URL}}js/jquery.csv-0.71.min.js", type: "text/javascript"}
 - block 'contents'
-  .row
-    #sidebar.col-md-2
-      %button.btn.btn-default.introduction.selected_menu{type:"button", style:"width:100%"} Introduction
-      %button.btn.btn-default.data_input{type:"button", style:"width:100%"} Input Data
-      %button.btn.btn-default.transform{type:"button", style:"width:100%"} Transform
-      / .transform_category{style: "display:none"}
-      /   %button.btn.btn-default{type:"button", style:"width:100%"} Detail1
-      /   %button.btn.btn-default{type:"button", style:"width:100%"} Detail1
-      /   %button.btn.btn-default{type:"button", style:"width:100%"} Detail1
-      %button.btn.btn-default.metadata{type:"button", style:"width:100%"} MetaData
-      %button.btn.btn-default.formula{type:"button", style:"width:100%"} Formula
-      %button.btn.btn-default.filter{type:"button", style:"width:100%"} Filter
-      %button.btn.btn-default.machine_learning{type:"button", style:"width:100%"} Machine Learning
-      %button.btn.btn-default.data_output{type:"button", style:"width:100%"} OUTPUT
-      %button.btn.btn-default.run{type:"button", style:"width:100%"} Run
-
-    #component_arguments.col-md-3{style: "margin-top; 10px;"}
-      .detail_introduction{style: "display: none"}
-        .content
-          %h2 Introduction
-          %p{style:"font-size:14pt;"} 
-            User can make any components shown in menu bar on left-side of this page.
-            The details corespond to the component you choose are specified in the
-            center of this page appeared after your click.
-            The most right-side column is for showing the history of your manupuration.
-            To get result, please don't forget click 'Run' button at the bottom of menu
-            bar.
-      .detail_data_input{style: "display: none"}
-        %fieldset
-          %legend Input
-          .form-group
-            %label.col-lg-2.control-label{for:"inputFile"} File
-            .col-lg-10
-              %input.form-control.floating-label{type:"text", readonly:"", placeholder:"Browse..."} 
-              %input#inputFile{type:"file", accept:".csv"}
-        %button.btn.btn-material-indigo.add_btn.add_input{type:"button", style:"float:right"} ADD
-      .detail_transform{style: "display: none"}
-        %fieldset
-          %legend Transform
-          .form-group
-            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-        %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD
-      .detail_metadata{style: "display: none"}
-        %fieldset
-          %legend Metadata
-          .form-group
-            .row
-              .col-md-4
-                %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-              .col-md-4
-                %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-              .col-md-4{style: "margin-top:0;"}
-                %button.btn{style: "background-color: #01a9f5;font-size: 20pt; color:white; padding: 0;"}
-                  %i.mdi-content-add
-                %button.btn{style: "background-color: #ea1f63;font-size: 20pt; color:white; padding: 0;"}
-                  %i.mdi-content-remove
-                  / %i.mdi-content-add.fa-5x{style:"color: #3e51b5;border: solid 2px #3e51b5;"}
-                  / %i.mdi-content-remove.fa-5x{style:"color: red;border: solid 2px red;"}
-          
-        %button.btn.btn-material-indigo.add_btn.add_metadata{type:"button", style:"float:right"} ADD
-      .detail_formula{style: "display: none"}
-        %fieldset
-          %legend Formula
-          .row{style:"text-align:center"}
-            %button.btn{style: "background-color: #01a9f5;font-size: 48pt; color:white; padding: 0;"}
-              %i.mdi-content-add
-            %button.btn{style: "background-color: #ea1f63;font-size: 48pt; color:white; padding: 0;"}
-              %i.mdi-content-remove
-            %button.btn{style: "background-color: #3e51b5;font-size: 48pt; color:white; padding: 0;"}
-              %i.mdi-content-clear
-            %button.btn{style: "background-color: #009787;font-size: 48pt; color:white; padding: 0;"}
-              %i.mdi-image-details
-          .form-group
-            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-        %button.btn.btn-material-indigo.add_btn.add_formula{type:"button", style:"float:right"} ADD
-      .detail_filter{style: "display: none"}
-        %fieldset
-          %legend Filtering
-          .form-group
-            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-        %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
-      .detail_machine_learning{style: "display: none"}
-        %fieldset
-          %legend Machine Learning
-          .form-group
-            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-        %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
-      .detail_data_output{style: "display: none"}
-        %fieldset
-          %legend Output
-          .form-group
-            %label.col-lg-2.control-label{for:"data_output"} Name
-            .col-lg-10
+  .whiteboard-flyout
+    %ul
+      %li.introduction
+        %i.glyphicon.glyphicon-star
+        Introduction
+      %li.data_input 
+        %i.glyphicon.glyphicon-star
+        Input Data
+      %li.transform 
+        %i.glyphicon.glyphicon-star
+        Transform
+      %li.projection 
+        %i.glyphicon.glyphicon-star
+        Projection
+      %li.normalization 
+        %i.glyphicon.glyphicon-star
+        Normalization
+      %li.metadata 
+        %i.glyphicon.glyphicon-star
+        MetaData
+      %li.formula 
+        %i.glyphicon.glyphicon-star
+        MathFormula
+      %li.filter 
+        %i.glyphicon.glyphicon-star
+        Filter
+      %li.machine_learning 
+        %i.glyphicon.glyphicon-star
+        Machine Learning
+      %li.data_output 
+        %i.glyphicon.glyphicon-star
+        OUTPUT
+      %li.run 
+        %i.glyphicon.glyphicon-star
+        Run
+  
+  #visualization
+    %svg.root{height:"800px", width:"100%"}  
+  }
+  #component_arguments
+    .detail.introduction
+      .content
+        %h2{style:"margin:0;  "} Introduction
+        %p{style:"font-size:14pt;"} 
+          User can make any components shown in menu bar on left-side of this page.
+          The details corespond to the component you choose are specified in the
+          center of this page appeared after your click.
+          The most right-side column is for showing the history of your manupuration.
+          To get result, please don't forget click 'Run' button at the bottom of menu
+          bar.
+    .detail.data_input{style: "display: none"}
+      %fieldset
+        %legend Input
+        .form-group
+          %label.col-lg-2.control-label{for:"inputFile"} File
+          .col-lg-10
+            %input.form-control.floating-label{type:"text", readonly:"", placeholder:"Browse..."} 
+            %input#inputFile{type:"file", accept:".csv"}
+      %button.btn.btn-material-indigo.add_btn.add_input{type:"button", style:"float:right"} ADD
+    .detail.transform{style: "display: none"}
+      %fieldset
+        %legend Transform
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD
+    .detail.projection{style: "display: none"}
+      %fieldset
+        %legend Projection
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD
+    .detail.normalization{style: "display: none"}
+      %fieldset
+        %legend Normalization
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD
+    .detail.metadata{style: "display: none"}
+      %fieldset
+        %legend Metadata
+        .form-group
+          .row
+            .col-md-4
               %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-          .form-group
-            %label.col-lg-2.control-label{for:"data_output"} Type
-            .col-lg-10
-              %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
-        %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD
-    #visualization.col-md-7
-      %svg.root{height:"500px", width:"100%"}
+            .col-md-4
+              %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+            .col-md-4{style: "margin-top:0;"}
+              %button.btn{style: "background-color: #01a9f5;font-size: 20pt; color:white; padding: 0;"}
+                %i.mdi-content-add
+              %button.btn{style: "background-color: #ea1f63;font-size: 20pt; color:white; padding: 0;"}
+                %i.mdi-content-remove
+                / %i.mdi-content-add.fa-5x{style:"color: #3e51b5;border: solid 2px #3e51b5;"}
+                / %i.mdi-content-remove.fa-5x{style:"color: red;border: solid 2px red;"}
+        
+      %button.btn.btn-material-indigo.add_btn.add_metadata{type:"button", style:"float:right"} ADD
+    .detail.formula{style: "display: none"}
+      %fieldset
+        %legend Formula
+        .row{style:"text-align:center"}
+          %button.btn{style: "background-color: #01a9f5;font-size: 48pt; color:white; padding: 0;"}
+            %i.mdi-content-add
+          %button.btn{style: "background-color: #ea1f63;font-size: 48pt; color:white; padding: 0;"}
+            %i.mdi-content-remove
+          %button.btn{style: "background-color: #3e51b5;font-size: 48pt; color:white; padding: 0;"}
+            %i.mdi-content-clear
+          %button.btn{style: "background-color: #009787;font-size: 48pt; color:white; padding: 0;"}
+            %i.mdi-image-details
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_formula{type:"button", style:"float:right"} ADD
+    .detail.filter{style: "display: none"}
+      %fieldset
+        %legend Filtering
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
+    .detail.machine_learning{style: "display: none"}
+      %fieldset
+        %legend Machine Learning
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
+    .detail.data_output{style: "display: none"}
+      %fieldset
+        %legend Output
+        .form-group
+          %label.col-lg-2.control-label{for:"data_output"} Name
+          .col-lg-10
+            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+        .form-group
+          %label.col-lg-2.control-label{for:"data_output"} Type
+          .col-lg-10
+            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+      %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD

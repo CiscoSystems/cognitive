@@ -1,16 +1,19 @@
 var _previous_node;
 var _from;
+var g_node_id = 0;
 var Node = (function() {
 
   // constructor
   function Node(options) {
-    
+    this.node_id      = g_node_id++;
     this.name    = options.name;
     this.inputs  = options.inputs;
     this.outputs = options.outputs;
+    this.width   = 180;
+    this.height  = 40;
     
     // if (typeof this.callee.node_id !== 'undefined') {
-    this.node_id = this.node_id++ || 1;
+    // this.node_id = this.node_id++ || 1;
         
     var svg = d3.selectAll("svg");
 
@@ -20,8 +23,8 @@ var Node = (function() {
     var node = g.append('rect')
       .attr("x", _x)
       .attr("y", _y)
-      .attr('width', 180)
-      .attr('height', 40)
+      .attr('width',  this.width)
+      .attr('height', this.height)
       .attr('class', "node")
       .attr('fill', 'white')
       .attr('stroke', "steelblue" )
@@ -29,7 +32,6 @@ var Node = (function() {
       .attr('text',"aaaaaa" )
       .attr('font-size', "20pt");
       // .call(d3.behavior.drag().on("drag", move));
-    
 
     g.append('text')
       .attr('x', _x + 90)
@@ -64,7 +66,7 @@ var Node = (function() {
      .attr('y', 0)
      .attr('abs_x', _x)
      .attr('abs_y', _y)
-     .attr('group_id', this.node_id)
+     .attr('id', this.node_id)
      .call(d3.behavior.drag().on("drag", _drag))
      .on("click", function(){ clicked(this); });
      
@@ -94,6 +96,25 @@ var Node = (function() {
         .attr('x', sx)
         .attr('y', sy)
         .attr('transform', 'translate(' + sx + ',' + sy + ')');
+
+
+
+      console.log("------------");
+      // var svg = d3.selectAll("svg");
+
+      line_from = d3.select('g[from_id="'+group.attr('id')+'"]').select('line')
+        .attr('x1', sx + parseInt(group.attr('abs_x')) + 90)
+        .attr('y1', sy + parseInt(group.attr('abs_y')) + 40);
+        // .attr('transform', 'translate(' + sx + ',' + sy + ')');
+
+      
+      d3.select('g[to_id="'+group.attr('id')+'"]').select('line')
+        .attr('x2', sx + parseInt(group.attr('abs_x')) + 90)
+        .attr('y2', sy + parseInt(group.attr('abs_y')))
+        ;
+      
+      console.log(svg.select('g[from_id='+group.id+']'));
+
   }
 
   function set_input_connection(elm) {
@@ -131,7 +152,7 @@ var Node = (function() {
       _previous_node = node;
       return;
     }
-    console.log("xxxxxxx");
+
     // if(_previous_node === node){
     //   node.select('rect').attr('fill', 'white');
     //   node.classed('clicked', false);
@@ -147,14 +168,20 @@ var Node = (function() {
     // console.log(last_clicked_elm.attr('abs_x'), last_clicked_elm.attr('abs_y'));
     // console.log(node.attr('abs_x'), node.attr('abs_y'));
     var svg = d3.selectAll("svg");
-    var g = svg.append('g');
+    var g = svg.append('g')
+        .attr('from_id', _previous_node.attr('id'))
+        .attr('to_id', node.attr('id'));
+    console.log("------------");
+    console.log(_previous_node.attr('id'));
+    console.log(node.attr('id'));
     line  = g.append("line")
-      .attr('x1',  parseInt(_previous_node.attr('x')) +  parseInt(_previous_node.attr('abs_x')))
-      .attr('y1',  parseInt(_previous_node.attr('y')) +  parseInt(_previous_node.attr('abs_y')))
-      .attr('x2',  parseInt(node.attr('x')) +  parseInt(node.attr('abs_x')))
+      .attr('x1',  parseInt(_previous_node.attr('x')) +  parseInt(_previous_node.attr('abs_x')) + 90)
+      .attr('y1',  parseInt(_previous_node.attr('y')) +  parseInt(_previous_node.attr('abs_y')) + 40)
+      .attr('x2',  parseInt(node.attr('x')) +  parseInt(node.attr('abs_x'))+ 90)
       .attr('y2',  parseInt(node.attr('y')) +  parseInt(node.attr('abs_y')))
       .attr('stroke', 'gray')
       .attr('stroke-width', 3);
+
     // line = last_clicked_elm.append("line")
     //   .attr('x1',  parseInt(node.attr('x')) +  parseInt(node.attr('abs_x')))
     //   .attr('y1',  parseInt(node.attr('y')) +  parseInt(node.attr('abs_y')))
@@ -162,7 +189,7 @@ var Node = (function() {
     //   .attr('y2',  parseInt(last_clicked_elm.attr('y')) +  parseInt(last_clicked_elm.attr('abs_y')))
     //   .attr('stroke', 'gray')
     //   .attr('stroke-width', 3);
-    // // last_clicked_elm.append(line);
+    // last_clicked_elm.append(line);
     
     // last_clicked_elm = null;
 

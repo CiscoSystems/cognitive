@@ -7,7 +7,6 @@ var CognitiveAPIClientV1 = (function() {
   return CognitiveAPIClientV1;
 })();
 
-
 function send_request(api_url, method, json_data) {
   $.ajax({ 
     url:  api_url,
@@ -16,29 +15,68 @@ function send_request(api_url, method, json_data) {
     "success": function(result) { console.log(result); }
   });
 };
-
 CognitiveAPIClientV1.createInputComponent = function(json_data) {
   this.prefix  = '/api/v1';  
   api_url = this.prefix + '/operations/input/';
   send_request(api_url, "POST", json_data);
 };
-
-
-CognitiveAPIClientV1.prototype.createOutputComponent = function(json_data) {
-  api_url = this.prefix + '/component/output'; 
+CognitiveAPIClientV1.createOutputComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/output'; 
+  send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.prototype.createTransformComponent = function(json_data) {
-  api_url = this.prefix + '/component/transform'; 
+CognitiveAPIClientV1.createAddRowComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/row'; 
+  send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.prototype.createMetadataComponent = function(json_data) {
-  api_url = this.prefix + '/component/metadata'; 
+CognitiveAPIClientV1.createMetadataComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/metadata'; 
+  send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.prototype.createMachineLeaningComponent = function(json_data) {
-  api_url = this.prefix + '/component/machine_learning'; 
+CognitiveAPIClientV1.createMachineLeaningComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/machine_learning'; 
+  send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.prototype.createFormulaComponent = function(json_data) {
-  api_url = this.prefix + '/component/formula'; 
+CognitiveAPIClientV1.createMathFormulaComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/MathFormula'; 
+  send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.prototype.createFilterComponent = function(json_data) {
-  api_url = this.prefix + '/component/filter'; 
+CognitiveAPIClientV1.createNormalizationComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/Normalization'; 
+  send_request(api_url, "POST", json_data);
+};
+CognitiveAPIClientV1.createProjectionComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/Projection'; 
+  send_request(api_url, "POST", json_data);
+};
+CognitiveAPIClientV1.createRemoveDuplicateComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/RemoveDuplicate'; 
+  send_request(api_url, "POST", json_data);
+};
+CognitiveAPIClientV1.createRemoveMissingValueComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/RemoveMissingValue'; 
+  send_request(api_url, "POST", json_data);
+};
+CognitiveAPIClientV1.createFilterComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/filter'; 
+  send_request(api_url, "POST", json_data);
+};
+CognitiveAPIClientV1.run = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/filter'; 
+  send_request(api_url, "POST", json_data);
+};
+CognitiveAPIClientV1.createComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/filter'; 
+  send_request(api_url, "POST", json_data);
 };

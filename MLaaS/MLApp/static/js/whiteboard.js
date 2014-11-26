@@ -3,7 +3,7 @@ var uploaded_file_as_text = "";
 
 $(function(){
   
-  var detail = $(".detail_introduction");
+  // var detail = $(".detail_introduction");
 
   var intro_clr     = "#ffeb3c";
   var input_clr     = "#009787";
@@ -16,23 +16,40 @@ $(function(){
 
   // var uploaded_file_as_text = "";
 
+// $(function(){
+//   $('.placewise-nav-menu').click(function() {
+//     $(".placewise-nav-flyout").css('left', 0);
+//     $(".placewise-nav-flyout").animate(
+//       {
+//         width: 'toggle'
+//       },
+//       {
+//         duration: 100
+//       }
+//     );
+//   })
+// })
+
+  // $(".whiteboard-flyout").animate(
+  //       {
+  //         width: 'toggle'
+  //       },
+  //       {
+  //         duration: 100
+  //       }
+  //     );
+
+
+
+
   function visualize_input_data() {
     // alert(uploaded_file_as_text);
   }
 
   var selected_menu;
-  function activate_menu_button(elm, background_color){
-    // elm.animate({"box-shadow":"0 6px 10px rgba(0,0,0,.23),0 10px 30px rgba(0,0,0,.19)"});
-    if (selected_menu != null) {
-      selected_menu.css("box-shadow","");
-      selected_menu.css("background-color", "#eeeeee");
-    }
-    elm.css("box-shadow", "0 6px 10px rgba(0,0,0,.23),0 10px 30px rgba(0,0,0,.19)");
-    elm.css("background-color", background_color);
-    selected_menu = elm
-  } 
+  
 
-  $(".detail_introduction").toggle("slide", {direction: "left"}, 700);
+  // $(".detail_introduction").toggle("slide", {direction: "left"}, 700);
   $(".detail_data_input").css("display", "none");
   $(".detail_transform").css("display", "none");
   $(".detail_metadata").css("display", "none");
@@ -41,22 +58,23 @@ $(function(){
   $(".detail_data_output").css("display", "none");
   
   
-  $(".introduction").css("background-color", "#ffeb3c");
-  activate_menu_button($(".introduction"), "#ffeb3c");
+  // $(".introduction").css("background-color", "#ffeb3c");
+  // activate_menu_button($(".introduction"), "#ffeb3c");
 
   
-  $(".introduction").on("mouseenter", "", function(evt){
-    $(".introduction").css("background-color", intro_clr)
-  }).on("mouseleave","", function(evt){
+  // $(".introduction").on("mouseenter", "", function(evt){
+  //   $(".introduction").css("background-color", intro_clr)
+  // }).on("mouseleave","", function(evt){
     // console.log(selected_menu);
     // console.log($(".introduction"));
     // console.log($(".introduction").attr('class') === $(".introduction").attr('class'))
-    if ($(".introduction").attr('class') != $(".introduction").attr('class')) { $(".introduction").css("background-color", intro_clr) }
-  })
+  //   if ($(".introduction").attr('class') != $(".introduction").attr('class')) { $(".introduction").css("background-color", intro_clr) }
+  // })
     // function(){ $(".introduction").css("background-color", intro_clr)},
     // function(){})
 
   $(".introduction").click(function(){
+    $(".detail.introduction").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".introduction"), intro_clr);  
     $(".introduction").css("background-color", "#ffeb3c");
     detail.toggle();
@@ -65,40 +83,47 @@ $(function(){
   });
 
   
-  $(".data_input").hover(
-    function(){ $(".data_input").css("background-color", input_clr)},
-    function(){ $(".data_input").css("background-color", "#eeeeee")})
   $(".data_input").click(function(){
+    $(".detail.data_input").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".data_input"), input_clr);
     detail.toggle();
     $(".detail_data_input").toggle("slide");
-    detail = $(".detail_data_input");
+    
   });
 
-  $(".transform").hover(
-    function(){ $(".transform").css("background-color", transform_clr)},
-    function(){ $(".transform").css("background-color", "#eeeeee")})
+  $(".projection").click(function(){
+    $(".detail.projection").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".projection"), input_clr);
+    detail.toggle();
+    $(".detail_projection").toggle("slide");  
+  });
+
+
+  $(".normalization").click(function(){
+    $(".detail.normalization").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".normalization"), input_clr);
+    detail.toggle();
+    $(".detail_normalization").toggle("slide");  
+  });
+  
   $(".transform").click(function(){
+    $(".detail.transform").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".transform"), transform_clr);
     detail.toggle();
     $(".detail_transform").toggle("slide");
     detail = $(".detail_transform");
   });
 
-  $(".metadata").hover(
-    function(){ $(".metadata").css("background-color", metadata_clr)},
-    function(){ $(".metadata").css("background-color", "#eeeeee")})
   $(".metadata").click(function(){
+    $(".detail.metadata").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".metadata"), metadata_clr);
     detail.toggle();
     $(".detail_metadata").toggle("slide");
     detail = $(".detail_metadata");
   });
 
-  $(".formula").hover(
-    function(){ $(".formula").css("background-color", formula_clr)},
-    function(){ $(".formula").css("background-color", "#eeeeee")})
   $(".formula").click(function(){
+    $(".detail.formula").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".formula"), formula_clr);
     
     detail.toggle();
@@ -106,30 +131,24 @@ $(function(){
     detail = $(".detail_formula");
   });
 
-  $(".filter").hover(
-    function(){ $(".filter").css("background-color", filter_clr)},
-    function(){ $(".filter").css("background-color", "#eeeeee")})
   $(".filter").click(function(){
+    $(".detail.filter").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".filter"), filter_clr);
     detail.toggle();
     $(".detail_filter").toggle("slide");
     detail = $(".detail_filter");
   });
 
-  $(".machine_learning").hover(
-    function(){ $(".machine_learning").css("background-color", ml_clr)},
-    function(){ $(".machine_learning").css("background-color", "#eeeeee")})
   $(".machine_learning").click(function(){
+    $(".detail.machine_learning").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".machine_learning"), ml_clr);
     detail.toggle();
     $(".detail_machine_learning").toggle("slide");
     detail = $(".detail_machine_learning");
   });
 
-  $(".data_output").hover(
-    function(){ $(".data_output").css("background-color", output_clr)},
-    function(){ $(".data_output").css("background-color", "#eeeeee")})
   $(".data_output").click(function(){
+    $(".detail.data_output").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".data_output"), output_clr);
     detail.toggle();
     $(".detail_data_output").toggle("slide");
@@ -218,42 +237,181 @@ $(function(){
         output:1
       });
 
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createTransformComponent(request_data);
+
+
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
         name:'METADATA',
         input:1,
         outputs:1
       });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createMetadataComponent(request_data);
+
     } else if ($(this).hasClass('add_transform')) {
       node = new Node({
         name:'TRANSFORM',
         input:1,
         outputs:1
       });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createTransformComponent(request_data);
+
     } else if ($(this).hasClass('add_formula')) {
       node = new Node({
         name:'FORMULA',
         input:1,
         outputs:1
       });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createFormulaComponent(request_data);
+
     } else if ($(this).hasClass('add_filtering')) {
       node = new Node({
         name:'FILTERING',
         input:1,
         outputs:1
       });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createFilteringComponent(request_data);
+
     } else if ($(this).hasClass('add_output')) {
       node = new Node({
         name:'OUTPUT',
         input:1,
         output:0
       });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createOutputComponent(request_data);
+
     } else if ($(this).hasClass('add_machine_learning')) {
+      
       node = new Node({
         name:'Machine Learning',
         input:1,
         output:0
       });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createMachineLearningComponent(request_data);
+
+    } else if ($(this).hasClass('run')) {
+      node = new Node({
+        name:'Machine Learning',
+        input:1,
+        output:0
+      });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.run(request_data);
+
+    } else if ($(this).hasClass('add_normalization')) {
+      node = new Node({
+        name:'Machine Learning',
+        input:1,
+        output:0
+      });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createNormalizationComponent(request_data);
+
+    } else if ($(this).hasClass('add_projection')) {
+      node = new Node({
+        name:'Projection',
+        input:1,
+        output:0
+      });
+
+      request_data = {
+        user_id: 1,
+        name: "sample_input.csv",
+        token: "aaa",
+        type: "css",
+        experiment: 1,
+        data: uploaded_file_as_text 
+      };
+
+      cognitive_client.createComponent(request_data);
+
     } 
   });
 

@@ -25,10 +25,10 @@
 
     - block 'extrahead'
 
-  %body
-    .header
+  %body{style: "background-color:white"}
+    #header{style:"height:30px;"}
       - include 'header.haml'
     .contents
       - block 'contents'
-    .footer
+    #footer
       - include 'footer.haml'
