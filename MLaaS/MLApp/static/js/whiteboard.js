@@ -221,11 +221,11 @@ $(function(){
       
       request_data = {
         user_id: 1,
-        name: "sample_input.csv",
+        input_file: "sample_input.csv",
         token: "aaa",
-        type: "css",
+        input_file_type: "csv",
         experiment: 1,
-        data: uploaded_file_as_text 
+        data_values: uploaded_file_as_text 
       };
 
       cognitive_client.createInputComponent(request_data);

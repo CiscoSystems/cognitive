@@ -90,7 +90,9 @@ class Component(models.Model):
     execution_end_time = models.DateField(blank=True, null=True)
     data_location = models.CharField(max_length=50, blank=True, null=True)
     preferred_data_location = models.CharField(max_length=50, blank=True, null=True)
-    component_id = models.IntegerField(blank=True, null=True)
+    #component_id = models.IntegerField(blank=True, null=True)
    
- 
+class Workflow(models.Model):
+    experiment = models.OneToOneField(Experiment)
+    graph_data = models.CharField(max_length=50)
    

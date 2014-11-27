@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Experiment, Component
+from .models import User, Experiment, Component, Workflow
 
 class UserSerializer(serializers.ModelSerializer):
     
@@ -23,3 +23,8 @@ class ComponentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Component
+
+class WorkflowSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Workflow

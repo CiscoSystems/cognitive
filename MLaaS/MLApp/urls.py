@@ -1,11 +1,12 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.routers import DefaultRouter
 
-from view import view_user, view_exp, view_operation
+from view import view_user, view_exp, view_operation, view_workflow
 
 router = DefaultRouter()
 router.register(r'users', view_user.UserViewSet,'')
 router.register(r'experiments', view_exp.ExperimentViewSet,'')
+router.register(r'workflows', view_workflow.WorkFlowViewSet,'')
 router.register(r'operations/(?P<operation>\w+)', view_operation.OperationViewSet,'')
 
 
