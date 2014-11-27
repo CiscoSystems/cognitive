@@ -17,9 +17,9 @@
       %li.menu_bar.data_input 
         %i.glyphicon.glyphicon-star
         Input Data
-      %li.menu_bar.transform 
+      %li.menu_bar.add_row 
         %i.glyphicon.glyphicon-star
-        Transform
+        Add Row
       %li.menu_bar.projection 
         %i.glyphicon.glyphicon-star
         Projection
@@ -68,12 +68,12 @@
             %input.form-control.floating-label{type:"text", readonly:"", placeholder:"Browse..."} 
             %input#inputFile{type:"file", accept:".csv"}
       %button.btn.btn-material-indigo.add_btn.add_input{type:"button", style:"float:right"} ADD
-    .detail.transform{style: "display: none"}
+    .detail.add_row{style: "display: none"}
       %fieldset
-        %legend Transform
+        %legend Add Row
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD
+      %button.btn.btn-material-indigo.add_btn.add_row{type:"button", style:"float:right"} ADD
     .detail.projection{style: "display: none"}
       %fieldset
         %legend Projection

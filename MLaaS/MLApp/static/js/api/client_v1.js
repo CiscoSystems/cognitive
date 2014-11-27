@@ -27,7 +27,7 @@ CognitiveAPIClientV1.createOutputComponent = function(json_data) {
 };
 CognitiveAPIClientV1.createAddRowComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/row'; 
+  api_url = this.prefix + '/operations/row/'; 
   send_request(api_url, "POST", json_data);
 };
 CognitiveAPIClientV1.createMetadataComponent = function(json_data) {

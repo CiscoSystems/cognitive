@@ -5,6 +5,21 @@ $(function(){
   
   // var detail = $(".detail_introduction");
 
+  var svg = d3.selectAll("svg");
+    // .call(make_x_axis()
+    //     .tickSize(-height, 0, 0)
+    //     .tickFormat("")
+    // )
+
+    // svg.append("g")         
+    //   .attr("class", "grid")
+    //   .call(make_y_axis()
+    //       .tickSize(-width, 0, 0)
+    //       .tickFormat("")
+    //   )
+
+
+
   var intro_clr     = "#ffeb3c";
   var input_clr     = "#009787";
   var transform_clr = "#ff9702";
@@ -90,6 +105,15 @@ $(function(){
     $(".detail_data_input").toggle("slide");
     
   });
+
+  $(".menu_bar.add_row").click(function(){
+    $(".detail.add_row").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".add_row"), transform_clr);
+    detail.toggle();
+    $(".detail_add_row").toggle("slide");
+    detail = $(".detail_add_row");
+  });
+
 
   $(".menu_bar.projection").click(function(){
     $(".detail.projection").toggle("slide", {direction: "left"}, 700);
@@ -231,23 +255,21 @@ $(function(){
 
       cognitive_client.createInputComponent(request_data);
 
-    } else if ($(this).hasClass('add_transform')) {
+    } else if ($(this).hasClass('add_row')) {
       node = new Node({
-        name:'TRANSFORM',
+        name:'+ Row',
         input: 1,
         output:1
       });
 
       request_data = {
         user_id: 1,
-        name: "sample_input.csv",
         token: "aaa",
-        type: "css",
         experiment: 1,
-        data: uploaded_file_as_text 
+        row_values: '1,"aaa",12,"csacsadcsa"'
       };
 
-      cognitive_client.createTransformComponent(request_data);
+      cognitive_client.createAddRowComponent(request_data);
 
 
     } else if ($(this).hasClass('add_metadata')) {
