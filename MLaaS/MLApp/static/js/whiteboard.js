@@ -135,6 +135,14 @@ $(function(){
     detail.toggle();
     $(".detail_normalization").toggle("slide");  
   });
+
+  $(".menu_bar.remove_column").click(function(){
+    $(".detail.remove_column").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".remove_column"), input_clr);
+    detail.toggle();
+    $(".detail_remove_column").toggle("slide");  
+  });
+  
   
   $(".menu_bar.transform").click(function(){
     $(".detail.transform").toggle("slide", {direction: "left"}, 700);
@@ -330,6 +338,23 @@ $(function(){
       };
 
       cognitive_client.createProjectionComponent(request_data);
+
+    } else if ($(this).hasClass('add_remove_duplicates')) {
+      
+      node = new Node({
+        name:'- Column',
+        input:1,
+        output:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_id: "1,2,3"
+      };
+
+      cognitive_client.createRemoveDuplicatesComponent(request_data);
 
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({

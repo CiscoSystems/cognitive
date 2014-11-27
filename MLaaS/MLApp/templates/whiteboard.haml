@@ -29,6 +29,9 @@
       %li.menu_bar.projection 
         %i.glyphicon.glyphicon-star
         Projection
+      %li.menu_bar.remove_column
+        %i.glyphicon.glyphicon-star
+        Remove Column
       %li.menu_bar.metadata 
         %i.glyphicon.glyphicon-star
         MetaData
@@ -95,6 +98,12 @@
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
       %button.btn.btn-material-indigo.add_btn.add_projection{type:"button", style:"float:right"} ADD
+    .detail.remove_column{style: "display: none"}
+      %fieldset
+        %legend Remove Duplicates
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_remove_duplicates{type:"button", style:"float:right"} ADD
     .detail.metadata{style: "display: none"}
       %fieldset
         %legend Metadata

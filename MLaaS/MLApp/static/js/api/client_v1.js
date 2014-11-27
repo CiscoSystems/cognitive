@@ -55,9 +55,9 @@ CognitiveAPIClientV1.createNormalizationComponent = function(json_data) {
   api_url = this.prefix + '/operations/normalization/'; 
   send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.createRemoveDuplicateComponent = function(json_data) {
+CognitiveAPIClientV1.createRemoveDuplicatesComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/remove_duplicate/'; 
+  api_url = this.prefix + '/operations/remove_duplicates/'; 
   send_request(api_url, "POST", json_data);
 };
 CognitiveAPIClientV1.createRemoveMissingValueComponent = function(json_data) {
