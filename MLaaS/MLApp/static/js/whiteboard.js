@@ -113,7 +113,13 @@ $(function(){
     $(".detail_add_row").toggle("slide");
     detail = $(".detail_add_row");
   });
-
+  $(".menu_bar.add_math_fomula").click(function(){
+    $(".detail.add_math_fomula").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".add_math_fomula"), transform_clr);
+    detail.toggle();
+    $(".detail_add_row").toggle("slide");
+    detail = $(".detail_add_row");
+  });
 
   $(".menu_bar.projection").click(function(){
     $(".detail.projection").toggle("slide", {direction: "left"}, 700);
@@ -272,6 +278,25 @@ $(function(){
       cognitive_client.createAddRowComponent(request_data);
 
 
+    } else if ($(this).hasClass('add_math_fomula')) {
+      node = new Node({
+        name:'Apply Formula',
+        input:1,
+        outputs:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_type: "column",
+        component_id: 1, // should be index number
+        op_type: "Add", // or Sub, Mul, Div
+        op_constant: 10
+      };
+
+      cognitive_client.createMathFormulaComponent(request_data);
+
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
         name:'METADATA',
@@ -290,25 +315,7 @@ $(function(){
 
       cognitive_client.createMetadataComponent(request_data);
 
-    } else if ($(this).hasClass('add_transform')) {
-      node = new Node({
-        name:'TRANSFORM',
-        input:1,
-        outputs:1
-      });
-
-      request_data = {
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createTransformComponent(request_data);
-
-    } else if ($(this).hasClass('add_formula')) {
+    }  else if ($(this).hasClass('add_formula')) {
       node = new Node({
         name:'FORMULA',
         input:1,

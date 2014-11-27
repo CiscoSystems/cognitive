@@ -20,6 +20,9 @@
       %li.menu_bar.add_row 
         %i.glyphicon.glyphicon-star
         Add Row
+      %li.menu_bar.add_math_fomula
+        %i.glyphicon.glyphicon-star
+        Math formula
       %li.menu_bar.projection 
         %i.glyphicon.glyphicon-star
         Projection
@@ -74,6 +77,12 @@
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
       %button.btn.btn-material-indigo.add_btn.add_row{type:"button", style:"float:right"} ADD
+    .detail.add_math_fomula{style: "display: none"}
+      %fieldset
+        %legend Math Formula
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
     .detail.projection{style: "display: none"}
       %fieldset
         %legend Projection
