@@ -195,18 +195,18 @@ $(function(){
   var last_clicked_elm = null;
   var group_id = 1;  
 
-  node = new Node({
-    name: 'aaaa',
-    inputs: 1,
-    outputs: 1
-  });
+  // node = new Node({
+  //   name: 'aaaa',
+  //   inputs: 1,
+  //   outputs: 1
+  // });
 
 
-  node = new Node({
-    name: 'bbb',
-    inputs: 1,
-    outputs: 1
-  });
+  // node = new Node({
+  //   name: 'bbb',
+  //   inputs: 1,
+  //   outputs: 1
+  // });
 
   
   $(".add_btn").click(function(){
