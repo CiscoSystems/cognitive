@@ -73,7 +73,7 @@ $(function(){
     // function(){ $(".introduction").css("background-color", intro_clr)},
     // function(){})
 
-  $(".introduction").click(function(){
+  $(".menu_bar.introduction").click(function(){
     $(".detail.introduction").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".introduction"), intro_clr);  
     $(".introduction").css("background-color", "#ffeb3c");
@@ -83,7 +83,7 @@ $(function(){
   });
 
   
-  $(".data_input").click(function(){
+  $(".menu_bar.data_input").click(function(){
     $(".detail.data_input").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".data_input"), input_clr);
     detail.toggle();
@@ -91,7 +91,7 @@ $(function(){
     
   });
 
-  $(".projection").click(function(){
+  $(".menu_bar.projection").click(function(){
     $(".detail.projection").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".projection"), input_clr);
     detail.toggle();
@@ -99,14 +99,14 @@ $(function(){
   });
 
 
-  $(".normalization").click(function(){
+  $(".menu_bar.normalization").click(function(){
     $(".detail.normalization").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".normalization"), input_clr);
     detail.toggle();
     $(".detail_normalization").toggle("slide");  
   });
   
-  $(".transform").click(function(){
+  $(".menu_bar.transform").click(function(){
     $(".detail.transform").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".transform"), transform_clr);
     detail.toggle();
@@ -114,7 +114,7 @@ $(function(){
     detail = $(".detail_transform");
   });
 
-  $(".metadata").click(function(){
+  $(".menu_bar.metadata").click(function(){
     $(".detail.metadata").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".metadata"), metadata_clr);
     detail.toggle();
@@ -122,7 +122,7 @@ $(function(){
     detail = $(".detail_metadata");
   });
 
-  $(".formula").click(function(){
+  $(".menu_bar.formula").click(function(){
     $(".detail.formula").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".formula"), formula_clr);
     
@@ -131,7 +131,7 @@ $(function(){
     detail = $(".detail_formula");
   });
 
-  $(".filter").click(function(){
+  $(".menu_bar.filter").click(function(){
     $(".detail.filter").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".filter"), filter_clr);
     detail.toggle();
@@ -139,7 +139,7 @@ $(function(){
     detail = $(".detail_filter");
   });
 
-  $(".machine_learning").click(function(){
+  $(".menu_bar.machine_learning").click(function(){
     $(".detail.machine_learning").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".machine_learning"), ml_clr);
     detail.toggle();
@@ -147,7 +147,7 @@ $(function(){
     detail = $(".detail_machine_learning");
   });
 
-  $(".data_output").click(function(){
+  $(".menu_bar.data_output").click(function(){
     $(".detail.data_output").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".data_output"), output_clr);
     detail.toggle();
@@ -158,6 +158,7 @@ $(function(){
   function handleFileSelect(evt) {
     var file = evt.target.files[0]; // FileList object
     
+    console("--------------")
     console.log(file);
     console.log(file.type);
     
