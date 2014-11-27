@@ -5,6 +5,21 @@ $(function(){
   
   // var detail = $(".detail_introduction");
 
+  var svg = d3.selectAll("svg");
+    // .call(make_x_axis()
+    //     .tickSize(-height, 0, 0)
+    //     .tickFormat("")
+    // )
+
+    // svg.append("g")         
+    //   .attr("class", "grid")
+    //   .call(make_y_axis()
+    //       .tickSize(-width, 0, 0)
+    //       .tickFormat("")
+    //   )
+
+
+
   var intro_clr     = "#ffeb3c";
   var input_clr     = "#009787";
   var transform_clr = "#ff9702";
@@ -73,7 +88,7 @@ $(function(){
     // function(){ $(".introduction").css("background-color", intro_clr)},
     // function(){})
 
-  $(".introduction").click(function(){
+  $(".menu_bar.introduction").click(function(){
     $(".detail.introduction").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".introduction"), intro_clr);  
     $(".introduction").css("background-color", "#ffeb3c");
@@ -83,7 +98,7 @@ $(function(){
   });
 
   
-  $(".data_input").click(function(){
+  $(".menu_bar.data_input").click(function(){
     $(".detail.data_input").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".data_input"), input_clr);
     detail.toggle();
@@ -91,7 +106,22 @@ $(function(){
     
   });
 
-  $(".projection").click(function(){
+  $(".menu_bar.add_row").click(function(){
+    $(".detail.add_row").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".add_row"), transform_clr);
+    detail.toggle();
+    $(".detail_add_row").toggle("slide");
+    detail = $(".detail_add_row");
+  });
+  $(".menu_bar.add_math_fomula").click(function(){
+    $(".detail.add_math_fomula").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".add_math_fomula"), transform_clr);
+    detail.toggle();
+    $(".detail_add_row").toggle("slide");
+    detail = $(".detail_add_row");
+  });
+
+  $(".menu_bar.projection").click(function(){
     $(".detail.projection").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".projection"), input_clr);
     detail.toggle();
@@ -99,14 +129,22 @@ $(function(){
   });
 
 
-  $(".normalization").click(function(){
+  $(".menu_bar.normalization").click(function(){
     $(".detail.normalization").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".normalization"), input_clr);
     detail.toggle();
     $(".detail_normalization").toggle("slide");  
   });
+
+  $(".menu_bar.remove_column").click(function(){
+    $(".detail.remove_column").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".remove_column"), input_clr);
+    detail.toggle();
+    $(".detail_remove_column").toggle("slide");  
+  });
   
-  $(".transform").click(function(){
+  
+  $(".menu_bar.transform").click(function(){
     $(".detail.transform").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".transform"), transform_clr);
     detail.toggle();
@@ -114,7 +152,7 @@ $(function(){
     detail = $(".detail_transform");
   });
 
-  $(".metadata").click(function(){
+  $(".menu_bar.metadata").click(function(){
     $(".detail.metadata").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".metadata"), metadata_clr);
     detail.toggle();
@@ -122,7 +160,7 @@ $(function(){
     detail = $(".detail_metadata");
   });
 
-  $(".formula").click(function(){
+  $(".menu_bar.formula").click(function(){
     $(".detail.formula").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".formula"), formula_clr);
     
@@ -131,7 +169,7 @@ $(function(){
     detail = $(".detail_formula");
   });
 
-  $(".filter").click(function(){
+  $(".menu_bar.filter").click(function(){
     $(".detail.filter").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".filter"), filter_clr);
     detail.toggle();
@@ -139,7 +177,7 @@ $(function(){
     detail = $(".detail_filter");
   });
 
-  $(".machine_learning").click(function(){
+  $(".menu_bar.machine_learning").click(function(){
     $(".detail.machine_learning").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".machine_learning"), ml_clr);
     detail.toggle();
@@ -147,7 +185,7 @@ $(function(){
     detail = $(".detail_machine_learning");
   });
 
-  $(".data_output").click(function(){
+  $(".menu_bar.data_output").click(function(){
     $(".detail.data_output").toggle("slide", {direction: "left"}, 700);
     activate_menu_button($(".data_output"), output_clr);
     detail.toggle();
@@ -158,6 +196,7 @@ $(function(){
   function handleFileSelect(evt) {
     var file = evt.target.files[0]; // FileList object
     
+    console("--------------")
     console.log(file);
     console.log(file.type);
     
@@ -194,18 +233,18 @@ $(function(){
   var last_clicked_elm = null;
   var group_id = 1;  
 
-  node = new Node({
-    name: 'aaaa',
-    inputs: 1,
-    outputs: 1
-  });
+  // node = new Node({
+  //   name: 'aaaa',
+  //   inputs: 1,
+  //   outputs: 1
+  // });
 
 
-  node = new Node({
-    name: 'bbb',
-    inputs: 1,
-    outputs: 1
-  });
+  // node = new Node({
+  //   name: 'bbb',
+  //   inputs: 1,
+  //   outputs: 1
+  // });
 
   
   $(".add_btn").click(function(){
@@ -230,24 +269,92 @@ $(function(){
 
       cognitive_client.createInputComponent(request_data);
 
-    } else if ($(this).hasClass('add_transform')) {
+    } else if ($(this).hasClass('add_row')) {
       node = new Node({
-        name:'TRANSFORM',
+        name:'+ Row',
         input: 1,
         output:1
       });
 
       request_data = {
         user_id: 1,
-        name: "sample_input.csv",
         token: "aaa",
-        type: "css",
         experiment: 1,
-        data: uploaded_file_as_text 
+        row_values: '1,"aaa",12,"csacsadcsa"'
       };
 
-      cognitive_client.createTransformComponent(request_data);
+      cognitive_client.createAddRowComponent(request_data);
 
+
+    } else if ($(this).hasClass('add_math_fomula')) {
+      node = new Node({
+        name:'Apply Formula',
+        input:1,
+        outputs:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_type: "column",
+        component_id: 1, // should be index number
+        op_type: "Add", // or Sub, Mul, Div
+        op_constant: 10
+      };
+
+      cognitive_client.createMathFormulaComponent(request_data);
+
+    } else if ($(this).hasClass('add_normalization')) {
+      node = new Node({
+        name:'Normalization',
+        input:1,
+        output:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_type: "column",
+        component_id: 1,
+        op_type: "standard"
+      };
+
+      cognitive_client.createNormalizationComponent(request_data);
+
+    } else if ($(this).hasClass('add_projection')) {
+      node = new Node({
+        name:'Projection',
+        input:1,
+        output:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_id: "1,2,3"
+      };
+
+      cognitive_client.createProjectionComponent(request_data);
+
+    } else if ($(this).hasClass('add_remove_duplicates')) {
+      
+      node = new Node({
+        name:'- Column',
+        input:1,
+        output:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_id: "1,2,3"
+      };
+
+      cognitive_client.createRemoveDuplicatesComponent(request_data);
 
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
@@ -267,25 +374,7 @@ $(function(){
 
       cognitive_client.createMetadataComponent(request_data);
 
-    } else if ($(this).hasClass('add_transform')) {
-      node = new Node({
-        name:'TRANSFORM',
-        input:1,
-        outputs:1
-      });
-
-      request_data = {
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createTransformComponent(request_data);
-
-    } else if ($(this).hasClass('add_formula')) {
+    }  else if ($(this).hasClass('add_formula')) {
       node = new Node({
         name:'FORMULA',
         input:1,
@@ -376,43 +465,7 @@ $(function(){
 
       cognitive_client.run(request_data);
 
-    } else if ($(this).hasClass('add_normalization')) {
-      node = new Node({
-        name:'Machine Learning',
-        input:1,
-        output:0
-      });
-
-      request_data = {
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createNormalizationComponent(request_data);
-
-    } else if ($(this).hasClass('add_projection')) {
-      node = new Node({
-        name:'Projection',
-        input:1,
-        output:0
-      });
-
-      request_data = {
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createComponent(request_data);
-
-    } 
+    }
   });
 
 

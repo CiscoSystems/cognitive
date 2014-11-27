@@ -18,7 +18,7 @@ var Node = (function() {
     var svg = d3.selectAll("svg");
 
     var g = svg.append('g');
-    var _x = 100;
+    var _x = 600;
     var _y = 30 + 1 * 80;
     var node = g.append('rect')
       .attr("x", _x)

@@ -3,3 +3,5 @@ venv
 *.tmp
 *.swp
 *.log
+*.tags
+.tags_sorted_by_file
