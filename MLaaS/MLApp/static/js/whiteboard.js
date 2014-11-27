@@ -297,6 +297,24 @@ $(function(){
 
       cognitive_client.createMathFormulaComponent(request_data);
 
+    } else if ($(this).hasClass('add_normalization')) {
+      node = new Node({
+        name:'Normalization',
+        input:1,
+        output:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_type: "column",
+        component_id: 1,
+        op_type: "standard"
+      };
+
+      cognitive_client.createNormalizationComponent(request_data);
+
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
         name:'METADATA',
@@ -405,24 +423,6 @@ $(function(){
       };
 
       cognitive_client.run(request_data);
-
-    } else if ($(this).hasClass('add_normalization')) {
-      node = new Node({
-        name:'Machine Learning',
-        input:1,
-        output:0
-      });
-
-      request_data = {
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createNormalizationComponent(request_data);
 
     } else if ($(this).hasClass('add_projection')) {
       node = new Node({

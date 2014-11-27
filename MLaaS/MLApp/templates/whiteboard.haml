@@ -23,12 +23,12 @@
       %li.menu_bar.add_math_fomula
         %i.glyphicon.glyphicon-star
         Math formula
-      %li.menu_bar.projection 
-        %i.glyphicon.glyphicon-star
-        Projection
       %li.menu_bar.normalization 
         %i.glyphicon.glyphicon-star
         Normalization
+      %li.menu_bar.projection 
+        %i.glyphicon.glyphicon-star
+        Projection
       %li.menu_bar.metadata 
         %i.glyphicon.glyphicon-star
         MetaData
@@ -83,15 +83,15 @@
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
       %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
-    .detail.projection{style: "display: none"}
-      %fieldset
-        %legend Projection
-        .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD
     .detail.normalization{style: "display: none"}
       %fieldset
         %legend Normalization
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+      %button.btn.btn-material-indigo.add_btn.add_normalization{type:"button", style:"float:right"} ADD
+    .detail.projection{style: "display: none"}
+      %fieldset
+        %legend Projection
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
       %button.btn.btn-material-indigo.add_btn.add_transform{type:"button", style:"float:right"} ADD

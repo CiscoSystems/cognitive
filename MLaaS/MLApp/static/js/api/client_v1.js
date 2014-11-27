@@ -37,12 +37,12 @@ CognitiveAPIClientV1.createMathFormulaComponent = function(json_data) {
 };
 CognitiveAPIClientV1.createMetadataComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/metadata'; 
+  api_url = this.prefix + '/operations/metadata/'; 
   send_request(api_url, "POST", json_data);
 };
 CognitiveAPIClientV1.createMachineLeaningComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/machine_learning'; 
+  api_url = this.prefix + '/operations/machine_learning/'; 
   send_request(api_url, "POST", json_data);
 };
 // CognitiveAPIClientV1.createMathFormulaComponent = function(json_data) {
@@ -52,17 +52,17 @@ CognitiveAPIClientV1.createMachineLeaningComponent = function(json_data) {
 // };
 CognitiveAPIClientV1.createNormalizationComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/Normalization'; 
+  api_url = this.prefix + '/operations/normalization/'; 
   send_request(api_url, "POST", json_data);
 };
 CognitiveAPIClientV1.createProjectionComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/Projection'; 
+  api_url = this.prefix + '/operations/projection/'; 
   send_request(api_url, "POST", json_data);
 };
 CognitiveAPIClientV1.createRemoveDuplicateComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/RemoveDuplicate'; 
+  api_url = this.prefix + '/operations/remove_duplicate/'; 
   send_request(api_url, "POST", json_data);
 };
 CognitiveAPIClientV1.createRemoveMissingValueComponent = function(json_data) {
