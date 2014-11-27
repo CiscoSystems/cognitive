@@ -31,7 +31,10 @@
         Projection
       %li.menu_bar.remove_column
         %i.glyphicon.glyphicon-star
-        Remove Column
+        Remove Duplication
+      %li.menu_bar.remove_missing_value
+        %i.glyphicon.glyphicon-star
+        Remove Missing Value
       %li.menu_bar.metadata 
         %i.glyphicon.glyphicon-star
         MetaData
@@ -104,6 +107,12 @@
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
       %button.btn.btn-material-indigo.add_btn.add_remove_duplicates{type:"button", style:"float:right"} ADD
+    .detail.remove_missing_value{style: "display: none"}
+      %fieldset
+        %legend Remove Missing Values
+        .form-group
+          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+      %button.btn.btn-material-indigo.add_btn.add_remove_missing_value{type:"button", style:"float:right"} ADD
     .detail.metadata{style: "display: none"}
       %fieldset
         %legend Metadata

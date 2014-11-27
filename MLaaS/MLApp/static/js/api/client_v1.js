@@ -70,6 +70,11 @@ CognitiveAPIClientV1.createFilterComponent = function(json_data) {
   api_url = this.prefix + '/operations/filter'; 
   send_request(api_url, "POST", json_data);
 };
+CognitiveAPIClientV1.createRemoveMissingValuesComponent = function(json_data) {
+  this.prefix  = '/api/v1';  
+  api_url = this.prefix + '/operations/remove_missing/'; 
+  send_request(api_url, "POST", json_data);
+};
 CognitiveAPIClientV1.run = function(json_data) {
   this.prefix  = '/api/v1';  
   api_url = this.prefix + '/operations/filter'; 

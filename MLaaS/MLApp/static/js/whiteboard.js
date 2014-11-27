@@ -142,6 +142,13 @@ $(function(){
     detail.toggle();
     $(".detail_remove_column").toggle("slide");  
   });
+
+  $(".menu_bar.remove_missing_value").click(function(){
+    $(".detail.remove_missing_value").toggle("slide", {direction: "left"}, 700);
+    activate_menu_button($(".remove_missing_value"), input_clr);
+    detail.toggle();
+    $(".detail_remove_column").toggle("slide");  
+  });
   
   
   $(".menu_bar.transform").click(function(){
@@ -355,6 +362,22 @@ $(function(){
       };
 
       cognitive_client.createRemoveDuplicatesComponent(request_data);
+
+    } else if ($(this).hasClass('add_remove_missing_value')) {
+      node = new Node({
+        name:'Remove Missing Values',
+        input:1,
+        outputs:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        op_action: "Replace_mean" // or Drop_row
+      };
+
+      cognitive_client.createRemoveMissingValuesComponent(request_data);
 
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
