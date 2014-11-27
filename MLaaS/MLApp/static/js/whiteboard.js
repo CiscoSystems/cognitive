@@ -315,6 +315,22 @@ $(function(){
 
       cognitive_client.createNormalizationComponent(request_data);
 
+    } else if ($(this).hasClass('add_projection')) {
+      node = new Node({
+        name:'Projection',
+        input:1,
+        output:1
+      });
+
+      request_data = {
+        user_id: 1,
+        token: "aaa",
+        experiment: 1,
+        component_id: "1,2,3"
+      };
+
+      cognitive_client.createProjectionComponent(request_data);
+
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
         name:'METADATA',
@@ -424,25 +440,7 @@ $(function(){
 
       cognitive_client.run(request_data);
 
-    } else if ($(this).hasClass('add_projection')) {
-      node = new Node({
-        name:'Projection',
-        input:1,
-        output:0
-      });
-
-      request_data = {
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createComponent(request_data);
-
-    } 
+    }
   });
 
 

@@ -55,11 +55,6 @@ CognitiveAPIClientV1.createNormalizationComponent = function(json_data) {
   api_url = this.prefix + '/operations/normalization/'; 
   send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.createProjectionComponent = function(json_data) {
-  this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/projection/'; 
-  send_request(api_url, "POST", json_data);
-};
 CognitiveAPIClientV1.createRemoveDuplicateComponent = function(json_data) {
   this.prefix  = '/api/v1';  
   api_url = this.prefix + '/operations/remove_duplicate/'; 
@@ -80,8 +75,8 @@ CognitiveAPIClientV1.run = function(json_data) {
   api_url = this.prefix + '/operations/filter'; 
   send_request(api_url, "POST", json_data);
 };
-CognitiveAPIClientV1.createComponent = function(json_data) {
+CognitiveAPIClientV1.createProjectionComponent = function(json_data) {
   this.prefix  = '/api/v1';  
-  api_url = this.prefix + '/operations/filter'; 
+  api_url = this.prefix + '/operations/projection/'; 
   send_request(api_url, "POST", json_data);
 };
