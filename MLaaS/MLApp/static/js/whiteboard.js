@@ -381,18 +381,16 @@ $(function(){
 
     } else if ($(this).hasClass('add_metadata')) {
       node = new Node({
-        name:'METADATA',
+        name:'MetaData',
         input:1,
         outputs:1
       });
 
       request_data = {
         user_id: 1,
-        name: "sample_input.csv",
         token: "aaa",
-        type: "css",
         experiment: 1,
-        data: uploaded_file_as_text 
+        column_type: "int,string,categorical"
       };
 
       cognitive_client.createMetadataComponent(request_data);
