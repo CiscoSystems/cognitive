@@ -1,12 +1,12 @@
 from django.db import models
-from treebeard.mp_tree import MP_Node
+#from treebeard.mp_tree import MP_Node
 
-class Category(MP_Node):
-    id_val = models.IntegerField()
-    node_order_by = ['id_val']
-
-    def __unicode__(self):
-        return 'Category: %d' % self.id_val
+#class Category(MP_Node):
+#    id_val = models.IntegerField()
+#    node_order_by = ['id_val']
+#
+#    def __unicode__(self):
+#        return 'Category: %d' % self.id_val
 
 
 class Data_operation_type(models.Model):
@@ -45,8 +45,14 @@ class Data_operation_type(models.Model):
     function_subtype_arg = models.CharField(max_length=50, blank=True, null=True)
     
     def __str__(self):
-        return self.function_type + " " + self.function_arg + " " + self.function_arg_id + \
-                 " " +  self.function_subtype + " " + self.function_subtype_arg
+        return_str = self.function_type + " " + self.function_arg + " "
+        if self.function_arg_id is not None:
+            return_str = return_str + self.function_arg_id + " "
+        if self.function_subtype is not None:
+            return_str = return_str + self.function_subtype + " "
+        if self.function_subtype_arg is not None:
+            return_str = return_str + self.function_subtype_arg + " "
+        return return_str
     
 class User(models.Model):
     username = models.CharField(max_length=50)

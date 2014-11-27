@@ -20,7 +20,7 @@ class myThread (threading.Thread):
         for data in graph_data:
             component_id = data[0]
             comp = Component.objects.get(pk= component_id)
-            print "Component_id" , component_id, " ", comp.operation_type  
+            print "Component_id" , component_id, " " ,comp.operation_type 
         
 
 class WorkFlowViewSet(viewsets.ViewSet):
@@ -42,8 +42,8 @@ class WorkFlowViewSet(viewsets.ViewSet):
         serializer = WorkflowSerializer(data=request.DATA)
         if serializer.is_valid():
            serializer.save()
-        #thread = myThread(1, "WorkFlow Thread", exp_id)
-        #thread.start() 
+        thread = myThread(1, "WorkFlow Thread", exp_id)
+        thread.start() 
         return send_response(request.method,serializer)
     
     def update(self,request, pk=None):

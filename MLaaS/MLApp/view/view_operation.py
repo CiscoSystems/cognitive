@@ -81,6 +81,9 @@ class OperationViewSet(viewsets.ViewSet):
             op = Data_operation_type(function_type = 'Create',  function_arg = 'table', 
                             function_subtype = 'input', function_subtype_arg = filename) 
             op.save()
+
+        elif operation == "training":
+            print data["model_id"], data["train_data_percentage"]
              
         component = Component(experiment= exp, created_time=datetime.now(),
                                 modified_time=datetime.now(), operation_type = op)

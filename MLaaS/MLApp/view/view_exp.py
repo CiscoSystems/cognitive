@@ -13,7 +13,7 @@ class ExperimentViewSet(viewsets.ViewSet):
         return send_response(request.method,serializer)
 
     def retrieve(self, request, pk=None):
-        exp = User.objects.get(pk=pk)
+        exp = Experiment.objects.get(pk=pk)
         serializer = ExperimentSerializer(exp)
         return send_response(request.method,serializer)
 
