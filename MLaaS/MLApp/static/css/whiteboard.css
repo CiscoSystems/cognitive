@@ -18,15 +18,32 @@ li.component {
 }
 
 .whiteboard-flyout{
+  overflow: scroll;
   margin-bottom:0; padding:0;
-  border-right: solid 1px #cccccc;
+  padding-bottom:35px;
+  border-right: solid 1px #afafaf;
   position: fixed;
   left: 0;
-  top: 50px; 
+  top: 45px;
   right: 0; 
   height: 100%; 
-  width: 200px;
+  width: 220px;
   background-color:white;
+  font-size:12pt;
+}
+.whiteboard-flyout li {
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-bottom: 40px;
+}
+.whiteboard-flyout .active li {
+  background-color: #1e8cff;
+  color: white;
+}
+
+
+.whiteboard-flyout i{
+  font-size:22pt; 
 }
 
 .whiteboard-flyout ul {
@@ -39,7 +56,8 @@ li.component {
 }
 
 .whiteboard-flyout ul li:hover{
-  background-color: #1e8cff;
+  background-color: #ffd124;
+  color: #333333;
 }
 #visualization{
   float:right; 
@@ -53,8 +71,8 @@ li.component {
   padding:0; 
   width: 30%; 
   position: fixed; 
-  left: 200px; 
-  top:50px; 
+  left: 220px; 
+  top:45px; 
   background:white; 
   display:none;
   height: 100%;

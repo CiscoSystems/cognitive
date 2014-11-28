@@ -10,49 +10,47 @@
   %script{src: "{{STATIC_URL}}js/jquery.csv-0.71.min.js", type: "text/javascript"}
 - block 'contents'
   .whiteboard-flyout
-    %ul
-      %li.menu_bar.introduction
-        %i.glyphicon.glyphicon-star
-        Introduction
-      %li.menu_bar.data_input 
-        %i.glyphicon.glyphicon-star
-        Input Data
-      %li.menu_bar.add_row 
-        %i.glyphicon.glyphicon-star
-        Add Row
-      %li.menu_bar.add_math_fomula
-        %i.glyphicon.glyphicon-star
-        Math formula
-      %li.menu_bar.normalization 
-        %i.glyphicon.glyphicon-star
-        Normalization
-      %li.menu_bar.projection 
-        %i.glyphicon.glyphicon-star
-        Projection
-      %li.menu_bar.remove_column
-        %i.glyphicon.glyphicon-star
-        Remove Duplication
-      %li.menu_bar.remove_missing_value
-        %i.glyphicon.glyphicon-star
-        Remove Missing Value
-      %li.menu_bar.metadata 
-        %i.glyphicon.glyphicon-star
-        MetaData
-      %li.menu_bar.formula 
-        %i.glyphicon.glyphicon-star
-        MathFormula
-      %li.menu_bar.filter 
-        %i.glyphicon.glyphicon-star
-        Filter
-      %li.menu_bar.machine_learning 
-        %i.glyphicon.glyphicon-star
-        Machine Learning
-      %li.menu_bar.data_output 
-        %i.glyphicon.glyphicon-star
-        OUTPUT
-      %li.menu_bar.run 
-        %i.glyphicon.glyphicon-star
-        Run
+    .flyout-wrapper
+      %ul
+        %li.menu_bar.introduction
+          %i.fa.fa-file-text-o
+          Introduction
+        %li.menu_bar.data_input 
+          %i.fa.fa-arrow-up
+          Input Data
+        %li.menu_bar.add_row 
+          %i.fa.fa-list-ol
+          Add Row
+        %li.menu_bar.add_math_fomula
+          %i.fa.fa-xing
+          Math formula
+        %li.menu_bar.normalization 
+          %i.fa.fa-align-center
+          Normalization
+        %li.menu_bar.projection 
+          %i.fa.fa-cogs
+          Projection
+        %li.menu_bar.remove_column
+          %i.fa.fa-cut
+          Remove Duplication
+        %li.menu_bar.remove_missing_value
+          %i.fa.fa-sliders
+          Remove Missing Value
+        %li.menu_bar.metadata 
+          %i.fa.fa-share-alt
+          MetaData
+        %li.menu_bar.filter 
+          %i.fa.fa-filter
+          Filter
+        %li.menu_bar.machine_learning 
+          %i.fa.fa-yelp
+          Machine Learning
+        %li.menu_bar.data_output 
+          %i.fa.fa-arrow-down
+          OUTPUT
+        %li.menu_bar.run 
+          %i.fa.fa-line-chart
+          Run
   
   #visualization
     %svg.root{height:"800px", width:"100%"}  
