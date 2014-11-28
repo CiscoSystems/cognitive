@@ -5,7 +5,7 @@ var Node = (function() {
 
   // constructor
   function Node(options) {
-    this.node_id      = g_node_id++;
+    this.node_id = g_node_id++;
     this.name    = options.name;
     this.inputs  = options.inputs;
     this.outputs = options.outputs;
