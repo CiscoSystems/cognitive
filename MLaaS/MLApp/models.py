@@ -1,13 +1,4 @@
 from django.db import models
-#from treebeard.mp_tree import MP_Node
-
-#class Category(MP_Node):
-#    id_val = models.IntegerField()
-#    node_order_by = ['id_val']
-#
-#    def __unicode__(self):
-#        return 'Category: %d' % self.id_val
-
 
 class Data_operation_type(models.Model):
     FUNCTION_TYPE = (
