@@ -9,6 +9,7 @@
     %link{href: "{{STATIC_URL}}css/bootstrap.min.css", rel: "stylesheet"}
     %link{href: "{{STATIC_URL}}css/material.min.css", rel: "stylesheet"}
 
+
     %link{href: "{{STATIC_URL}}css/ripples.min.css", rel: "stylesheet"}
     %link{href: "{{STATIC_URL}}css/material-wfont.min.css", rel: "stylesheet"}
     %link{href: "{{STATIC_URL}}css/jquery-ui.structure.min.css", rel: "stylesheet"}
@@ -21,12 +22,12 @@
     %script{src: "{{STATIC_URL}}js/react.min.js", type: "text/javascript"}
     %script{src: "{{STATIC_URL}}js/ripples.min.js", type: "text/javascript"}
     %script{src: "{{STATIC_URL}}js/jquery-ui.min.js", type: "text/javascript"}
-
+    %link{href: "{{STATIC_URL}}css/font-awesome.min.css", rel: "stylesheet"}
 
     - block 'extrahead'
 
-  %body{style: "background-color:white"}
-    #header{style:"height:30px;"}
+  %body{style: "background-color:white; padding:0;"}
+    #header{style:"height:45px;padding:0; border-bottom: solid 1px #4c79ff"}
       - include 'header.haml'
     .contents
       - block 'contents'

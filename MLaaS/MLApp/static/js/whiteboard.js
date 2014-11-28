@@ -1,77 +1,71 @@
 
 var uploaded_file_as_text = "";
 
+var Manager = (function(){
+    
+  function Manager(param){
+    this._active_menu = null;
+  }
+
+  function activate_menubar(elm){
+    menubar     = $('li.'+elm)
+    description = $('.detail.'+elm)
+
+    menubar
+      .css("background-color", "#1e8cff")
+      .css("color", "white");
+
+    description.toggle("slide", {direction: "left"}, 700);
+
+    if (this._active_menu == null) {
+      this._active_menu = elm;
+      return(menubar.addClass("active"));
+    } 
+
+    if (this._active_menu == elm) {
+      if (menubar.hasClass("active")) {
+        this._active_menu = null;
+        return menubar
+                  .css("background-color", "")
+                  .css("color", "")
+                  .removeClass("active");
+      }
+    }
+
+    previous_menubar     = $('li.'+ this._active_menu)
+    previous_description = $('.detail.'+ this._active_menu)
+
+    previous_description.toggle("slide");
+    previous_menubar
+      .css("background-color", "")
+      .css("color", "")
+      .removeClass("active");
+
+    this._active_menu = elm;
+    
+    return(menubar.addClass("active"));
+  }
+
+  Manager.prototype = {
+    constructor: Manager,
+    activate_menubar: activate_menubar
+  };
+
+  return Manager;
+
+})();
+
+
 $(function(){
   
-  // var detail = $(".detail_introduction");
-
+  var m = new Manager();
   var svg = d3.selectAll("svg");
-    // .call(make_x_axis()
-    //     .tickSize(-height, 0, 0)
-    //     .tickFormat("")
-    // )
-
-    // svg.append("g")         
-    //   .attr("class", "grid")
-    //   .call(make_y_axis()
-    //       .tickSize(-width, 0, 0)
-    //       .tickFormat("")
-    //   )
-
-
-
-  var intro_clr     = "#ffeb3c";
-  var input_clr     = "#009787";
-  var transform_clr = "#ff9702";
-  var metadata_clr  = "#f44236";
-  var formula_clr   = "#3e51b5";
-  var filter_clr    = "#009787";
-  var ml_clr        = "#fe5721";
-  var output_clr    = "#607d8b";
-
-  // var uploaded_file_as_text = "";
-
-// $(function(){
-//   $('.placewise-nav-menu').click(function() {
-//     $(".placewise-nav-flyout").css('left', 0);
-//     $(".placewise-nav-flyout").animate(
-//       {
-//         width: 'toggle'
-//       },
-//       {
-//         duration: 100
-//       }
-//     );
-//   })
-// })
-
-  // $(".whiteboard-flyout").animate(
-  //       {
-  //         width: 'toggle'
-  //       },
-  //       {
-  //         duration: 100
-  //       }
-  //     );
-
-
-
 
   function visualize_input_data() {
     // alert(uploaded_file_as_text);
   }
 
-  var selected_menu;
-  
-
   // $(".detail_introduction").toggle("slide", {direction: "left"}, 700);
-  $(".detail_data_input").css("display", "none");
-  $(".detail_transform").css("display", "none");
-  $(".detail_metadata").css("display", "none");
-  $(".detail_formula").css("display", "none");
-  $(".detail_filter").css("display", "none");
-  $(".detail_data_output").css("display", "none");
-  
   
   // $(".introduction").css("background-color", "#ffeb3c");
   // activate_menu_button($(".introduction"), "#ffeb3c");
@@ -89,115 +83,61 @@ $(function(){
     // function(){})
 
   $(".menu_bar.introduction").click(function(){
-    $(".detail.introduction").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".introduction"), intro_clr);  
-    $(".introduction").css("background-color", "#ffeb3c");
-    detail.toggle();
-    $(".detail_introduction").toggle("slide");
-    detail = $(".detail_introduction");
+    m.activate_menubar('introduction');
   });
-
   
   $(".menu_bar.data_input").click(function(){
-    $(".detail.data_input").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".data_input"), input_clr);
-    detail.toggle();
-    $(".detail_data_input").toggle("slide");
-    
+    m.activate_menubar('data_input');    
   });
 
   $(".menu_bar.add_row").click(function(){
-    $(".detail.add_row").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".add_row"), transform_clr);
-    detail.toggle();
-    $(".detail_add_row").toggle("slide");
-    detail = $(".detail_add_row");
+    m.activate_menubar("add_row");
   });
+
   $(".menu_bar.add_math_fomula").click(function(){
-    $(".detail.add_math_fomula").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".add_math_fomula"), transform_clr);
-    detail.toggle();
-    $(".detail_add_row").toggle("slide");
-    detail = $(".detail_add_row");
+    m.activate_menubar("add_math_fomula");
   });
 
   $(".menu_bar.projection").click(function(){
-    $(".detail.projection").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".projection"), input_clr);
-    detail.toggle();
-    $(".detail_projection").toggle("slide");  
+    m.activate_menubar("projection");
   });
 
 
   $(".menu_bar.normalization").click(function(){
-    $(".detail.normalization").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".normalization"), input_clr);
-    detail.toggle();
-    $(".detail_normalization").toggle("slide");  
+    m.activate_menubar("normalization");
   });
 
   $(".menu_bar.remove_column").click(function(){
-    $(".detail.remove_column").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".remove_column"), input_clr);
-    detail.toggle();
-    $(".detail_remove_column").toggle("slide");  
+    m.activate_menubar("remove_column");
   });
 
   $(".menu_bar.remove_missing_value").click(function(){
-    $(".detail.remove_missing_value").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".remove_missing_value"), input_clr);
-    detail.toggle();
-    $(".detail_remove_column").toggle("slide");  
+    m.activate_menubar("remove_missing_value");
   });
   
   
   $(".menu_bar.transform").click(function(){
-    $(".detail.transform").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".transform"), transform_clr);
-    detail.toggle();
-    $(".detail_transform").toggle("slide");
-    detail = $(".detail_transform");
+    m.activate_menubar("transform");
   });
 
   $(".menu_bar.metadata").click(function(){
-    $(".detail.metadata").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".metadata"), metadata_clr);
-    detail.toggle();
-    $(".detail_metadata").toggle("slide");
-    detail = $(".detail_metadata");
+    m.activate_menubar("metadata");
   });
 
   $(".menu_bar.formula").click(function(){
-    $(".detail.formula").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".formula"), formula_clr);
-    
-    detail.toggle();
-    $(".detail_formula").toggle("slide");
-    detail = $(".detail_formula");
+    m.activate_menubar("formula");
   });
 
   $(".menu_bar.filter").click(function(){
-    $(".detail.filter").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".filter"), filter_clr);
-    detail.toggle();
-    $(".detail_filter").toggle("slide");
-    detail = $(".detail_filter");
+    m.activate_menubar("filter");
   });
 
   $(".menu_bar.machine_learning").click(function(){
-    $(".detail.machine_learning").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".machine_learning"), ml_clr);
-    detail.toggle();
-    $(".detail_machine_learning").toggle("slide");
-    detail = $(".detail_machine_learning");
+    m.activate_menubar("machine_learning");
   });
 
   $(".menu_bar.data_output").click(function(){
-    $(".detail.data_output").toggle("slide", {direction: "left"}, 700);
-    activate_menu_button($(".data_output"), output_clr);
-    detail.toggle();
-    $(".detail_data_output").toggle("slide");
-    detail = $(".detail_data_output");
+    m.activate_menubar("data_output");    
   });
 
   function handleFileSelect(evt) {
@@ -523,5 +463,4 @@ $(function(){
   //     alert('Unable to read ' + file.fileName);
   //   };
   // });
-
 });
