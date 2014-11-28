@@ -70,48 +70,47 @@
     .detail.data_input{style: "display: none"}
       .content
         %h2 Input
-        .form-group
+        .form-group{style:"margin-top: 30px;"}
           %label.col-lg-2.control-label{for:"inputFile"} File
           .col-lg-10
-            %input.form-control.floating-label{type:"text", readonly:"", placeholder:"Browse..."} 
             %input#inputFile{type:"file", accept:".csv"}
-      %button.btn.btn-material-indigo.add_btn.add_input{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_input{type:"button", style:"float:right"} ADD
     .detail.add_row{style: "display: none"}
       .content
         %h2 Add Row
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_row{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_row{type:"button", style:"float:right"} ADD
     .detail.add_math_fomula{style: "display: none"}
       .content
         %h2 Math Formula
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
     .detail.normalization{style: "display: none"}
       .content
         %h2 Normalization
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_normalization{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_normalization{type:"button", style:"float:right"} ADD
     .detail.projection{style: "display: none"}
       .content
         %h2 Projection
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_projection{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_projection{type:"button", style:"float:right"} ADD
     .detail.remove_column{style: "display: none"}
       .content
         %h2 Remove Duplicates
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_remove_duplicates{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_remove_duplicates{type:"button", style:"float:right"} ADD
     .detail.remove_missing_value{style: "display: none"}
       .content
         %h2 Remove Missing Values
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
-      %button.btn.btn-material-indigo.add_btn.add_remove_missing_value{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_remove_missing_value{type:"button", style:"float:right"} ADD
     .detail.metadata{style: "display: none"}
       .content
         %h2 Metadata
@@ -129,7 +128,7 @@
                 / %i.mdi-content-add.fa-5x{style:"color: #3e51b5;border: solid 2px #3e51b5;"}
                 / %i.mdi-content-remove.fa-5x{style:"color: red;border: solid 2px red;"}
         
-      %button.btn.btn-material-indigo.add_btn.add_metadata{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_metadata{type:"button", style:"float:right"} ADD
     .detail.formula{style: "display: none"}
       .content
         %h2 Formula
@@ -144,19 +143,19 @@
             %i.mdi-image-details
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_formula{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_formula{type:"button", style:"float:right"} ADD
     .detail.filter{style: "display: none"}
       .content
         %h2 Filtering
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
     .detail.machine_learning{style: "display: none"}
       .content
         %h2 Machine Learning
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-      %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
     .detail.data_output{style: "display: none"}
       .content
         %h2 Output
@@ -168,4 +167,4 @@
           %label.col-lg-2.control-label{for:"data_output"} Type
           .col-lg-10
             %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
-      %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD

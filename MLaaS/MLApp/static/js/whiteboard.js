@@ -1,30 +1,14 @@
-
-var uploaded_file_as_text = "";
+var _uploaded_file_as_text   = "";
+var _uploaded_file_name      = "";
+var _uploaded_file_as_arrays = [];
+var _debug_tmp;
 $(function(){
   
   var m = new Manager();
+  var cognitive_client = new CognitiveAPIClientV1();
+  
   var svg = d3.selectAll("svg");
 
-  function visualize_input_data() {
-    // alert(uploaded_file_as_text);
-  }
-
-  // $(".detail_introduction").toggle("slide", {direction: "left"}, 700);
-  
-  // $(".introduction").css("background-color", "#ffeb3c");
-  // activate_menu_button($(".introduction"), "#ffeb3c");
-
-  
-  // $(".introduction").on("mouseenter", "", function(evt){
-  //   $(".introduction").css("background-color", intro_clr)
-  // }).on("mouseleave","", function(evt){
-    // console.log(selected_menu);
-    // console.log($(".introduction"));
-    // console.log($(".introduction").attr('class') === $(".introduction").attr('class'))
-  //   if ($(".introduction").attr('class') != $(".introduction").attr('class')) { $(".introduction").css("background-color", intro_clr) }
-  // })
-    // function(){ $(".introduction").css("background-color", intro_clr)},
-    // function(){})
 
   $(".menu_bar.introduction").click(function(){
     m.activate_menubar('introduction');
@@ -83,108 +67,55 @@ $(function(){
   $(".menu_bar.data_output").click(function(){
     m.activate_menubar("data_output");    
   });
-
-  function handleFileSelect(evt) {
-    var file = evt.target.files[0]; // FileList object
-    
-    console("--------------")
-    console.log(file);
-    console.log(file.type);
-    
-    var reader = new FileReader();
-    
-    reader.onload = function(e) { 
-      uploaded_file_as_text = e.target.result; 
-    }
-    
-    reader.readAsText(file)
-
-    $("<button/>", {
-      "class": "btn btn-material-lightgreen",
-      text: "Show",
-      style:"float:right",
-      click: visualize_input_data
-    }).appendTo(".detail_data_input");
-
-  }
-
-  document.getElementById('inputFile').addEventListener('change', handleFileSelect, false);
-
-
-  // -----------------------------
-  // Following lines are divided finaly because of readability reason.
-  // -----------------------------
-
-
-    var dataset = [ 5, 10, 15, 20, 25 ];
+  
   var nodes = [];
+  var response;
 
-  cognitive_client = CognitiveAPIClientV1;
-  
-  var last_clicked_elm = null;
-  var group_id = 1;  
-
-  // node = new Node({
-  //   name: 'aaaa',
-  //   inputs: 1,
-  //   outputs: 1
-  // });
-
-
-  // node = new Node({
-  //   name: 'bbb',
-  //   inputs: 1,
-  //   outputs: 1
-  // });
-
-  
   $(".add_btn").click(function(){
 
     var node;
     if ($(this).hasClass('add_input')){
-      
+
       node = new Node({
         name:'INPUT_DATA',
         outputs:1,
-        inputs:0
+        inputs:0,
       });
-      
-      request_data = {
+
+      cognitive_client.createInputComponent({
         user_id: 1,
-        input_file: "sample_input.csv",
-        token: "aaa",
+        input_file: _uploaded_file_name,
+        token: "token",
         input_file_type: "csv",
         experiment: 1,
-        data_values: uploaded_file_as_text 
-      };
-
-      cognitive_client.createInputComponent(request_data);
-
+        data_values: _uploaded_file_as_text 
+      }, node);
+      
     } else if ($(this).hasClass('add_row')) {
+
       node = new Node({
         name:'+ Row',
         input: 1,
         output:1
       });
 
-      request_data = {
+      cognitive_client.createAddRowComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         row_values: '1,"aaa",12,"csacsadcsa"'
-      };
-
-      cognitive_client.createAddRowComponent(request_data);
+      }, node);
 
 
     } else if ($(this).hasClass('add_math_fomula')) {
+      
       node = new Node({
         name:'Apply Formula',
         input:1,
         outputs:1
       });
 
-      request_data = {
+      cognitive_client.createMathFormulaComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
@@ -192,43 +123,39 @@ $(function(){
         component_id: 1, // should be index number
         op_type: "Add", // or Sub, Mul, Div
         op_constant: 10
-      };
-
-      cognitive_client.createMathFormulaComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_normalization')) {
+      
       node = new Node({
         name:'Normalization',
         input:1,
         output:1
       });
 
-      request_data = {
+      cognitive_client.createNormalizationComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         component_type: "column",
         component_id: 1,
         op_type: "standard"
-      };
-
-      cognitive_client.createNormalizationComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_projection')) {
+      
       node = new Node({
         name:'Projection',
         input:1,
         output:1
       });
 
-      request_data = {
+      cognitive_client.createProjectionComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         component_id: "1,2,3"
-      };
-
-      cognitive_client.createProjectionComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_remove_duplicates')) {
       
@@ -237,101 +164,94 @@ $(function(){
         input:1,
         output:1
       });
-
-      request_data = {
+      
+      cognitive_client.createRemoveDuplicatesComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         component_id: "1,2,3"
-      };
-
-      cognitive_client.createRemoveDuplicatesComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_remove_missing_value')) {
+      
       node = new Node({
         name:'Remove Missing Values',
         input:1,
         outputs:1
       });
 
-      request_data = {
+      cognitive_client.createRemoveMissingValuesComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         op_action: "Replace_mean" // or Drop_row
-      };
-
-      cognitive_client.createRemoveMissingValuesComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_metadata')) {
+      
       node = new Node({
         name:'MetaData',
         input:1,
         outputs:1
       });
 
-      request_data = {
+      cognitive_client.createMetadataComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         column_type: "int,string,categorical"
-      };
-
-      cognitive_client.createMetadataComponent(request_data);
+      }, node);
 
     }  else if ($(this).hasClass('add_formula')) {
+      
       node = new Node({
         name:'FORMULA',
         input:1,
         outputs:1
       });
 
-      request_data = {
+      cognitive_client.createFormulaComponent({
         user_id: 1,
         name: "sample_input.csv",
         token: "aaa",
         type: "css",
         experiment: 1,
         data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createFormulaComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_filtering')) {
+      
       node = new Node({
         name:'FILTERING',
         input:1,
         outputs:1
       });
 
-      request_data = {
+      cognitive_client.createFilteringComponent({
         user_id: 1,
         name: "sample_input.csv",
         token: "aaa",
         type: "css",
         experiment: 1,
         data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createFilteringComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_output')) {
+      
       node = new Node({
         name:'OUTPUT',
         input:1,
         output:0
       });
 
-      request_data = {
+      cognitive_client.createOutputComponent({
         user_id: 1,
         name: "sample_input.csv",
         token: "aaa",
         type: "css",
         experiment: 1,
         data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createOutputComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('add_machine_learning')) {
       
@@ -341,70 +261,55 @@ $(function(){
         output:0
       });
 
-      request_data = {
+      cognitive_client.createMachineLearningComponent({
         user_id: 1,
         name: "sample_input.csv",
         token: "aaa",
         type: "css",
         experiment: 1,
         data: uploaded_file_as_text 
-      };
-
-      cognitive_client.createMachineLearningComponent(request_data);
+      }, node);
 
     } else if ($(this).hasClass('run')) {
+      
       node = new Node({
         name:'Machine Learning',
         input:1,
         output:0
       });
 
-      request_data = {
+      cognitive_client.run({
         user_id: 1,
         name: "sample_input.csv",
         token: "aaa",
         type: "css",
         experiment: 1,
         data: uploaded_file_as_text 
-      };
-
-      cognitive_client.run(request_data);
+      }, node);
 
     }
   });
 
 
+  $('#inputFile').change(function(evt) {
+    var file = evt.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) { 
+      _uploaded_file_as_text   = e.target.result;
+      _uploaded_file_as_arrays = $.csv.toArrays(_uploaded_file_as_text);
+    }
+    reader.readAsText(file);
 
+    _uploaded_file_name = file.name
 
+    $("<button/>", {
+      "class": "btn btn-material-lightgreen",
+      text: "Show",
+      style:"float:right",
+      click: function() {
+        alert(_uploaded_file_as_text);   
+      }
+    }).appendTo(".detail.data_input");
+  });
 
-
-
-
-
-
-
-
-
-
-  // $('#inputFile').change(function() {
-  //   // upload csv file
-    
-  //   console.log("aaaaa");
-  //   var csv_file = new FormData($('#inputFile'));
-  //   console.log(csv_file);
-  //   var reader = new FileReader();
-  //   reader.readAsText(csv_file);
-  //   reader.onload = function(event) {
-  //     var csvData = event.target.result;
-  //     data = $.csv.toArrays(csvData);
-  //     if (data && data.length > 0) {
-  //       alert('Imported -' + data.length + '- rows successfully!');
-  //     } else {
-  //       alert('No data to import!');
-  //     }
-  //   };
-  //   reader.onerror = function() {
-  //     alert('Unable to read ' + file.fileName);
-  //   };
-  // });
 });

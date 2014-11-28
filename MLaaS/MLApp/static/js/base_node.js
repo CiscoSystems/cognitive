@@ -1,16 +1,18 @@
 var _previous_node;
 var _from;
 var g_node_id = 0;
-var Node = (function() {
 
+var Node = (function() {
   // constructor
   function Node(options) {
-    this.node_id = g_node_id++;
-    this.name    = options.name;
-    this.inputs  = options.inputs;
-    this.outputs = options.outputs;
-    this.width   = 180;
-    this.height  = 40;
+    
+    this.node_id      = g_node_id++;
+    this.name         = options.name;
+    this.inputs       = options.inputs;
+    this.outputs      = options.outputs;
+    this.width        = 180;
+    this.height       = 40;
+    this.component_id = 0;
     
     // if (typeof this.callee.node_id !== 'undefined') {
     // this.node_id = this.node_id++ || 1;
@@ -202,6 +204,20 @@ var Node = (function() {
 
     //_previous_node = null;
     // node.classed('clicked', true);
+  }
+
+  function setComponentId(id) {
+    this.component_id = id;
+  }
+
+  function getComponentId(id) {
+    return (this.component_id);
+  }
+
+  Node.prototype = {
+    constructor: Node,
+    setComponentId: setComponentId,
+    getComponentId: getComponentId
   }
 
   return Node;
