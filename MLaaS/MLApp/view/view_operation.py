@@ -42,31 +42,31 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'projection':
             print data["component_id"]
-            op = Data_operation_type(function_type = 'Filter', function_arg = 'table', 
+            op = Data_operation_type(function_type = 'Filter', function_arg = 'Table', 
                             function_arg_id = data["component_id"], function_subtype = 'Project')
             op.save()
         
         elif operation == 'remove_duplicates':
             print data["component_id"]
-            op = Data_operation_type(function_type = 'Filter', function_arg = 'table', 
+            op = Data_operation_type(function_type = 'Filter', function_arg = 'Table', 
                             function_arg_id = data["component_id"], function_subtype = 'RemoveDup')
             op.save()
 
         elif operation == 'remove_missing':
-            print data["op_action"], data["experiment"] 
-            op = Data_operation_type(function_type = 'Filter', function_arg = 'table', 
+            print data["op_action"] 
+            op = Data_operation_type(function_type = 'Filter', function_arg = 'Table', 
                             function_subtype = 'RemoveMissing', function_subtype_arg = data["op_action"])
             op.save()
         
         elif operation == 'metadata':
             print data["column_type"]
-            op = Data_operation_type(function_type = 'Update',  function_arg = 'table', 
+            op = Data_operation_type(function_type = 'Update',  function_arg = 'Table', 
                             function_subtype = 'Metadata', function_subtype_arg = data["column_type"]) 
             op.save()
          
         elif operation == 'row':
             print data["row_values"]
-            op = Data_operation_type(function_type = 'Create',  function_arg = 'row', 
+            op = Data_operation_type(function_type = 'Create',  function_arg = 'Row', 
                             function_subtype = 'Row', function_subtype_arg = data["row_values"]) 
             op.save()
         
@@ -78,8 +78,8 @@ class OperationViewSet(viewsets.ViewSet):
             f = open(filename, 'w')
             f.write(data["data_values"])
             f.close()
-            op = Data_operation_type(function_type = 'Create',  function_arg = 'table', 
-                            function_subtype = 'input', function_subtype_arg = filename) 
+            op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
+                            function_subtype = 'Input', function_subtype_arg = filename) 
             op.save()
 
         elif operation == "training":

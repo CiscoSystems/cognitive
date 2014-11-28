@@ -2,8 +2,10 @@ Django==1.7.1
 Markdown==2.5.1
 Pygments==2.0.1
 django-bower==5.0.1
+django-mptt==0.6.1
 django-treebeard==2.0
 djangorestframework==2.4.4
 hamlpy==0.82.2
+numpy==1.9.1
 six==1.8.0
 wsgiref==0.1.2
