@@ -44,6 +44,7 @@ $(function(){
 
   $(".menu_bar.remove_missing_value").click(function(){
     m.activate_menubar("remove_missing_value");
+
   });
   
   
@@ -53,6 +54,7 @@ $(function(){
 
   $(".menu_bar.metadata").click(function(){
     m.activate_menubar("metadata");
+    description_metadata();
   });
 
   $(".menu_bar.formula").click(function(){
@@ -228,11 +230,16 @@ $(function(){
         output:1
       });
 
+      var types = "";
+      for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+        types += $("#metadata_discriptions div.meta_"+i).val() + ",";
+      }
+
       cognitive_client.createMetadataComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        column_type: "int,string,categorical"
+        column_type: types
       }, node);
 
     }  else if ($(this).hasClass('add_formula')) {
@@ -358,6 +365,17 @@ function description_normalization() {
     $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
 }
+
+function description_metadata() {
+  $("#metadata_discriptions").empty(); 
+  for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+    $("#metadata_discriptions").append('<div class="row meta_'+i+'" style="padding-top:25px;"></div>');
+    $("#metadata_discriptions div.meta_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'</p>');
+    $("#metadata_discriptions div.meta_"+i)
+      .append('<select class="form-control" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
+  }
+}
+
 
 function names_to_ids(names) {
   var parsed  = names.split(",");
