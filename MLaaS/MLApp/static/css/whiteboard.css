@@ -91,5 +91,9 @@ li.component {
   fill: white;
 }
 .clicked rect{
-  fill: blue;
+  fill: #ceff00;
+}
+.add_row_form {
+  list-style: none; 
+
 }

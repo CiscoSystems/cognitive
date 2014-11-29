@@ -20,6 +20,7 @@ $(function(){
 
   $(".menu_bar.add_row").click(function(){
     m.activate_menubar("add_row");
+    description_addrow();
   });
 
   $(".menu_bar.add_math_fomula").click(function(){
@@ -99,11 +100,20 @@ $(function(){
         output:1
       });
 
+      var request_text = "";
+      for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+        request_text += $("#_column_" + i).val();
+        if (i == _uploaded_file_as_arrays[0] - 2) {
+          break;
+        }
+        request_text += ",";
+      }
+
       cognitive_client.createAddRowComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        row_values: '1,"aaa",12,"csacsadcsa"'
+        row_values: request_text
       }, node);
 
 
@@ -315,3 +325,18 @@ $(function(){
   });
 
 });
+
+function description_addrow() {
+  _uploaded_file_as_arrays[0];
+  console.log(_uploaded_file_as_arrays[0]);
+  for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+    $(".add_row_form").append('<li class="column_'+i+'" style="padding-top: 10px"></li>');
+    $(".add_row_form li.column_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'<p/>');
+    $("<input/>", {
+      "class": "form-control floating-label"+" _column_" + i,
+      id: "_column_" + i,
+      type:"text", 
+      placeholder: "value",
+    }).appendTo(".add_row_form li.column_"+i);  
+  }
+}
