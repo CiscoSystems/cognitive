@@ -25,6 +25,7 @@ $(function(){
 
   $(".menu_bar.add_math_fomula").click(function(){
     m.activate_menubar("add_math_fomula");
+    description_formula();
   });
 
   $(".menu_bar.projection").click(function(){
@@ -125,14 +126,18 @@ $(function(){
         output:1
       });
 
+      var method   = $('select#formula_method').val();
+      var column   = $('select#formula_column').val();
+      var constant = $('select#formula_constant').val();
+
       cognitive_client.createMathFormulaComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         component_type: "column",
-        component_id: 1, // should be index number
-        op_type: "Add", // or Sub, Mul, Div
-        op_constant: 10
+        component_id: column, // should be index number
+        op_type: method, // or Sub, Mul, Div
+        op_constant: constant
       }, node);
 
     } else if ($(this).hasClass('add_normalization')) {
@@ -229,26 +234,7 @@ $(function(){
         data: uploaded_file_as_text 
       }, node);
 
-    } 
-    // else if ($(this).hasClass('add_filtering')) {
-      
-    //   node = new Node({
-    //     name:'FILTERING',
-    //     input:1,
-    //     outputs:1
-    //   });
-
-    //   cognitive_client.createFilteringComponent({
-    //     user_id: 1,
-    //     name: "sample_input.csv",
-    //     token: "aaa",
-    //     type: "css",
-    //     experiment: 1,
-    //     data: uploaded_file_as_text 
-    //   }, node);
-
-    // } 
-      else if ($(this).hasClass('add_output')) {
+    } else if ($(this).hasClass('add_output')) {
       
       node = new Node({
         name:'OUTPUT',
@@ -327,6 +313,7 @@ $(function(){
 });
 
 function description_addrow() {
+  $('.add_row_form').empty();
   _uploaded_file_as_arrays[0];
   console.log(_uploaded_file_as_arrays[0]);
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
@@ -338,5 +325,12 @@ function description_addrow() {
       type:"text", 
       placeholder: "value",
     }).appendTo(".add_row_form li.column_"+i);  
+  }
+}
+
+function description_formula() {
+  $("#formula_column").empty(); 
+  for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+    $("#formula_column").append('<option>'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
 }

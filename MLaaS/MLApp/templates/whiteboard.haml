@@ -63,17 +63,7 @@
           The most right-side column is for showing the history of your manupuration.
           To get result, please don't forget click 'Run' button at the bottom of menu
           bar.
-        .form-group
-          %label.col-lg-2.control-label{for:"select"} Selects
-          .col-lg-10
-            %select.form-control#select
-              %option 1
-              %option 2
-              %option 3
-              %option 4
-              %option 5
-            
-            %br
+
     .detail.data_input{style: "display: none"}
       .content
         %h2 Input
@@ -86,12 +76,30 @@
       .content
         %h2 Add Row
         .add_row_form{style:"list-style:none; font-size: 18pt;"}
-        %button.btn.btn-material-indigo.add_btn.add_row{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.addd_btn.add_row{type:"button", style:"float:right"} ADD
     .detail.add_math_fomula{style: "display: none"}
       .content
         %h2 Math Formula
-        .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+
+        .row
+          %label.col-lg-3.control-label{for:"select"} Method
+          .col-lg-9
+            %select.form-control#formula_method#select{style:"font-size:20pt;"}
+              %option{style:"font-size:20pt;"} Add
+              %option{style:"font-size:20pt;"} Sub
+              %option{style:"font-size:20pt;"} Mul
+              %option{style:"font-size:20pt;"} Div
+
+        .row{style:"padding-top:20px;"}
+          %label.col-lg-3.control-label{for:"select"} Column
+          .col-lg-9
+            %select#formula_column.form-control#select{style:"font-size:20pt;"}
+
+        .row{style:"padding-top:20px;"}
+          %label.col-lg-3.control-label{for:"select"} Constant
+          .col-lg-9
+            %input.form-control.floating-label#formula_constant#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+
         %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
     .detail.normalization{style: "display: none"}
       .content
