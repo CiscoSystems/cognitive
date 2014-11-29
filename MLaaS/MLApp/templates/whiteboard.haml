@@ -98,7 +98,7 @@
         .row{style:"padding-top:20px;"}
           %label.col-lg-3.control-label{for:"select"} Constant
           .col-lg-9
-            %input.form-control.floating-label#formula_constant#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+            %input.form-control.floating-label#formula_constant#focusedInput{type:"text", placeholder: "value"}
 
         %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
     .detail.normalization{style: "display: none"}
@@ -122,20 +122,28 @@
     .detail.projection{style: "display: none"}
       .content
         %h2 Projection
+        %p plz input column name
+        %p ex) name,school,...
         .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+
+          %input#projection_text.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
         %button.btn.btn-material-indigo.add_btn.add_projection{type:"button", style:"float:right"} ADD
     .detail.remove_column{style: "display: none"}
       .content
         %h2 Remove Duplicates
+        %p plz input column name
+        %p ex) name,school,...
         .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+          %input#remove_column_text.form-control.floating-label#focusedInput{type:"text", placeholder: "value"}
         %button.btn.btn-material-indigo.add_btn.add_remove_duplicates{type:"button", style:"float:right"} ADD
+
     .detail.remove_missing_value{style: "display: none"}
       .content
         %h2 Remove Missing Values
+        %p plz input column name
+        %p ex) name,school,...
         .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+          %input#remove_missing_values_text.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
         %button.btn.btn-material-indigo.add_btn.add_remove_missing_value{type:"button", style:"float:right"} ADD
     .detail.metadata{style: "display: none"}
       .content

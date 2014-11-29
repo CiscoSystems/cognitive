@@ -169,11 +169,15 @@ $(function(){
         output:1
       });
 
+      var names = $('#projection_text').val();
+      var indexes = names_to_ids(names);
+      console.log(indexes);
+
       cognitive_client.createProjectionComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        component_id: "1,2,3"
+        component_id: indexes
       }, node);
 
     } else if ($(this).hasClass('add_remove_duplicates')) {
@@ -343,4 +347,17 @@ function description_normalization() {
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
     $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
+}
+
+function names_to_ids(names) {
+  var parsed  = names.split(",");
+  var indexes = "";
+  console.log(parsed);
+  for (var i =0; i < parsed.length; i++) {
+    for (var j =0; j < _uploaded_file_as_arrays[0].length; j++) {
+      if (parsed[i] == _uploaded_file_as_arrays[0][j])
+        indexes += j + ",";
+    }
+  }
+  return indexes;
 }
