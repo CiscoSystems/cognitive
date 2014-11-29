@@ -140,10 +140,13 @@
     .detail.remove_missing_value{style: "display: none"}
       .content
         %h2 Remove Missing Values
-        %p plz input column name
-        %p ex) name,school,...
         .form-group
-          %input#remove_missing_values_text.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+          %label.col-lg-3.control-label{for:"select"} Method
+          .col-lg-9
+            %select#remove_missing_value_method.form-control
+              %option Replace_mean
+              %option Drop_row
+            
         %button.btn.btn-material-indigo.add_btn.add_remove_missing_value{type:"button", style:"float:right"} ADD
     .detail.metadata{style: "display: none"}
       .content

@@ -211,12 +211,13 @@ $(function(){
       // var names = $('#remove_missing_values_text').val();
       // var indexes = names_to_ids(names);
       // console.log(indexes);
+      var method = $('#remove_missing_value_method').val();
 
       cognitive_client.createRemoveMissingValuesComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        op_action: "Replace_mean" // or Drop_row
+        op_action: method //"Replace_mean" or Drop_row
       }, node);
 
     } else if ($(this).hasClass('add_metadata')) {
