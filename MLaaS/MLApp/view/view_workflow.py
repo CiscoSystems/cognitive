@@ -19,15 +19,14 @@ class myThread (threading.Thread):
 
     def run(self):
         print "Run called for thread name", self.name
-        graph_data = [[1,[]],[2,[1]],[3,[2]],[4,[2,3]],[5,[4]],[6,[4]]] 
+        graph_data = [[1,[]],[2,[1]],[3,[2]],[4,[2,3]],[5,[4]],[6,[4]] ,[7,[6]], [8,[7]], [9,[8]],[10,[9]],[11,[10]],[12,[11]]] 
         #input_data = None 
         input_data = DataFrame
         feature_names = None
         feature_types = None
         for data in graph_data:
             component_id = data[0]
-            print "Id ", component_id, "input_data" , input_data
-            print input_data.dtypes
+            print "Id ", component_id
             comp = Component.objects.get(pk= component_id)
             print "Component_id" , component_id, " " ,comp.operation_type 
             op = comp.operation_type
@@ -86,6 +85,33 @@ class myThread (threading.Thread):
                         #constant_value = sum_array[column_id]
                         #input_data[:,column_id] = input_data[:,column_id] / constant_value
                         input_data[column_name] = input_data[column_name] / normalization_value
+            if op.function_type == 'Filter' :
+                if op.function_arg == 'Table':
+                    if op.function_subtype == 'Project':
+                        column_id_list = json.loads(op.function_arg_id)
+                        excluded_columns = range(len(input_data.columns))
+                        for elem in column_id_list:
+                            excluded_columns.remove(elem)
+                        input_data = input_data.drop(input_data.columns[excluded_columns], axis=1)
+                    if op.function_subtype == 'RemoveDup':
+                        column_id_list = json.loads(op.function_arg_id)
+                        column_name_list = []
+                        for elem in column_id_list:
+                            column_name_list.append(input_data.columns[elem])
+                        input_data = input_data.drop_duplicates(subset = column_name_list) 
+                    if op.function_subtype == 'RemoveMissing':
+                        if op.function_subtype_arg == 'Replace_mean':
+                            input_data = input_data.fillna(input_data.mean())
+                        if op.function_subtype_arg == 'Replace_median':
+                            input_data = input_data.fillna(input_data.median())
+                        if op.function_subtype_arg == 'Replace_mode':
+                            input_data = input_data.fillna(input_data.mode())
+                        if op.function_subtype_arg == 'Drop_row':
+                            input_data = input_data.dropna(axis = 0)
+            print "Data"
+            print input_data
+            print "Data Type"
+            print input_data.dtypes
                          
 
 class WorkFlowViewSet(viewsets.ViewSet):
