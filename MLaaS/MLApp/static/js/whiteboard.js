@@ -35,6 +35,7 @@ $(function(){
 
   $(".menu_bar.normalization").click(function(){
     m.activate_menubar("normalization");
+    description_normalization();
   });
 
   $(".menu_bar.remove_column").click(function(){
@@ -127,7 +128,7 @@ $(function(){
       });
 
       var method   = $('select#formula_method').val();
-      var column   = $('select#formula_column').val();
+      var column_num   = $('select#formula_column').val();
       var constant = $('select#formula_constant').val();
 
       cognitive_client.createMathFormulaComponent({
@@ -135,7 +136,7 @@ $(function(){
         token: "aaa",
         experiment: 1,
         component_type: "column",
-        component_id: column, // should be index number
+        component_id: column_num, // should be index number
         op_type: method, // or Sub, Mul, Div
         op_constant: constant
       }, node);
@@ -148,13 +149,16 @@ $(function(){
         output:1
       });
 
+      var method   = $('select#normalization_method').val();
+      var column_num   = $('select#normalization_column').val();
+
       cognitive_client.createNormalizationComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
         component_type: "column",
-        component_id: 1,
-        op_type: "standard"
+        component_id: column_num,
+        op_type: method
       }, node);
 
     } else if ($(this).hasClass('add_projection')) {
@@ -331,6 +335,12 @@ function description_addrow() {
 function description_formula() {
   $("#formula_column").empty(); 
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-    $("#formula_column").append('<option>'+_uploaded_file_as_arrays[0][i]+'</option>');
+    $("#formula_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
+  }
+}
+function description_normalization() {
+  $("#normalization_column").empty(); 
+  for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+    $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
 }

@@ -93,7 +93,7 @@
         .row{style:"padding-top:20px;"}
           %label.col-lg-3.control-label{for:"select"} Column
           .col-lg-9
-            %select#formula_column.form-control#select{style:"font-size:20pt;"}
+            %select#formula_column.form-control
 
         .row{style:"padding-top:20px;"}
           %label.col-lg-3.control-label{for:"select"} Constant
@@ -105,16 +105,19 @@
       .content
         %h2 Normalization
         .form-group
-          %label.col-lg-3.control-label{for:"select"} Method
-          / .col-lg-6
-          /   %select.form-control{multiple:""}
-          /     %option Standard
-          .col-lg-9
-            %select.form-control#select{style:"font-size:20pt;"}
-              %option{style:"font-size:20pt;"} Standard
-          %select.form-control#select{style:"font-size:20pt;"}
-            %option{style:"font-size:20pt;"} Standard
-          / %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+          .row{style:"padding-top:20px;"}
+            %label.col-lg-3.control-label{for:"select"} Method
+            .col-lg-9
+              %select#normalization_method.form-control
+                %option{value: 0, style:"font-size:20pt;"} Standard
+                %option{value: 1, style:"font-size:20pt;"} Regression
+          
+          .row{style:"padding-top:20px;"}
+            %label.col-lg-3.control-label{for:"select"} Column
+            .col-lg-9
+              %select#normalization_column.form-control
+
+
         %button.btn.btn-material-indigo.add_btn.add_normalization{type:"button", style:"float:right"} ADD
     .detail.projection{style: "display: none"}
       .content
