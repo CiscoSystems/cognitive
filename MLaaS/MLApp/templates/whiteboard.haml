@@ -40,19 +40,15 @@
         %li.menu_bar.metadata 
           %i.fa.fa-share-alt
           MetaData
-        %li.menu_bar.filter 
-          %i.fa.fa-filter
-          Filter
+        / %li.menu_bar.filter 
+        /   %i.fa.fa-filter
+        /   Filter
         %li.menu_bar.machine_learning 
           %i.fa.fa-yelp
           Machine Learning
         %li.menu_bar.data_output 
           %i.fa.fa-arrow-down
           OUTPUT
-        %li.menu_bar.run 
-          %i.fa.fa-line-chart
-          Run
-  
   #visualization
     %svg.root{height:"800px", width:"100%"}  
   }
@@ -67,6 +63,17 @@
           The most right-side column is for showing the history of your manupuration.
           To get result, please don't forget click 'Run' button at the bottom of menu
           bar.
+        .form-group
+          %label.col-lg-2.control-label{for:"select"} Selects
+          .col-lg-10
+            %select.form-control#select
+              %option 1
+              %option 2
+              %option 3
+              %option 4
+              %option 5
+            
+            %br
     .detail.data_input{style: "display: none"}
       .content
         %h2 Input
@@ -91,7 +98,16 @@
       .content
         %h2 Normalization
         .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+          %label.col-lg-3.control-label{for:"select"} Method
+          / .col-lg-6
+          /   %select.form-control{multiple:""}
+          /     %option Standard
+          .col-lg-9
+            %select.form-control#select{style:"font-size:20pt;"}
+              %option{style:"font-size:20pt;"} Standard
+          %select.form-control#select{style:"font-size:20pt;"}
+            %option{style:"font-size:20pt;"} Standard
+          / %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
         %button.btn.btn-material-indigo.add_btn.add_normalization{type:"button", style:"float:right"} ADD
     .detail.projection{style: "display: none"}
       .content
@@ -115,20 +131,25 @@
       .content
         %h2 Metadata
         .form-group
-          .row
-            .col-md-4
+          .row{style:"padding-top: 15px;"}
+            .col-md-7
+              %p.{style:" border-left: solid 17px steelblue; border-bottom: solid 2px steelblue; font-size:14pt; text-align:center"} name
+            .col-md-5
+              %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+          .row{style:"padding-top: 15px;"}
+            .col-md-7
+              %p.{style:" border-left: solid 17px steelblue; border-bottom: solid 2px steelblue; font-size:14pt; text-align:center"} name
+            .col-md-5
               %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-            .col-md-4
-              %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-            .col-md-4{style: "margin-top:0;"}
-              %button.btn{style: "background-color: #01a9f5;font-size: 20pt; color:white; padding: 0;"}
-                %i.mdi-content-add
-              %button.btn{style: "background-color: #ea1f63;font-size: 20pt; color:white; padding: 0;"}
-                %i.mdi-content-remove
-                / %i.mdi-content-add.fa-5x{style:"color: #3e51b5;border: solid 2px #3e51b5;"}
-                / %i.mdi-content-remove.fa-5x{style:"color: red;border: solid 2px red;"}
+              / .col-md-4{style: "margin-top:0;"}
+              /   %button.btn{style: "background-color: #01a9f5;font-size: 20pt; color:white; padding: 0;"}
+              /     %i.mdi-content-add
+              /   %button.btn{style: "background-color: #ea1f63;font-size: 20pt; color:white; padding: 0;"}
+              /     %i.mdi-content-remove
+              /     %i.mdi-content-add.fa-5x{style:"color: #3e51b5;border: solid 2px #3e51b5;"}
+              / %i.mdi-content-remove.fa-5x{style:"color: red;border: solid 2px red;"}
         
-        %button.btn.btn-material-indigo.add_btn.add_metadata{type:"button", style:"float:right"} ADD
+        %button.btn.btn-material-indigo.add_btn.add_metadata{type:"button", style:"float:right; margin-top: 70px;"} ADD
     .detail.formula{style: "display: none"}
       .content
         %h2 Formula
@@ -144,12 +165,12 @@
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
         %button.btn.btn-material-indigo.add_btn.add_formula{type:"button", style:"float:right"} ADD
-    .detail.filter{style: "display: none"}
-      .content
-        %h2 Filtering
-        .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-        %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
+    / .detail.filter{style: "display: none"}
+    /   .content
+    /     %h2 Filtering
+    /     .form-group
+    /       %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+    /     %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
     .detail.machine_learning{style: "display: none"}
       .content
         %h2 Machine Learning
@@ -168,3 +189,7 @@
           .col-lg-10
             %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
         %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD
+  .whiteboard-flyout-left-menu{style:"position:fixed; float:right; right:0; top:45px; height:100%; border-left: solid 1px gray; width:80px;text-align:center;"}
+    %p{style:"font-size:12pt; border-top:solid 1px gray; padding-top:15px; padding-bottom:8px; margin:0; position:absolute; bottom:45px;"}
+      %i.fa.fa-play-circle{style:"font-size:42pt; padding:0; margin:0;"}
+      Run

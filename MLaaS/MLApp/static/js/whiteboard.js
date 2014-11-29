@@ -78,8 +78,8 @@ $(function(){
 
       node = new Node({
         name:'INPUT_DATA',
-        outputs:1,
-        inputs:0,
+        output:1,
+        input:0,
       });
 
       cognitive_client.createInputComponent({
@@ -112,7 +112,7 @@ $(function(){
       node = new Node({
         name:'Apply Formula',
         input:1,
-        outputs:1
+        output:1
       });
 
       cognitive_client.createMathFormulaComponent({
@@ -177,7 +177,7 @@ $(function(){
       node = new Node({
         name:'Remove Missing Values',
         input:1,
-        outputs:1
+        output:1
       });
 
       cognitive_client.createRemoveMissingValuesComponent({
@@ -192,7 +192,7 @@ $(function(){
       node = new Node({
         name:'MetaData',
         input:1,
-        outputs:1
+        output:1
       });
 
       cognitive_client.createMetadataComponent({
@@ -207,7 +207,7 @@ $(function(){
       node = new Node({
         name:'FORMULA',
         input:1,
-        outputs:1
+        output:1
       });
 
       cognitive_client.createFormulaComponent({
@@ -219,24 +219,26 @@ $(function(){
         data: uploaded_file_as_text 
       }, node);
 
-    } else if ($(this).hasClass('add_filtering')) {
+    } 
+    // else if ($(this).hasClass('add_filtering')) {
       
-      node = new Node({
-        name:'FILTERING',
-        input:1,
-        outputs:1
-      });
+    //   node = new Node({
+    //     name:'FILTERING',
+    //     input:1,
+    //     outputs:1
+    //   });
 
-      cognitive_client.createFilteringComponent({
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      }, node);
+    //   cognitive_client.createFilteringComponent({
+    //     user_id: 1,
+    //     name: "sample_input.csv",
+    //     token: "aaa",
+    //     type: "css",
+    //     experiment: 1,
+    //     data: uploaded_file_as_text 
+    //   }, node);
 
-    } else if ($(this).hasClass('add_output')) {
+    // } 
+      else if ($(this).hasClass('add_output')) {
       
       node = new Node({
         name:'OUTPUT',

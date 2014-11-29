@@ -83,3 +83,13 @@ li.component {
   padding-left: 15px;
   padding-right: 45px; 
 }
+
+.base-node:hover {
+  fill: #ffd124;
+}
+.base-node {
+  fill: white;
+}
+.clicked rect{
+  fill: blue;
+}
