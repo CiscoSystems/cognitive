@@ -281,16 +281,14 @@ $(function(){
       node = new Node({
         name:'Machine Learning',
         input:1,
-        output:0
+        output:1
       });
 
       cognitive_client.createMachineLearningComponent({
         user_id: 1,
-        name: "sample_input.csv",
         token: "aaa",
-        type: "css",
         experiment: 1,
-        data: uploaded_file_as_text 
+        classification_type: "SVM"
       }, node);
 
     } else if ($(this).hasClass('run')) {

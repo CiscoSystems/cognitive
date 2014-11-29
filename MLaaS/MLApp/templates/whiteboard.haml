@@ -179,7 +179,11 @@
       .content
         %h2 Machine Learning
         .form-group
-          %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+          %label.col-lg-3.control-label{for:"select"} Method
+          .col-lg-9
+            %select.form-control#formula_method#select{style:"font-size:20pt;"}
+              %option{style:"font-size:20pt;"} SVM
+
         %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
     .detail.data_output{style: "display: none"}
       .content
