@@ -188,11 +188,16 @@ $(function(){
         output:1
       });
       
+      var names = $('#remove_column_text').val();
+      var indexes = names_to_ids(names);
+      console.log(indexes);
+
+
       cognitive_client.createRemoveDuplicatesComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        component_id: "1,2,3"
+        component_id: indexes
       }, node);
 
     } else if ($(this).hasClass('add_remove_missing_value')) {
@@ -202,6 +207,10 @@ $(function(){
         input:1,
         output:1
       });
+
+      // var names = $('#remove_missing_values_text').val();
+      // var indexes = names_to_ids(names);
+      // console.log(indexes);
 
       cognitive_client.createRemoveMissingValuesComponent({
         user_id: 1,
