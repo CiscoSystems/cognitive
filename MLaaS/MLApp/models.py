@@ -12,6 +12,7 @@ class Data_operation_type(models.Model):
         ('Row', 'Row of a table'),
         ('Column', 'Column of a table'),
         ('Table', 'Entire table'),
+        ('Model', 'Machine Learning Model'),
     )
 
     FUNCTION_SUBTYPE = (
@@ -27,6 +28,7 @@ class Data_operation_type(models.Model):
         ('Row', 'Adding a new row'),
         ('Input', 'Load input data'),
         ('Output', 'Dump output data'),
+        ('Train-Test', 'Train and test a machine learning model'),
     )
 
     function_type = models.CharField(max_length=50,choices=FUNCTION_TYPE)
@@ -92,4 +94,16 @@ class Component(models.Model):
 class Workflow(models.Model):
     experiment = models.OneToOneField(Experiment)
     graph_data = models.CharField(max_length=50)
-   
+  
+class MLearning(models.Model):
+    MODEL_TYPE = (
+        ('Classifier', 'Classifier models'),
+        ('Clustering', 'Clustering models'),
+        ('Regression', 'Regression models'),
+    )
+    
+    experiment = models.ForeignKey(Experiment)
+    model_type = models.CharField(max_length=50,choices=MODEL_TYPE)
+    model_name = models.CharField(max_length=50)
+    model_parameters = models.CharField(max_length=50, blank=True, null=True)
+     

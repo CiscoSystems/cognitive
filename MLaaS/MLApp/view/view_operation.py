@@ -82,8 +82,13 @@ class OperationViewSet(viewsets.ViewSet):
                             function_subtype = 'Input', function_subtype_arg = filename) 
             op.save()
 
-        elif operation == "training":
-            print data["model_id"], data["train_data_percentage"]
+        elif operation == "machine_learning":
+            print data["model_type"], data["train_data_percentage"], data["target_column"]
+            arg = {'train_data_percentage':data["train_data_percentage"],'target_column':data["target_column"]}
+            op = Data_operation_type(function_type = 'Create',  function_arg = 'Model', 
+                            function_arg_id = data["model_type"] , function_subtype = 'Train-Test', 
+                            function_subtype_arg = json.dumps(arg)) 
+            op.save()
              
         component = Component(experiment= exp, created_time=datetime.now(),
                                 modified_time=datetime.now(), operation_type = op)

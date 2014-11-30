@@ -45,6 +45,13 @@ class myThread (threading.Thread):
                         #arr = np.array(row_values)
                         #input_data = np.vstack((input_data,row_values))
                         input_data.loc[len(input_data)+1]= row_values
+                if op.function_arg == 'Model':
+                    if op.function_subtype == 'Train-Test':
+                        params = json.loads(op.function_subtype_arg)
+                        train_data_percentage = int(params["train_data_percentage"])
+                        target_column = int(params["target_column"])
+                        model_type = op.function_arg_id
+                        print model_type, train_data_percentage,target_column
             if op.function_type == 'Update' :
                 if op.function_arg == 'Table':
                     if op.function_subtype == 'Metadata':
