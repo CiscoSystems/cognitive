@@ -28,24 +28,24 @@ class Classifier:
         
     
     def learn(self):
-        print self.input_features
-        print self.target_feature
+        print "Input features ", list(self.input_features)
+        print "Target feature ", self.target_feature
         features = self.input_data[self.input_features].values
         labels = self.input_data[self.target_feature].values
         test_data_percentage = 1 - self.train_data_percentage
         X_train, X_test, Y_train, Y_actual = cross_validation.train_test_split(features, labels, test_size=test_data_percentage, random_state=0) 
-        print X_train.shape, Y_train.shape
-        print X_test.shape, Y_actual.shape
         self.clf.fit(X_train, Y_train)
-        print self.clf.score(X_test, Y_actual)
         Y_pred = self.clf.predict(X_test) 
-        print "Accuracy_score ", accuracy_score(Y_actual, Y_pred)
-        print "Recall_score ", recall_score(Y_actual, Y_pred)
-        print "Precision_score ", precision_score(Y_actual, Y_pred)
-        print "F1_score ", f1_score(Y_actual, Y_pred)
+        accuracy = accuracy_score(Y_actual, Y_pred)
+        recall = recall_score(Y_actual, Y_pred)
+        precision =precision_score(Y_actual, Y_pred)
+        f1 = f1_score(Y_actual, Y_pred)
         mat =confusion_matrix(Y_actual, Y_pred)
-        print "True Positives ", mat[1][1]
-        print "False Positives", mat[0][1]
-        print "True Negatives", mat[0][0]
-        print "False Negatives", mat[1][0]
+        true_positives = mat[1][1]
+        false_positives = mat[0][1]
+        true_negatives = mat[0][0]
+        false_negatives = mat[1][0]
+        result = {'accuracy_score': accuracy, 'recall_score':recall, 'precision_score':precision, 'f1_score':f1, 'true_positives':true_positives, 'false_positives':false_positives, 'true_negatives':true_negatives, 'false_negatives':false_negatives}
+        print result
+        return result
 
