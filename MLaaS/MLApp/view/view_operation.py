@@ -10,8 +10,7 @@ import json
 MAX_COMPONENTS_PER_EXP = 100
 class OperationViewSet(viewsets.ViewSet):
    
-    def set_operation(self, exp_id, operation, data):
-        exp = Experiment.objects.get(pk = exp_id)
+    def set_operation(self, operation, data):
         if operation == 'math_formula':
             print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
             op = Data_operation_type(function_type = 'Update', function_arg = data["component_type"],
@@ -92,8 +91,9 @@ class OperationViewSet(viewsets.ViewSet):
         data = json.loads(JSONRenderer().render(request.DATA))
         op = None
         exp_id = int(data["experiment"])
+        exp = Experiment.objects.get(pk = exp_id)
         print "Experiment ", exp_id, " Operation ", operation
-        op = self.set_operation(exp_id, operation, data)
+        op = self.set_operation(operation, data)
              
         component = Component(experiment= exp, created_time=datetime.now(),
                                 modified_time=datetime.now(), operation_type = op)
@@ -107,7 +107,7 @@ class OperationViewSet(viewsets.ViewSet):
         op = None
         exp_id = int(data["experiment"])
         print "Experiment ", exp_id, " Operation ", operation
-        op = self.set_operation(exp_id, operation, data)
+        op = self.set_operation(operation, data)
 
         comp = Component.objects.get(pk=pk)
         serializer = ComponentSerializer(comp,data=request.DATA)
