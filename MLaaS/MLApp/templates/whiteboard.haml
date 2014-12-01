@@ -182,7 +182,11 @@
           %label.col-lg-3.control-label{for:"select"} Method
           .col-lg-9
             %select.form-control#formula_method#select{style:"font-size:20pt;"}
-              %option{style:"font-size:20pt;"} SVM
+              %option Linear-SVM
+              %option Nearest-Neighbours
+              %option Decision_Tree
+              %option Random_Forest
+              %option Naive_Bayes
 
         %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
     .detail.data_output{style: "display: none"}
