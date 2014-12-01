@@ -2,6 +2,7 @@
 - block 'extrahead'
   - load staticfiles
   %link{href: "{{STATIC_URL}}css/whiteboard.css", rel: "stylesheet"}
+  %link{href: "{{STATIC_URL}}css/colorbox.css", rel: "stylesheet"}
   %script{src: "{{STATIC_URL}}js/api/client_v1.js", type: "text/javascript"}
   %script{src: "{{STATIC_URL}}js/whiteboard_manager.js", type:"text/javascript"}
   %script{src: "{{STATIC_URL}}js/whiteboard.js", type: "text/jsx"}
@@ -9,6 +10,7 @@
   %script{src: "{{STATIC_URL}}js/base_node.js", type: "text/javascript"}
   %script{src: "{{STATIC_URL}}js/whiteboard_d3.js", type: "text/javascript"}
   %script{src: "{{STATIC_URL}}js/jquery.csv-0.71.min.js", type: "text/javascript"}
+  %script{src: "{{STATIC_URL}}js/jquery.colorbox-min.js", type: "text/javascript"}
 - block 'contents'
   .whiteboard-flyout
     .flyout-wrapper
@@ -205,9 +207,11 @@
     / %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
     /   %i.fa.fa-paperclip{style:"font-size:32pt; padding:0; margin:0;"}
     /   Share
-    / %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
-    /   %i.fa.fa-arrow-circle-o-down{style:"font-size:32pt; padding:0; margin:0;"}
-    /   DL
     %p#execute-btn.add-btn.execute-btn{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
       %i.fa.fa-play-circle-o{style:"font-size:32pt; padding:0; margin:0;"}
       Run
+    %a.show_result_graph{style: "color:black;text-decoration: none;", href:"#result_table"}
+      %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
+        %i.fa.fa-bar-chart{style:"font-size:27pt; padding:0; margin:0;"}
+        Show
+  #result_table{style:""}

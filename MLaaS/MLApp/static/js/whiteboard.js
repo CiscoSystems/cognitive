@@ -233,8 +233,9 @@ $(function(){
       });
 
       var types = "";
-      for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        types += $("#metadata_discriptions div.meta_"+i).val() + ",";
+      for (var i = 0; i < _uploaded_file_as_arrays.length; i++){
+        console.log($(".metadata .column"+i).val());
+        types += $(".metadata .column"+i).val() + ",";
       }
 
       cognitive_client.createMetadataComponent({
@@ -332,17 +333,27 @@ $(function(){
       return n.getComponentId();
     })
 
+    // var flow_path = function(x){ 
+    //   var l = [];
+    //   for (var i =0; i < x.length-1; i++) {  
+    //     var t = "";
+    //     t += x[i]+":"+x[i+1];
+    //     l.push(t);
+    //   }
+    //   console.log(l);
+    //   return l;
+    // }(components_id_list);
+
     var flow_path = function(x){ 
-      var l = [];
+      var t = "";
       for (var i =0; i < x.length-1; i++) {  
         var t = "";
-        t += x[i]+":"+x[i+1];
-        l.push(t);
+        t += x[i]+":"+x[i+1] + ",";
       }
-      console.log(l);
-      return l;
+      return t.substr(0,t.length-1);
     }(components_id_list);
 
+    console.log('------');
     console.log(flow_path);
 
     cognitive_client.executeAll({
@@ -365,14 +376,20 @@ $(function(){
     _uploaded_file_name = file.name
 
     $("<button/>", {
-      "class": "btn btn-material-lightgreen",
+      "class": "btn btn-material-lightgreen show_result_graph",
       text: "Show",
       style:"float:right",
+      href:"#result_table",
       click: function() {
-        alert(_uploaded_file_as_text);   
+        adjust_result_table(_uploaded_file_as_arrays);
+        $(".show_result_graph").colorbox({inline:true, width:"50%"});
       }
     }).appendTo(".detail.data_input");
   });
+
+
+  
+ $(".show_result_graph").colorbox({inline:true, width:"50%"});
 
 });
 
@@ -411,7 +428,7 @@ function description_metadata() {
     $("#metadata_discriptions").append('<div class="row meta_'+i+'" style="padding-top:25px;"></div>');
     $("#metadata_discriptions div.meta_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'</p>');
     $("#metadata_discriptions div.meta_"+i)
-      .append('<select class="form-control" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
+      .append('<select class="form-control metadata column'+i+'" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
   }
 }
 
@@ -427,4 +444,16 @@ function names_to_ids(names) {
     }
   }
   return indexes;
+}
+
+function adjust_result_table(t) {
+  $('#result_table').empty();
+  $('#result_table').append('<table id="result_graph"></table>');
+  for (var i = 0; i < t.length; i++) {
+    $('#result_graph').append('<tr class="result_'+i+'"></tr>');
+    for (var j = 0; j < t[i].length; j++) {
+      $('tr.result_'+i).append('<th>'+t[i][j]+'</th>');
+      console.log(t[i][j]);
+    }
+  }
 }
