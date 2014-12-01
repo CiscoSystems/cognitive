@@ -9,11 +9,12 @@ from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import pandas as pd
 
-class ML_model:
-    def __init__(self, input_data, classifier_type, train_data_percentage , target_column):
+class Classifier:
+    def __init__(self, input_data, classifier_type, train_data_percentage , input_features, target_feature):
         self.input_data = input_data
         self.train_data_percentage = train_data_percentage
-        self.target_column = target_column
+        self.target_feature = target_feature
+        self.input_features = input_features
         if classifier_type == 'Linear_SVM':
             self.clf = SVC(kernel='linear', C=0.025)
         elif classifier_type == 'Nearest_Neighbours':
@@ -27,12 +28,10 @@ class ML_model:
         
     
     def learn(self):
-        input_features = range(len(self.input_data.columns))
-        input_features.remove(self.target_column)
-        input_features = [2 ,9]
-        print input_features
-        features = self.input_data[self.input_data.columns[input_features]].values
-        labels = self.input_data[self.input_data.columns[self.target_column]].values
+        print self.input_features
+        print self.target_feature
+        features = self.input_data[self.input_features].values
+        labels = self.input_data[self.target_feature].values
         test_data_percentage = 1 - self.train_data_percentage
         X_train, X_test, Y_train, Y_actual = cross_validation.train_test_split(features, labels, test_size=test_data_percentage, random_state=0) 
         print X_train.shape, Y_train.shape
