@@ -24,15 +24,10 @@ var Node = (function() {
       .attr('width',  this.width)
       .attr('height', this.height)
       .attr('class', "node base-node")
-      // .attr('fill', 'white')
       .attr('stroke', "steelblue" )
       .attr('stroke-width', "3" )
       .attr('text',"aaaaaa" )
       .attr('font-size', "20pt");
-      
-      
-      // .on("mouseover", function() { d3.select(d3.event.target).classed("highlight", true); });
-      // .call(d3.behavior.drag().on("drag", move));
 
     g.append('text')
       .attr('x', _x + 90)
@@ -42,8 +37,6 @@ var Node = (function() {
       .style({"font-size":"14px","z-index":"9999999"} )
       .style('text-anchor', "middle")
       .text(this.name);
-
-      // g.call(d3.behavior.drag().on("drag", move));
     
     if (this.input > 0){
      g.append('circle')        
@@ -93,12 +86,17 @@ var Node = (function() {
       .attr('y2', sy + parseInt(group.attr('abs_y')));
   }
 
-  function set_input_connection(elm) {
-    this.input_connection = elm;
+  function setInputPath(path) {
+    this.input_path = path;
   }
-
-  function set_output_connection(elm) {
-    this.out_connection = elm;
+  function setOutputPath(path) {
+    this.output_path = path;
+  }
+  function getInputPath(path) {
+    return this.input_path;
+  }
+  function getOutputPath(path) {
+    return this.output_path;
   }
 
 
@@ -133,6 +131,11 @@ var Node = (function() {
       .attr("stroke", "gray")
       .attr('troke-width', 10);
 
+    Node.find_by_id(Node.current_focus.attr('id'))
+      .setOutputPath(g);
+    Node.find_by_id(node.attr('id'))
+      .setInputPath(g);
+
     Node.current_focus.classed('clicked', false);
     
     node.classed('clicked', false);
@@ -151,14 +154,72 @@ var Node = (function() {
     return this.node_id;
   }
 
+
   Node.prototype = {
-    constructor: Node,
-    getId: getId,
+    constructor:    Node,
+    getId:          getId,
     setComponentId: setComponentId,
-    getComponentId: getComponentId
+    getComponentId: getComponentId,
+    setInputPath:   setInputPath,
+    setOutputPath:  setOutputPath,
+    getInputPath:   getInputPath,
+    getOutputPath:  getOutputPath
   }
 
   Node.current_focus  = null;
+  
+  Node._all            = [];
+  
+  Node.getAll = function(){
+    return Node._all;
+  }
+  
+  Node.appendToList = function(node){
+    return Node._all.push(node);
+  }
+
+  Node.find_by_id = function(id){
+    for (var i =0; i < Node._all.length; i++){
+      if (Node._all[i].node_id == id){
+        return Node._all[i];
+      }
+    }
+    return null;
+  }
+  
+  Node.find_by = function(obj) {
+    
+    var key = Object.keys(obj)[0];
+    
+    for (var i =0; i < Node._all.length; i++){
+      if (Node._all[i][key] == obj[key]){
+        return Node._all[i];
+      }
+    }
+    return null;
+  }
+
+
+
+  Node.getWorkflowFrom = function(node_id) {
+    var node_list = [];
+
+    var start = Node.find_by_id(node_id);
+    // if (start.getOutputPath() == undefined) {
+    //   node_list.push(start);
+    //   return node_list;
+    // }
+
+    for ( var i = start; ;
+      i = Node.find_by_id(parseInt(i.getOutputPath().attr('to_id')))) {
+      console.log(i);
+      node_list.push(i);
+      if (i.getOutputPath() == undefined) { break; };
+    }
+    console.log("----------------");
+    console.log(node_list);
+    return node_list;
+  }
 
   return Node;
 })();

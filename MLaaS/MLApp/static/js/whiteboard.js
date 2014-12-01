@@ -2,6 +2,7 @@ var _uploaded_file_as_text   = "";
 var _uploaded_file_name      = "";
 var _uploaded_file_as_arrays = [];
 var _debug_tmp;
+
 $(function(){
   
   var m = new Manager();
@@ -73,12 +74,13 @@ $(function(){
     m.activate_menubar("data_output");    
   });
   
-  var nodes = [];
-  var response;
 
+  
+  
   $(".add_btn").click(function(){
-
     var node;
+    var response;
+
     if ($(this).hasClass('add_input')){
 
       node = new Node({
@@ -291,25 +293,64 @@ $(function(){
         classification_type: "SVM"
       }, node);
 
-    } else if ($(this).hasClass('run')) {
+    } 
+    // else if ($(this).hasClass('run')) {
       
-      node = new Node({
-        name:'Machine Learning',
-        input:1,
-        output:0
-      });
+    //   node = new Node({
+    //     name:'Machine Learning',
+    //     input:1,
+    //     output:0
+    //   });
 
-      cognitive_client.run({
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      }, node);
+    //   cognitive_client.run({
+    //     user_id: 1,
+    //     name: "sample_input.csv",
+    //     token: "aaa",
+    //     type: "css",
+    //     experiment: 1,
+    //     data: uploaded_file_as_text 
+    //   }, node);
 
-    }
+    // } 
+
+    Node.appendToList(node);
   });
+
+  $("#execute-btn").click(function(){
+  
+    console.log("aaaaa");
+
+    var start = Node.find_by({name:"INPUT_DATA"});
+    var node_list = Node.getWorkflowFrom(start.getId());
+    
+    if (node_list.length < 2) {
+      alert("no workflow or input files");
+      return ;
+    }
+
+    var components_id_list = node_list.map(function(n){
+      return n.getComponentId();
+    })
+
+    var flow_path = function(x){ 
+      var l = [];
+      for (var i =0; i < x.length-1; i++) {  
+        var t = "";
+        t += x[i]+":"+x[i+1];
+        l.push(t);
+      }
+      console.log(l);
+      return l;
+    }(components_id_list);
+
+    console.log(flow_path);
+
+    cognitive_client.executeAll({
+      user_id: 1,
+      experiment: 1,
+      graph_data: flow_path
+    });
+  }); 
 
 
   $('#inputFile').change(function(evt) {

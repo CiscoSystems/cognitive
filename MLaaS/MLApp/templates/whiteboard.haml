@@ -201,7 +201,13 @@
           .col-lg-10
             %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
         %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD
-  .whiteboard-flyout-left-menu{style:"position:fixed; float:right; right:0; top:45px; height:100%; border-left: solid 1px gray; width:80px;text-align:center;"}
-    %p{style:"font-size:12pt; border-top:solid 1px gray; padding-top:15px; padding-bottom:8px; margin:0; position:absolute; bottom:45px;"}
-      %i.fa.fa-play-circle{style:"font-size:42pt; padding:0; margin:0;"}
+  .whiteboard-flyout-left-menu{style:"position:fixed; float:right; right:0; top:45px; height:100%; border-left: solid 1px gray; width:60px;text-align:center;"}
+    / %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
+    /   %i.fa.fa-paperclip{style:"font-size:32pt; padding:0; margin:0;"}
+    /   Share
+    / %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
+    /   %i.fa.fa-arrow-circle-o-down{style:"font-size:32pt; padding:0; margin:0;"}
+    /   DL
+    %p#execute-btn.add-btn.execute-btn{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
+      %i.fa.fa-play-circle-o{style:"font-size:32pt; padding:0; margin:0;"}
       Run

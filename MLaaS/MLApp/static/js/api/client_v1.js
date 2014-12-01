@@ -11,7 +11,9 @@ var CognitiveAPIClientV1 = (function() {
       data: json_data,
       success: function(result) { 
         console.log(result);
-        node.setComponentId(result.id);
+        if (node != null){
+          node.setComponentId(result.id);
+        }
       }
     });
   };
@@ -81,6 +83,11 @@ var CognitiveAPIClientV1 = (function() {
     _send_request(api_url, "POST", json_data, node);
   };
 
+  function executeAll(json_data) {
+    api_url = this.prefix + '/workflows/'; 
+    _send_request(api_url, "POST", json_data, null);
+  };
+
 
   CognitiveAPIClientV1.prototype = {
     constructor: CognitiveAPIClientV1,
@@ -95,7 +102,8 @@ var CognitiveAPIClientV1 = (function() {
     createRemoveMissingValueComponent: createRemoveMissingValueComponent,
     createFilterComponent: createFilterComponent,
     createRemoveMissingValuesComponent: createRemoveMissingValuesComponent,
-    createProjectionComponent: createProjectionComponent
+    createProjectionComponent: createProjectionComponent,
+    executeAll: executeAll
   };
 
   return CognitiveAPIClientV1;
