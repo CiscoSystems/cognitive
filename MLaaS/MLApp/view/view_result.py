@@ -12,8 +12,10 @@ from pandas import *
 import threading
 import json
 
+CACHE = {}
+
 class myThread (threading.Thread):
-    def __init__(self, threadID, name, experiment, component_id, max_results):
+    def __init__(self, threadID, name, experiment, component_id, max_results, cache_results):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
@@ -21,13 +23,21 @@ class myThread (threading.Thread):
         self.comp_id = component_id
         self.result = {}
         self.max_results = max_results
+        self.cache_results = cache_results
        
 
     def run(self):
         print "Run called for thread name", self.name
+        exp = Experiment.objects.get(pk=self.experiment)
+        print exp.workflow.graph_data
+        #graph = json.loads(exp.workflow.graph_data)
+        #print graph
         graph_data = [[1,[]],[2,[1]],[3,[2]],[4,[2,3]],[5,[4]],[6,[4]] ,[7,[6]], [8,[7]], [9,[8]],[10,[9]],[11,[10]],[12,[11]], [13,[11]]] 
-        #input_data = None 
-        input_data = DataFrame
+        #input_data = None
+        if self.experiment in CACHE:
+            input_data = CACHE[self.experiment]
+        else:
+            input_data = DataFrame
         feature_names = None
         feature_types = None
         output_data = None
@@ -169,7 +179,9 @@ class myThread (threading.Thread):
                         self.result["50_quartile"].append(None)
                         self.result["75_quartile"].append(None)
                 self.result["total_rows"] = input_data.shape[0]    
-                self.result["total_columns"] = input_data.shape[1]    
+                self.result["total_columns"] = input_data.shape[1]   
+                if self.cache_results == True:
+                    CACHE[self.experiment] = input_data 
                 break
                          
 
@@ -179,7 +191,7 @@ class ResultViewSet(viewsets.ViewSet):
         exp_id = int(request.GET.get('experiment', ''))
         component_id = int(request.GET.get('component_id', ''))
         print "Experiment ", exp_id
-        thread = myThread(1, "WorkFlow Thread", exp_id , component_id, 10)
+        thread = myThread(1, "WorkFlow Thread", exp_id, component_id, 10, False)
         thread.start()
         thread.join()
         return HttpResponse(json.dumps(thread.result), content_type="application/json")
