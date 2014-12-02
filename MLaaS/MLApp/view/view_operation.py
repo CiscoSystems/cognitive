@@ -92,7 +92,7 @@ class OperationViewSet(viewsets.ViewSet):
         op = None
         exp_id = int(data["experiment"])
         exp = Experiment.objects.get(pk = exp_id)
-        print "Experiment ", exp_id, " Operation ", operation
+        print "Experiment ", exp_id, " Operation ", operation , "data ", data
         op = self.set_operation(operation, data)
              
         component = Component(experiment= exp, created_time=datetime.now(),
