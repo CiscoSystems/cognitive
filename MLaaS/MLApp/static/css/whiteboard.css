@@ -66,9 +66,11 @@ li.component {
   width:100%
 }
 .detail {
+  overflow: scroll;
   float:left; 
   margin:0; 
   padding:0; 
+  padding-bottom:100px;
   width: 30%; 
   position: fixed; 
   left: 220px; 
@@ -83,6 +85,7 @@ li.component {
   padding-left: 15px;
   padding-right: 45px; 
 }
+
 
 .base-node:hover {
   fill: #ffd124;
