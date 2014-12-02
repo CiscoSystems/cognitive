@@ -62,7 +62,9 @@ var Node = (function() {
      .attr('abs_y', _y)
      .attr('id', this.node_id)
      .call(d3.behavior.drag().on("drag", _drag))
-     .on("click", function(){ clicked(this); });
+     .on("click", function(){ clicked(this); })
+     .append('i').attr('class', 'fa fa-bar-chart')
+     ;
   }
 
   function _drag(){
