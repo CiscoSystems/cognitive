@@ -133,17 +133,20 @@ $(function(){
 
       var method   = $('select#formula_method').val();
       var column_num   = $('select#formula_column').val();
-      var constant = $('select#formula_constant').val();
-
-      cognitive_client.createMathFormulaComponent({
+      var constant = $('#formula_constant').val();
+      
+      var t = {
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        component_type: "column",
+        component_type: "Column",
         component_id: column_num, // should be index number
         op_type: method, // or Sub, Mul, Div
         op_constant: constant
-      }, node);
+      };
+      console.log(t);
+
+      cognitive_client.createMathFormulaComponent(t, node);
 
     } else if ($(this).hasClass('add_normalization')) {
       
@@ -245,24 +248,7 @@ $(function(){
         column_type: types
       }, node);
 
-    }  else if ($(this).hasClass('add_formula')) {
-      
-      node = new Node({
-        name:'FORMULA',
-        input:1,
-        output:1
-      });
-
-      cognitive_client.createFormulaComponent({
-        user_id: 1,
-        name: "sample_input.csv",
-        token: "aaa",
-        type: "css",
-        experiment: 1,
-        data: uploaded_file_as_text 
-      }, node);
-
-    } else if ($(this).hasClass('add_output')) {
+    }  else if ($(this).hasClass('add_output')) {
       
       node = new Node({
         name:'OUTPUT',

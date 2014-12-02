@@ -86,7 +86,7 @@
         .row
           %label.col-lg-3.control-label{for:"select"} Method
           .col-lg-9
-            %select.form-control#formula_method#select{style:"font-size:20pt;"}
+            %select#formula_method.form-control{style:"font-size:20pt;"}
               %option{style:"font-size:20pt;"} Add
               %option{style:"font-size:20pt;"} Sub
               %option{style:"font-size:20pt;"} Mul
@@ -100,7 +100,7 @@
         .row{style:"padding-top:20px;"}
           %label.col-lg-3.control-label{for:"select"} Constant
           .col-lg-9
-            %input.form-control.floating-label#formula_constant#focusedInput{type:"text", placeholder: "value"}
+            %input#formula_constant.form-control.floating-label#focusedInput{type:"text", placeholder: "value"}
 
         %button.btn.btn-material-indigo.add_btn.add_math_fomula{type:"button", style:"float:right"} ADD
     .detail.normalization{style: "display: none"}
