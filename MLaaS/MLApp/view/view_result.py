@@ -25,7 +25,7 @@ class myThread (threading.Thread):
 
     def run(self):
         print "Run called for thread name", self.name
-        graph_data = [[1,[]],[2,[1]],[3,[2]],[4,[2,3]],[5,[4]],[6,[4]] ,[7,[6]], [8,[7]], [9,[8]],[10,[9]],[11,[10]],[12,[11]]] 
+        graph_data = [[1,[]],[2,[1]],[3,[2]],[4,[2,3]],[5,[4]],[6,[4]] ,[7,[6]], [8,[7]], [9,[8]],[10,[9]],[11,[10]],[12,[11]], [13,[11]]] 
         #input_data = None 
         input_data = DataFrame
         feature_names = None
@@ -33,7 +33,6 @@ class myThread (threading.Thread):
         output_data = None
         for data in graph_data:
             component_id = data[0]
-            print "Id ", component_id
             comp = Component.objects.get(pk= component_id)
             print "Component_id" , component_id, " " ,comp.operation_type 
             op = comp.operation_type
@@ -118,10 +117,10 @@ class myThread (threading.Thread):
                             input_data = input_data.fillna(input_data.mode())
                         if op.function_subtype_arg == 'Drop_row':
                             input_data = input_data.dropna(axis = 0)
-            print "Data"
-            print input_data
-            print "Data Type"
-            print input_data.dtypes
+            #print "Data"
+            #print input_data
+            #print "Data Type"
+            #print input_data.dtypes
             if component_id == self.comp_id:
                 print "End component reached"
                 self.result["feature_names"] = list(input_data.columns)
@@ -179,10 +178,7 @@ class ResultViewSet(viewsets.ViewSet):
     def list(self, request):
         exp_id = int(request.GET.get('experiment', ''))
         component_id = int(request.GET.get('component_id', ''))
-        #exp_id = int(data["experiment"])
         print "Experiment ", exp_id
-        #component_id = int(data["component_id"])
-        print "Component ", component_id
         thread = myThread(1, "WorkFlow Thread", exp_id , component_id, 10)
         thread.start()
         thread.join()

@@ -9,23 +9,8 @@ import json
 
 MAX_COMPONENTS_PER_EXP = 100
 class OperationViewSet(viewsets.ViewSet):
-    
-    def list(self, request, operation):
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return send_response(request.method,serializer)
-
-    def retrieve(self, request, operation, pk=None):
-        comp = Component.objects.get(pk = int(pk))
-        serializer = ComponentSerializer(comp)
-        return send_response(request.method, serializer)
-
-    def create(self,request, operation):
-        data = json.loads(JSONRenderer().render(request.DATA))
-        op = None
-        exp_id = int(data["experiment"])
-        print "Experiment ", exp_id, " Operation ", operation
-        exp = Experiment.objects.get(pk = exp_id)
+   
+    def set_operation(self, operation, data):
         if operation == 'math_formula':
             print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
             op = Data_operation_type(function_type = 'Update', function_arg = data["component_type"],
@@ -89,26 +74,50 @@ class OperationViewSet(viewsets.ViewSet):
                             function_arg_id = data["model_type"] , function_subtype = 'Train-Test', 
                             function_subtype_arg = json.dumps(arg)) 
             op.save()
+        
+        return op
+
+    def list(self, request, operation):
+        comp = Component.objects.all()
+        serializer = ComponentSerializer(comp, many=True)
+        return send_response(request.method,serializer)
+
+    def retrieve(self, request, operation, pk=None):
+        comp = Component.objects.get(pk = int(pk))
+        serializer = ComponentSerializer(comp)
+        return send_response(request.method, serializer)
+
+    def create(self,request, operation):
+        data = json.loads(JSONRenderer().render(request.DATA))
+        op = None
+        exp_id = int(data["experiment"])
+        exp = Experiment.objects.get(pk = exp_id)
+        print "Experiment ", exp_id, " Operation ", operation
+        op = self.set_operation(operation, data)
              
         component = Component(experiment= exp, created_time=datetime.now(),
                                 modified_time=datetime.now(), operation_type = op)
         component.save()
-        #comp_id= MAX_COMPONENTS_PER_EXP * exp_id + component.pk
-        #component.component_id= comp_id
-        #component.save()
         serializer = ComponentSerializer(component)
         return send_response("GET",serializer)
             
     
     def update(self,request, operation, pk=None):
-        user = User.objects.get(pk=pk)
-        serializer = UserSerializer(user,data=request.DATA)
+        data = json.loads(JSONRenderer().render(request.DATA))
+        op = None
+        exp_id = int(data["experiment"])
+        print "Experiment ", exp_id, " Operation ", operation
+        op = self.set_operation(operation, data)
+
+        comp = Component.objects.get(pk=pk)
+        serializer = ComponentSerializer(comp,data=request.DATA)
         if serializer.is_valid():
+            serializer.object.operation_type = op
             serializer.save()
         return send_response(request.method,serializer)
 
     def destroy(self, request, operation, pk=None):
-        user = User.objects.get(pk=pk)
+        user = Component.objects.get(pk=pk)
         serializer = None
         user.delete()
         return send_response(request.method,serializer)
