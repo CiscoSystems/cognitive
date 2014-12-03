@@ -14,6 +14,7 @@ import threading
 import json
 
 CACHE = {}
+pandas.set_option('precision', 4)
 
 class myThread (threading.Thread):
     def __init__(self, threadID, name, experiment, component_id, max_results, cache_results):
@@ -189,7 +190,11 @@ class myThread (threading.Thread):
                 for i in range(result_length):
                     tmp = []
                     for col in input_data.columns:
-                        tmp.append(input_data[col][i])
+                        print "Val",json.dumps(input_data[col][i])
+                        if json.dumps(input_data[col][i]) == 'NaN':
+                            tmp.append('')
+                        else:
+                            tmp.append(input_data[col][i])
                     self.result["data"].append(tmp)
                 self.result["graph_data"] = []
                 for elem in feature_names:
@@ -206,11 +211,11 @@ class myThread (threading.Thread):
                     if elem in mean:
                         self.result["mean"].append(mean[elem])
                     else:
-                        self.result["mean"].append(None)
+                        self.result["mean"].append('')
                     if elem in median:
                         self.result["median"].append(median[elem])
                     else:
-                        self.result["median"].append(None)
+                        self.result["median"].append('')
                 self.result["unique_values"] = []
                 for elem in input_data.columns:
                     self.result["unique_values"].append(input_data[elem].nunique())
@@ -230,12 +235,12 @@ class myThread (threading.Thread):
                         self.result["50_quartile"].append(metric_val[elem]["50%"])
                         self.result["75_quartile"].append(metric_val[elem]["75%"])
                     else:
-                        self.result["min"].append(None)
-                        self.result["max"].append(None)
-                        self.result["std"].append(None)
-                        self.result["25_quartile"].append(None)
-                        self.result["50_quartile"].append(None)
-                        self.result["75_quartile"].append(None)
+                        self.result["min"].append('')
+                        self.result["max"].append('')
+                        self.result["std"].append('')
+                        self.result["25_quartile"].append('')
+                        self.result["50_quartile"].append('')
+                        self.result["75_quartile"].append('')
                 self.result["total_rows"] = input_data.shape[0]    
                 self.result["total_columns"] = input_data.shape[1]   
                 if self.cache_results == True:
