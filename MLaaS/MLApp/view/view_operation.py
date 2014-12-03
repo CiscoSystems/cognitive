@@ -6,6 +6,8 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view
 from datetime import datetime
 import json
+import csv
+import urllib2
 
 MAX_COMPONENTS_PER_EXP = 100
 class OperationViewSet(viewsets.ViewSet):
@@ -57,15 +59,30 @@ class OperationViewSet(viewsets.ViewSet):
         
         elif operation == 'input':
             print data
-            print data["data_values"], data["input_file"] , data["input_file_type"]
-            filename = "/tmp/"+str(data["experiment"])+ "_" + data["input_file"]
-            print "Filename ", filename
-            f = open(filename, 'w')
-            f.write(data["data_values"])
-            f.close()
-            op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
+            if data["input_file_type"] == "csv":
+                print data["data_values"], data["input_file"] , data["input_file_type"]
+                filename = "/tmp/"+str(data["experiment"])+ "_" + data["input_file"]
+                print "Filename ", filename
+                f = open(filename, 'w')
+                f.write(data["data_values"])
+                f.close()
+                op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
                             function_subtype = 'Input', function_subtype_arg = filename) 
-            op.save()
+                op.save()
+            elif data["input_file_type"] == "http":
+                filename = "/tmp/"+str(data["experiment"])+ "_" + data["input_file"].split('/')[-1]
+                print "Filename ", filename
+                f = open(filename, 'w')
+                response = urllib2.urlopen(data["input_file"])
+                cr = csv.reader(response)
+                for row in cr:
+                    print ', '.join(row)
+                    f.write(','.join(row))
+                    f.write('\n')
+                f.close()
+                op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
+                            function_subtype = 'Input', function_subtype_arg = filename) 
+                op.save()
 
         elif operation == "machine_learning":
             print data["model_type"], data["train_data_percentage"], data["target_column"]

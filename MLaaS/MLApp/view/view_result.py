@@ -194,7 +194,7 @@ class myThread (threading.Thread):
                 self.result["total_rows"] = input_data.shape[0]    
                 self.result["total_columns"] = input_data.shape[1]   
                 if self.cache_results == True:
-                    CACHE[self.experiment] = input_data 
+                    CACHE[self.experiment] = input_data
                 break
                          
 
