@@ -1,4 +1,9 @@
 - extends 'base.haml'
 - block 'extrahead'
-- load staticfiles
+  - load staticfiles
+  %link{href: "{{STATIC_URL}}css/index.css", rel: "stylesheet"}
+  %script{src: "http://d3js.org/d3.v3.min.js", charset:"utf-8"}
+  %script{src: "{{STATIC_URL}}js/index.js", type: "text/javascript"}
 - block 'contents'
+  %svg.graph{ width:"100px", height:"100px"}
+

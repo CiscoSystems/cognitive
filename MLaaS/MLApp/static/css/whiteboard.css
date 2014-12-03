@@ -105,3 +105,11 @@ li.component {
   background-color: #1e8cff;
   color: white;
 }
+.result_table {
+  text-align: center;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 40px;
+  text-align: center;
+}
+

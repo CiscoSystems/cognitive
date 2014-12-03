@@ -453,9 +453,9 @@ $(function(){
     console.log("-------------------");
     var node = Node.getCurrentForcus();
     console.log(node);
-    console.log("-------------------A");
-    if (node == null) {return;}
 
+    if (node == null) {return;}
+    console.log("-------------------A");
     $.ajax({ 
       url:  '/api/v1/results/?experiment=1&component_id=' + node.component_id,
       type: "GET",
@@ -468,9 +468,12 @@ $(function(){
         // adjust_result_table(result);
         // $(".show_result_graph").colorbox({inline:true, width:"50%"});    
 
+        console.log("test");
+        console.log(result);
         var z = serialize_result_to_html(result);
+
         a = result;
-        $.colorbox({html:"<h1>Results</h1><p>"+z+"</p>", width: "90%"});
+        $.colorbox({html:"<h1><i class='fa.fa-bar-chart'>Results</h1><p>"+z+"</p>", width: "90%"});
       }
     });
   }
@@ -495,10 +498,11 @@ $(function(){
     //   min: Array[12]
     //   missing_values: Array[12]
     //   std: Array[12]total_columns: 12total_rows: 891unique_values
-    var _html ="<table>"
+
+    var _html ="<table class='result_table'>"
 
     _html += '<tr style="background:#ffd124;color: #333333;">'
-    _html +="<th>feature_names</th>"
+    _html +="<th>metrics name</th>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
@@ -529,9 +533,9 @@ $(function(){
     }
     _html += "</tr>"
 
-    _html += "</table><table><tr style='background:#1e8cff;color: white;'>"
+    _html += "</table><table class='result_table'><tr style='background:#1e8cff;color: white;'>"
 
-    _html +="<th>feature_names</th>"
+    _html +="<th>metrics name</th>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
@@ -571,7 +575,21 @@ $(function(){
     for (var i=0; i < result['unique_values'].length; i++ ){
       _html += "<th>" + result['unique_values'][i] + "</th>"
     }
+    
+    _html += "</tr></table><table class='result_table'><tr style='background:#09be00;color: white;'><td>metrics name</td>"
+    for (var i=0; i < result['feature_names'].length; i++ ){
+      _html += "<th>" + result['feature_names'][i] + "</th>"
+    }
     _html += "</tr>"
+
+    for (var i=0; i < result['data'].length; i++ ){
+      _html +="<tr><th></th>"
+      for (var j=0; j < result['data'][i].length; j++ ){
+        _html += "<th>" + result['data'][i][j] + "</th>"
+      }
+      _html +="</tr>"
+    }
+    _html += "</table>"
 
     return _html;
   }
