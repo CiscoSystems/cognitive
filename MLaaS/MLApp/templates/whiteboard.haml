@@ -112,7 +112,6 @@
             .col-lg-9
               %select#normalization_method.form-control
                 %option{value: 0, style:"font-size:20pt;"} Standard
-                %option{value: 1, style:"font-size:20pt;"} Regression
           
           .row{style:"padding-top:20px;"}
             %label.col-lg-3.control-label{for:"select"} Column
@@ -123,21 +122,23 @@
         %button.btn.btn-material-indigo.add_btn.add_normalization{type:"button", style:"float:right"} ADD
     .detail.projection{style: "display: none"}
       .content
-        %h2 Projection
-        %p plz input column name
-        %p ex) name,school,...
-        .form-group
-
-          %input#projection_text.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
+        %h2 Projection        
+        .form-group.projection_form
         %button.btn.btn-material-indigo.add_btn.add_projection{type:"button", style:"float:right"} ADD
+        .projection.minus-bottom{style:"border:solid 3px #5757AD;width:40px;height:36px; text-align:center;float:right; margin-top:10px; margin-right:15px;"}
+          %i.fa.fa-minus{style:"color:#5757AD; font-size:24pt; "}
+        .projection.plus-bottom{style:"border:solid 3px #F77A64;width:40px;height:36px; text-align:center;float:right; margin-top:10px; margin-right:3px;"}
+          %i.fa.fa-plus{style:"color:#F77A64; font-size:24pt; "}
+        
     .detail.remove_column{style: "display: none"}
       .content
         %h2 Remove Duplicates
-        %p plz input column name
-        %p ex) name,school,...
-        .form-group
-          %input#remove_column_text.form-control.floating-label#focusedInput{type:"text", placeholder: "value"}
+        .form-group.remove_duplicates_form
         %button.btn.btn-material-indigo.add_btn.add_remove_duplicates{type:"button", style:"float:right"} ADD
+        .remove_duplicates.minus-bottom{style:"border:solid 3px #5757AD;width:40px;height:36px; text-align:center;float:right; margin-top:10px; margin-right:15px;"}
+          %i.fa.fa-minus{style:"color:#5757AD; font-size:24pt; "}
+        .remove_duplicates.plus-bottom{style:"border:solid 3px #F77A64;width:40px;height:36px; text-align:center;float:right; margin-top:10px; margin-right:3px;"}
+          %i.fa.fa-plus{style:"color:#F77A64; font-size:24pt; "}
 
     .detail.remove_missing_value{style: "display: none"}
       .content
