@@ -88,6 +88,11 @@ var CognitiveAPIClientV1 = (function() {
     _send_request(api_url, "POST", json_data, null);
   };
 
+  function getResult(component_id) {
+    api_url = this.prefix + '/results/?expetiment=1&component_id=' + component_id; 
+    _send_request(api_url, "GET", null, null);
+  };
+
 
   CognitiveAPIClientV1.prototype = {
     constructor: CognitiveAPIClientV1,

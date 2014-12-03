@@ -48,9 +48,9 @@
         %li.menu_bar.machine_learning 
           %i.fa.fa-yelp
           Machine Learning
-        %li.menu_bar.data_output 
-          %i.fa.fa-arrow-down
-          OUTPUT
+        / %li.menu_bar.data_output 
+        /   %i.fa.fa-arrow-down
+        /   OUTPUT
   #visualization
     %svg.root{height:"800px", width:"100%"}  
   }
@@ -191,13 +191,13 @@
               %option Naive_Bayes
 
         %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
-    .detail.data_output{style: "display: none"}
-      .content
-        %h2 Output
-        .form-group
-          %label.col-lg-2.control-label{for:"data_output"} Name
-          .col-lg-10
-            %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
+    / .detail.data_output{style: "display: none"}
+    /   .content
+    /     %h2 Output
+    /     .form-group
+    /       %label.col-lg-2.control-label{for:"data_output"} Name
+    /       .col-lg-10
+    /         %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
         .form-group
           %label.col-lg-2.control-label{for:"data_output"} Type
           .col-lg-10

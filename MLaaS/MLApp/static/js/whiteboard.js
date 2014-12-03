@@ -361,21 +361,41 @@ $(function(){
 
     _uploaded_file_name = file.name
 
-    $("<button/>", {
-      "class": "btn btn-material-lightgreen show_result_graph",
-      text: "Show",
-      style:"float:right",
-      href:"#result_table",
-      click: function() {
-        adjust_result_table(_uploaded_file_as_arrays);
-        $(".show_result_graph").colorbox({inline:true, width:"50%"});
-      }
-    }).appendTo(".detail.data_input");
+    // $("<button/>", {
+    //   "class": "btn btn-material-lightgreen show_result_graph",
+    //   text: "Show",
+    //   style:"float:right",
+    //   href:"#result_table",
+    //   click: getResult()
+    // }).appendTo(".detail.data_input");
   });
+ 
+ // $(".show_result_graph").colorbox({inline:true, width:"50%"});
+ $(".show_result_graph").colorbox({inline:true, width:"50%"});    
+ $(".show_result_graph").click(getResult);
 
+ function getResult() {
+    console.log("-------------------");
+    var node = Node.getCurrentForcus();
+    console.log(node);
+    console.log("-------------------A");
+    if (node == null) {return;}
 
-  
- $(".show_result_graph").colorbox({inline:true, width:"50%"});
+    $.ajax({ 
+      url:  '/api/v1/results/?experiment=1&component_id=' + node.component_id,
+      type: "GET",
+      data: "",
+      success: function(result) { 
+        console.log("aaaaaa");
+        console.log(result);
+        $('#result_table').empty();
+        $('#result_table').append(result);
+        adjust_result_table(result);
+        $(".show_result_graph").colorbox({inline:true, width:"50%"});    
+      }
+    });
+  }
+
 
 });
 
