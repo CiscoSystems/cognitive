@@ -446,7 +446,7 @@ $(function(){
   });
  
  // $(".show_result_graph").colorbox({inline:true, width:"50%"});
- $(".show_result_graph").colorbox({inline:true, width:"50%"});    
+ // $(".show_result_graph").colorbox({inline:true, width:"50%"});
  $(".show_result_graph").click(getResult);
 
  function getResult() {
@@ -461,14 +461,119 @@ $(function(){
       type: "GET",
       data: "",
       success: function(result) { 
-        console.log("aaaaaa");
-        console.log(result);
-        $('#result_table').empty();
-        $('#result_table').append(result);
-        adjust_result_table(result);
-        $(".show_result_graph").colorbox({inline:true, width:"50%"});    
+        // console.log("aaaaaa");
+        // console.log(result);
+        // $('#result_table').empty();
+        // $('#result_table').append(result);
+        // adjust_result_table(result);
+        // $(".show_result_graph").colorbox({inline:true, width:"50%"});    
+
+        var z = serialize_result_to_html(result);
+        a = result;
+        $.colorbox({html:"<h1>Results</h1><p>"+z+"</p>", width: "90%"});
       }
     });
+  }
+
+  function serialize_result_to_html(result) {
+    // 25_quartile: Array[12]
+    // 50_quartile: Array[12]
+    // 75_quartile: Array[12]
+    // data: "{"
+    //   PassengerId":{"0":2.0,"1":3.0,"2":4.0,"3":5.0,"4":6.0,"5":7.0,"6":8.0,"7":9.0,"8":10.0,"9":11.0},"
+    //   Survived":{"0":0,"1":1,"2":1,"3":1,"4":0,"5":0,"6":0,"7":0,"8":1,"9":1},
+    //   "Pclass":{"0":3,"1":1,"2":3,"3":1,"4":3,"5":3,"6":1,"7":3,"8":3,"9":2},
+    //   "Name":{"0":"Braund, Mr. Owen Harris","1":"Cumings, Mrs. John Bradley (Florence Briggs Thayer)","2":"Heikkinen, Miss. Laina","3":"Futrelle, Mrs. Jacques Heath (Lily May Peel)","4":"Allen, Mr. William Henry","5":"Moran, Mr. James","6":"McCarthy, Mr. Timothy J","7":"Palsson, Master. Gosta Leonard","8":"Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)","9":"Nasser, Mrs. Nicholas (Adele Achem)"},"Sex":{"0":"male","1":"female","2":"female","3":"female","4":"male","5":"male","6":"male","7":"male","8":"female","9":"female"},"Age":{"0":22.0,"1":38.0,"2":26.0,"3":35.0,"4":35.0,"5":null,"6":54.0,"7":2.0,"8":27.0,"9":14.0},"SibSp":{"0":1,"1":1,"2":0,"3":1,"4":0,"5":0,"6":0,"7":3,"8":0,"9":1},"Parch":{"0":0,"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":1,"8":2,"9":0},
+    //   "Ticket":{"0":"A\/5 21171","1":"PC 17599","2":"STON\/O2. 3101282","3":"113803","4":"373450","5":"330877","6":"17463","7":"349909","8":"347742","9":"237736"},
+    //   "Fare":{"0":7.25,"1":71.2833,"2":7.925,"3":53.1,"4":8.05,"5":8.4583,"6":51.8625,"7":21.075,"8":11.1333,"9":30.0708},
+    //   "Cabin":{"0":null,"1":"C85","2":null,"3":"C123","4":null,"5":null,"6":"E46","7":null,"8":null,"9":null},
+    //   "Embarked":{"0":"S","1":"C","2":"S","3":"S","4":"S","5":"Q","6":"S","7":"S","8":"S","9":"C"}}"
+    //   feature_names: Array[12]
+    //   max: Array[12]
+    //   mean: Array[12]
+    //   median: Array[12]
+    //   min: Array[12]
+    //   missing_values: Array[12]
+    //   std: Array[12]total_columns: 12total_rows: 891unique_values
+    var _html ="<table>"
+
+    _html += '<tr style="background:#ffd124;color: #333333;">'
+    _html +="<th>feature_names</th>"
+    for (var i=0; i < result['feature_names'].length; i++ ){
+      _html += "<th>" + result['feature_names'][i] + "</th>"
+    }
+    _html += "</tr>"
+
+    _html += "<tr>"
+    _html +="<th>std</th>"
+    for (var i=0; i < result['std'].length; i++ ){
+      _html += "<th>" + result['std'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+    
+    _html +="<th>75_quartile</th>"
+    for (var i=0; i < result['75_quartile'].length; i++ ){
+      _html += "<th>" + result['75_quartile'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+    
+    _html +="<th>50_quartile</th>"
+    for (var i=0; i < result['50_quartile'].length; i++ ){
+      _html += "<th>" + result['50_quartile'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>25_quartile</th>"
+    for (var i=0; i < result['25_quartile'].length; i++ ){
+      _html += "<th>" + result['25_quartile'][i] + "</th>"
+    }
+    _html += "</tr>"
+
+    _html += "</table><table><tr style='background:#1e8cff;color: white;'>"
+
+    _html +="<th>feature_names</th>"
+    for (var i=0; i < result['feature_names'].length; i++ ){
+      _html += "<th>" + result['feature_names'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>max</th>"
+    for (var i=0; i < result['max'].length; i++ ){
+      _html += "<th>" + result['max'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>mean</th>"
+    for (var i=0; i < result['mean'].length; i++ ){
+      _html += "<th>" + result['mean'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>median</th>"
+    for (var i=0; i < result['median'].length; i++ ){
+      _html += "<th>" + result['median'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>min</th>"
+    for (var i=0; i < result['min'].length; i++ ){
+      _html += "<th>" + result['min'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>missing_values</th>"
+    for (var i=0; i < result['missing_values'].length; i++ ){
+      _html += "<th>" + result['missing_values'][i] + "</th>"
+    }
+    _html += "</tr><tr>"
+
+    _html +="<th>unique_values</th>"
+    for (var i=0; i < result['unique_values'].length; i++ ){
+      _html += "<th>" + result['unique_values'][i] + "</th>"
+    }
+    _html += "</tr>"
+
+    return _html;
   }
 
 
