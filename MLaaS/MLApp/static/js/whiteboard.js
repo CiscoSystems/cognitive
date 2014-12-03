@@ -319,6 +319,7 @@ $(function(){
       return n.getComponentId();
     })
 
+    console.log(components_id_list);
     // var flow_path = function(x){ 
     //   var l = [];
     //   for (var i =0; i < x.length-1; i++) {  
@@ -333,7 +334,6 @@ $(function(){
     var flow_path = function(x){ 
       var t = "";
       for (var i =0; i < x.length-1; i++) {  
-        var t = "";
         t += x[i]+":"+x[i+1] + ",";
       }
       return t.substr(0,t.length-1);
