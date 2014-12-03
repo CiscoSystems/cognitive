@@ -27,6 +27,7 @@ class WorkFlowViewSet(viewsets.ViewSet):
         data = json.loads(JSONRenderer().render(request.DATA))
         exp_id = int(data["experiment"])
         exp = Experiment.objects.get(pk = exp_id)
+        print "Experiment ", exp_id, "graph_data ", data["graph_data"]
         try:#Temporarily for accepting changes through POST requests from UI
             workflow = exp.workflow
         except Workflow.DoesNotExist:

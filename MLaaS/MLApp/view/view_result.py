@@ -1,4 +1,5 @@
 from ..models import Experiment, Component
+from toposort import toposort, toposort_flatten
 from ..serializers import ExperimentSerializer
 from ..views import send_response
 from ..ml_models import Classifier 
@@ -27,12 +28,24 @@ class myThread (threading.Thread):
        
 
     def run(self):
-        print "Run called for thread name", self.name
+        print "Run called for thread name", self.name, "End component", self.comp_id
         exp = Experiment.objects.get(pk=self.experiment)
         print exp.workflow.graph_data
-        #graph = json.loads(exp.workflow.graph_data)
-        #print graph
-        graph_data = [[1,[]],[2,[1]],[3,[2]],[4,[2,3]],[5,[4]],[6,[4]] ,[7,[6]], [8,[7]], [9,[8]],[10,[9]],[11,[10]],[12,[11]], [13,[11]]] 
+        graph = exp.workflow.graph_data
+        graph_data = {}
+        print graph
+        tmp = graph.split(',')
+        for elem in tmp:
+            first_node = elem.split(":")[0]
+            second_node = elem.split(":")[1]
+            if second_node in graph_data:
+                depend_nodes = graph_data[second_node]
+                depend_nodes.add(first_node)
+            else:
+                graph_data[second_node] = set()
+                graph_data[second_node].add(first_node)
+        topological_graph = toposort_flatten(graph_data)
+        print "Graph after topological sort", topological_graph
         #input_data = None
         if self.experiment in CACHE:
             input_data = CACHE[self.experiment]
@@ -41,8 +54,8 @@ class myThread (threading.Thread):
         feature_names = None
         feature_types = None
         output_data = None
-        for data in graph_data:
-            component_id = data[0]
+        for data in topological_graph:
+            component_id = int(data)
             comp = Component.objects.get(pk= component_id)
             print "Component_id" , component_id, " " ,comp.operation_type 
             op = comp.operation_type
