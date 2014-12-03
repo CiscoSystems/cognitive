@@ -21,6 +21,17 @@ $(function(){
     $('.form-group.projection_form').append('<select id="normalization_method" class="form-control">'+option_string+'</select>');
   });
 
+  $('.remove_duplicates.plus-bottom').click(function(){
+
+    var column_names = _uploaded_file_as_arrays[0];
+    var option_string = "";
+    for (var i=0; i < column_names.length; i++ ){
+      option_string += '<option>'+ column_names[i] +'</option>'
+    }
+    $('.form-group.remove_duplicates_form').append('<select id="normalization_method" class="form-control">'+option_string+'</select>');
+  });
+
+
   $(".menu_bar.introduction").click(function(){
     m.activate_menubar('introduction');
   });
