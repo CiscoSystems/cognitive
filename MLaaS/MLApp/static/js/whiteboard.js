@@ -153,8 +153,7 @@ $(function(){
 
       var request_text = "[";
       for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        request_text += $(".add_row._column_" + i).val();
-        request_text += ","
+        request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
       }
 
       request_text = request_text.slice(0, request_text.length-1) 
