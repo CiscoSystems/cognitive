@@ -151,16 +151,13 @@ $(function(){
         output:1
       });
 
-      var request_text = "";
+      var request_text = "[";
       for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
         request_text += $(".add_row._column_" + i).val();
-        if (i == _uploaded_file_as_arrays[0] - 2) {
-          break;
-        }
-        request_text += ",";
       }
 
       request_text = request_text.slice(0, request_text.length-1) 
+      request_text += "]"
       console.log(request_text);
 
       cognitive_client.createAddRowComponent({
