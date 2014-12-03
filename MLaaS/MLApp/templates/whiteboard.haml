@@ -163,6 +163,8 @@
           .col-lg-9
             %select#remove_missing_value_method.form-control
               %option Replace_mean
+              %option Replace_median
+              %option Replace_mode
               %option Drop_row
             
         %button.btn.btn-material-indigo.add_btn.add_remove_missing_value{type:"button", style:"float:right"} ADD
