@@ -11,14 +11,16 @@ $(function(){
   var svg = d3.selectAll("svg");
 
 
+  var projections = 0;
   $('.projection.plus-bottom').click(function(){
 
     var column_names = _uploaded_file_as_arrays[0];
     var option_string = "";
     for (var i=0; i < column_names.length; i++ ){
-      option_string += '<option>'+ column_names[i] +'</option>'
+      option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
     }
-    $('.form-group.projection_form').append('<select id="normalization_method" class="form-control">'+option_string+'</select>');
+    $('.form-group.projection_form').append('<select class="form-control projection_selects _selects_'+projections+'">'+option_string+'</select>');
+    projections++;
   });
 
   $('.remove_duplicates.plus-bottom').click(function(){
@@ -26,7 +28,7 @@ $(function(){
     var column_names = _uploaded_file_as_arrays[0];
     var option_string = "";
     for (var i=0; i < column_names.length; i++ ){
-      option_string += '<option>'+ column_names[i] +'</option>'
+      option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
     }
     $('.form-group.remove_duplicates_form').append('<select id="normalization_method" class="form-control">'+option_string+'</select>');
   });
@@ -197,15 +199,23 @@ $(function(){
         output:1
       });
 
-      var names = $('#projection_text').val();
-      var indexes = names_to_ids(names);
-      console.log(indexes);
+      var len = $('.projection_selects').length;
+
+      var projection_columns = "";
+      for (var i=0; i<len; i++) {
+        console.log($('.projection_selects._selects_'+i).val());
+        projection_columns += $('.projection_selects._selects_'+i).val() + ","
+      }
+
+      // var names = $('#projection_text').val();
+      // var indexes = names_to_ids(names);
+      // console.log(indexes);
 
       cognitive_client.createProjectionComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        component_id: indexes
+        component_id: projection_columns
       }, node);
 
     } else if ($(this).hasClass('add_remove_duplicates')) {
