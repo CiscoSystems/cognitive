@@ -201,7 +201,7 @@ $(function(){
     } else if ($(this).hasClass('add_projection')) {
       
       node = new Node({
-        name:'Projection',
+        name:'Column Selection',
         input:1,
         output:1
       });
@@ -458,8 +458,9 @@ function description_addrow() {
   $('.add_row_form').empty();
   _uploaded_file_as_arrays[0];
   console.log(_uploaded_file_as_arrays[0]);
+  if (_uploaded_file_as_text == "") {return;}
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-    $(".add_row_form").append('<li class="add_row column_'+i+'" style="padding-top: 10px"></li>');
+  $(".add_row_form").append('<li class="add_row column_'+i+'" style="padding-top: 10px"></li>');
     $(".add_row_form li.column_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'<p/>');
     $("<input/>", {
       "class": "form-control floating-label"+" _column_" + i,
@@ -472,12 +473,14 @@ function description_addrow() {
 
 function description_formula() {
   $("#formula_column").empty(); 
+  if (_uploaded_file_as_text == "") {return;}
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
     $("#formula_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
 }
 function description_normalization() {
   $("#normalization_column").empty(); 
+  if (_uploaded_file_as_text == "") {return;}
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
     $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
@@ -485,6 +488,7 @@ function description_normalization() {
 
 function description_metadata() {
   $("#metadata_discriptions").empty(); 
+  if (_uploaded_file_as_text == "") {return;}
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
     $("#metadata_discriptions").append('<div class="row meta_'+i+'" style="padding-top:25px;"></div>');
     $("#metadata_discriptions div.meta_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'</p>');
