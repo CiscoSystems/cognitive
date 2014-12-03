@@ -280,7 +280,7 @@ $(function(){
         classification_type: "SVM"
       }, node);
 
-    } 
+    }
     // else if ($(this).hasClass('run')) {
       
     //   node = new Node({
