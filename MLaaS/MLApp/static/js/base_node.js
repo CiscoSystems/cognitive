@@ -202,6 +202,10 @@ var Node = (function() {
   }
 
 
+  Node.getCurrentForcus = function() {
+    return Node.find_by_id(Node.current_focus[0][0].id);
+  }
+
 
   Node.getWorkflowFrom = function(node_id) {
     var node_list = [];
