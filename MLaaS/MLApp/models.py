@@ -50,6 +50,7 @@ class Data_operation_type(models.Model):
 class User(models.Model):
     username = models.CharField(max_length=50)
     full_name = models.CharField(max_length=50)
+    max_experiments = models.IntegerField(default = 50)
     
     def __str__(self): 
         return self.username
