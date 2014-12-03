@@ -466,8 +466,9 @@ $(function(){
     });
   }
 
+  
   function render_result_graphs(result) {
-
+    
     for (var i=0; i < result['feature_names'].length; i++ ){
       var target_area = d3.select("svg[class='graph column_"+i+"']");
       var dataset = [ 55, 40, 90, 29];

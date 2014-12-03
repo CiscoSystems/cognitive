@@ -112,3 +112,8 @@ li.component {
   padding-right: 40px;
   text-align: center;
 }
+
+svg.graph {
+   width: 100px;
+   height: 100px;
+}
