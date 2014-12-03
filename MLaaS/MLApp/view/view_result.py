@@ -14,7 +14,6 @@ import threading
 import json
 
 CACHE = {}
-pandas.set_option('precision', 4)
 
 class myThread (threading.Thread):
     def __init__(self, threadID, name, experiment, component_id, max_results, cache_results):
@@ -190,7 +189,6 @@ class myThread (threading.Thread):
                 for i in range(result_length):
                     tmp = []
                     for col in input_data.columns:
-                        print "Val",json.dumps(input_data[col][i])
                         if json.dumps(input_data[col][i]) == 'NaN':
                             tmp.append('')
                         else:
@@ -203,8 +201,8 @@ class myThread (threading.Thread):
                 if output_data is not None:
                     self.result["output"] = output_data
                 self.result["missing_values"] = list(input_data.isnull().sum().values)
-                mean = input_data.mean()  
-                median = input_data.median()
+                mean = input_data.mean().round(2) 
+                median = input_data.median().round(2)
                 self.result["mean"] = []
                 self.result["median"] = []
                 for elem in input_data.columns:
@@ -228,12 +226,13 @@ class myThread (threading.Thread):
                 metric_val = input_data.describe()
                 for elem in input_data.columns:
                     if elem in metric_val:
-                        self.result["min"].append(metric_val[elem]["min"])
-                        self.result["max"].append(metric_val[elem]["max"])
-                        self.result["std"].append(metric_val[elem]["std"])
-                        self.result["25_quartile"].append(metric_val[elem]["25%"])
-                        self.result["50_quartile"].append(metric_val[elem]["50%"])
-                        self.result["75_quartile"].append(metric_val[elem]["75%"])
+                        val = metric_val[elem].round(2)
+                        self.result["min"].append(val["min"])
+                        self.result["max"].append(val["max"])
+                        self.result["std"].append(val["std"])
+                        self.result["25_quartile"].append(val["25%"])
+                        self.result["50_quartile"].append(val["50%"])
+                        self.result["75_quartile"].append(val["75%"])
                     else:
                         self.result["min"].append('')
                         self.result["max"].append('')
