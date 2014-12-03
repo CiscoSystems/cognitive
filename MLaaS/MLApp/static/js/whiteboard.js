@@ -299,17 +299,20 @@ $(function(){
         output:1
       });
 
-      var types = "";
-      for (var i = 0; i < _uploaded_file_as_arrays.length; i++){
-        console.log($(".metadata .column"+i).val());
-        types += $(".metadata .column"+i).val() + ",";
+      var metadata_types = "[";
+      for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++){
+        console.log($(".metadata.column"+i).val());
+        metadata_types += $(".metadata.column"+i).val() + ",";
       }
+      metadata_types = metadata_types.slice(0, metadata_types.length-1);
+      metadata_types += "]";
+      console.log(metadata_types);
 
       cognitive_client.createMetadataComponent({
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        column_type: types
+        column_type: metadata_types
       }, node);
 
     }  else if ($(this).hasClass('add_output')) {
