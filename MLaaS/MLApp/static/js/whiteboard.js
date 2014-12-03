@@ -10,10 +10,12 @@ $(function(){
   
   var svg = d3.selectAll("svg");
 
+  
+  $('.projection.plus-bottom').click(add_column_for_projection);
 
   var projections = 0;
-  $('.projection.plus-bottom').click(function(){
-
+  function add_column_for_projection(){
+    if (_uploaded_file_as_text == ""){return;}
     var column_names = _uploaded_file_as_arrays[0];
     var option_string = "";
     for (var i=0; i < column_names.length; i++ ){
@@ -21,11 +23,17 @@ $(function(){
     }
     $('.form-group.projection_form').append('<select class="form-control projection_selects _selects_'+projections+'">'+option_string+'</select>');
     projections++;
-  });
+  };
+  function initializa_projection_column() {
+    $('.form-group.projection_form').empty();
+    projections = 0;
+  }
+
+  $('.remove_duplicates.plus-bottom').click(add_column_for_remove_duplicates);
 
   var _num_remove_duplicates_column = 0;
-  $('.remove_duplicates.plus-bottom').click(function(){
-
+  function add_column_for_remove_duplicates(){
+    if (_uploaded_file_as_text == ""){return;}
     var column_names = _uploaded_file_as_arrays[0];
     var option_string = "";
     for (var i=0; i < column_names.length; i++ ){
@@ -33,7 +41,11 @@ $(function(){
     }
     $('.form-group.remove_duplicates_form').append('<select class="form-control remove_duplicates_selects _selects_'+_num_remove_duplicates_column+'">'+option_string+'</select>');
     _num_remove_duplicates_column++;
-  });
+  };
+  function initializa_remove_duplicates_column() {
+    $('.form-group.remove_duplicates_form').empty();
+    _num_remove_duplicates_column = 0;
+  }
 
 
   $(".menu_bar.introduction").click(function(){
@@ -56,6 +68,8 @@ $(function(){
 
   $(".menu_bar.projection").click(function(){
     m.activate_menubar("projection");
+    initializa_projection_column();
+    add_column_for_projection();
   });
 
 
@@ -66,10 +80,13 @@ $(function(){
 
   $(".menu_bar.remove_column").click(function(){
     m.activate_menubar("remove_column");
+    initializa_remove_duplicates_column();
+    add_column_for_remove_duplicates();
   });
 
   $(".menu_bar.remove_missing_value").click(function(){
     m.activate_menubar("remove_missing_value");
+
 
   });
   
