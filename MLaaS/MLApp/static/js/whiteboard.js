@@ -110,6 +110,7 @@ $(function(){
 
   $(".menu_bar.machine_learning").click(function(){
     m.activate_menubar("machine_learning");
+    description_machine_learning();
   });
 
   $(".menu_bar.data_output").click(function(){
@@ -339,7 +340,9 @@ $(function(){
         output:1
       });
 
-      var argo = $('.machine_learning_select').val()
+      var argo = $('.machine_learning_select').val();
+      var target = $('.machine_learning_target').val();
+      var parcentage = $('.machine_learning_target_parcentage').val();
 
       console.log(argo);
 
@@ -348,8 +351,8 @@ $(function(){
         token: "aaa",
         experiment: 1,
         model_type: argo,
-        train_data_percentage: 70,
-        target_column: 1
+        train_data_percentage: parcentage,
+        target_column: target
       }, node);
 
     }
@@ -500,6 +503,13 @@ function description_normalization() {
   if (_uploaded_file_as_text == "") {return;}
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
     $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
+  }
+}
+function description_machine_learning() {
+  $('.machine_learning_target').empty(); 
+  if (_uploaded_file_as_text == "") {return;}
+  for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
+    $('.machine_learning_target').append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
   }
 }
 

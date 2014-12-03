@@ -203,14 +203,35 @@
           %i.fa.fa-yelp
           Machine Learning
         .form-group
-          %label.col-lg-3.control-label{for:"select"} Method
-          .col-lg-9
-            %select.form-control.machine_learning_select#formula_method#select{style:"font-size:20pt;"}
-              %option Linear_SVM
-              %option Nearest_Neighbours
-              %option Decision_Tree
-              %option Random_Forest
-              %option Naive_Bayes
+          .row
+            %label.col-lg-3.control-label{for:"select"} Method
+            .col-lg-9
+              %select.form-control.machine_learning_select#formula_method#select{style:"font-size:20pt;"}
+                %option Linear_SVM
+                %option Nearest_Neighbours
+                %option Decision_Tree
+                %option Random_Forest
+                %option Naive_Bayes
+        .form-group
+          .row
+            %label.col-lg-3.control-label{for:"select"} Target Column
+            .col-lg-9
+              %select.form-control.machine_learning_target#formula_method#select{style:"font-size:20pt;"}
+
+        .form-group
+          .row
+            %label.col-lg-3.control-label{for:"select"} Train Data Percentage
+            .col-lg-9
+              %select.form-control.machine_learning_target_parcentage#formula_method#select{style:"font-size:20pt;"}
+                %option 10
+                %option 20
+                %option 30
+                %option 40
+                %option 50
+                %option 60
+                %option 70
+                %option 80
+                %option 90
 
         %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
     / .detail.data_output{style: "display: none"}
