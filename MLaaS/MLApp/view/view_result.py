@@ -183,7 +183,14 @@ class myThread (threading.Thread):
                 self.result["feature_names"] = list(input_data.columns)
                 if feature_types is not None:
                     self.result["feature_types"] = feature_types
-                self.result["data"] = input_data[:self.max_results].to_json()
+                #self.result["data"] = input_data[:self.max_results].to_json()
+                self.result["data"]= []
+                result_length = min (len(input_data), self.max_results)
+                for i in range(result_length):
+                    tmp = []
+                    for col in input_data.columns:
+                        tmp.append(input_data[col][i])
+                    self.result["data"].append(tmp)
                 if output_data is not None:
                     self.result["output"] = output_data
                 self.result["missing_values"] = list(input_data.isnull().sum().values)
