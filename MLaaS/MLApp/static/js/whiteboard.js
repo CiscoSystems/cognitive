@@ -193,7 +193,7 @@ $(function(){
         user_id: 1,
         token: "aaa",
         experiment: 1,
-        component_type: "column",
+        component_type: "Column",
         component_id: column_num,
         op_type: method
       }, node);

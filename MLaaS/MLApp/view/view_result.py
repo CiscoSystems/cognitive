@@ -30,7 +30,6 @@ class myThread (threading.Thread):
     def run(self):
         print "Run called for thread name", self.name, "End component", self.comp_id
         exp = Experiment.objects.get(pk=self.experiment)
-        print exp.workflow.graph_data
         graph = exp.workflow.graph_data
         graph_data = {}
         print graph
@@ -95,42 +94,77 @@ class myThread (threading.Thread):
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
+                        if column_name not in input_data:
+                            print "Column name ",column_name, " not present. Skipping"
+                            continue#throw error in module status
+                        if input_data[column_name].dtype == 'object':
+                            print "Column name ",column_name, " is not integer/float. Skipping"
+                            continue#throw error in module status 
                         input_data[column_name] = input_data[column_name] + constant_value
                     if op.function_subtype == 'Sub':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
+                        if column_name not in input_data:
+                            print "Column name ",column_name, " not present. Skipping"
+                            continue#throw error in module status
+                        if input_data[column_name].dtype == 'object':
+                            print "Column name ",column_name, " is not integer/float. Skipping"
+                            continue#throw error in module status 
                         input_data[column_name] = input_data[column_name] - constant_value
                     if op.function_subtype == 'Mult':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
+                        if column_name not in input_data:
+                            print "Column name ",column_name, " not present. Skipping"
+                            continue#throw error in module status
+                        if input_data[column_name].dtype == 'object':
+                            print "Column name ",column_name, " is not integer/float. Skipping"
+                            continue#throw error in module status 
                         input_data[column_name] = input_data[column_name] * constant_value
                     if op.function_subtype == 'Div':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
+                        if column_name not in input_data:
+                            print "Column name ",column_name, " not present. Skipping"
+                            continue#throw error in module status
+                        if input_data[column_name].dtype == 'object':
+                            print "Column name ",column_name, " is not integer/float. Skipping"
+                            continue#throw error in module status 
                         input_data[column_name] = input_data[column_name] / constant_value
                     if op.function_subtype == 'Normalize':
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         sum_array = input_data.sum(axis=0)
+                        if column_name not in sum_array:
+                            print "Column name ",column_name, " not present. Skipping"
+                            continue#throw error in module status
                         normalization_value = sum_array[column_name]
                         input_data[column_name] = input_data[column_name] / normalization_value
             if op.function_type == 'Filter' :
                 if op.function_arg == 'Table':
                     if op.function_subtype == 'Project':
                         column_id_list = json.loads(op.function_arg_id)
-                        excluded_columns = range(len(input_data.columns))
+                        excluded_columns = range(len(feature_names))
                         for elem in column_id_list:#Bug: Calling Projection twice will break indexing logic
                             excluded_columns.remove(elem)
-                        input_data = input_data.drop(input_data.columns[excluded_columns], axis=1)
+                        excluded_columns = [ x for x in excluded_columns if feature_names[x] in input_data ]
+                        print "Excluded columns ", excluded_columns
+                        if excluded_columns:
+                            input_data = input_data.drop(feature_names[excluded_columns], axis=1)
                     if op.function_subtype == 'RemoveDup':
                         column_id_list = json.loads(op.function_arg_id)
                         column_name_list = []
                         for elem in column_id_list:
-                            column_name_list.append(feature_names[elem])
-                        input_data = input_data.drop_duplicates(subset = column_name_list) 
+                            column_name = feature_names[elem]
+                            if column_name not in input_data:
+                                print "Column name ",column_name, " not present. Skipping"
+                                continue#throw error in module status
+                            column_name_list.append(column_name)
+                        if column_name_list:
+                            input_data = input_data.drop_duplicates(subset = column_name_list) 
                     if op.function_subtype == 'RemoveMissing':
                         if op.function_subtype_arg == 'Replace_mean':
                             input_data = input_data.fillna(input_data.mean())
@@ -194,7 +228,8 @@ class myThread (threading.Thread):
                 self.result["total_rows"] = input_data.shape[0]    
                 self.result["total_columns"] = input_data.shape[1]   
                 if self.cache_results == True:
-                    CACHE[self.experiment] = input_data 
+                    CACHE[self.experiment] = input_data
+                print self.result
                 break
                          
 
