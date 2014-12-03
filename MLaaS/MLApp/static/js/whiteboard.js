@@ -154,6 +154,7 @@ $(function(){
       var request_text = "[";
       for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
         request_text += $(".add_row._column_" + i).val();
+        request_text += ","
       }
 
       request_text = request_text.slice(0, request_text.length-1) 
@@ -302,7 +303,7 @@ $(function(){
       var metadata_types = "[";
       for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++){
         console.log($(".metadata.column"+i).val());
-        metadata_types += $(".metadata.column"+i).val() + ",";
+        metadata_types += "\"" + $(".metadata.column"+i).val() + "\",";
       }
       metadata_types = metadata_types.slice(0, metadata_types.length-1);
       metadata_types += "]";
@@ -483,7 +484,7 @@ function description_addrow() {
   $(".add_row_form").append('<li class="add_row column_'+i+'" style="padding-top: 10px"></li>');
     $(".add_row_form li.column_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'<p/>');
     $("<input/>", {
-      "class": "form-control floating-label"+" _column_" + i,
+      "class": "add_row form-control floating-label"+" _column_" + i,
       id: "_column_" + i,
       type:"text", 
       placeholder: "value",
