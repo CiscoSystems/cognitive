@@ -191,6 +191,10 @@ class myThread (threading.Thread):
                     for col in input_data.columns:
                         tmp.append(input_data[col][i])
                     self.result["data"].append(tmp)
+                self.result["graph_data"] = []
+                for elem in feature_names:
+                    tmp = [["a","b","c","d"],[1,1,5,200]]
+                    self.result["graph_data"].append(tmp)
                 if output_data is not None:
                     self.result["output"] = output_data
                 self.result["missing_values"] = list(input_data.isnull().sum().values)
