@@ -125,20 +125,25 @@ $(function(){
       
     } else if ($(this).hasClass('add_row')) {
 
+      console.log("add_row test");
+      
       node = new Node({
-        name:'+ Row',
+        name:'Add Row',
         input: 1,
         output:1
       });
 
       var request_text = "";
       for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        request_text += $("#_column_" + i).val();
+        request_text += $(".add_row._column_" + i).val();
         if (i == _uploaded_file_as_arrays[0] - 2) {
           break;
         }
         request_text += ",";
       }
+
+      request_text = request_text.slice(0, request_text.length-1) 
+      console.log(request_text);
 
       cognitive_client.createAddRowComponent({
         user_id: 1,
@@ -454,7 +459,7 @@ function description_addrow() {
   _uploaded_file_as_arrays[0];
   console.log(_uploaded_file_as_arrays[0]);
   for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-    $(".add_row_form").append('<li class="column_'+i+'" style="padding-top: 10px"></li>');
+    $(".add_row_form").append('<li class="add_row column_'+i+'" style="padding-top: 10px"></li>');
     $(".add_row_form li.column_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'<p/>');
     $("<input/>", {
       "class": "form-control floating-label"+" _column_" + i,
