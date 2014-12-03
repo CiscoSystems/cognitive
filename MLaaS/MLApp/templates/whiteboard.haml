@@ -191,12 +191,6 @@
         .form-group
           %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
         %button.btn.btn-material-indigo.add_btn.add_formula{type:"button", style:"float:right"} ADD
-    / .detail.filter{style: "display: none"}
-    /   .content
-    /     %h2 Filtering
-    /     .form-group
-    /       %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
-    /     %button.btn.btn-material-indigo.add_btn.add_filtering{type:"button", style:"float:right"} ADD
     .detail.machine_learning{style: "display: none"}
       .content
         %h2
@@ -234,22 +228,12 @@
                 %option 90
 
         %button.btn.btn-material-indigo.add_btn.add_machine_learning{type:"button", style:"float:right"} ADD
-    / .detail.data_output{style: "display: none"}
-    /   .content
-    /     %h2 Output
-    /     .form-group
-    /       %label.col-lg-2.control-label{for:"data_output"} Name
-    /       .col-lg-10
-    /         %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}            
         .form-group
           %label.col-lg-2.control-label{for:"data_output"} Type
           .col-lg-10
             %input.form-control.floating-label#focusedInput{type:"text", placeholder: "Write something to make the label float"}
         %button.btn.btn-material-indigo.add_btn.add_output{type:"button", style:"float:right"} ADD
   .whiteboard-flyout-left-menu{style:"position:fixed; float:right; right:0; top:45px; height:100%; border-left: solid 1px gray; width:60px;text-align:center;"}
-    / %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
-    /   %i.fa.fa-paperclip{style:"font-size:32pt; padding:0; margin:0;"}
-    /   Share
     %p#execute-btn.add-btn.execute-btn{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
       %i.fa.fa-play-circle-o{style:"font-size:32pt; padding:0; margin:0;"}
       Run
@@ -257,16 +241,3 @@
       %p{style:"font-size:12pt; border-bottom:solid 1px gray; padding-top:25px; padding-bottom:20px; margin:0; "}
         %i.fa.fa-bar-chart{style:"font-size:27pt; padding:0; margin:0;"}
         Show
-  #result_table{style:""}
-    %table
-      %tr
-        %th aaa
-        %th aaa
-        %th aaa
-        %th aaa
-      %tr
-        %th aaa
-        %th aaa
-        %th aaa
-        %th aaa
-
