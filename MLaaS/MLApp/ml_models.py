@@ -15,6 +15,7 @@ class Classifier:
         self.train_data_percentage = train_data_percentage
         self.target_feature = target_feature
         self.input_features = input_features
+        self.parallel_jobs = 1
         if classifier_type == 'Linear_SVM':
             self.clf = SVC(kernel='linear', C=0.025)
         elif classifier_type == 'Nearest_Neighbours':
@@ -22,7 +23,7 @@ class Classifier:
         elif classifier_type == 'Decision_Tree':
             self.clf = DecisionTreeClassifier(max_depth=5)
         elif classifier_type == 'Random_Forest':
-            self.clf = RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)
+            self.clf = RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1, n_jobs = self.parallel_jobs)
         elif classifier_type == 'Naive_Bayes':
             self.clf = GaussianNB()
         

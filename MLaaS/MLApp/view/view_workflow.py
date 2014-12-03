@@ -1,4 +1,4 @@
-from ..models import Workflow
+from ..models import Workflow, Experiment
 from ..serializers import WorkflowSerializer
 from ..views import send_response 
 from rest_framework import viewsets
@@ -25,10 +25,22 @@ class WorkFlowViewSet(viewsets.ViewSet):
 
     def create(self,request):
         data = json.loads(JSONRenderer().render(request.DATA))
-        serializer = WorkflowSerializer(data=request.DATA)
-        if serializer.is_valid():
-           serializer.save()
-        return send_response(request.method,serializer)
+        exp_id = int(data["experiment"])
+        exp = Experiment.objects.get(pk = exp_id)
+        try:#Temporarily for accepting changes through POST requests from UI
+            workflow = exp.workflow
+        except Workflow.DoesNotExist:
+            print "Workflow is not yet created. Creating one"
+            serializer = WorkflowSerializer(data=request.DATA)
+            if serializer.is_valid():
+                serializer.save()
+            return send_response(request.method,serializer)
+        else:
+            print "Workflow already exists. Modifying one"
+            serializer = WorkflowSerializer(workflow,data=request.DATA)
+            if serializer.is_valid():
+                serializer.save()
+            return send_response(request.method,serializer)
     
     def update(self,request, pk=None):
         exp = Workflow.objects.get(pk=pk)

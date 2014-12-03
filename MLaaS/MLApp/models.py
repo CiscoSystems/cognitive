@@ -93,7 +93,7 @@ class Component(models.Model):
    
 class Workflow(models.Model):
     experiment = models.OneToOneField(Experiment)
-    graph_data = models.CharField(max_length=50)
+    graph_data = models.CharField(max_length=100)
   
 class MLearning(models.Model):
     MODEL_TYPE = (
