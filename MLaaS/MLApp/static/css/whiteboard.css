@@ -108,6 +108,8 @@ li.component {
 .result_table {
   text-align: center;
   width: 100%;
+  margin-left: 30px;
+  margin-top:30px;
   padding-left: 0px;
   padding-right: 40px;
   text-align: center;
@@ -119,19 +121,19 @@ svg.graph {
 }
 
 .bar {
-  fill:#1e8cff;
+  fill:steelblue;
 }
 .bar:hover {
   fill:#ffd124;
 }
 
 tr.metrics {
-  background: #1e8cff;
+  background: midnightblue;
   color: white;
 }
 
 tr.result_row:hover {
-  background: #Ee85b5;
+  background: powderblue;
 }
 
 .machine_learning_result {
@@ -140,4 +142,15 @@ tr.result_row:hover {
 
 .static_results{
   background: #eeeeee;
+}
+
+/*.result_wrapper {
+  padding-left: 20px;
+}*/
+
+.projection_selects {
+  margin-top: 20px;
+}
+.remove_duplicates_selects{
+  margin-top: 20px;
 }
