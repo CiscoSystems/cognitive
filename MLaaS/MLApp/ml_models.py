@@ -46,7 +46,7 @@ class Classifier:
         false_positives = mat[0][1]
         true_negatives = mat[0][0]
         false_negatives = mat[1][0]
-        result = {'accuracy_score': accuracy, 'recall_score':recall, 'precision_score':precision, 'f1_score':f1, 'true_positives':true_positives, 'false_positives':false_positives, 'true_negatives':true_negatives, 'false_negatives':false_negatives}
+        result = {'Accuracy Score': accuracy, 'Recall Score':recall, 'Precision Score':precision, 'F1 Score':f1, 'True Positives':true_positives, 'False Positives':false_positives, 'True Negatives':true_negatives, 'False Negatives':false_negatives}
         print result
         return result
 
