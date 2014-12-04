@@ -454,11 +454,10 @@ $(function(){
       type: "GET",
       data: "",
       success: function(result) { 
-
+        a = result;
         console.log(result);
         var z = serialize_result_to_html(result);
-
-        a = result;
+        
         $.colorbox({html:"<h1><i class='fa.fa-bar-chart'></i> Results</h1><p>"+z+"</p>", width: "90%"});
 
         render_result_graphs(result);
@@ -534,8 +533,28 @@ $(function(){
 
   function serialize_result_to_html(result) {
     
-    var _html ="<table class='result_table'>"
+    var _html ="";
 
+    if (Object.keys(result).indexOf('output')) {
+      _html += "<h2>Model Evaluation</h2>" 
+      _html += "<table class='result_table machine_learning_result'>";
+
+      var ml_output = result['output'];
+      var keys = Object.keys(ml_output);
+      
+      _html += "<tr style='background:#1e8cff;'>"
+      for (var i=0; i<keys.length; i++) {
+        _html += "<th>"+keys[i]+"</th>"
+      }
+      _html += "</tr><tr>"
+      for (var i=0; i<keys.length; i++) {
+        _html += "<th>"+ml_output[keys[i]]+"</th>"
+      }
+      _html += "</tr></table>"
+    }
+
+    _html += "<h2>Model Evaluation</h2>" 
+    _html += "<table class='result_table'>"
 
     _html +="<tr><th></th>"
     
