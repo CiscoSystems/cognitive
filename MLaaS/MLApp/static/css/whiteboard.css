@@ -133,3 +133,11 @@ tr.metrics {
 tr.result_row:hover {
   background: #Ee85b5;
 }
+
+.machine_learning_result {
+  margin-bottom: 30px;
+}
+
+.static_results{
+  background: #eeeeee;
+}
