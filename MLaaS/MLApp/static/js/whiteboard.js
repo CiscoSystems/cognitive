@@ -385,7 +385,7 @@ $(function(){
     var start = Node.find_by({name:"INPUT_DATA"});
     var node_list = Node.getWorkflowFrom(start.getId());
     
-    if (node_list.length < 2) {
+    if (node_list.length < 1) {
       alert("no workflow or input files");
       return ;
     }
@@ -393,6 +393,8 @@ $(function(){
     var components_id_list = node_list.map(function(n){
       return n.getComponentId();
     })
+    console.log("components_id_list");
+    console.log(components_id_list);
 
     console.log(components_id_list);
     // var flow_path = function(x){ 
@@ -533,16 +535,16 @@ $(function(){
 
   function serialize_result_to_html(result) {
     
-    var _html ="";
+    var _html ="<div id='result_wrapper'>";
 
     if (Object.keys(result).indexOf('output') >= 0) {
-      _html += "<h2>Model Evaluation</h2>" 
+      _html += "<h2 style='border-left: solid 35px midnightblue;padding-left: 8px;'>Model Evaluation</h2>" 
       _html += "<table class='result_table machine_learning_result'>";
 
       var ml_output = result['output'];
       var keys = Object.keys(ml_output);
       
-      _html += "<tr style='background:#1e8cff; color:white'>"
+      _html += "<tr class='metrics'>"
       for (var i=0; i<keys.length; i++) {
         _html += "<th>"+keys[i]+"</th>"
       }
@@ -553,10 +555,10 @@ $(function(){
       _html += "</tr></table>"
     }
 
-    _html += "<h2>Statistics</h2>" 
+    _html += "<h2 style='border-left: solid 35px midnightblue;padding-left: 8px;'></i>Statistics</h2>" 
     _html += "<table class='result_table'>"
 
-    _html +="<tr><th>　　　　　　　　　　　　　</th>"
+    _html +="<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>"
     
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th><svg class='graph column_"+i+"'></svg></th>"
@@ -644,7 +646,7 @@ $(function(){
       }
       _html +="</tr>"
     }
-    _html += "</table>"
+    _html += "</table></div>"
 
     return _html;
   }
