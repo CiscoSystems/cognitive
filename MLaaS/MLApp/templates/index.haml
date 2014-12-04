@@ -5,5 +5,45 @@
   %script{src: "http://d3js.org/d3.v3.min.js", charset:"utf-8"}
   %script{src: "{{STATIC_URL}}js/index.js", type: "text/javascript"}
 - block 'contents'
-  %svg.graph{ width:"100px", height:"100px"}
+
+  %div{style:"width:100%; padding:50px; padding-left:100px;"}
+    %h2{style:"color: #4c79ff; padding-left:15px; border-bottom: solid 1px; border-left: solid 7px; width: 200px;"} data source
+    .datasource
+      .datasource-image{style:"width:35%; height:250px; float:right;  text-align:left"}
+        %i.fa.fa-file-text-o{style:"font-size:220pt;"}
+      .datasource-text{style:"width:65%; height:250px; background:#eeeeee; text-align:right; padding-right: 60px;"}
+        %h2 something exptranation of data source
+
+    %p{style:"clear:both"}
+
+    %h2{style:"color: #4c79ff; padding-left:15px; border-bottom: solid 1px; border-left: solid 7px; width: 400px;"} data transformation
+    .transformation{style:"height:300px;"}
+      .transformation-image{style:"width:35%; height:250px; float:left; text-align:right"}
+        %i.fa.fa-file-text-o{style:"font-size:220pt;"}
+      .transformation-text{style:"width:65%; height:250px; float:right; background:#eeeeee"}
+        %h2 plz write explanation
+
+    %p{style:"clear:both"}
+  
+    %h2{style:"color: #4c79ff; padding-left:15px;border-bottom: solid 1px; border-left: solid 7px; width: 400px;"} machine learning models
+    .machine-learning{style:"height:380px;"}
+      .machine-learning-image{style:"width:35%; height:250px; float:right; "}
+        %i.fa.fa-file-text-o{style:"font-size:220pt;"}
+      .machine-learning-text{style:"width:65%; height:250px; background:#eeeeee"}
+
+    %span Cognitive is designed to be a multi-user machine learning service.
+    %br
+    %span Each user ican create multiple experiments which is limited by the user quota(set by the admin).
+    %br
+    %span Each user is allowed to load/update previously created experiments.
+    %br
+    %span The same experiment can be shared with multiple users.
+    %br
+    %span Each user is authenticated using token mechanism. Token has to be passed as an argument for every rest api call.
+    %br
+    %span Data Input and Output can be a HTTP file, CSV file or text file
+    %br
+    %span Each experiment has a single workflow which specifies the graph flow of events. 
+    %br
+    %span The user starts the execution using a workflow POST request. Each workflow execution is asynchronously handled in a separate thread so that request thread is not blocked. The user can poll the status of the workflow and get the list of completed events using the GET request.
 

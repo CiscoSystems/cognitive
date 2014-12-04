@@ -245,7 +245,7 @@ $(function(){
     } else if ($(this).hasClass('add_remove_duplicates')) {
       
       node = new Node({
-        name:'- Column',
+        name:'Remove Duplicates',
         input:1,
         output:1
       });
@@ -542,7 +542,7 @@ $(function(){
       var ml_output = result['output'];
       var keys = Object.keys(ml_output);
       
-      _html += "<tr style='background:#1e8cff;'>"
+      _html += "<tr style='background:#1e8cff; color:white'>"
       for (var i=0; i<keys.length; i++) {
         _html += "<th>"+keys[i]+"</th>"
       }

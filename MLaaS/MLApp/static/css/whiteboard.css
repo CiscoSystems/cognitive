@@ -126,8 +126,8 @@ svg.graph {
 }
 
 tr.metrics {
-  background-color: #ffd124;
-  color: #333333;
+  background: #1e8cff;
+  color: white;
 }
 
 tr.result_row:hover {
