@@ -137,3 +137,7 @@ tr.result_row:hover {
 .machine_learning_result {
   margin-bottom: 30px;
 }
+
+.static_results{
+  background: #eeeeee;
+}
