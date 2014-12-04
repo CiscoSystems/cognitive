@@ -545,81 +545,74 @@ $(function(){
     _html +="</tr>"
 
     _html += '<tr class="metrics">'    
-    _html +="<th>metrics name</th>"
+    _html +="<th>Statistics</th>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
     _html += "</tr>"
 
     _html += "<tr class='result_row'>"
-    _html +="<th>standard deviation</th>"
+    _html +="<th>Std Deviation</th>"
     for (var i=0; i < result['std'].length; i++ ){
       _html += "<th>" + result['std'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
     
-    _html +="<th>75_quartile</th>"
+    _html +="<th>75 Quartile</th>"
     for (var i=0; i < result['75_quartile'].length; i++ ){
       _html += "<th>" + result['75_quartile'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
     
-    _html +="<th>50_quartile</th>"
+    _html +="<th>50 Quartile</th>"
     for (var i=0; i < result['50_quartile'].length; i++ ){
       _html += "<th>" + result['50_quartile'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>25_quartile</th>"
+    _html +="<th>25 Quartile</th>"
     for (var i=0; i < result['25_quartile'].length; i++ ){
       _html += "<th>" + result['25_quartile'][i] + "</th>"
     }
-    _html += "</tr>"
 
-    _html += "<tr class='metrics'>"
-
-    _html +="<th>metrics name</th>"
-    for (var i=0; i < result['feature_names'].length; i++ ){
-      _html += "<th>" + result['feature_names'][i] + "</th>"
-    }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>max</th>"
+    _html +="<th>Max</th>"
     for (var i=0; i < result['max'].length; i++ ){
       _html += "<th>" + result['max'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>mean</th>"
+    _html +="<th>Mean</th>"
     for (var i=0; i < result['mean'].length; i++ ){
       _html += "<th>" + result['mean'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>median</th>"
+    _html +="<th>Median</th>"
     for (var i=0; i < result['median'].length; i++ ){
       _html += "<th>" + result['median'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>min</th>"
+    _html +="<th>Min</th>"
     for (var i=0; i < result['min'].length; i++ ){
       _html += "<th>" + result['min'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>missing_values</th>"
+    _html +="<th>Missing Values</th>"
     for (var i=0; i < result['missing_values'].length; i++ ){
       _html += "<th>" + result['missing_values'][i] + "</th>"
     }
     _html += "</tr><tr class='result_row'>"
 
-    _html +="<th>unique_values</th>"
+    _html +="<th>Unique Values</th>"
     for (var i=0; i < result['unique_values'].length; i++ ){
       _html += "<th>" + result['unique_values'][i] + "</th>"
     }
     
-    _html += "</tr><tr class='metrics'><td>metrics name</td>"
+    _html += "</tr><tr class='metrics'><td></td>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
