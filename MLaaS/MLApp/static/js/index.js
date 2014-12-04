@@ -1,8 +1,5 @@
 $(function(){
 
-// $.colorbox({html:"<img src='/static/images/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false});
-
-
 var dataset = [ 55, 40, 90, 29];
 
 var xAxis = d3.svg.axis();

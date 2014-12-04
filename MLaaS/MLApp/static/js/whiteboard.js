@@ -4,7 +4,7 @@ var _uploaded_file_as_arrays = [];
 var _debug_tmp;
 
 $(function(){
-  
+
   var m = new Manager();
   var cognitive_client = new CognitiveAPIClientV1();
   
@@ -424,6 +424,22 @@ $(function(){
       experiment: 1,
       graph_data: flow_path
     });
+
+    $.colorbox({html:"<img src='/static/images/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false, transition:"none", opacity:0, arrowKey:false, overlayClose:false, fastIframe:false, width:"300px", height:"300px"});
+    $('#cboxClose').remove();
+    $('#cboxTopLeft').remove();
+    $('#cboxTopCenter').remove();
+    $('#cboxTopRight').remove();
+    $('#cboxMiddleLeft').remove();
+    $('#cboxMiddleRight').remove();
+    $('#cboxBottomCenter').remove();
+    $('#cboxBottomLeft').remove()
+    $('#cboxBottomRight').remove();
+    setTimeout("$.colorbox.close()", 700);
+    
+    // $.colorbox({html:"<img src='/static/images/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false});
+    // setTimeout("$.colorbox.close()", 700);
+
   }); 
 
 
