@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view
 from datetime import datetime
+from pandas import *
 import json
 import csv
 import urllib2
@@ -72,14 +73,9 @@ class OperationViewSet(viewsets.ViewSet):
             elif data["input_file_type"] == "http":
                 filename = "/tmp/"+str(data["experiment"])+ "_" + data["input_file"].split('/')[-1]
                 print "Filename ", filename
-                f = open(filename, 'w')
                 response = urllib2.urlopen(data["input_file"])
-                cr = csv.reader(response)
-                for row in cr:
-                    print ', '.join(row)
-                    f.write(','.join(row))
-                    f.write('\n')
-                f.close()
+                csv_data = read_csv(response)
+                csv_data.to_csv(filename, index= False)
                 op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
                             function_subtype = 'Input', function_subtype_arg = filename) 
                 op.save()
