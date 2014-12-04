@@ -459,7 +459,7 @@ $(function(){
         var z = serialize_result_to_html(result);
 
         a = result;
-        $.colorbox({html:"<h1><i class='fa.fa-bar-chart'>Results</h1><p>"+z+"</p>", width: "90%"});
+        $.colorbox({html:"<h1><i class='fa.fa-bar-chart'></i> Results</h1><p>"+z+"</p>", width: "90%"});
 
         render_result_graphs(result);
       }
@@ -488,16 +488,11 @@ $(function(){
      .data(dataset)
      .enter()
      .append("rect")
-     .attr("x", function(d,i){
-      return i * 20 + 6;
-     })
-     .attr('fill', '#1e8cff')
+     .attr("x", function(d,i){ return i * 22 + 7; })
+     .attr("y", function(d){ return h - d; })
      .attr('class', 'bar')
-     .attr("y", function(d){
-      return h - d;
-     })
-     .attr('height', function(d){ return d -3; })
-     .attr("width", (w/dataset.length - 7));
+     .attr('height', function(d){ return d -4; })
+     .attr("width", (w/dataset.length - 6));
 
     svg.append('rect')
       .attr("x", 3)
@@ -507,7 +502,6 @@ $(function(){
       .attr('stroke', "black" )
       .attr('fill', 'none')
       .attr('stroke-width', "1" )
-
 
     }
 
@@ -525,31 +519,31 @@ $(function(){
     }
     _html +="</tr>"
 
-    _html += '<tr style="background:#ffd124;color: #333333;">'    
+    _html += '<tr class="metrics">'    
     _html +="<th>metrics name</th>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
     _html += "</tr>"
 
-    _html += "<tr>"
+    _html += "<tr class='result_row'>"
     _html +="<th>std</th>"
     for (var i=0; i < result['std'].length; i++ ){
       _html += "<th>" + result['std'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
     
     _html +="<th>75_quartile</th>"
     for (var i=0; i < result['75_quartile'].length; i++ ){
       _html += "<th>" + result['75_quartile'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
     
     _html +="<th>50_quartile</th>"
     for (var i=0; i < result['50_quartile'].length; i++ ){
       _html += "<th>" + result['50_quartile'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>25_quartile</th>"
     for (var i=0; i < result['25_quartile'].length; i++ ){
@@ -557,57 +551,57 @@ $(function(){
     }
     _html += "</tr>"
 
-    _html += "<tr style='background:#1e8cff;color: white;'>"
+    _html += "<tr class='metrics'>"
 
     _html +="<th>metrics name</th>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>max</th>"
     for (var i=0; i < result['max'].length; i++ ){
       _html += "<th>" + result['max'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>mean</th>"
     for (var i=0; i < result['mean'].length; i++ ){
       _html += "<th>" + result['mean'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>median</th>"
     for (var i=0; i < result['median'].length; i++ ){
       _html += "<th>" + result['median'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>min</th>"
     for (var i=0; i < result['min'].length; i++ ){
       _html += "<th>" + result['min'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>missing_values</th>"
     for (var i=0; i < result['missing_values'].length; i++ ){
       _html += "<th>" + result['missing_values'][i] + "</th>"
     }
-    _html += "</tr><tr>"
+    _html += "</tr><tr class='result_row'>"
 
     _html +="<th>unique_values</th>"
     for (var i=0; i < result['unique_values'].length; i++ ){
       _html += "<th>" + result['unique_values'][i] + "</th>"
     }
     
-    _html += "</tr><tr style='background:#09be00;color: white;'><td>metrics name</td>"
+    _html += "</tr><tr class='metrics'><td>metrics name</td>"
     for (var i=0; i < result['feature_names'].length; i++ ){
       _html += "<th>" + result['feature_names'][i] + "</th>"
     }
     _html += "</tr>"
 
     for (var i=0; i < result['data'].length; i++ ){
-      _html +="<tr><th></th>"
+      _html +="<tr class='result_row'><th></th>"
       for (var j=0; j < result['data'][i].length; j++ ){
         _html += "<th>" + result['data'][i][j] + "</th>"
       }

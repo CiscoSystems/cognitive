@@ -117,3 +117,19 @@ svg.graph {
    width: 100px;
    height: 100px;
 }
+
+.bar {
+  fill:#1e8cff;
+}
+.bar:hover {
+  fill:#ffd124;
+}
+
+tr.metrics {
+  background-color: #ffd124;
+  color: #333333;
+}
+
+tr.result_row:hover {
+  background: #Ee85b5;
+}

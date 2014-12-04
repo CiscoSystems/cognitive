@@ -17,16 +17,12 @@ svg.selectAll("rect")
    .data(dataset)
    .enter()
    .append("rect")
-   .attr("x", function(d,i){
-    return i * 20 + 6;
-   })
-   .attr('fill', '#1e8cff')
+   .attr("x", function(d,i){ return i * 22 + 7; })
+   .attr("y", function(d){ return h - d; })
    .attr('class', 'bar')
-   .attr("y", function(d){
-    return h - d;
-   })
+   
    .attr('height', function(d){ return d -3; })
-   .attr("width", (w/dataset.length - 7));
+   .attr("width", (w/dataset.length - 6));
 
   svg.append('rect')
     .attr("x", 3)
@@ -36,22 +32,5 @@ svg.selectAll("rect")
     .attr('stroke', "black" )
     .attr('fill', 'none')
     .attr('stroke-width', "1" )
-
-
-// svg.append('line')
-//   .attr('x1', 0 )
-//   .attr('y1', h - 3 )
-//   .attr('x2', w )
-//   .attr('y2', h - 3 )
-//   .attr('stroke',"black" )
-//   .attr('stroke-width',"1");
-
-// svg.append('line')
-//   .attr('x1', 3 )
-//   .attr('y1', 0 )
-//   .attr('x2', 3 )
-//   .attr('y2', h )
-//   .attr('stroke',"black" )
-//   .attr('stroke-width',"1");
   
 })
