@@ -535,7 +535,7 @@ $(function(){
     
     var _html ="";
 
-    if (Object.keys(result).indexOf('output')) {
+    if (Object.keys(result).indexOf('output') >= 0) {
       _html += "<h2>Model Evaluation</h2>" 
       _html += "<table class='result_table machine_learning_result'>";
 
@@ -553,7 +553,7 @@ $(function(){
       _html += "</tr></table>"
     }
 
-    _html += "<h2>Model Evaluation</h2>" 
+    _html += "<h2>Statistics</h2>" 
     _html += "<table class='result_table'>"
 
     _html +="<tr><th></th>"
