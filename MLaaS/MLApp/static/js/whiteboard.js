@@ -468,41 +468,66 @@ $(function(){
 
   
   function render_result_graphs(result) {
+
+    var w = 100;
+    var h = 100;
     
     for (var i=0; i < result['feature_names'].length; i++ ){
       var target_area = d3.select("svg[class='graph column_"+i+"']");
-      var dataset = [ 55, 40, 90, 29];
+      var dataset = result.graph_data[i][1]
 
-    var xAxis = d3.svg.axis();
+      if (d3.max(dataset) == d3.min(dataset)) {
+        dataset = [100,100,100,100];        
+      }
+      console.log(dataset.length);
+      for (var j=0; j < dataset.length; j++) {
+        console.log("test");
+        if (dataset[j] >= 96) {
+          dataset[j] -= 4;
+        }
+      }
+      if (dataset.length == 3){
+        dataset.push(0);
+      } else if (dataset.length == 2) {
+        var _t = [0];
+        _t.push(dataset[0]);
+        _t.push(0);
+        _t.push(dataset[1]);
+        dataset = _t;
+      } else if (dataset.length == 1) {
+        var _t = [0];
+        _t.push(dataset[0]);
+        _t.push(0)
+        _t.push(0)
+        dataset = _t;
+      }
 
-      var yScale = d3.scale.linear()
-            .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-            .range([0, 350]);
+      // var xAxis = d3.svg.axis();
+      // var yScale = d3.scale.linear()
+      //       .domain([0, d3.max(dataset)])
+      //       .range([0, 100]);
 
-  var w = 100;
-  var h = 100;
-  // var svg = d3.select("body").selectAll("svg")
-  var svg = d3.select("svg[class='graph column_"+i+"']");
 
-  svg.selectAll("rect")
-     .data(dataset)
-     .enter()
-     .append("rect")
-     .attr("x", function(d,i){ return i * 22 + 7; })
-     .attr("y", function(d){ return h - d; })
-     .attr('class', 'bar')
-     .attr('height', function(d){ return d -4; })
-     .attr("width", (w/dataset.length - 6));
+      var svg = d3.select("svg[class='graph column_"+i+"']");
 
-    svg.append('rect')
-      .attr("x", 3)
-      .attr("y", 3)
-      .attr('width',  w - 6 )
-      .attr('height', h - 6 )
-      .attr('stroke', "black" )
-      .attr('fill', 'none')
-      .attr('stroke-width', "1" )
+      svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+         .attr("x", function(d,i){ return i * 22 + 7; })
+         .attr("y", function(d){ return h - d; })
+         .attr('class', 'bar')
+         .attr('height', function(d){ return d -4; })
+         .attr("width", (w/dataset.length - 6));
 
+      svg.append('rect')
+        .attr("x", 3)
+        .attr("y", 3)
+        .attr('width',  w - 6 )
+        .attr('height', h - 6 )
+        .attr('stroke', "black" )
+        .attr('fill', 'none')
+        .attr('stroke-width', "1" )
     }
 
   }
@@ -527,7 +552,7 @@ $(function(){
     _html += "</tr>"
 
     _html += "<tr class='result_row'>"
-    _html +="<th>std</th>"
+    _html +="<th>standard deviation</th>"
     for (var i=0; i < result['std'].length; i++ ){
       _html += "<th>" + result['std'][i] + "</th>"
     }
