@@ -168,9 +168,9 @@ class myThread (threading.Thread):
                             input_data = input_data.drop_duplicates(subset = column_name_list) 
                     if op.function_subtype == 'RemoveMissing':
                         if op.function_subtype_arg == 'Replace_mean':
-                            input_data = input_data.fillna(input_data.mean())
+                            input_data = input_data.fillna(input_data.mean().round(2))
                         if op.function_subtype_arg == 'Replace_median':
-                            input_data = input_data.fillna(input_data.median())
+                            input_data = input_data.fillna(input_data.median().round(2))
                         if op.function_subtype_arg == 'Replace_mode':
                             input_data = input_data.fillna(input_data.mode())
                         if op.function_subtype_arg == 'Drop_row':

@@ -37,10 +37,10 @@ class Classifier:
         X_train, X_test, Y_train, Y_actual = cross_validation.train_test_split(features, labels, test_size=test_data_percentage, random_state=0) 
         self.clf.fit(X_train, Y_train)
         Y_pred = self.clf.predict(X_test) 
-        accuracy = accuracy_score(Y_actual, Y_pred)
-        recall = recall_score(Y_actual, Y_pred)
-        precision =precision_score(Y_actual, Y_pred)
-        f1 = f1_score(Y_actual, Y_pred)
+        accuracy = round(accuracy_score(Y_actual, Y_pred), 2)
+        recall = round(recall_score(Y_actual, Y_pred), 2)
+        precision = round(precision_score(Y_actual, Y_pred), 2)
+        f1 = round(f1_score(Y_actual, Y_pred), 2)
         mat =confusion_matrix(Y_actual, Y_pred)
         true_positives = mat[1][1]
         false_positives = mat[0][1]
