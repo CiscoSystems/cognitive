@@ -14,7 +14,9 @@
       .datasource-image{style:"width:35%; height:250px; float:right;  text-align:left"}
         %i.fa.fa-file-text-o{style:"font-size:220pt;"}
       .datasource-text{style:"width:65%; height:250px; background:#eeeeee; text-align:right; padding-right: 60px;"}
-        %h2 something exptranation of data source
+        %h2 CSV file            
+        %h2 Plain text file            
+        %h2 HTTP file            
 
     %p{style:"clear:both"}
 
@@ -23,7 +25,12 @@
       .transformation-image{style:"width:35%; height:250px; float:left; text-align:right"}
         %i.fa.fa-file-text-o{style:"font-size:220pt;"}
       .transformation-text{style:"width:65%; height:250px; float:right; background:#eeeeee"}
-        %h2 plz write explanation
+        %h2 Apply Mathematical functions on Rows/Colums
+        %h2 Normalize Columns
+        %h2 Add new Row/Column
+        %h2 Column Projections
+        %h2 Filter Missing Values
+        %h2 Filter Duplicates
 
     %p{style:"clear:both"}
   
@@ -32,20 +39,14 @@
       .machine-learning-image{style:"width:35%; height:250px; float:right; "}
         %i.fa.fa-file-text-o{style:"font-size:220pt;"}
       .machine-learning-text{style:"width:65%; height:250px; background:#eeeeee"}
+        %h2 Classifier models
+        %h2 Clustering models
+        %h2 Regression models
 
-    %span Cognitive is designed to be a multi-user machine learning service.
-    %br
-    %span Each user ican create multiple experiments which is limited by the user quota(set by the admin).
-    %br
-    %span Each user is allowed to load/update previously created experiments.
-    %br
-    %span The same experiment can be shared with multiple users.
-    %br
-    %span Each user is authenticated using token mechanism. Token has to be passed as an argument for every rest api call.
-    %br
-    %span Data Input and Output can be a HTTP file, CSV file or text file
-    %br
-    %span Each experiment has a single workflow which specifies the graph flow of events. 
-    %br
-    %span The user starts the execution using a workflow POST request. Each workflow execution is asynchronously handled in a separate thread so that request thread is not blocked. The user can poll the status of the workflow and get the list of completed events using the GET request.
-
+        %span Each system user has a separate workspace of experiments. The number is limited as per the user quota set by the admin.
+            Each user is authenticated using token mechanism. The client is expected to send token as an argument for every api call.
+            Each experiment has multiple components which are connected to form a single workflow. Workflows specify the flow of data from the data source to data sink thorugh various data transformations. Each component knows its parent so that whole workflow can be reexcuted on failures. In this version, web client supports only single inheritance. However, Multiple inheritance can be created using rest api calls.
+            For iterative executions, the client can specify whether the results should be cached. If caching is enabled, parent operations are skipped.
+            Every workflow is persisted that enables user to load or update previously created workflows.
+            Data source/Data output can be a CSV file, plain text file or a HTTP file.
+            Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions. The client is expected to poll using GET requests to get the list of successful/errored operation.
