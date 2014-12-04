@@ -8,8 +8,9 @@ from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
 from datetime import datetime
 from numpy import genfromtxt
-import numpy as np
+from collections import Counter
 from pandas import *
+import numpy as np
 import threading
 import json
 
@@ -195,9 +196,19 @@ class myThread (threading.Thread):
                             tmp.append(input_data[col][i])
                     self.result["data"].append(tmp)
                 self.result["graph_data"] = []
-                for elem in feature_names:
-                    tmp = [["a","b","c","d"],[1,1,5,200]]
+                for name in list(input_data.columns):
+                    top_uniques = Counter(list(input_data[name])).most_common(4)
+                    col_names= []
+                    unique_count =[]
+                    for val in top_uniques:
+                        if json.dumps(val[0]) == 'NaN':
+                            continue
+                        col_names.append(val[0])
+                        unique_count.append(val[1])
+                    tmp = [col_names, unique_count]
                     self.result["graph_data"].append(tmp)
+                    #tmp = [["a","b","c","d"],[1,1,5,200]]
+                    #self.result["graph_data"].append(tmp)
                 if output_data is not None:
                     self.result["output"] = output_data
                 self.result["missing_values"] = list(input_data.isnull().sum().values)
