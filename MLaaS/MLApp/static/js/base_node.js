@@ -16,8 +16,12 @@ var Node = (function() {
     var svg = d3.selectAll("svg");
 
     var g = svg.append('g');
-    var _x = 600;
-    var _y = 30 + 1 * 80;
+    // Just adding an element of randomity so things don't appear on top of each other.
+    var _x = $('.detail').width() + (Math.random() * 400);
+    var _y = 50 + (Math.random() * 400);
+    // Lets compensate for smaller window widths, just in case.
+    if (_x > window.innerWidth - 350) { _x = window.innerWidth - 500; console.log("Too big, making " + _x)}
+    if (_y > window.innerHeight) { _y = window.innerHeight - 300;}
     var node = g.append('rect')
       .attr("x", _x)
       .attr("y", _y)

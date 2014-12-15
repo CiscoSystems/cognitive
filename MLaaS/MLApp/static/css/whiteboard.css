@@ -41,6 +41,13 @@ li.component {
   color: white;
 }
 
+#contents {
+  position:absolute;
+  top: 45px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 .whiteboard-flyout i{
   font-size:22pt; 
@@ -63,7 +70,12 @@ li.component {
   float:right; 
   background-color:white;
   padding-left: 200px;
-  width:100%
+  width:100%;
+  height: calc(100%);
+}
+#root{
+  width: 100%;
+  height: calc(100%);
 }
 .detail {
   overflow: scroll;
@@ -80,6 +92,7 @@ li.component {
   height: 100%;
   border-right: solid 1px gray;
   padding-top: 5px;
+  max-width: 600px;
 }
 .content {
   padding-left: 15px;
