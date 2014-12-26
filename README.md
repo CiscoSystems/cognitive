@@ -22,6 +22,7 @@ Usage
 -----
 
 1.  Add CSV input data
+         
       Only file format that is supported from UI is '.csv'.  You can use Titanic dataset csv file in the 'tmp' folder. 
       All column names must be visible after you add input data.  
 
