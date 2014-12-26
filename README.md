@@ -29,6 +29,7 @@ Usage
 2. You can apply any operation on the input data. The sequence of execution is determined by the workflow graph displayed on the right pane. Create links between components to show relationship.
 
       Creating links between components
+      --------------------------------------
 
       a) Select one component to highlight it (green colour). Now, click on the second component to create a link between them. Inorder to de-highlight , click on the same component again. 
 
