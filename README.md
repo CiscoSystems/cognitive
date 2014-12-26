@@ -42,6 +42,7 @@ Usage
 
               
 Missing features
+----------------
 
 1. In this version, UI doesn't support update and deletion of components. It is not possible to edit the component parameters or workflow graph. If you messed up accidentally, the only solution is to refresh the page and create the workflow again.  'Update' and 'Delete' features will be included in the next version of UI. However, all these features are supported through REST API. You can try them using any rest api client. Each workflow step has a corresponding rest API call.
 
