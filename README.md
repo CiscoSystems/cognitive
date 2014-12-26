@@ -9,7 +9,7 @@ It is still in development. If you find any errors, please let us know.
 Installation
 ------------
 
-Install all python packages listed in requirements file. Start your Django server(Optionally using a public ip).  It is advised to use virutalenv to isolate other python environments.
+Install all python packages listed in requirements file. Start your Django server(Optionally using a public ip).  It is advised to use virtualenv to isolate other python environments.
 
     virtualenv env
     source env/bin/activate
