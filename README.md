@@ -51,5 +51,6 @@ Missing features
         eg: Applying mathematical operations on  non numerical columns
             Applying operations on columns that are non-existent. (Once 'Column selection' feature is applied to project lesser number of columns, un-selected columns cannot be used in any of the future operations)
             Applying ML algorithm on an input that has some missing entries
+            Applying ML algorithm on an input that has non-numerical values
 
  
