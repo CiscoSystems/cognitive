@@ -107,3 +107,5 @@ STATICFILES_DIRS = (
 # BOWER_INSTALLED_APPS = (
 #     'bootstrap-material-design',
 # )
+
+CLUSTER_TYPE = 'local'
