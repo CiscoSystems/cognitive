@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
-from view import view_user, view_exp, view_operation, view_workflow
+from view import view_user, view_exp, view_operation, view_workflow, view_result_storm, view_result_local
 
 if settings.CLUSTER_TYPE == 'storm':
     from view import view_result_storm as view_result

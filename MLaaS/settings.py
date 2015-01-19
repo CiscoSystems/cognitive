@@ -108,4 +108,10 @@ STATICFILES_DIRS = (
 #     'bootstrap-material-design',
 # )
 
-CLUSTER_TYPE = 'local'
+CLUSTER_TYPE = 'storm'
+
+#Settings required if cluster type is storm. Specify Redis host and Port
+
+DRPC_HOST = 'bd-1-3'
+REDIS_HOST = "bd-1-3"
+REDIS_PORT = "6379"
