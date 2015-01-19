@@ -32,12 +32,7 @@ class storm_client (threading.Thread):
         self.result = {}
         self.max_results = max_results
         self.cache_results = cache_results
-        #print "Storm DPRC HOST ",settings.DRPC_HOST
-        #self.client = DRPCClient(settings.DRPC_HOST, 3772)
-       
-
-    def run(self):
-        print "Run called for thread name", self.name, "End component", self.comp_id
+        print "Submitting topology to storm. End component", self.comp_id
         exp = Experiment.objects.get(pk=self.experiment)
         graph = exp.workflow.graph_data
         graph_data = {}
@@ -63,10 +58,20 @@ class storm_client (threading.Thread):
             print "Component_id" , component_id, " " ,comp.operation_type, " string "
             message['components'][data]=serialized_obj
         print "Message ",message
-        r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0) 
+        r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0)
+        self.pubsub = r.pubsub(ignore_subscribe_messages=True)
+        self.pubsub.subscribe("Exp "+str(self.experiment))
         ret = r.publish('workflow', json.dumps(message))
         print "return", ret
  
+    def run(self):
+        print "Listening for results"
+        for message in self.pubsub.listen():
+            self.result = json.loads(message['data'])
+            print self.result
+            break
+        self.pubsub.unsubscribe() 
+        self.pubsub.close() 
                          
 
 class ResultViewSet(viewsets.ViewSet):
@@ -82,6 +87,7 @@ class ResultViewSet(viewsets.ViewSet):
         except Exception,e:
             print "Exception Raised during storm cluster connection",str(e)
             client_thread.result={'status':'failed', 'message':str(e)}
+        print "Client thread status ", client_thread.result
         return HttpResponse(json.dumps(client_thread.result), content_type="application/json")
 
         
