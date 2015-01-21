@@ -78,12 +78,8 @@ class OperationViewSet(viewsets.ViewSet):
                 response = urllib2.urlopen(data["input_file"])
                 csv_data = read_csv(response)
                 csv_data.to_csv(filename, index= False)
-                if settings.CLUSTER_TYPE == 'storm':
-                    op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
-                                function_subtype = 'Input', function_subtype_arg = data["input_file"]) 
-                else:
-                    op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
-                                function_subtype = 'Input', function_subtype_arg = filename) 
+                op = Data_operation_type(function_type = 'Create',  function_arg = 'Table', 
+                            function_subtype = 'Input', function_subtype_arg = filename) 
                 op.save()
 
         elif operation == "machine_learning":

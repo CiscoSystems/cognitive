@@ -54,13 +54,22 @@ class storm_client (threading.Thread):
         for data in topological_graph:
             component_id = int(data)
             comp = Component.objects.get(pk= component_id)
+            if comp.operation_type.function_type == 'Create':
+                if comp.operation_type.function_arg == 'Table':
+                        filename = comp.operation_type.function_subtype_arg
+                        input_data = read_csv(filename)
+                        message['input'] = {}
+                        for elem in list(input_data.columns):
+                            message['input'][elem] = list(input_data[elem])
+                        message['cols'] = list(input_data.columns)
+                        #message['input'] = input_data.to_dict()  
             serialized_obj = serializers.serialize('json', [ comp.operation_type, ])
-            print "Component_id" , component_id, " " ,comp.operation_type, " string "
+            print "Component_id" , component_id, " " ,comp.operation_type
             message['components'][data]=serialized_obj
         print "Message ",message
         r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0)
         self.pubsub = r.pubsub(ignore_subscribe_messages=True)
-        self.pubsub.subscribe("Exp "+str(self.experiment))
+        self.pubsub.subscribe("Exp "+ str(self.experiment))
         ret = r.publish('workflow', json.dumps(message))
         print "return", ret
  
