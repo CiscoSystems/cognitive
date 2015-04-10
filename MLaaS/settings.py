@@ -24,14 +24,12 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR+'/MLaaS/MLApp', 'templates'),
+    os.path.join(BASE_DIR + '/MLaaS/MLApp', 'templates'),
 )
 
 TEMPLATE_LOADERS = (
-    
-        'hamlpy.template.loaders.HamlPyFilesystemLoader',
-        'hamlpy.template.loaders.HamlPyAppDirectoriesLoader'
-    
+    'hamlpy.template.loaders.HamlPyFilesystemLoader',
+    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader'
 )
 
 ALLOWED_HOSTS = []
@@ -95,7 +93,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR+'/MLaaS/MLApp', "static"),
+    os.path.join(BASE_DIR + '/MLaaS/MLApp', "static"),
 )
 
 # STATICFILES_FINDERS = (
@@ -111,7 +109,7 @@ STATICFILES_DIRS = (
 # 'local' for local processing; 'storm' for storm processing
 CLUSTER_TYPE = 'local'
 
-#Settings required if cluster type is storm. Specify Redis host and Port
+# Settings required if cluster type is storm. Specify Redis host and Port
 
 DRPC_HOST = 'bd-1-3'
 REDIS_HOST = "bd-1-3"

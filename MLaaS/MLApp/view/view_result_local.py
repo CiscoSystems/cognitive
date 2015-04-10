@@ -1,32 +1,29 @@
 from ..models import Experiment, Component
-from toposort import toposort, toposort_flatten
-from ..serializers import ExperimentSerializer
-from ..views import send_response
-from ..ml_models import Classifier 
+from toposort import toposort_flatten
+from ..ml_models import Classifier
 from rest_framework import viewsets
-from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
-from datetime import datetime
-from numpy import genfromtxt
 from collections import Counter
+# TODO: [refactor] this import statement should specify needed file instead of '*'
 from pandas import *
-import numpy as np
 import threading
 import json
 
 CACHE = {}
 
+
 class myThread (threading.Thread):
-    def __init__(self, threadID, name, experiment, component_id, max_results, cache_results):
+
+    def __init__(self, thread_id, name, experiment, component_id, max_results, cache_results):
+
         threading.Thread.__init__(self)
-        self.threadID = threadID
+        self.threadID = thread_id
         self.name = name
         self.experiment = experiment
         self.comp_id = component_id
         self.result = {}
         self.max_results = max_results
         self.cache_results = cache_results
-       
 
     def run(self):
         print "Run called for thread name", self.name, "End component", self.comp_id
@@ -35,6 +32,7 @@ class myThread (threading.Thread):
         graph_data = {}
         print graph
         tmp = graph.split(',')
+
         for elem in tmp:
             first_node = elem.split(":")[0]
             second_node = elem.split(":")[1]
@@ -44,114 +42,126 @@ class myThread (threading.Thread):
             else:
                 graph_data[second_node] = set()
                 graph_data[second_node].add(first_node)
+
         topological_graph = toposort_flatten(graph_data)
         print "Graph after topological sort", topological_graph
-        #input_data = None
+
         if self.experiment in CACHE:
             input_data = CACHE[self.experiment]
         else:
             input_data = DataFrame
+
         feature_names = None
         feature_types = None
         output_data = None
+
         for data in topological_graph:
             component_id = int(data)
-            comp = Component.objects.get(pk= component_id)
-            print "Component_id" , component_id, " " ,comp.operation_type 
+            comp = Component.objects.get(pk=component_id)
+            print "Component_id", component_id, " ", comp.operation_type
             op = comp.operation_type
+
             if op.function_type == 'Create':
                 if op.function_arg == 'Table':
                     if op.function_subtype == 'Input':
                         filename = op.function_subtype_arg
                         input_data = read_csv(filename)
                         feature_names = input_data.columns
+
+                # TODO: [refactor] elif?
                 if op.function_arg == 'Row':
                     if op.function_subtype == 'Row':
                         row_values = json.loads(op.function_subtype_arg)
-                        input_data.loc[len(input_data)+1]= row_values
+                        input_data.loc[len(input_data) + 1] = row_values
+
                 if op.function_arg == 'Model':
                     if op.function_subtype == 'Train-Test':
                         params = json.loads(op.function_subtype_arg)
                         train_data_percentage = int(params["train_data_percentage"])
                         target_column = int(params["target_column"])
                         model_type = op.function_arg_id
-                        print model_type, train_data_percentage,target_column
+                        print model_type, train_data_percentage, target_column
                         target_feature = feature_names[target_column]
                         actual_target_column = input_data.columns.get_loc(target_feature)
                         input_feature_columns = range(len(input_data.columns))
                         input_feature_columns.remove(actual_target_column)
                         input_features = input_data.columns[input_feature_columns]
-                        classifier = Classifier(input_data, model_type, train_data_percentage, input_features ,target_feature)
+                        classifier = Classifier(
+                            input_data, model_type, train_data_percentage,
+                            input_features, target_feature)
                         output_data = classifier.learn()
 
-            if op.function_type == 'Update' :
+            # TODO: [refactor] elif?
+            if op.function_type == 'Update':
                 if op.function_arg == 'Table':
                     if op.function_subtype == 'Metadata':
                         feature_types = json.loads(op.function_subtype_arg)
-                        print "Feature Names" ,feature_names, " Feature_types ", feature_types
-                        
+                        print "Feature Names", feature_names, " Feature_types ", feature_types
+
                 if op.function_arg == 'Column':
                     if op.function_subtype == 'Add':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ",column_name, " not present. Skipping"
-                            continue#throw error in module status
+                            print "Column name ", column_name, " not present. Skipping"
+                            continue  # throw error in module status
                         if input_data[column_name].dtype == 'object':
-                            print "Column name ",column_name, " is not integer/float. Skipping"
-                            continue#throw error in module status 
-                        input_data[column_name] = input_data[column_name] + constant_value
+                            print "Column name ", column_name, " is not integer/float. Skipping"
+                            continue  # throw error in module status
+                        input_data[column_name] += constant_value
                     if op.function_subtype == 'Sub':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ",column_name, " not present. Skipping"
-                            continue#throw error in module status
+                            print "Column name ", column_name, " not present. Skipping"
+                            continue  # throw error in module status
                         if input_data[column_name].dtype == 'object':
-                            print "Column name ",column_name, " is not integer/float. Skipping"
-                            continue#throw error in module status 
-                        input_data[column_name] = input_data[column_name] - constant_value
+                            print "Column name ", column_name, " is not integer/float. Skipping"
+                            continue  # throw error in module status
+                        input_data[column_name] -= constant_value
                     if op.function_subtype == 'Mult':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ",column_name, " not present. Skipping"
-                            continue#throw error in module status
+                            print "Column name ", column_name, " not present. Skipping"
+                            continue  # throw error in module status
                         if input_data[column_name].dtype == 'object':
-                            print "Column name ",column_name, " is not integer/float. Skipping"
-                            continue#throw error in module status 
-                        input_data[column_name] = input_data[column_name] * constant_value
+                            print "Column name ", column_name, " is not integer/float. Skipping"
+                            continue  # throw error in module status
+                        input_data[column_name] *= constant_value
                     if op.function_subtype == 'Div':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ",column_name, " not present. Skipping"
-                            continue#throw error in module status
+                            print "Column name ", column_name, " not present. Skipping"
+                            continue  # throw error in module status
                         if input_data[column_name].dtype == 'object':
-                            print "Column name ",column_name, " is not integer/float. Skipping"
-                            continue#throw error in module status 
-                        input_data[column_name] = input_data[column_name] / constant_value
+                            print "Column name ", column_name, " is not integer/float. Skipping"
+                            continue  # throw error in module status
+                        input_data[column_name] /= constant_value
                     if op.function_subtype == 'Normalize':
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         sum_array = input_data.sum(axis=0)
                         if column_name not in sum_array:
-                            print "Column name ",column_name, " not present. Skipping"
-                            continue#throw error in module status
+                            print "Column name ", column_name, " not present. Skipping"
+                            continue  # throw error in module status
                         normalization_value = sum_array[column_name]
                         input_data[column_name] = input_data[column_name] / normalization_value
-            if op.function_type == 'Filter' :
+
+            # TODO: [refactor] elif?
+            if op.function_type == 'Filter':
                 if op.function_arg == 'Table':
                     if op.function_subtype == 'Project':
                         column_id_list = json.loads(op.function_arg_id)
                         excluded_columns = range(len(feature_names))
-                        for elem in column_id_list:#Bug: Calling Projection twice will break indexing logic
+                        for elem in column_id_list:  # Bug: Calling Projection twice will break indexing logic
                             excluded_columns.remove(elem)
-                        excluded_columns = [ x for x in excluded_columns if feature_names[x] in input_data ]
+                        excluded_columns = [x for x in excluded_columns if feature_names[x] in input_data]
                         print "Excluded columns ", excluded_columns
                         if excluded_columns:
                             input_data = input_data.drop(feature_names[excluded_columns], axis=1)
@@ -161,11 +171,11 @@ class myThread (threading.Thread):
                         for elem in column_id_list:
                             column_name = feature_names[elem]
                             if column_name not in input_data:
-                                print "Column name ",column_name, " not present. Skipping"
-                                continue#throw error in module status
+                                print "Column name ", column_name, " not present. Skipping"
+                                continue  # throw error in module status
                             column_name_list.append(column_name)
                         if column_name_list:
-                            input_data = input_data.drop_duplicates(subset = column_name_list) 
+                            input_data = input_data.drop_duplicates(subset=column_name_list)
                     if op.function_subtype == 'RemoveMissing':
                         if op.function_subtype_arg == 'Replace_mean':
                             input_data = input_data.fillna(input_data.mean().round(2))
@@ -174,19 +184,17 @@ class myThread (threading.Thread):
                         if op.function_subtype_arg == 'Replace_mode':
                             input_data = input_data.fillna(input_data.mode())
                         if op.function_subtype_arg == 'Drop_row':
-                            input_data = input_data.dropna(axis = 0)
-            #print "Data"
-            #print input_data
-            #print "Data Type"
-            #print input_data.dtypes
+                            input_data = input_data.dropna(axis=0)
+
             if component_id == self.comp_id:
                 print "End component reached"
                 self.result["feature_names"] = list(input_data.columns)
                 if feature_types is not None:
                     self.result["feature_types"] = feature_types
-                #self.result["data"] = input_data[:self.max_results].to_json()
-                self.result["data"]= []
-                result_length = min (len(input_data), self.max_results)
+                # self.result["data"] = input_data[:self.max_results].to_json()
+                self.result["data"] = []
+                result_length = min(len(input_data), self.max_results)
+
                 for i in range(result_length):
                     tmp = []
                     for col in input_data.columns:
@@ -195,11 +203,13 @@ class myThread (threading.Thread):
                         else:
                             tmp.append(input_data[col][i])
                     self.result["data"].append(tmp)
+
                 self.result["graph_data"] = []
+
                 for name in list(input_data.columns):
                     top_uniques = Counter(list(input_data[name])).most_common(4)
-                    col_names= []
-                    unique_count =[]
+                    col_names = []
+                    unique_count = []
                     for val in top_uniques:
                         if json.dumps(val[0]) == 'NaN':
                             continue
@@ -207,15 +217,16 @@ class myThread (threading.Thread):
                         unique_count.append(val[1])
                     tmp = [col_names, unique_count]
                     self.result["graph_data"].append(tmp)
-                    #tmp = [["a","b","c","d"],[1,1,5,200]]
-                    #self.result["graph_data"].append(tmp)
+
                 if output_data is not None:
                     self.result["output"] = output_data
+
                 self.result["missing_values"] = list(input_data.isnull().sum().values)
-                mean = input_data.mean().round(2) 
+                mean = input_data.mean().round(2)
                 median = input_data.median().round(2)
                 self.result["mean"] = []
                 self.result["median"] = []
+
                 for elem in input_data.columns:
                     if elem in mean:
                         self.result["mean"].append(mean[elem])
@@ -225,16 +236,20 @@ class myThread (threading.Thread):
                         self.result["median"].append(median[elem])
                     else:
                         self.result["median"].append('')
+
                 self.result["unique_values"] = []
+
                 for elem in input_data.columns:
                     self.result["unique_values"].append(input_data[elem].nunique())
-                self.result["min"] = []    
-                self.result["max"] = []    
+
+                self.result["min"] = []
+                self.result["max"] = []
                 self.result["std"] = []
-                self.result["25_quartile"] =[]    
-                self.result["50_quartile"] =[]    
-                self.result["75_quartile"] =[]    
+                self.result["25_quartile"] = []
+                self.result["50_quartile"] = []
+                self.result["75_quartile"] = []
                 metric_val = input_data.describe()
+
                 for elem in input_data.columns:
                     if elem in metric_val:
                         val = metric_val[elem].round(2)
@@ -251,16 +266,19 @@ class myThread (threading.Thread):
                         self.result["25_quartile"].append('')
                         self.result["50_quartile"].append('')
                         self.result["75_quartile"].append('')
-                self.result["total_rows"] = input_data.shape[0]    
-                self.result["total_columns"] = input_data.shape[1]   
-                if self.cache_results == True:
+
+                self.result["total_rows"] = input_data.shape[0]
+                self.result["total_columns"] = input_data.shape[1]
+
+                if self.cache_results is True:
                     CACHE[self.experiment] = input_data
+
                 print self.result
                 break
-                         
+
 
 class ResultViewSet(viewsets.ViewSet):
-    
+
     def list(self, request):
         exp_id = int(request.GET.get('experiment', ''))
         component_id = int(request.GET.get('component_id', ''))
@@ -269,5 +287,3 @@ class ResultViewSet(viewsets.ViewSet):
         thread.start()
         thread.join()
         return HttpResponse(json.dumps(thread.result), content_type="application/json")
-
-        

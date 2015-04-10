@@ -1,31 +1,24 @@
 from ..models import Experiment, Component
-from toposort import toposort, toposort_flatten
-from ..serializers import ExperimentSerializer
-from ..views import send_response
-from ..ml_models import Classifier 
+from toposort import toposort_flatten
 from rest_framework import viewsets
-from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
-from datetime import datetime
-from numpy import genfromtxt
-from collections import Counter
-from storm.drpc import DRPCClient
 from django.conf import settings
 from django.core import serializers
 from collections import defaultdict
+# TODO: [refactor] this import statement should specify some file instead of '*'
 from pandas import *
 import redis
-import numpy as np
 import threading
 import json
-import sys
 
 CACHE = {}
 
+
 class storm_client (threading.Thread):
-    def __init__(self, threadID, name, experiment, component_id, max_results, cache_results):
+
+    def __init__(self, thread_id, name, experiment, component_id, max_results, cache_results):
         threading.Thread.__init__(self)
-        self.threadID = threadID
+        self.threadID = thread_id
         self.name = name
         self.experiment = experiment
         self.comp_id = component_id
@@ -49,11 +42,13 @@ class storm_client (threading.Thread):
                 graph_data[second_node].add(first_node)
         topological_graph = toposort_flatten(graph_data)
         print "Graph after topological sort", topological_graph
-        message = {'exp_id':self.experiment,'result':self.comp_id,'graph':topological_graph}
-        message['components']= defaultdict()
+        message = {
+            'exp_id': self.experiment, 'result': self.comp_id,
+            'graph': topological_graph, 'components': defaultdict()}
+
         for data in topological_graph:
             component_id = int(data)
-            comp = Component.objects.get(pk= component_id)
+            comp = Component.objects.get(pk=component_id)
             if comp.operation_type.function_type == 'Create':
                 if comp.operation_type.function_arg == 'Table':
                         filename = comp.operation_type.function_subtype_arg
@@ -62,29 +57,31 @@ class storm_client (threading.Thread):
                         for elem in list(input_data.columns):
                             message['input'][elem] = list(input_data[elem])
                         message['cols'] = list(input_data.columns)
-                        #message['input'] = input_data.to_dict()  
-            serialized_obj = serializers.serialize('json', [ comp.operation_type, ])
-            print "Component_id" , component_id, " " ,comp.operation_type
-            message['components'][data]=serialized_obj
-        print "Message ",message
+                        # message['input'] = input_data.to_dict()
+
+            serialized_obj = serializers.serialize('json', [comp.operation_type, ])
+            print "Component_id", component_id, " ", comp.operation_type
+            message['components'][data] = serialized_obj
+
+        print "Message ", message
         r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0)
         self.pubsub = r.pubsub(ignore_subscribe_messages=True)
-        self.pubsub.subscribe("Exp "+ str(self.experiment))
+        self.pubsub.subscribe("Exp " + str(self.experiment))
         ret = r.publish('workflow', json.dumps(message))
         print "return", ret
- 
+
     def run(self):
         print "Listening for results"
         for message in self.pubsub.listen():
             self.result = json.loads(message['data'])
             print self.result
             break
-        self.pubsub.unsubscribe() 
-        self.pubsub.close() 
-                         
+        self.pubsub.unsubscribe()
+        self.pubsub.close()
+
 
 class ResultViewSet(viewsets.ViewSet):
-    
+
     def list(self, request):
         exp_id = int(request.GET.get('experiment', ''))
         component_id = int(request.GET.get('component_id', ''))
@@ -93,10 +90,8 @@ class ResultViewSet(viewsets.ViewSet):
             client_thread = storm_client(1, "WorkFlow Thread", exp_id, component_id, 10, False)
             client_thread.start()
             client_thread.join()
-        except Exception,e:
-            print "Exception Raised during storm cluster connection",str(e)
-            client_thread.result={'status':'failed', 'message':str(e)}
+        except Exception, e:
+            print "Exception Raised during storm cluster connection", str(e)
+            client_thread.result = {'status': 'failed', 'message': str(e)}
         print "Client thread status ", client_thread.result
         return HttpResponse(json.dumps(client_thread.result), content_type="application/json")
-
-        
