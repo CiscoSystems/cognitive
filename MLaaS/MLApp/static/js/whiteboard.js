@@ -7,9 +7,7 @@ $(function(){
 
     var m = new Manager();
     var cognitive_client = new CognitiveAPIClientV1();
-
     var svg = d3.selectAll("svg");
-
 
     $('.projection.plus-bottom').click(add_column_for_projection);
 
@@ -24,6 +22,7 @@ $(function(){
         $('.form-group.projection_form').append('<select class="form-control projection_selects _selects_'+projections+'">'+option_string+'</select>');
         projections++;
     }
+
     function initializa_projection_column() {
         $('.form-group.projection_form').empty();
         projections = 0;
@@ -32,6 +31,7 @@ $(function(){
     $('.remove_duplicates.plus-bottom').click(add_column_for_remove_duplicates);
 
     var _num_remove_duplicates_column = 0;
+
     function add_column_for_remove_duplicates(){
         if (_uploaded_file_as_text == ""){return;}
         var column_names = _uploaded_file_as_arrays[0];
@@ -42,11 +42,11 @@ $(function(){
         $('.form-group.remove_duplicates_form').append('<select class="form-control remove_duplicates_selects _selects_'+_num_remove_duplicates_column+'">'+option_string+'</select>');
         _num_remove_duplicates_column++;
     }
+
     function initializa_remove_duplicates_column() {
         $('.form-group.remove_duplicates_form').empty();
         _num_remove_duplicates_column = 0;
     }
-
 
     $(".menu_bar.introduction").click(function(){
         m.activate_menubar('introduction');
@@ -72,7 +72,6 @@ $(function(){
         add_column_for_projection();
     });
 
-
     $(".menu_bar.normalization").click(function(){
         m.activate_menubar("normalization");
         description_normalization();
@@ -86,10 +85,7 @@ $(function(){
 
     $(".menu_bar.remove_missing_value").click(function(){
         m.activate_menubar("remove_missing_value");
-
-
     });
-
 
     $(".menu_bar.transform").click(function(){
         m.activate_menubar("transform");
@@ -117,19 +113,13 @@ $(function(){
         m.activate_menubar("data_output");
     });
 
-
-
-
     $(".add_btn").click(function(){
         var node;
-        var response;
 
         if ($(this).hasClass('add_input')){
 
             node = new Node({
-                name:'INPUT_DATA',
-                output:1,
-                input:0,
+                name:'INPUT_DATA', output:1, input:0
             });
 
             cognitive_client.createInputComponent({
@@ -222,8 +212,8 @@ $(function(){
             });
 
             var len = $('.projection_selects').length;
-
             var projection_columns = "[";
+
             for (var i=0; i<len; i++) {
                 console.log($('.projection_selects._selects_'+i).val());
                 projection_columns += $('.projection_selects._selects_'+i).val() + ","
@@ -231,9 +221,6 @@ $(function(){
 
             projection_columns = projection_columns.slice(0, projection_columns.length-1);
             projection_columns += "]";
-            // var names = $('#projection_text').val();
-            // var indexes = names_to_ids(names);
-            // console.log(indexes);
 
             cognitive_client.createProjectionComponent({
                 user_id: 1,
@@ -251,8 +238,8 @@ $(function(){
             });
 
             var len = $('.remove_duplicates_selects').length;
-
             var remove_duplicates_columns = "[";
+
             for (var i=0; i<len; i++) {
                 console.log($('.remove_duplicates_selects._selects_'+i).val());
                 remove_duplicates_columns += $('.remove_duplicates_selects._selects_'+i).val() + ","
@@ -260,9 +247,7 @@ $(function(){
             remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length-1);
             remove_duplicates_columns += "]";
 
-            console.log('=============');
             console.log(remove_duplicates_columns);
-
 
             cognitive_client.createRemoveDuplicatesComponent({
                 user_id: 1,
@@ -356,31 +341,11 @@ $(function(){
             }, node);
 
         }
-        // else if ($(this).hasClass('run')) {
-
-        //   node = new Node({
-        //     name:'Machine Learning',
-        //     input:1,
-        //     output:0
-        //   });
-
-        //   cognitive_client.run({
-        //     user_id: 1,
-        //     name: "sample_input.csv",
-        //     token: "aaa",
-        //     type: "css",
-        //     experiment: 1,
-        //     data: uploaded_file_as_text
-        //   }, node);
-
-        // }
 
         Node.appendToList(node);
     });
 
     $("#execute-btn").click(function(){
-
-        console.log("aaaaa");
 
         var start = Node.find_by({name:"INPUT_DATA"});
         var node_list = Node.getWorkflowFrom(start.getId());
@@ -393,20 +358,6 @@ $(function(){
         var components_id_list = node_list.map(function(n){
             return n.getComponentId();
         });
-        console.log("components_id_list");
-        console.log(components_id_list);
-
-        console.log(components_id_list);
-        // var flow_path = function(x){
-        //   var l = [];
-        //   for (var i =0; i < x.length-1; i++) {
-        //     var t = "";
-        //     t += x[i]+":"+x[i+1];
-        //     l.push(t);
-        //   }
-        //   console.log(l);
-        //   return l;
-        // }(components_id_list);
 
         var flow_path = function(x){
             var t = "";
@@ -415,9 +366,6 @@ $(function(){
             }
             return t.substr(0,t.length-1);
         }(components_id_list);
-
-        console.log('------');
-        console.log(flow_path);
 
         cognitive_client.executeAll({
             user_id: 1,
@@ -437,11 +385,7 @@ $(function(){
         $('#cboxBottomRight').remove();
         setTimeout("$.colorbox.close()", 700);
 
-        // $.colorbox({html:"<img src='/static/images/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false});
-        // setTimeout("$.colorbox.close()", 700);
-
     });
-
 
     $('#inputFile').change(function(evt) {
         var file = evt.target.files[0];
@@ -453,20 +397,16 @@ $(function(){
         reader.readAsText(file);
 
         _uploaded_file_name = file.name
-
     });
 
-    // $(".show_result_graph").colorbox({inline:true, width:"50%"});
-    // $(".show_result_graph").colorbox({inline:true, width:"50%"});
     $(".show_result_graph").click(getResult);
 
     function getResult() {
-        console.log("-------------------");
+
         var node = Node.getCurrentForcus();
-        console.log(node);
 
         if (node == null) {return;}
-        console.log("-------------------A");
+
         $.ajax({
             url:  '/api/v1/results/?experiment=1&component_id=' + node.component_id,
             type: "GET",
@@ -483,7 +423,6 @@ $(function(){
         });
     }
 
-
     function render_result_graphs(result) {
 
         var w = 100;
@@ -496,13 +435,13 @@ $(function(){
             if (d3.max(dataset) == d3.min(dataset)) {
                 dataset = [100,100,100,100];
             }
-            console.log(dataset.length);
+
             for (var j=0; j < dataset.length; j++) {
-                console.log("test");
                 if (dataset[j] >= 96) {
                     dataset[j] -= 4;
                 }
             }
+
             if (dataset.length == 3){
                 dataset.push(0);
             } else if (dataset.length == 2) {
@@ -518,12 +457,6 @@ $(function(){
                 _t.push(0);
                 dataset = _t;
             }
-
-            // var xAxis = d3.svg.axis();
-            // var yScale = d3.scale.linear()
-            //       .domain([0, d3.max(dataset)])
-            //       .range([0, 100]);
-
 
             var svg = d3.select("svg[class='graph column_"+i+"']");
 
@@ -546,7 +479,6 @@ $(function(){
                 .attr('fill', 'none')
                 .attr('stroke-width', "1" )
         }
-
     }
 
     function serialize_result_to_html(result) {
@@ -671,7 +603,7 @@ $(function(){
 });
 
 function description_addrow() {
-    $('.add_row_form').empty();
+    $(".add_row_form").empty();
     _uploaded_file_as_arrays[0];
     console.log(_uploaded_file_as_arrays[0]);
     if (_uploaded_file_as_text == "") {return;}
@@ -682,7 +614,7 @@ function description_addrow() {
             "class": "add_row form-control floating-label"+" _column_" + i,
             id: "_column_" + i,
             type:"text",
-            placeholder: "value",
+            placeholder: "value"
         }).appendTo(".add_row_form li.column_"+i);
     }
 }
@@ -694,6 +626,7 @@ function description_formula() {
         $("#formula_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
     }
 }
+
 function description_normalization() {
     $("#normalization_column").empty();
     if (_uploaded_file_as_text == "") {return;}
@@ -701,6 +634,7 @@ function description_normalization() {
         $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
     }
 }
+
 function description_machine_learning() {
     $('.machine_learning_target').empty();
     if (_uploaded_file_as_text == "") {return;}
@@ -719,7 +653,6 @@ function description_metadata() {
             .append('<select class="form-control metadata column'+i+'" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
     }
 }
-
 
 function names_to_ids(names) {
     var parsed  = names.split(",");
