@@ -1,3 +1,7 @@
+.idea/
+.tox/
+.eggs/
+cognitive.egg-info/
 venv
 *.pyc
 *.tmp
