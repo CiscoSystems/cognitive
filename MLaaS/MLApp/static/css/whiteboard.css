@@ -173,3 +173,7 @@ tr.result_row:hover {
 .remove_duplicates_selects{
     margin-top: 20px;
 }
+
+a:hover {
+    text-decoration: none;
+}

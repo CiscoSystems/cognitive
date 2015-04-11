@@ -1,5 +1,7 @@
 - extends 'base.haml'
+
 - block 'extrahead'
+
   - load staticfiles
   %link{href: "{{STATIC_URL}}css/index.css", rel: "stylesheet"}
   %script{src: "http://d3js.org/d3.v3.min.js", charset:"utf-8"}
@@ -8,25 +10,21 @@
 
 - block 'contents'
 
-  %div{style:"width:100%; padding:50px; padding-left:100px;"}
-    / %h2{style:"color: #4c79ff; padding-left:15px; border-bottom: solid 1px; border-left: solid 7px; width: 200px;"} Data Source
+  .in_content
     %div{style:"width:100%; margin-bottom:45px;"}
       %h2 Machine Learning as a Service (MLaaS) - Cognitive
     %div{style:"width:100%; text-align:center"}
-     // %img{src:"/static/images/cognitive.jpg"}
+
     .datasource
       .datasource-image{style:"width:35%; height:250px; float:right;  text-align:left"}
         %i.fa.fa-cubes{style:"font-size:220pt;"}
       .datasource-text{style:" text-align:left; padding-right: 60px;"}
-        %h2{style:"font-size:14pt;"} 1. Each system user has a separate workspace of experiments. The number is limited as per the user quota set by the admin.
-        %h2{style:"font-size:14pt;"} 2. Each user is authenticated using token mechanism. The client is expected to send token as an argument for every api call.
-        %h2{style:"font-size:14pt;"} 3. Each experiment has multiple components which are connected to form a single workflow. Workflows specify the flow of data from the data source to data sink through various data transformations. Each component knows its parent so that whole workflow can be re-excuted on failures. In this version, web client supports only single inheritance. However, Multiple inheritance can be created using rest api calls.
-        %h2{style:"font-size:14pt;"} 4. For iterative executions, the client can specify whether the results should be cached. If caching is enabled, parent operations are skipped.
-        %h2{style:"font-size:14pt;"} 5. Every workflow is persisted that enables user to load or update previously created workflows.
-        %h2{style:"font-size:14pt;"} 6. Data source/Data output can be a CSV file, plain text file or a HTTP file.
-        %h2{style:"font-size:14pt;"} 7. Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions. The client is expected to poll using GET requests to get the list of successful/errored operations.
+        %h2.feature_statement 1. Each system user has a separate workspace of experiments. The number is limited as per the user quota set by the admin.
+        %h2.feature_statement 2. Each user is authenticated using token mechanism. The client is expected to send token as an argument for every api call.
+        %h2.feature_statement 3. Each experiment has multiple components which are connected to form a single workflow. Workflows specify the flow of data from the data source to data sink through various data transformations. Each component knows its parent so that whole workflow can be re-excuted on failures. In this version, web client supports only single inheritance. However, Multiple inheritance can be created using rest api calls.
+        %h2.feature_statement 4. For iterative executions, the client can specify whether the results should be cached. If caching is enabled, parent operations are skipped.
+        %h2.feature_statement 5. Every workflow is persisted that enables user to load or update previously created workflows.
+        %h2.feature_statement 6. Data source/Data output can be a CSV file, plain text file or a HTTP file.
+        %h2.feature_statement 7. Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions. The client is expected to poll using GET requests to get the list of successful/errored operations.
 
-
-
-
-    %p{style:"clear:both"}
+    .clear_float
