@@ -1,8 +1,8 @@
 .bar {
   fill:#2838B3;
-  /*margin-right: 2px;*/
+
 }
+
 .bar:hover {
   fill:yellow;
-  /*margin-right: 2px;*/
 }
