@@ -118,10 +118,20 @@ li.component {
 
 .add_row_form {
     list-style: none;
-
 }
 
-.whiteboard-flyout-left-menu p:hover{
+#whiteboard-right-menu {
+    position:fixed;
+    right:0;
+    top:45px;
+    height:100%;
+    width:60px;
+    float:right;
+    border-left: solid 1px gray;
+    text-align:center;
+}
+
+#whiteboard-right-menu p:hover{
     background-color: #1e8cff;
     color: white;
 }
@@ -174,6 +184,46 @@ tr.result_row:hover {
     margin-top: 20px;
 }
 
-a:hover {
-    text-decoration: none;
+.show_result_icon{
+    font-size:12pt;
+    border-bottom:solid 1px gray;
+    padding-top:25px;
+    padding-bottom:20px;
+    margin:0;
+}
+
+.plus-bottom {
+    border:solid 3px #F77A64;
+    width:40px;
+    height:36px;
+    text-align:center;
+    margin-top:10px;
+    margin-right:3px;
+}
+
+.plus-icon {
+    color:#F77A64;
+    font-size:24pt;
+}
+
+.minus-bottom{
+    border:solid 3px #5757AD;
+    width:40px;
+    height:36px;
+    text-align:center;
+    margin-top:10px;
+    margin-right:15px;
+}
+
+.minus-icon {
+    color:#5757AD;
+    font-size:24pt;
+}
+
+.execute-btn{
+    font-size:12pt;
+    border-bottom:solid 1px gray;
+    padding-top:25px;
+    padding-bottom:20px;
+    margin:0;
 }

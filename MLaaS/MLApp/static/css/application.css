@@ -1,0 +1,43 @@
+body {
+    background-color:white;
+    padding:0;
+}
+
+#header {
+    height:45px;
+    padding:0;
+    border-bottom: solid 1px #4c79ff;
+}
+
+#content {
+
+}
+
+#footer {
+
+}
+
+.zero_padding_margin {
+    margin: 0;
+    padding: 0;
+}
+
+.display_none {
+    display: none;
+}
+
+.clear_float {
+    clear: both;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}

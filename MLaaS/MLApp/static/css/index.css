@@ -1,3 +1,8 @@
+#in_content {
+    width: 100%;
+    padding: 50px 50px 50px 100px;
+}
+
 .bar {
   fill:#2838B3;
 }
@@ -6,19 +11,6 @@
   fill:yellow;
 }
 
-a:hover {
-    text-decoration: none;
-}
-
 .feature_statement {
     font-size: 14pt;
-}
-
-.in_content {
-    width: 100%;
-    padding: 50px 50px 50px 100px;
-}
-
-.clear_float {
-    clear: both;
 }
