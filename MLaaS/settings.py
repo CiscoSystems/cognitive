@@ -17,6 +17,7 @@ Django settings for MLaaS project.
 import os
 
 import xstatic.main
+import xstatic.pkg.bootstrap
 import xstatic.pkg.d3
 import xstatic.pkg.jquery
 import xstatic.pkg.jquery_ui
@@ -115,6 +116,8 @@ def get_staticfiles_dirs(webroot='/'):
     :return: the list of file path for static files
     """
     static_files_dirs = [
+        ('lib/bootstrap',
+         xstatic.main.XStatic(xstatic.pkg.bootstrap, root_url=webroot).base_dir),
         ('lib/d3',
          xstatic.main.XStatic(xstatic.pkg.d3, root_url=webroot).base_dir),
         ('lib/jquery',
