@@ -1,0 +1,7 @@
+{
+    "globals": {
+        "jquery": false,
+        "d3": false,
+        "$": false
+    }
+}
