@@ -4,9 +4,14 @@ body {
 }
 
 #header {
-    height:45px;
-    padding:0;
-    border-bottom: solid 1px #4c79ff;
+    height: 45px;
+    padding: 0;
+    border-bottom: solid 1px #cccccc;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    background-color:white;
 }
 
 #content {
