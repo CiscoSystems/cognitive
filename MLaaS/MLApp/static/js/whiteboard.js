@@ -373,7 +373,7 @@ $(function(){
             graph_data: flow_path
         });
 
-        $.colorbox({html:"<img src='/static/images/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false, transition:"none", opacity:0, arrowKey:false, overlayClose:false, fastIframe:false, width:"300px", height:"300px"});
+        $.colorbox({html:"<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false, transition:"none", opacity:0, arrowKey:false, overlayClose:false, fastIframe:false, width:"300px", height:"300px"});
         $('#cboxClose').remove();
         $('#cboxTopLeft').remove();
         $('#cboxTopCenter').remove();
