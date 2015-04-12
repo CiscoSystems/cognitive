@@ -31,14 +31,6 @@ li.component {
     color: white;
 }
 
-#contents {
-    position:absolute;
-    top: 45px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
 .whiteboard-flyout i{
     font-size:22pt;
 }

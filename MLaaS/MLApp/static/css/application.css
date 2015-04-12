@@ -1,6 +1,6 @@
 body {
-    background-color:white;
-    padding:0;
+    background-color: #577691;
+    padding: 0;
 }
 
 #header {
@@ -12,14 +12,21 @@ body {
     top: 0;
     right: 0;
     background-color:white;
+    z-index: 10;
 }
 
-#content {
-
+#contents {
+    background: white;
+    position: absolute;
+    top: 45px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 #footer {
-
+    margin-top: -45px;
+    background: white;
 }
 
 .zero_padding_margin {
