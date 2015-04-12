@@ -3,6 +3,7 @@ var _g_node_id = 1;
 var Node = (function() {
 
     function Node(options) {
+        var node_layer = $('#layer-3');
 
         this.node_id = _g_node_id++;
         this.name = options.name;
@@ -11,18 +12,23 @@ var Node = (function() {
         this.width = 180;
         this.height = 40;
         this.component_id = 0;
-
-        var svg = d3.selectAll("svg");
+        console.log('-------------------------------------');
+        console.log(node_layer);
+        kk = node_layer;
+        var svg = d3.selectAll(node_layer);
+        console.log(svg);
+        console.log('-------------------------------------');
         var g = svg.append('g');
-
+        console.log('-------------------------------------');
         // Just adding an element of randomity so things don't appear on top of each other.
         var _x = $('.detail').width() + (Math.random() * 400);
         var _y = 50 + (Math.random() * 400);
         // Lets compensate for smaller window widths, just in case.
-
+        console.log('-------------------------------------');
         if (_x > window.innerWidth - 350) { _x = window.innerWidth - 500; console.log("Too big, making " + _x)}
         if (_y > window.innerHeight) { _y = window.innerHeight - 300;}
-
+        console.log('-------------------------------------');
+        xx = g;
         var node = g.append('rect')
             .attr("x", _x)
             .attr("y", _y)
@@ -35,6 +41,14 @@ var Node = (function() {
             .attr('font-size', "20pt");
 
         g.append('text')
+            .attr('x', _x - 15)
+            .attr('y', _y - 5)
+            .attr('font-family', 'FontAwesome')
+            .attr('class', 'node close-icon')
+            .attr('font-size', '12pt')
+            .text('\uf00d');  // icon: fa-close
+
+        g.append('text')
             .attr('x', _x + 90)
             .attr('y', _y + 25)
             .attr('fill', 'black')
@@ -43,15 +57,15 @@ var Node = (function() {
             .style('text-anchor', "middle")
             .text(this.name);
 
-        if (this.input > 0){
+        if (this.input > 0) {
             g.append('circle')
-                .attr('cx', _x + 90 )
+                .attr('cx', _x + 90)
                 .attr('cy', _y)
-                .attr('r', 4 )
+                .attr('r', 4)
                 .attr('fill', '#fd8d3c')
                 .style('stroke-width', 1);
-
         }
+
         if (this.output > 0) {
             g.append('circle')
                 .attr('cx', _x + 90 )
@@ -67,28 +81,25 @@ var Node = (function() {
             .attr('abs_y', _y)
             .attr('id', this.node_id)
             .call(d3.behavior.drag().on("drag", _drag))
-            .on("click", function(){ clicked(this); })
-            .append('i').attr('class', 'fa fa-bar-chart')
-        ;
+            .on("click", function () { clicked(this); })
+            .append('i').attr('class', 'fa fa-bar-chart');
     }
 
-    function _drag(){
+    function _drag() {
 
         var group = d3.select(this);
 
-        sx = parseInt(group.attr('x')) + parseInt(d3.event.dx);
-        sy = parseInt(group.attr('y')) + parseInt(d3.event.dy);
+        var sx = parseInt(group.attr('x')) + parseInt(d3.event.dx);
+        var sy = parseInt(group.attr('y')) + parseInt(d3.event.dy);
 
-        group
-            .attr('x', sx)
-            .attr('y', sy)
+        group.attr('x', sx).attr('y', sy)
             .attr('transform', 'translate(' + sx + ',' + sy + ')');
 
-        line_from = d3.selectAll('g[from_id="'+group.attr('id')+'"]').selectAll('line')
+        d3.selectAll('g[from_id="' + group.attr('id') + '"]').selectAll('line')
             .attr('x1', sx + parseInt(group.attr('abs_x')) + 90)
             .attr('y1', sy + parseInt(group.attr('abs_y')) + 40);
 
-        d3.selectAll('g[to_id="'+group.attr('id')+'"]').selectAll('line')
+        d3.selectAll('g[to_id="' + group.attr('id') + '"]').selectAll('line')
             .attr('x2', sx + parseInt(group.attr('abs_x')) + 90)
             .attr('y2', sy + parseInt(group.attr('abs_y')));
     }
@@ -96,22 +107,25 @@ var Node = (function() {
     function setInputPath(path) {
         this.input_path = path;
     }
+
     function setOutputPath(path) {
         this.output_path = path;
     }
+
     function getInputPath(path) {
         return this.input_path;
     }
+
     function getOutputPath(path) {
         return this.output_path;
     }
 
-
     function clicked(elm){
+        var line_layer = $('#layer-2');
 
         if (d3.event.defaultPrevented) return;
 
-        node = d3.select(elm);
+        var node = d3.select(elm);
 
         if (Node.current_focus == null) {
             node.classed('clicked', true);
@@ -125,7 +139,7 @@ var Node = (function() {
             return;
         }
 
-        var svg = d3.selectAll("svg");
+        var svg = d3.selectAll(line_layer);
         var g = svg.append('g')
             .attr('from_id', Node.current_focus.attr('id'))
             .attr('to_id', node.attr('id'));
@@ -136,7 +150,7 @@ var Node = (function() {
             .attr('x2',  parseInt(node.attr('x')) +  parseInt(node.attr('abs_x'))+ 90)
             .attr('y2',  parseInt(node.attr('y')) +  parseInt(node.attr('abs_y')))
             .attr("stroke", "gray")
-            .attr('troke-width', 10);
+            .attr('stroke-width', 2);
 
         Node.find_by_id(Node.current_focus.attr('id'))
             .setOutputPath(g);
@@ -161,7 +175,6 @@ var Node = (function() {
         return this.node_id;
     }
 
-
     Node.prototype = {
         constructor:    Node,
         getId:          getId,
@@ -173,9 +186,9 @@ var Node = (function() {
         getOutputPath:  getOutputPath
     };
 
-    Node.current_focus  = null;
+    Node.current_focus = null;
 
-    Node._all            = [];
+    Node._all = [];
 
     Node.getAll = function(){
         return Node._all;
@@ -206,11 +219,9 @@ var Node = (function() {
         return null;
     };
 
-
     Node.getCurrentForcus = function() {
         return Node.find_by_id(Node.current_focus[0][0].id);
     };
-
 
     Node.getWorkflowFrom = function(node_id) {
 
@@ -231,4 +242,5 @@ var Node = (function() {
     };
 
     return Node;
+
 })();

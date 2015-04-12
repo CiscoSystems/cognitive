@@ -31,6 +31,14 @@ li.component {
     color: white;
 }
 
+#contents {
+    position:absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 .whiteboard-flyout i{
     font-size:22pt;
 }
@@ -75,7 +83,7 @@ li.component {
     display:none;
     height: 100%;
     border-right: solid 1px gray;
-    padding: 5px 0 0;
+    padding: 5px 0 0px;
     max-width: 600px;
 }
 
@@ -206,4 +214,25 @@ tr.result_row:hover {
     padding-top:25px;
     padding-bottom:20px;
     margin:0;
+}
+
+.node.close-icon {
+    display: none;
+}
+
+#layer-0 {
+    height: 100%;
+    width: 100%;
+}
+#layer-1 {
+    height: 100%;
+    width: 100%;
+}
+#layer-2 {
+    height: 100%;
+    width: 100%;
+}
+#layer-3 {
+    height: 100%;
+    width: 100%;
 }
