@@ -1,91 +1,165 @@
-var _g_node_id = 1;
-
 var Node = (function() {
 
-    function Node(options) {
-        var node_layer = $('#layer-3');
+    // class variable
+    var functionality_layer, node_layer, connection_layer, scope_layer;
 
-        this.node_id = _g_node_id++;
+    // class function
+    var generate_id = (function(){
+        var gen = 1;
+        return function() {return gen++;};
+    })();
+
+    function Node(options) {
+
+        functionality_layer = $('#layer-4')
+        node_layer = $('#layer-3');
+        connection_layer = $('#layer-2');
+        scope_layer = $('#layer-1');
+
+        this._id = generate_id();
+        this._width = 180;
+        this._height = 40;
         this.name = options.name;
-        this.input = options.input;
-        this.output = options.output;
-        this.width = 180;
-        this.height = 40;
+        this._input = options.input;
+        this._output = options.output;
         this.component_id = 0;
-        console.log('-------------------------------------');
-        console.log(node_layer);
-        kk = node_layer;
-        var svg = d3.selectAll(node_layer);
-        console.log(svg);
-        console.log('-------------------------------------');
-        var g = svg.append('g');
-        console.log('-------------------------------------');
+        this._x = 0;
+        this._y = 0;
+
+        _create_node.call(this);
+        _create_scope.call(this);
+        _append_functionality.call(this);
+    }
+
+    // private function
+    function _create_node() {
+
         // Just adding an element of randomity so things don't appear on top of each other.
-        var _x = $('.detail').width() + (Math.random() * 400);
-        var _y = 50 + (Math.random() * 400);
+        this._x = $('.detail').width() + (Math.random() * 400);
+        this._y = 50 + (Math.random() * 400);
+
         // Lets compensate for smaller window widths, just in case.
-        console.log('-------------------------------------');
-        if (_x > window.innerWidth - 350) { _x = window.innerWidth - 500; console.log("Too big, making " + _x)}
-        if (_y > window.innerHeight) { _y = window.innerHeight - 300;}
-        console.log('-------------------------------------');
-        xx = g;
-        var node = g.append('rect')
-            .attr("x", _x)
-            .attr("y", _y)
-            .attr('width',  this.width)
-            .attr('height', this.height)
+        if (this._x > window.innerWidth - 350) { this._x = window.innerWidth - 500; console.log("Too big, making " + _x);}
+        if (this._y > window.innerHeight) { this._y = window.innerHeight - 300;}
+
+        var svg = d3.selectAll(node_layer);
+        var g = svg.append('g')
+            .attr('class', 'node-group')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('abs_x', this._x)
+            .attr('abs_y', this._y)
+            .attr('id', 'node-group-' + this._id)
+            .call(d3.behavior.drag().on("drag", _drag))
+            .on("click", function () { clicked(this); })
+            .on("mouseenter", function() {
+                var id = this.id.split("-")[2];
+                $("#close-icon-id-" + id).css("display", "block");
+            });
+
+        g.append('rect')
+            .attr('x', this._x)
+            .attr('y', this._y)
+            .attr('width',  this._width)
+            .attr('height', this._height)
             .attr('class', "node base-node")
             .attr('stroke', "steelblue" )
-            .attr('stroke-width', "3" )
-            .attr('text',"aaaaaa" )
-            .attr('font-size', "20pt");
+            .attr('stroke-width', "3" );
 
         g.append('text')
-            .attr('x', _x - 15)
-            .attr('y', _y - 5)
-            .attr('font-family', 'FontAwesome')
-            .attr('class', 'node close-icon')
-            .attr('font-size', '12pt')
-            .text('\uf00d');  // icon: fa-close
-
-        g.append('text')
-            .attr('x', _x + 90)
-            .attr('y', _y + 25)
+            .attr('x', this._x + 90)
+            .attr('y', this._y + 25)
             .attr('fill', 'black')
             .style('stroke-width', 1)
             .style({"font-size":"14px","z-index":"9999999"} )
             .style('text-anchor', "middle")
             .text(this.name);
 
-        if (this.input > 0) {
+        if (this._input > 0) {
             g.append('circle')
-                .attr('cx', _x + 90)
-                .attr('cy', _y)
+                .attr('cx', this._x + 90)
+                .attr('cy', this._y)
                 .attr('r', 4)
                 .attr('fill', '#fd8d3c')
                 .style('stroke-width', 1);
         }
 
-        if (this.output > 0) {
+        if (this._output > 0) {
             g.append('circle')
-                .attr('cx', _x + 90 )
-                .attr('cy', _y + 40 )
+                .attr('cx', this._x + 90 )
+                .attr('cy', this._y + 40 )
                 .attr('r', 4 )
                 .attr('fill', '#5264ae')
                 .style('stroke-width', 1);
         }
 
-        g.attr('x', 0)
-            .attr('y', 0)
-            .attr('abs_x', _x)
-            .attr('abs_y', _y)
-            .attr('id', this.node_id)
-            .call(d3.behavior.drag().on("drag", _drag))
-            .on("click", function () { clicked(this); })
-            .append('i').attr('class', 'fa fa-bar-chart');
+    }
+
+    // private function
+    function _create_scope() {
+
+        var scope = d3.selectAll(scope_layer)
+            .append('g').attr('id', "scope-group-" + this._id)
+            .on("mouseleave", function(){
+                var id = this.id.split("-")[2];
+                $("#close-icon-id-" + id).css("display", "none");
+            });
+
+        console.log(this._width);
+        scope.append('rect')
+            .attr('x', this._x - 35)
+            .attr('y', this._y - 35)
+            .attr('width',  this._width + 70)
+            .attr('height', this._height + 70)
+            .attr('class', "scope")
+            .attr('id', "scope-" + this._id)
+            .attr('fill', 'white');
+    }
+
+    // private function
+    function _append_functionality() {
+        var svg = d3.selectAll(functionality_layer);
+        var g = svg.append('g').attr('id', 'functionality-group-' + this._id);
+
+        g.append('text')
+            .attr('x',this. _x - 20)
+            .attr('y', this._y - 5)
+            .attr('class', 'close-icon')
+            .attr('id', 'close-icon-id-' + this._id)
+            .text('\uf00d')  // icon: fa-close
+            .on("click", function() { erase(this); return false; })
+            .on("mouseenter", function(){$(this).css("display", "block")});
+    }
+
+    function erase(elm) {
+
+        var g = d3.select(elm);
+        var id = g.attr('id').split("-")[3];
+
+        Node.current_focus = null;
+
+        $('#scope-group-' + id).remove();
+        $('#node-group-' + id).remove();
+        $('g[from_id="' + "node-group-" + id +'"]').remove();
+        $('g[to_id="' + "node-group-" + id +'"]').remove();
+        $('#functionality-group-' + id).remove();
+
+        /*
+        *  TODO: remove from Node.all tables otherwise cannot calculate path information
+        * */
+
+        var self_node_idx = Node.find_by_id(this._id);
+        if (self_node_idx > -1) { Node._all.splice(self_node_idx, 1); }
+
+        return false;
     }
 
     function _drag() {
+
+        /*
+         * TODO: should separate each drag functions for each part
+         *       or should make some group which can control entire node
+         */
 
         var group = d3.select(this);
 
@@ -102,6 +176,21 @@ var Node = (function() {
         d3.selectAll('g[to_id="' + group.attr('id') + '"]').selectAll('line')
             .attr('x2', sx + parseInt(group.attr('abs_x')) + 90)
             .attr('y2', sy + parseInt(group.attr('abs_y')));
+
+        var node_id = group.attr('id').split("-")[2];
+
+        var scope = d3.selectAll($('#scope-' + node_id));
+
+        scope
+            .attr('x', sx - 30 + parseInt(group.attr('abs_x')))
+            .attr('y', sy - 30 + parseInt(group.attr('abs_y')));
+
+        var functionality_group = d3.selectAll($('#close-icon-id-' + node_id));
+        console.log(functionality_group);
+        functionality_group
+            .attr('x', sx - 20 + parseInt(group.attr('abs_x')))
+            .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
+
     }
 
     function setInputPath(path) {
@@ -116,15 +205,13 @@ var Node = (function() {
         return this.input_path;
     }
 
-    function getOutputPath(path) {
+    function getOutputPath() {
         return this.output_path;
     }
 
     function clicked(elm){
-        var line_layer = $('#layer-2');
 
         if (d3.event.defaultPrevented) return;
-
         var node = d3.select(elm);
 
         if (Node.current_focus == null) {
@@ -139,7 +226,7 @@ var Node = (function() {
             return;
         }
 
-        var svg = d3.selectAll(line_layer);
+        var svg = d3.selectAll(connection_layer);
         var g = svg.append('g')
             .attr('from_id', Node.current_focus.attr('id'))
             .attr('to_id', node.attr('id'));
@@ -152,11 +239,11 @@ var Node = (function() {
             .attr("stroke", "gray")
             .attr('stroke-width', 2);
 
-        Node.find_by_id(Node.current_focus.attr('id'))
-            .setOutputPath(g);
-        Node.find_by_id(node.attr('id'))
-            .setInputPath(g);
+        var current_focus_node_id = Node.current_focus.attr('id').split("-")[2];
+        var next_node_id = node.attr('id').split("-")[2];
 
+        Node.find_by_id(current_focus_node_id).setOutputPath(g);
+        Node.find_by_id(next_node_id).setInputPath(g);
         Node.current_focus.classed('clicked', false);
 
         node.classed('clicked', false);
@@ -168,12 +255,28 @@ var Node = (function() {
     }
 
     function getComponentId(id) {
-        return (this.component_id);
+        return this.component_id;
     }
 
     function getId() {
-        return this.node_id;
+        return this._id;
     }
+
+    //Node.disableUIFocus = function disableUIFocus() {
+    //
+    //    var target = $('.clicked');
+    //    var class_list = target.attr('class').split(" ,");
+    //    var idx = class_list.indexOf("clicked");
+    //
+    //    if (idx > -1) {
+    //        class_list.splice(idx, 1);
+    //    }
+    //
+    //    var without_clicked = class_list
+    //        .reduce(function(result, x){return result + " " + x}, "");
+    //
+    //    target.attr('class', without_clicked);
+    //};
 
     Node.prototype = {
         constructor:    Node,
@@ -198,9 +301,9 @@ var Node = (function() {
         return Node._all.push(node);
     };
 
-    Node.find_by_id = function(id){
+    Node.find_by_id = function(id) {
         for (var i =0; i < Node._all.length; i++){
-            if (Node._all[i].node_id == id){
+            if (Node._all[i]._id == id){
                 return Node._all[i];
             }
         }
@@ -219,8 +322,9 @@ var Node = (function() {
         return null;
     };
 
-    Node.getCurrentForcus = function() {
-        return Node.find_by_id(Node.current_focus[0][0].id);
+    Node.getCurrentFocus = function () {
+        var focus_node_id = Node.current_focus[0][0].id.split("-")[2];
+        return Node.find_by_id(focus_node_id);
     };
 
     Node.getWorkflowFrom = function(node_id) {
@@ -228,16 +332,14 @@ var Node = (function() {
         var node_list = [];
         var start = Node.find_by_id(node_id);
 
-        for ( var i = start; ;
-              i = Node.find_by_id(parseInt(i.getOutputPath().attr('to_id')))) {
-            console.log(i);
+        for ( var i = start;;
+              i = Node.find_by_id(parseInt(i.getOutputPath().attr('to_id').split("-")[2]))) {
             node_list.push(i);
-            if (i.getOutputPath() == undefined) {
+            if (i.getOutputPath() === undefined) {
                 break;
             }
         }
 
-        console.log(node_list);
         return node_list;
     };
 

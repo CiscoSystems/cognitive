@@ -5,7 +5,7 @@ var Manager = (function(){
     }
 
     function activate_menubar(elm){
-        menubar     = $('li.'+elm);
+        menubar = $('li.'+elm);
         description = $('.detail.'+elm);
 
         menubar
@@ -14,7 +14,7 @@ var Manager = (function(){
 
         description.toggle("slide", {direction: "left"}, 700);
 
-        if (this._active_menu == null) {
+        if (this._active_menu === null) {
             this._active_menu = elm;
             return(menubar.addClass("active"));
         }
@@ -29,7 +29,7 @@ var Manager = (function(){
             }
         }
 
-        previous_menubar     = $('li.'+ this._active_menu);
+        previous_menubar = $('li.'+ this._active_menu);
         previous_description = $('.detail.'+ this._active_menu);
 
         previous_description.toggle("slide");

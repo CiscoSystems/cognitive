@@ -264,9 +264,6 @@ $(function(){
                 output:1
             });
 
-            // var names = $('#remove_missing_values_text').val();
-            // var indexes = names_to_ids(names);
-            // console.log(indexes);
             var method = $('#remove_missing_value_method').val();
 
             cognitive_client.createRemoveMissingValuesComponent({
@@ -403,9 +400,14 @@ $(function(){
 
     function getResult() {
 
-        var node = Node.getCurrentForcus();
+        console.log("--------------------");
+
+        var node = Node.getCurrentFocus();
+        console.log(node);
 
         if (node == null) {return;}
+
+        console.log("--------------------");
 
         $.ajax({
             url:  '/api/v1/results/?experiment=1&component_id=' + node.component_id,
@@ -421,6 +423,7 @@ $(function(){
                 render_result_graphs(result);
             }
         });
+        console.log("--------------------");
     }
 
     function render_result_graphs(result) {

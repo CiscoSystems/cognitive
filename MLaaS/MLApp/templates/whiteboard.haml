@@ -18,7 +18,10 @@
 
 - block 'contents'
 
-  .whiteboard-flyout
+  #main-menu.zero_padding_margin
+  -#  new tabs like `setting`, `experiment` will be appeared here
+
+  .whiteboard-flyout{style:"left: 55px;"}
     .flyout-wrapper
       %ul
         %li.menu_bar.introduction
@@ -58,6 +61,7 @@
       %g#layer-1
       %g#layer-2
       %g#layer-3
+      %g#layer-4
 
   #component_arguments
     .detail.introduction

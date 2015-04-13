@@ -58,10 +58,11 @@ li.component {
     color: #333333;
 }
 
-#visualization{
+#visualization {
     float:right;
     background-color:white;
-    padding-left: 200px;
+    padding-left: 275px;
+    padding-right: 60px;
     width:100%;
     height: calc(100%);
 }
@@ -77,7 +78,7 @@ li.component {
     margin:0;
     width: 30%;
     position: fixed;
-    left: 220px;
+    left: 275px;
     top:45px;
     background:white;
     display:none;
@@ -216,8 +217,15 @@ tr.result_row:hover {
     margin:0;
 }
 
-.node.close-icon {
+.close-icon {
+    font-family: 'FontAwesome';
+    font-size: 16pt;
+    fill: #dddddd;
     display: none;
+}
+
+.close-icon:hover {
+    fill: #aa1852;
 }
 
 #layer-0 {
@@ -235,4 +243,14 @@ tr.result_row:hover {
 #layer-3 {
     height: 100%;
     width: 100%;
+}
+
+#main-menu {
+    position: fixed;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    width: 55px;
+    height: 100%;
+    background:#3D3D3D;
 }
