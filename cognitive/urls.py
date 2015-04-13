@@ -10,8 +10,16 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MLaaS.settings")
+from django.conf.urls import patterns, include, url
+from app import views, urls
 
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns(
+    '',
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', views.index, name="home"),
+    url(r'^whiteboard$', views.whiteboard, name="whiteboard"),
+    url(r'^api/v1/', include(urls)),
+)

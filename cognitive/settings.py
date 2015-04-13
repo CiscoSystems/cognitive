@@ -12,7 +12,7 @@
 
 
 """
-Django settings for MLaaS project.
+Django settings for cognitive project.
 """
 
 import os
@@ -34,7 +34,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR + '/MLaaS/MLApp', 'templates'),
+    os.path.join(BASE_DIR + '/cognitive/app', 'templates'),
 )
 
 TEMPLATE_LOADERS = (
@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djangobower',
     'rest_framework',
-    'MLaaS.MLApp',
+    'cognitive.app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,9 +68,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'MLaaS.urls'
+ROOT_URLCONF = 'cognitive.urls'
 
-WSGI_APPLICATION = 'MLaaS.wsgi.application'
+WSGI_APPLICATION = 'cognitive.wsgi.application'
 
 
 # Database
@@ -134,4 +134,4 @@ def get_staticfiles_dirs(webroot='/'):
 
 
 STATICFILES_DIRS = get_staticfiles_dirs()
-STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/MLaaS/MLApp', "static")))
+STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/app', "static")))
