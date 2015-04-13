@@ -1,7 +1,6 @@
 var _uploaded_file_as_text   = "";
 var _uploaded_file_name      = "";
 var _uploaded_file_as_arrays = [];
-var _debug_tmp;
 
 $(function(){
 

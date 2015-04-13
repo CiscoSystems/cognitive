@@ -145,7 +145,10 @@ class OperationViewSet(viewsets.ViewSet):
         op = None  # TODO: [refactor] This value is probably not needed
 
         exp_id = int(data["experiment"])
+
+        # TODO: [required] this statement should be surrounded by try-catch
         exp = Experiment.objects.get(pk=exp_id)
+
         print "Experiment ", exp_id, " Operation ", operation, "data ", data
         op = self.set_operation(operation, data)
 

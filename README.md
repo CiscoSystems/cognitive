@@ -11,8 +11,8 @@ Installation
 
 Install all python packages listed in requirements file. Start your Django server(Optionally using a public ip).  It is advised to use virtualenv to isolate other python environments.
 
-    virtualenv env
-    source env/bin/activate
+    virtualenv venv
+    source venv/bin/activate
     pip install -r requirements.txt
     python manage.py runserver <optional IP:PORT>
 

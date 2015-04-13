@@ -24,7 +24,7 @@ import json
 CACHE = {}
 
 
-class myThread (threading.Thread):
+class myThread(threading.Thread):
 
     def __init__(self, thread_id, name, experiment, component_id, max_results, cache_results):
 

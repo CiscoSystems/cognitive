@@ -34,7 +34,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR + '/cognitive/app', 'templates'),
+    os.path.join(BASE_DIR + '/cognitive/MLApp', 'templates'),
 )
 
 TEMPLATE_LOADERS = (
@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djangobower',
     'rest_framework',
-    'cognitive.app',
+    'cognitive.MLApp',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,4 +134,4 @@ def get_staticfiles_dirs(webroot='/'):
 
 
 STATICFILES_DIRS = get_staticfiles_dirs()
-STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/app', "static")))
+STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/MLApp', "static")))
