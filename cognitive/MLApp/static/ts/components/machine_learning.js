@@ -4,17 +4,17 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-var MathFormula = (function (_super) {
-    __extends(MathFormula, _super);
-    function MathFormula() {
+var MachineLearning = (function (_super) {
+    __extends(MachineLearning, _super);
+    function MachineLearning() {
         _super.call(this, {
-            "name": "Math Formula",
+            "name": "Machine Learning",
             "width": 0,
             "height": 0,
             "input": 1,
             "output": 1
         });
     }
-    return MathFormula;
+    return MachineLearning;
 })(ComponentBase);
-//# sourceMappingURL=math_formula.js.map
+//# sourceMappingURL=machine_learning.js.map

@@ -1,4 +1,4 @@
-interface ComponentInfo {
+interface ComponentInfo extends Object {
     name:string; width:number; height:number; input: number; output:number;
 }
 
@@ -40,8 +40,8 @@ class ComponentBase {
         this.backend_id = 0;
         this.x = 0;
         this.y = 0;
-        this.avilable_input_links = 1;
-        this.avilable_output_links = 1;
+        this.avilable_input_links = params.input;
+        this.avilable_output_links = params.output;
         this.enter_path = null; // should be number?
         this.leave_path = null;
 
@@ -130,8 +130,7 @@ class ComponentBase {
                 var id = this.id.split("-")[2];
                 $("#close-icon-id-" + id).css("display", "none");
             });
-        console.log(this.x);
-        console.log(this.width);
+
         scope.append('rect')
             .attr('x', this.x - 35)
             .attr('y', this.y - 35)
@@ -145,10 +144,6 @@ class ComponentBase {
     private render_functions() {
         var svg = d3.selectAll(ComponentBase.function_layer);
         var g = svg.append('g').attr('id', 'functionality-group-' + this._id);
-
-        console.log("debug");
-        console.log(this.x);
-
         var _eliminate = this.eliminate;
 
         g.append('text')
@@ -180,7 +175,6 @@ class ComponentBase {
             .attr('y2', sy + parseInt(group.attr('abs_y')));
 
         var node_id = group.attr('id').split("-")[2];
-
         var scope = d3.selectAll($('#scope-' + node_id));
 
         scope
@@ -200,22 +194,17 @@ class ComponentBase {
 
         var component = d3.select(e);
 
-        console.log("here");
-
         if (ComponentBase.current_focus == null) {
             component.classed('clicked', true);
             ComponentBase.current_focus = component;
             return;
         }
-        console.log("here");
 
         if (ComponentBase.current_focus.attr('id') == component.attr('id')) {
             component.classed('clicked', false);
             ComponentBase.current_focus = null;
             return;
         }
-
-        console.log("make line");
 
         var svg = d3.selectAll(ComponentBase.connection_layer);
         var g = svg.append('g')
@@ -233,14 +222,9 @@ class ComponentBase {
         var current_focus_node_id = ComponentBase.current_focus.attr('id').split("-")[2];
         var next_node_id = component.attr('id').split("-")[2];
 
-        console.log(current_focus_node_id);
-        console.log(ComponentBase.find_by_id(current_focus_node_id));
         ComponentBase.find_by_id(current_focus_node_id).setOutputPath(g);
-        console.log(current_focus_node_id);
         ComponentBase.find_by_id(next_node_id).setInputPath(g);
-        console.log(current_focus_node_id);
         ComponentBase.current_focus.classed('clicked', false);
-        console.log(current_focus_node_id);
 
         component.classed('clicked', false);
         ComponentBase.current_focus = null;
@@ -307,35 +291,18 @@ class ComponentBase {
 
         var component_list = [];
         var start_component = ComponentBase.find_by_id(id);
-
-        //for ( var i = start_component;;
-        //      i = ComponentBase.find_by_id(parseInt(i.getOutputPath().attr('to_id').split("-")[2]))) {
-        //    console.log(i);
-        //    component_list.push(i);
-        //    console.log(component_list)
-        //    if (i.getOutputPath() == null) {
-        //        break;
-        //    }
-        //    console.log(i.getOutputPath())
-        //}
-
         var i = start_component;
+
         while (true) {
-            console.log(i);
             component_list.push(i);
             console.log("component_list: ", component_list);
             if (i.getOutputPath() == null || i.getOutputPath() == undefined) break;
-            console.log("--------------------");
             var _output_obj = i.getOutputPath()
-            console.log(_output_obj);
-            xx = _output_obj;
             var next_id = _output_obj.attr("to_id").split("-")[2]
-            console.log(next_id);
             i = ComponentBase.find_by_id(next_id)
         }
 
         return component_list;
-
     }
 
     public set_backend_id(id): void {
@@ -346,14 +313,7 @@ class ComponentBase {
         return this.backend_id;
     }
 
-    public get_outpath() {
-        return this.leave_path;
-    }
-
-    public get_enter_path() {
-        return this.enter_path;
-    }
-
+    /* TODO: [refactor] the function names bellow */
     public getInputPath(){
         return this.enter_path;
     }
@@ -369,7 +329,5 @@ class ComponentBase {
     public getOutputPath() {
         return this.leave_path;
     }
-
-
 
 }

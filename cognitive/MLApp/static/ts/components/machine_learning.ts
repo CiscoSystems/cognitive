@@ -1,11 +1,11 @@
-class MathFormula extends ComponentBase {
-    constructor(){
+class MachineLearning extends ComponentBase {
+    constructor() {
         super({
-            "name": "Math Formula",
+            "name": "Machine Learning",
             "width": 0,
             "height":0,
             "input":1,
             "output":1
-        });
+        })
     }
 }

@@ -95,9 +95,7 @@ $(function () {
     $(".add_btn").click(function () {
         var node;
         if ($(this).hasClass('add_input')) {
-            node = new ComponentBase({
-                name: 'INPUT_DATA', output: 1, input: 0
-            });
+            node = new InputData();
             cognitive_client.createInputComponent({
                 user_id: 1,
                 input_file: _uploaded_file_name,
@@ -108,12 +106,7 @@ $(function () {
             }, node);
         }
         else if ($(this).hasClass('add_row')) {
-            console.log("add_row test");
-            node = new ComponentBase({
-                name: 'Add Row',
-                input: 1,
-                output: 1
-            });
+            node = new AddRow();
             var request_text = "[";
             for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
                 request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
@@ -129,11 +122,6 @@ $(function () {
             }, node);
         }
         else if ($(this).hasClass('add_math_fomula')) {
-            //node = new ComponentBase({
-            //    name:'Apply Formula',
-            //    input:1,
-            //    output:1
-            //});
             node = new MathFormula();
             var method = $('select#formula_method').val();
             var column_num = $('select#formula_column').val();
@@ -151,11 +139,7 @@ $(function () {
             cognitive_client.createMathFormulaComponent(t, node);
         }
         else if ($(this).hasClass('add_normalization')) {
-            node = new ComponentBase({
-                name: 'Normalization',
-                input: 1,
-                output: 1
-            });
+            node = new Normalization();
             var method = $('select#normalization_method').val();
             var column_num = $('select#normalization_column').val();
             cognitive_client.createNormalizationComponent({
@@ -168,11 +152,7 @@ $(function () {
             }, node);
         }
         else if ($(this).hasClass('add_projection')) {
-            node = new ComponentBase({
-                name: 'Column Selection',
-                input: 1,
-                output: 1
-            });
+            node = new ColumnSelection();
             var len = $('.projection_selects').length;
             var projection_columns = "[";
             for (var i = 0; i < len; i++) {
@@ -189,11 +169,7 @@ $(function () {
             }, node);
         }
         else if ($(this).hasClass('add_remove_duplicates')) {
-            node = new ComponentBase({
-                name: 'Remove Duplicates',
-                input: 1,
-                output: 1
-            });
+            node = new RemoveDuplicates();
             var len = $('.remove_duplicates_selects').length;
             var remove_duplicates_columns = "[";
             for (var i = 0; i < len; i++) {
@@ -211,11 +187,7 @@ $(function () {
             }, node);
         }
         else if ($(this).hasClass('add_remove_missing_value')) {
-            node = new ComponentBase({
-                name: 'Remove Missing Values',
-                input: 1,
-                output: 1
-            });
+            node = new RemoveMissingValues();
             var method = $('#remove_missing_value_method').val();
             cognitive_client.createRemoveMissingValuesComponent({
                 user_id: 1,
@@ -225,11 +197,7 @@ $(function () {
             }, node);
         }
         else if ($(this).hasClass('add_metadata')) {
-            node = new ComponentBase({
-                name: 'MetaData',
-                input: 1,
-                output: 1
-            });
+            node = new MetadataEditor();
             var metadata_types = "[";
             for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
                 console.log($(".metadata.column" + i).val());
@@ -245,27 +213,8 @@ $(function () {
                 column_type: metadata_types
             }, node);
         }
-        else if ($(this).hasClass('add_output')) {
-            node = new ComponentBase({
-                name: 'OUTPUT',
-                input: 1,
-                output: 0
-            });
-            cognitive_client.createOutputComponent({
-                user_id: 1,
-                name: "sample_input.csv",
-                token: "aaa",
-                type: "css",
-                experiment: 1,
-                data: uploaded_file_as_text
-            }, node);
-        }
         else if ($(this).hasClass('add_machine_learning')) {
-            node = new ComponentBase({
-                name: 'Machine Learning',
-                input: 1,
-                output: 1
-            });
+            node = MachineLearning();
             var argo = $('.machine_learning_select').val();
             var target = $('.machine_learning_target').val();
             var parcentage = $('.machine_learning_target_parcentage').val();
@@ -279,10 +228,14 @@ $(function () {
                 target_column: target
             }, node);
         }
-        //ComponentBase.appendToList(node);
     });
     $("#execute-btn").click(function () {
-        var start = ComponentBase.find_by_key_value({ name: "INPUT_DATA" });
+        var start;
+        for (var i = 0; i < ComponentBase.component_list.length; i++) {
+            if (ComponentBase.component_list[i].name == "Input Data") {
+                start = ComponentBase.component_list[i];
+            }
+        }
         var node_list = ComponentBase.get_workflow_from(start.get_id());
         if (node_list.length < 1) {
             alert("no workflow or input files");
@@ -327,13 +280,11 @@ $(function () {
     });
     $(".show_result_graph").click(getResult);
     function getResult() {
-        console.log("--------------------");
         var component = ComponentBase.get_current_focus_component();
         console.log(component);
         if (component == null) {
             return;
         }
-        console.log("--------------------");
         $.ajax({
             url: '/api/v1/results/?experiment=1&component_id=' + component.get_backend_id(),
             type: "GET",
@@ -346,7 +297,6 @@ $(function () {
                 render_result_graphs(result);
             }
         });
-        console.log("--------------------");
     }
     function render_result_graphs(result) {
         var w = 100;

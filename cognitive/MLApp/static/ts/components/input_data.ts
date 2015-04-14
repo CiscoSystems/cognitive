@@ -1,10 +1,10 @@
-class MathFormula extends ComponentBase {
+class InputData extends ComponentBase {
     constructor(){
         super({
-            "name": "Math Formula",
+            "name": "Input Data",
             "width": 0,
             "height":0,
-            "input":1,
+            "input":0,
             "output":1
         });
     }
