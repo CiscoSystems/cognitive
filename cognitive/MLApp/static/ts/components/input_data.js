@@ -17,11 +17,8 @@ var InputData = (function (_super) {
     }
     InputData.prototype.create_request = function (params) {
         var json_data = {
-            user_id: 1,
             input_file: params.file_name,
-            token: "token",
             input_file_type: "csv",
-            experiment: 1,
             data_values: params.text_data
         };
         var api_url = '/api/v1' + '/operations/input/';

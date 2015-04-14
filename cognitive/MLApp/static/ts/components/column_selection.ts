@@ -15,10 +15,7 @@ class ColumnSelection extends ComponentBase {
 
     public create_request(params: ColumnSelectionComponentCreateParams) {
         var json_data = {
-            user_id: 1,
-                token: "aaa",
-                experiment: 1,
-                component_id: params.component_id
+            component_id: params.component_id
         };
 
         var api_url = '/api/v1' + '/operations/projection/';

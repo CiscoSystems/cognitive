@@ -17,9 +17,6 @@ var RemoveMissingValues = (function (_super) {
     }
     RemoveMissingValues.prototype.create_request = function (params) {
         var json_data = {
-            user_id: 1,
-            token: "aaa",
-            experiment: 1,
             op_action: params.op_action
         };
         var api_url = '/api/v1' + '/operations/remove_missing/';

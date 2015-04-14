@@ -17,9 +17,6 @@ var MetadataEditor = (function (_super) {
     }
     MetadataEditor.prototype.create_request = function (params) {
         var json_data = {
-            user_id: 1,
-            token: "aaa",
-            experiment: 1,
             column_type: params.column_type
         };
         var api_url = '/api/v1' + '/operations/metadata/';

@@ -15,9 +15,6 @@ class MetadataEditor extends ComponentBase {
 
     public create_request(params: MetadataEditorComponentCreateParams){
         var json_data = {
-            user_id: 1,
-            token: "aaa",
-            experiment: 1,
             column_type: params.column_type
         };
 

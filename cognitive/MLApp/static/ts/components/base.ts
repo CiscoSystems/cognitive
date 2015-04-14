@@ -314,6 +314,12 @@ class ComponentBase {
     }
 
     static _send_request(api_url: string, method: string, json_data, node): void {
+
+        /* authentication information */
+        json_data["user_id"] = 1;
+        json_data["token"] = "aaa";
+        json_data["experiment"] = 1;
+
         $.ajax({
             url:  api_url,
             type: method,

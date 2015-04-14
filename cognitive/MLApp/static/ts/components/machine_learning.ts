@@ -17,9 +17,6 @@ class MachineLearning extends ComponentBase {
 
     public create_request(params: MachineLearningComponentCreateParams){
         var json_data = {
-            user_id: 1,
-            token: "aaa",
-            experiment: 1,
             model_type: params.model_type,
             train_data_percentage: params.train_data_percentage,
             target_column: params.target_column

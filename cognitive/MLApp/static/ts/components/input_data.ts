@@ -16,11 +16,8 @@ class InputData extends ComponentBase {
 
     public create_request(params: InputDataComponentCreateParams){
         var json_data = {
-            user_id: 1,
             input_file: params.file_name,
-            token: "token",
             input_file_type: "csv",
-            experiment: 1,
             data_values: params.text_data
         };
 

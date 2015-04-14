@@ -233,6 +233,10 @@ var ComponentBase = (function () {
         return this.backend_id;
     };
     ComponentBase._send_request = function (api_url, method, json_data, node) {
+        /* authentication information */
+        json_data["user_id"] = 1;
+        json_data["token"] = "aaa";
+        json_data["experiment"] = 1;
         $.ajax({
             url: api_url,
             type: method,

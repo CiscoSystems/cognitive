@@ -15,9 +15,6 @@ class RemoveDuplicates extends ComponentBase {
 
     public create_request(params: RemoveDuplicatesComponentCreateParams){
         var json_data = {
-            user_id: 1,
-            token: "aaa",
-            experiment: 1,
             component_id: params.component_id
         };
 

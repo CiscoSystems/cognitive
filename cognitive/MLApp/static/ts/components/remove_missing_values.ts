@@ -15,9 +15,6 @@ class RemoveMissingValues extends ComponentBase {
 
     public create_request(params: RemoveMissingValuesComponentCreateParams){
         var json_data = {
-            user_id: 1,
-            token: "aaa",
-            experiment: 1,
             op_action: params.op_action
         };
 
