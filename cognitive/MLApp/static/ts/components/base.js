@@ -232,6 +232,19 @@ var ComponentBase = (function () {
     ComponentBase.prototype.get_backend_id = function () {
         return this.backend_id;
     };
+    ComponentBase._send_request = function (api_url, method, json_data, node) {
+        $.ajax({
+            url: api_url,
+            type: method,
+            data: json_data,
+            success: function (result) {
+                console.log(result);
+                if (node !== null) {
+                    node.set_backend_id(result.id);
+                }
+            }
+        });
+    };
     /* TODO: [refactor] the function names bellow */
     ComponentBase.prototype.getInputPath = function () {
         return this.enter_path;

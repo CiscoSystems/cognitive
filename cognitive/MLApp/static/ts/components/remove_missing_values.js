@@ -15,6 +15,16 @@ var RemoveMissingValues = (function (_super) {
             "output": 1
         });
     }
+    RemoveMissingValues.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            op_action: params.op_action
+        };
+        var api_url = '/api/v1' + '/operations/remove_missing/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return RemoveMissingValues;
 })(ComponentBase);
 //# sourceMappingURL=remove_missing_values.js.map

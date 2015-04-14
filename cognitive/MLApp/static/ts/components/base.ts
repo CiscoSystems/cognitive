@@ -313,6 +313,18 @@ class ComponentBase {
         return this.backend_id;
     }
 
+    static _send_request(api_url: string, method: string, json_data, node): void {
+        $.ajax({
+            url:  api_url,
+            type: method,
+            data: json_data,
+            success: function(result) {
+                console.log(result);
+                if (node !== null){ node.set_backend_id(result.id);}
+            }
+        });
+    }
+
     /* TODO: [refactor] the function names bellow */
     public getInputPath(){
         return this.enter_path;

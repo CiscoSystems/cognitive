@@ -15,6 +15,16 @@ var RemoveDuplicates = (function (_super) {
             "output": 1
         });
     }
+    RemoveDuplicates.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            component_id: params.component_id
+        };
+        var api_url = '/api/v1' + '/operations/remove_duplicates/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return RemoveDuplicates;
 })(ComponentBase);
 //# sourceMappingURL=remove_duplicate.js.map

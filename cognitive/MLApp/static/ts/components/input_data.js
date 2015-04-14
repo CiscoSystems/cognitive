@@ -15,6 +15,18 @@ var InputData = (function (_super) {
             "output": 1
         });
     }
+    InputData.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            input_file: params.file_name,
+            token: "token",
+            input_file_type: "csv",
+            experiment: 1,
+            data_values: params.text_data
+        };
+        var api_url = '/api/v1' + '/operations/input/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return InputData;
 })(ComponentBase);
 //# sourceMappingURL=input_data.js.map

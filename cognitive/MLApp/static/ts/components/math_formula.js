@@ -15,6 +15,19 @@ var MathFormula = (function (_super) {
             "output": 1
         });
     }
+    MathFormula.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            component_type: params.component_type,
+            component_id: params.component_id,
+            op_type: params.op_type,
+            op_constant: params.op_constant
+        };
+        var api_url = '/api/v1' + '/operations/math_formula/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return MathFormula;
 })(ComponentBase);
 //# sourceMappingURL=math_formula.js.map

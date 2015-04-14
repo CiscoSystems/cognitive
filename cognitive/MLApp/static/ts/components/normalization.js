@@ -15,6 +15,18 @@ var Normalization = (function (_super) {
             "output": 1
         });
     }
+    Normalization.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            component_type: params.component_type,
+            component_id: params.component_id,
+            op_type: params.op_type
+        };
+        var api_url = '/api/v1' + '/operations/normalization/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return Normalization;
 })(ComponentBase);
 //# sourceMappingURL=normalization.js.map

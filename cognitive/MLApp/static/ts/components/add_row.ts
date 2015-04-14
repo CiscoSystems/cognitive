@@ -1,3 +1,7 @@
+interface AddRowComponentCreateParams {
+    values: string;
+}
+
 class AddRow extends ComponentBase {
     constructor () {
         super({
@@ -8,4 +12,19 @@ class AddRow extends ComponentBase {
             "output":1
         })
     }
+
+    public create_request(params: AddRowComponentCreateParams) {
+
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            row_values: params.values
+        };
+
+        var api_url = '/api/v1' + '/operations/row/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+
+    }
+
 }

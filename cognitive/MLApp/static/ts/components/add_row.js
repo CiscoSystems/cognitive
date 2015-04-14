@@ -15,6 +15,16 @@ var AddRow = (function (_super) {
             "output": 1
         });
     }
+    AddRow.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            row_values: params.values
+        };
+        var api_url = '/api/v1' + '/operations/row/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return AddRow;
 })(ComponentBase);
 //# sourceMappingURL=add_row.js.map

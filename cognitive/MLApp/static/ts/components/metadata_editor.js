@@ -15,6 +15,16 @@ var MetadataEditor = (function (_super) {
             "output": 1
         });
     }
+    MetadataEditor.prototype.create_request = function (params) {
+        var json_data = {
+            user_id: 1,
+            token: "aaa",
+            experiment: 1,
+            column_type: params.column_type
+        };
+        var api_url = '/api/v1' + '/operations/metadata/';
+        ComponentBase._send_request(api_url, "POST", json_data, this);
+    };
     return MetadataEditor;
 })(ComponentBase);
 //# sourceMappingURL=metadata_editor.js.map
