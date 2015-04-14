@@ -24,6 +24,10 @@ var MachineLearning = (function (_super) {
         var api_url = '/api/v1' + '/operations/machine_learning/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    MachineLearning.prototype.delete_request = function () {
+        var api_url = '/api/v1' + '/operations/machine_learning/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "DELETE", {}, null);
+    };
     return MachineLearning;
 })(ComponentBase);
 //# sourceMappingURL=machine_learning.js.map

@@ -24,6 +24,10 @@ var InputData = (function (_super) {
         var api_url = '/api/v1' + '/operations/input/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    InputData.prototype.delete_request = function () {
+        var api_url = '/api/v1' + '/operations/input/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "DELETE", {}, null);
+    };
     return InputData;
 })(ComponentBase);
 //# sourceMappingURL=input_data.js.map

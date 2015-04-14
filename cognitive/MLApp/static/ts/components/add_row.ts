@@ -27,4 +27,8 @@ class AddRow extends ComponentBase {
 
     }
 
+    public delete_request() {
+        var api_url = '/api/v1'  + '/operations/row/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "DELETE", {}, null);
+    }
 }

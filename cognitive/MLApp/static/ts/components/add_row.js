@@ -25,6 +25,10 @@ var AddRow = (function (_super) {
         var api_url = '/api/v1' + '/operations/row/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    AddRow.prototype.delete_request = function () {
+        var api_url = '/api/v1' + '/operations/row/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "DELETE", {}, null);
+    };
     return AddRow;
 })(ComponentBase);
 //# sourceMappingURL=add_row.js.map

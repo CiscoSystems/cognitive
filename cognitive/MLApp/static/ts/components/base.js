@@ -175,7 +175,13 @@ var ComponentBase = (function () {
         $('#functionality-group-' + id).remove();
         ComponentBase.remove_by_id(id);
         console.log("Current Components:", ComponentBase.component_list);
+        this.delete_request();
         return false;
+    };
+    ComponentBase.prototype.delete_request = function () {
+        /* you should overwrite this function
+         * this function is called when remove button of the UI is clicked */
+        console.log("delete_request function is not implemented");
     };
     ComponentBase.find_by_id = function (id) {
         for (var i = 0; i < ComponentBase.component_list.length; i++) {
@@ -237,6 +243,12 @@ var ComponentBase = (function () {
         json_data["user_id"] = 1;
         json_data["token"] = "aaa";
         json_data["experiment"] = 1;
+        if (method === "DELETE") {
+            $.ajax({ url: api_url, type: method, data: json_data,
+                success: function () { }
+            });
+            return;
+        }
         $.ajax({
             url: api_url,
             type: method,

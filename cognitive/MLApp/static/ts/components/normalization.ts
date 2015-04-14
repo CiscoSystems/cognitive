@@ -26,4 +26,9 @@ class Normalization extends ComponentBase {
         var api_url = '/api/v1' + '/operations/normalization/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     }
+
+    public delete_request() {
+        var api_url = '/api/v1'  + '/operations/normalization/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "DELETE", {}, null);
+    }
 }

@@ -244,7 +244,16 @@ class ComponentBase {
 
         console.log("Current Components:", ComponentBase.component_list);
 
+        this.delete_request();
+
         return false;
+
+    }
+
+    public delete_request() {
+        /* you should overwrite this function
+         * this function is called when remove button of the UI is clicked */
+        console.log("delete_request function is not implemented");
     }
 
     static find_by_id(id): any {
@@ -319,6 +328,13 @@ class ComponentBase {
         json_data["user_id"] = 1;
         json_data["token"] = "aaa";
         json_data["experiment"] = 1;
+
+        if (method === "DELETE") {
+            $.ajax({ url:  api_url, type: method, data: json_data,
+                success: function() {}
+            });
+            return;
+        }
 
         $.ajax({
             url:  api_url,

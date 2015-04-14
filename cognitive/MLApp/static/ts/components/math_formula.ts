@@ -27,4 +27,9 @@ class MathFormula extends ComponentBase {
         var api_url = '/api/v1' + '/operations/math_formula/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     }
+
+    public delete_request() {
+        var api_url = '/api/v1'  + '/operations/math_formula/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "DELETE", {}, null);
+    }
 }
