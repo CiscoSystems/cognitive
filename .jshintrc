@@ -1,4 +1,7 @@
 {
+    "indent": 4,
+    "white": false,
+
     "globals": {
         "jquery": false,
         "d3": false,

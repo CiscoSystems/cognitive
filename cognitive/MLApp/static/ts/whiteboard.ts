@@ -117,7 +117,7 @@ $(function(){
 
         if ($(this).hasClass('add_input')){
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'INPUT_DATA', output:1, input:0
             });
 
@@ -134,7 +134,7 @@ $(function(){
 
             console.log("add_row test");
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'Add Row',
                 input: 1,
                 output:1
@@ -159,12 +159,12 @@ $(function(){
 
         } else if ($(this).hasClass('add_math_fomula')) {
 
-            //node = new Node({
+            //node = new ComponentBase({
             //    name:'Apply Formula',
             //    input:1,
             //    output:1
             //});
-            node = new MathFormula(Node);
+            node = new MathFormula();
 
             var method   = $('select#formula_method').val();
             var column_num   = $('select#formula_column').val();
@@ -185,7 +185,7 @@ $(function(){
 
         } else if ($(this).hasClass('add_normalization')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'Normalization',
                 input:1,
                 output:1
@@ -205,7 +205,7 @@ $(function(){
 
         } else if ($(this).hasClass('add_projection')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'Column Selection',
                 input:1,
                 output:1
@@ -231,7 +231,7 @@ $(function(){
 
         } else if ($(this).hasClass('add_remove_duplicates')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'Remove Duplicates',
                 input:1,
                 output:1
@@ -258,7 +258,7 @@ $(function(){
 
         } else if ($(this).hasClass('add_remove_missing_value')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'Remove Missing Values',
                 input:1,
                 output:1
@@ -275,7 +275,7 @@ $(function(){
 
         } else if ($(this).hasClass('add_metadata')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'MetaData',
                 input:1,
                 output:1
@@ -299,7 +299,7 @@ $(function(){
 
         }  else if ($(this).hasClass('add_output')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'OUTPUT',
                 input:1,
                 output:0
@@ -316,7 +316,7 @@ $(function(){
 
         } else if ($(this).hasClass('add_machine_learning')) {
 
-            node = new Node({
+            node = new ComponentBase({
                 name:'Machine Learning',
                 input:1,
                 output:1
@@ -339,13 +339,14 @@ $(function(){
 
         }
 
-        Node.appendToList(node);
+        //ComponentBase.appendToList(node);
+
     });
 
     $("#execute-btn").click(function(){
 
-        var start = Node.find_by({name:"INPUT_DATA"});
-        var node_list = Node.getWorkflowFrom(start.getId());
+        var start = ComponentBase.find_by_key_value({name:"INPUT_DATA"});
+        var node_list = ComponentBase.get_workflow_from(start.get_id());
 
         if (node_list.length < 1) {
             alert("no workflow or input files");
@@ -353,7 +354,7 @@ $(function(){
         }
 
         var components_id_list = node_list.map(function(n){
-            return n.getComponentId();
+            return n.get_backend_id();
         });
 
         var flow_path = function(x){
@@ -402,15 +403,15 @@ $(function(){
 
         console.log("--------------------");
 
-        var node = Node.getCurrentFocus();
-        console.log(node);
+        var component = ComponentBase.get_current_focus_component();
+        console.log(component);
 
-        if (node == null) {return;}
+        if (component == null) {return;}
 
         console.log("--------------------");
 
         $.ajax({
-            url:  '/api/v1/results/?experiment=1&component_id=' + node.component_id,
+            url:  '/api/v1/results/?experiment=1&component_id=' + component.get_backend_id(),
             type: "GET",
             data: "",
             success: function(result) {
