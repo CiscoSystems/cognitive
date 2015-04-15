@@ -48,4 +48,7 @@ class RemoveDuplicates extends ComponentBase {
         var api_url = '/api/v1'  + '/operations/remove_duplicates' + '/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     }
+    private click_edit(e): void {
+
+    }
 }

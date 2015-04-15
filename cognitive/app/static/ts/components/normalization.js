@@ -43,6 +43,8 @@ var Normalization = (function (_super) {
         var api_url = '/api/v1' + '/operations/normalization/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
+    Normalization.prototype.click_edit = function (e) {
+    };
     return Normalization;
 })(ComponentBase);
 //# sourceMappingURL=normalization.js.map

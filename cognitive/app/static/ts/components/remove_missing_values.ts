@@ -49,4 +49,8 @@ class RemoveMissingValues extends ComponentBase {
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     }
 
+    private click_edit(e): void {
+
+    }
+
 }

@@ -35,6 +35,8 @@ var RemoveDuplicates = (function (_super) {
         var api_url = '/api/v1' + '/operations/remove_duplicates' + '/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
+    RemoveDuplicates.prototype.click_edit = function (e) {
+    };
     return RemoveDuplicates;
 })(ComponentBase);
 //# sourceMappingURL=remove_duplicate.js.map

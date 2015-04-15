@@ -48,4 +48,6 @@ class ColumnSelection extends ComponentBase {
         var api_url = '/api/v1'  + '/operations/projection/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     }
+    private click_edit(e): void {
+    }
 }

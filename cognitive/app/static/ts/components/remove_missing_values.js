@@ -35,6 +35,8 @@ var RemoveMissingValues = (function (_super) {
         var api_url = '/api/v1' + '/operations/remove_missing/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
+    RemoveMissingValues.prototype.click_edit = function (e) {
+    };
     return RemoveMissingValues;
 })(ComponentBase);
 //# sourceMappingURL=remove_missing_values.js.map

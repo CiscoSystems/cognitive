@@ -77,6 +77,11 @@ class MathFormula extends ComponentBase {
         $('#formula_method').val(this.operation);
         $('#formula_column').val(this.column_idx);
         $('#formula_constant').val(this.constant);
-
     }
+    /* TODO:
+     * in the future, instead of implementing click edit function for all components,
+     * static enable_click() function will deal with this.
+     * The main problem is the mapping each id, say #formula_method, to
+     */
+
 }

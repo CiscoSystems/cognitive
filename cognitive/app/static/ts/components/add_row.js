@@ -41,6 +41,8 @@ var AddRow = (function (_super) {
         var api_url = '/api/v1' + '/operations/row/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
+    AddRow.prototype.click_edit = function (e) {
+    };
     return AddRow;
 })(ComponentBase);
 //# sourceMappingURL=add_row.js.map

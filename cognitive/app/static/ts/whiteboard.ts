@@ -304,8 +304,6 @@ $(function(){
             return t.substr(0,t.length-1);
         }(components_id_list);
 
-        //_send_request(api_url, "POST", json_data, null);
-
         $.ajax({
             url:  '/api/v1/workflows/',
             type: "POST", data: {
@@ -315,12 +313,6 @@ $(function(){
             },
             success: function(result) { console.log(result); }
         });
-
-        //cognitive_client.executeAll({
-        //    user_id: 1,
-        //    experiment: 1,
-        //    graph_data: flow_path
-        //});
 
         $.colorbox({html:"<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false, transition:"none", opacity:0, arrowKey:false, overlayClose:false, fastIframe:false, width:"300px", height:"300px"});
         $('#cboxClose').remove();
@@ -602,31 +594,6 @@ function description_metadata() {
         $("#metadata_discriptions div.meta_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'</p>');
         $("#metadata_discriptions div.meta_"+i)
             .append('<select class="form-control metadata column'+i+'" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
-    }
-}
-
-function names_to_ids(names) {
-    var parsed  = names.split(",");
-    var indexes = "";
-    console.log(parsed);
-    for (var i =0; i < parsed.length; i++) {
-        for (var j =0; j < _uploaded_file_as_arrays[0].length; j++) {
-            if (parsed[i] == _uploaded_file_as_arrays[0][j])
-                indexes += j + ",";
-        }
-    }
-    return indexes;
-}
-
-function adjust_result_table(t) {
-    $('#result_table').empty();
-    $('#result_table').append('<table id="result_graph"></table>');
-    for (var i = 0; i < t.length; i++) {
-        $('#result_graph').append('<tr class="result_'+i+'"></tr>');
-        for (var j = 0; j < t[i].length; j++) {
-            $('tr.result_'+i).append('<th>'+t[i][j]+'</th>');
-            console.log(t[i][j]);
-        }
     }
 }
 

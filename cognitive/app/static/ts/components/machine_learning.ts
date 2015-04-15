@@ -62,4 +62,7 @@ class MachineLearning extends ComponentBase {
         var api_url = '/api/v1'  + '/operations/machine_learning/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     }
+
+    private click_edit(e): void {
+    }
 }

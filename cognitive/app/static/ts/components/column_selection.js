@@ -35,6 +35,8 @@ var ColumnSelection = (function (_super) {
         var api_url = '/api/v1' + '/operations/projection/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
+    ColumnSelection.prototype.click_edit = function (e) {
+    };
     return ColumnSelection;
 })(ComponentBase);
 //# sourceMappingURL=column_selection.js.map
