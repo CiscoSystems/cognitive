@@ -2,158 +2,127 @@ var _uploaded_file_as_text   = "";
 var _uploaded_file_name      = "";
 var _uploaded_file_as_arrays = [];
 
+
+class ViewController {
+
+    static projections: number;
+    static remove_duplicates_columns: number;
+
+    constructor() {
+
+        $(".menu_bar").click(function(){
+            if ($(this).hasClass("introduction")){
+                ComponentController.activate_menubar('introduction');
+            } else if ($(this).hasClass("data_input")) {
+                ComponentController.activate_menubar('data_input');
+            } else if ($(this).hasClass("add_row")) {
+                ComponentController.activate_menubar("add_row");
+                description_addrow();
+            } else if ($(this).hasClass("add_math_fomula")) {
+                ComponentController.activate_menubar("add_math_fomula");
+                description_formula();
+            } else if ($(this).hasClass("projection")) {
+                ComponentController.activate_menubar("projection");
+                ViewController.initialize_projection_column();
+                ViewController.add_column_for_projection();
+            } else if ($(this).hasClass("normalization")) {
+                ComponentController.activate_menubar("normalization");
+                description_normalization();
+            } else if ($(this).hasClass("remove_column")) {
+                ComponentController.activate_menubar("remove_column");
+                ViewController.initialize_remove_duplicates_column();
+                ViewController.add_column_for_remove_duplicates();
+            } else if ($(this).hasClass("remove_missing_value")) {
+                ComponentController.activate_menubar("remove_missing_value");
+            } else if ($(this).hasClass("transform")) {
+                ComponentController.activate_menubar("transform");
+            } else if ($(this).hasClass("metadata")) {
+                ComponentController.activate_menubar("metadata");
+                description_metadata();
+            } else if ($(this).hasClass("formula")) {
+                ComponentController.activate_menubar("formula");
+            } else if ($(this).hasClass("filter")) {
+                ComponentController.activate_menubar("filter");
+            } else if ($(this).hasClass("machine_learning")) {
+                ComponentController.activate_menubar("machine_learning");
+                description_machine_learning();
+            }
+        });
+
+        $(".add_btn").click(function() {
+            if ($(this).hasClass('add_input')) {
+                ComponentController.create_input_component();
+            } else if ($(this).hasClass('add_row')) {
+                ComponentController.create_add_row_component();
+            } else if ($(this).hasClass('add_math_fomula')) {
+                ComponentController.create_math_fomula_component();
+            } else if ($(this).hasClass('add_normalization')) {
+                ComponentController.create_normalization_component();
+            } else if ($(this).hasClass('add_projection')) {
+                ComponentController.create_projection_component();
+            } else if ($(this).hasClass('add_remove_duplicates')) {
+                ComponentController.create_remove_duplicates_component();
+            } else if ($(this).hasClass('add_remove_missing_value')) {
+                ComponentController.create_remove_missing_value_component();
+            } else if ($(this).hasClass('add_metadata')) {
+                ComponentController.create_metadata_component();
+            } else if ($(this).hasClass('add_machine_learning')) {
+                ComponentController.create_machine_learning_component();
+            }
+        });
+    }
+
+    static initialize_projection_column(): void {
+        $('.form-group.projection_form').empty();
+        ViewController.projections = 0;
+    }
+
+    static add_column_for_projection(): void {
+        if (_uploaded_file_as_text == ""){ return; }
+        var column_names = _uploaded_file_as_arrays[0];
+        var option_string = "";
+        for (var i=0; i < column_names.length; i++ ){
+            option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
+        }
+        $('.form-group.projection_form').append(
+            '<select class="form-control projection_selects _selects_'
+            +ViewController.projections+'">'+option_string+'</select>'
+        );
+
+        ViewController.projections++;
+    }
+
+    static initialize_remove_duplicates_column():void {
+        $('.form-group.remove_duplicates_form').empty();
+        ViewController.remove_duplicates_columns = 0;
+    }
+
+    static add_column_for_remove_duplicates(): void {
+        if (_uploaded_file_as_text == ""){ return;}
+        var column_names = _uploaded_file_as_arrays[0];
+        var option_string = "";
+        for (var i=0; i < column_names.length; i++ ){
+            option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
+        }
+        $('.form-group.remove_duplicates_form').append(
+            '<select class="form-control remove_duplicates_selects _selects_'
+            +ViewController.remove_duplicates_columns+'">'+option_string+'</select>'
+        );
+
+        ViewController.remove_duplicates_columns++;
+    }
+}
+
 $(function(){
 
     var m = Manager;
 
     var svg = d3.selectAll("svg");
 
-    $('.projection.plus-bottom').click(add_column_for_projection);
+    $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
+    $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
 
-    var projections = 0;
-    function add_column_for_projection(){
-        if (_uploaded_file_as_text == ""){return;}
-        var column_names = _uploaded_file_as_arrays[0];
-        var option_string = "";
-        for (var i=0; i < column_names.length; i++ ){
-            option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
-        }
-        $('.form-group.projection_form').append('<select class="form-control projection_selects _selects_'+projections+'">'+option_string+'</select>');
-        projections++;
-    }
-
-
-    function initializa_projection_column() {
-        $('.form-group.projection_form').empty();
-        projections = 0;
-    }
-
-    $('.remove_duplicates.plus-bottom').click(add_column_for_remove_duplicates);
-
-    var _num_remove_duplicates_column = 0;
-
-    function add_column_for_remove_duplicates(){
-        if (_uploaded_file_as_text == ""){return;}
-        var column_names = _uploaded_file_as_arrays[0];
-        var option_string = "";
-        for (var i=0; i < column_names.length; i++ ){
-            option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
-        }
-        $('.form-group.remove_duplicates_form').append('<select class="form-control remove_duplicates_selects _selects_'+_num_remove_duplicates_column+'">'+option_string+'</select>');
-        _num_remove_duplicates_column++;
-    }
-
-    function initializa_remove_duplicates_column() {
-        $('.form-group.remove_duplicates_form').empty();
-        _num_remove_duplicates_column = 0;
-    }
-
-    $(".menu_bar.introduction").click(function(){
-        ComponentController.activate_menubar('introduction');
-    });
-
-    $(".menu_bar.data_input").click(function(){
-        ComponentController.activate_menubar('data_input');
-    });
-
-    $(".menu_bar.add_row").click(function(){
-        ComponentController.activate_menubar("add_row");
-        description_addrow();
-    });
-
-    $(".menu_bar.add_math_fomula").click(function(){
-        ComponentController.activate_menubar("add_math_fomula");
-        description_formula();
-    });
-
-    $(".menu_bar.projection").click(function(){
-        ComponentController.activate_menubar("projection");
-        initializa_projection_column();
-        add_column_for_projection();
-    });
-
-    $(".menu_bar.normalization").click(function(){
-        ComponentController.activate_menubar("normalization");
-        description_normalization();
-    });
-
-    $(".menu_bar.remove_column").click(function(){
-        ComponentController.activate_menubar("remove_column");
-        initializa_remove_duplicates_column();
-        add_column_for_remove_duplicates();
-    });
-
-    $(".menu_bar.remove_missing_value").click(function(){
-        ComponentController.activate_menubar("remove_missing_value");
-    });
-
-    $(".menu_bar.transform").click(function(){
-        ComponentController.activate_menubar("transform");
-    });
-
-    $(".menu_bar.metadata").click(function(){
-        ComponentController.activate_menubar("metadata");
-        description_metadata();
-    });
-
-    $(".menu_bar.formula").click(function(){
-        ComponentController.activate_menubar("formula");
-    });
-
-    $(".menu_bar.filter").click(function(){
-        ComponentController.activate_menubar("filter");
-    });
-
-    $(".menu_bar.machine_learning").click(function(){
-        ComponentController.activate_menubar("machine_learning");
-        description_machine_learning();
-    });
-
-    $(".menu_bar.data_output").click(function(){
-        ComponentController.activate_menubar("data_output");
-    });
-
-    $(".add_btn").click(function(){
-
-        if ($(this).hasClass('add_input')){
-
-            ComponentController.create_input_component();
-
-        } else if ($(this).hasClass('add_row')) {
-
-            ComponentController.create_add_row_component();
-
-        } else if ($(this).hasClass('add_math_fomula')) {
-
-            ComponentController.create_math_fomula_component();
-
-        } else if ($(this).hasClass('add_normalization')) {
-
-            ComponentController.create_normalization_component();
-
-        } else if ($(this).hasClass('add_projection')) {
-
-            ComponentController.create_projection_component();
-
-        } else if ($(this).hasClass('add_remove_duplicates')) {
-
-            ComponentController.create_remove_duplicates_component();
-
-        } else if ($(this).hasClass('add_remove_missing_value')) {
-
-            ComponentController.create_remove_missing_value_component();
-
-        } else if ($(this).hasClass('add_metadata')) {
-
-            ComponentController.create_metadata_component();
-
-        } else if ($(this).hasClass('add_machine_learning')) {
-
-            ComponentController.create_machine_learning_component();
-
-        }
-
-    });
+    var t = new ViewController();
 
     $("#execute-btn").click(function(){
 
@@ -530,7 +499,7 @@ class ComponentController {
 
     static create_input_component(): void {
         var node = new InputData();
-        var params:InputDataComponentCreateParams = {
+        var params: InputDataComponentCreateParams = {
             file_name: _uploaded_file_name,
             text_data: _uploaded_file_as_text
         };
@@ -548,7 +517,7 @@ class ComponentController {
         request_text = request_text.slice(0, request_text.length - 1);
         request_text += "]";
 
-        var params:AddRowComponentCreateParams = {
+        var params: AddRowComponentCreateParams = {
             values: request_text
         };
 
@@ -561,7 +530,7 @@ class ComponentController {
         var column_num = $('select#formula_column').val();
         var constant = $('#formula_constant').val();
 
-        var params:MathFormulaComponentCreateParams = {
+        var params: MathFormulaComponentCreateParams = {
             component_type: "Column",
             component_id: column_num, // should be index number
             op_type: method, // or Sub, Mul, Div
@@ -575,7 +544,7 @@ class ComponentController {
         var node = new Normalization();
         var method = $('select#normalization_method').val();
         var column_num = $('select#normalization_column').val();
-        var params:NormalizationComponentCreateParams = {
+        var params: NormalizationComponentCreateParams = {
             component_type: "Column",
             component_id: column_num,
             op_type: method
@@ -598,7 +567,7 @@ class ComponentController {
         projection_columns = projection_columns.slice(0, projection_columns.length - 1);
         projection_columns += "]";
 
-        var params:ColumnSelection = {
+        var params: ColumnSelection = {
             component_id: projection_columns
         };
 
@@ -617,7 +586,7 @@ class ComponentController {
         remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length - 1);
         remove_duplicates_columns += "]";
 
-        params: RemoveDuplicatesComponentCreateParams = {
+        RemoveDuplicatesComponentCreateParams = {
             component_id: remove_duplicates_columns
         };
 
@@ -627,7 +596,7 @@ class ComponentController {
     static create_remove_missing_value_component(): void {
         var node = new RemoveMissingValues();
         var method = $('#remove_missing_value_method').val();
-        var params:RemoveMissingValuesComponentCreateParams = {
+        var params: RemoveMissingValuesComponentCreateParams = {
             op_action: method //"Replace_mean" or Drop_row
         };
 
@@ -635,7 +604,7 @@ class ComponentController {
     }
 
     static create_metadata_component(): void {
-        var node = new MetadataEditor()
+        var node = new MetadataEditor();
         var metadata_types = "[";
         for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
             console.log($(".metadata.column" + i).val());
@@ -644,7 +613,7 @@ class ComponentController {
         metadata_types = metadata_types.slice(0, metadata_types.length - 1);
         metadata_types += "]";
 
-        var params:MetadataEditorComponentCreateParams = {
+        var params: MetadataEditorComponentCreateParams = {
             column_type: metadata_types
         };
 
@@ -656,7 +625,7 @@ class ComponentController {
         var argo = $('.machine_learning_select').val();
         var target = $('.machine_learning_target').val();
         var parcentage = $('.machine_learning_target_parcentage').val();
-        var params:MachineLearningComponentCreateParams = {
+        var params: MachineLearningComponentCreateParams = {
             model_type: argo,
             train_data_percentage: parcentage,
             target_column: target
