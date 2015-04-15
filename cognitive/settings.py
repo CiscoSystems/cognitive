@@ -35,7 +35,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR + '/cognitive/MLApp', 'templates'),
+    os.path.join(BASE_DIR + '/cognitive/app', 'templates'),
 )
 
 TEMPLATE_LOADERS = (
@@ -58,7 +58,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # 'djangobower',
     'rest_framework',
-    'cognitive.MLApp',
+    'cognitive.app',
     'rest_framework_swagger',
 )
 
@@ -136,7 +136,7 @@ def get_staticfiles_dirs(webroot='/'):
 
 
 STATICFILES_DIRS = get_staticfiles_dirs()
-STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/MLApp', "static")))
+STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/app', "static")))
 
 
 # Swagger Documentation Setting

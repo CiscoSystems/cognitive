@@ -11,7 +11,7 @@
 # under the License.
 
 from django.conf.urls import patterns, include, url
-from MLApp import views, urls
+from app import views, urls
 
 from django.contrib import admin
 admin.autodiscover()
