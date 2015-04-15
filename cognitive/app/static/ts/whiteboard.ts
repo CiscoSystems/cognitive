@@ -8,6 +8,10 @@ class ViewController {
     static projections: number;
     static remove_duplicates_columns: number;
 
+    //static uploaded_file_as_text   = "";
+    //static uploaded_file_name      = "";
+    //static uploaded_file_as_arrays = [];
+
     constructor() {
 
         $(".menu_bar").click(function(){
@@ -70,6 +74,13 @@ class ViewController {
                 ComponentController.create_machine_learning_component();
             }
         });
+
+        $("#execute-btn").click(function () {
+            ViewController.run();
+        })
+
+        $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
+        $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
     }
 
     static initialize_projection_column(): void {
@@ -111,24 +122,12 @@ class ViewController {
 
         ViewController.remove_duplicates_columns++;
     }
-}
 
-$(function(){
+    static run(): void {
 
-    var m = Manager;
+        var start: InputData;
 
-    var svg = d3.selectAll("svg");
-
-    $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
-    $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
-
-    var t = new ViewController();
-
-    $("#execute-btn").click(function(){
-
-        var start:InputData;
-
-        for (var i:number = 0; i < ComponentBase.component_list.length; i++) {
+        for (var i: number = 0; i < ComponentBase.component_list.length; i++) {
             if (ComponentBase.component_list[i].name == "Input Data") {
                 start = ComponentBase.component_list[i];
             }
@@ -138,32 +137,44 @@ $(function(){
 
         if (node_list.length < 1) {
             alert("no workflow or input files");
-            return ;
+            return;
         }
 
-        var components_id_list = node_list.map(function(n){
+        var components_id_list = node_list.map(function (n) {
             return n.get_backend_id();
         });
 
-        var flow_path = function(x){
+        var flow_path = function (x) {
             var t = "";
-            for (var i =0; i < x.length-1; i++) {
-                t += x[i]+":"+x[i+1] + ",";
+            for (var i = 0; i < x.length - 1; i++) {
+                t += x[i] + ":" + x[i + 1] + ",";
             }
-            return t.substr(0,t.length-1);
+            return t.substr(0, t.length - 1);
         }(components_id_list);
 
         $.ajax({
-            url:  '/api/v1/workflows/',
+            url: '/api/v1/workflows/',
             type: "POST", data: {
                 user_id: 1,
                 experiment: 1,
                 graph_data: flow_path
             },
-            success: function(result) { console.log(result); }
+            success: function (result) {
+                console.log(result);
+            }
         });
 
-        $.colorbox({html:"<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false, transition:"none", opacity:0, arrowKey:false, overlayClose:false, fastIframe:false, width:"300px", height:"300px"});
+        $.colorbox({
+            html: "<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>",
+            closeButton: false,
+            transition: "none",
+            opacity: 0,
+            arrowKey: false,
+            overlayClose: false,
+            fastIframe: false,
+            width: "300px",
+            height: "300px"
+        });
         $('#cboxClose').remove();
         $('#cboxTopLeft').remove();
         $('#cboxTopCenter').remove();
@@ -174,8 +185,16 @@ $(function(){
         $('#cboxBottomLeft').remove();
         $('#cboxBottomRight').remove();
         setTimeout("$.colorbox.close()", 700);
+    }
 
-    });
+}
+
+$(function(){
+
+    var m = Manager;
+    var svg = d3.selectAll("svg");
+    var t = new ViewController();
+
 
     $('#inputFile').change(function(evt) {
         var file = evt.target.files[0];

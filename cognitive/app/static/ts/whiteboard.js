@@ -2,6 +2,9 @@ var _uploaded_file_as_text = "";
 var _uploaded_file_name = "";
 var _uploaded_file_as_arrays = [];
 var ViewController = (function () {
+    //static uploaded_file_as_text   = "";
+    //static uploaded_file_name      = "";
+    //static uploaded_file_as_arrays = [];
     function ViewController() {
         $(".menu_bar").click(function () {
             if ($(this).hasClass("introduction")) {
@@ -82,6 +85,11 @@ var ViewController = (function () {
                 ComponentController.create_machine_learning_component();
             }
         });
+        $("#execute-btn").click(function () {
+            ViewController.run();
+        });
+        $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
+        $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
     }
     ViewController.initialize_projection_column = function () {
         $('.form-group.projection_form').empty();
@@ -117,15 +125,7 @@ var ViewController = (function () {
             + ViewController.remove_duplicates_columns + '">' + option_string + '</select>');
         ViewController.remove_duplicates_columns++;
     };
-    return ViewController;
-})();
-$(function () {
-    var m = Manager;
-    var svg = d3.selectAll("svg");
-    $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
-    $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
-    var t = new ViewController();
-    $("#execute-btn").click(function () {
+    ViewController.run = function () {
         var start;
         for (var i = 0; i < ComponentBase.component_list.length; i++) {
             if (ComponentBase.component_list[i].name == "Input Data") {
@@ -154,9 +154,21 @@ $(function () {
                 experiment: 1,
                 graph_data: flow_path
             },
-            success: function (result) { console.log(result); }
+            success: function (result) {
+                console.log(result);
+            }
         });
-        $.colorbox({ html: "<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton: false, transition: "none", opacity: 0, arrowKey: false, overlayClose: false, fastIframe: false, width: "300px", height: "300px" });
+        $.colorbox({
+            html: "<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>",
+            closeButton: false,
+            transition: "none",
+            opacity: 0,
+            arrowKey: false,
+            overlayClose: false,
+            fastIframe: false,
+            width: "300px",
+            height: "300px"
+        });
         $('#cboxClose').remove();
         $('#cboxTopLeft').remove();
         $('#cboxTopCenter').remove();
@@ -167,7 +179,13 @@ $(function () {
         $('#cboxBottomLeft').remove();
         $('#cboxBottomRight').remove();
         setTimeout("$.colorbox.close()", 700);
-    });
+    };
+    return ViewController;
+})();
+$(function () {
+    var m = Manager;
+    var svg = d3.selectAll("svg");
+    var t = new ViewController();
     $('#inputFile').change(function (evt) {
         var file = evt.target.files[0];
         var reader = new FileReader();
