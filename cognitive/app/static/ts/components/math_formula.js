@@ -49,7 +49,7 @@ var MathFormula = (function (_super) {
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
     MathFormula.prototype.click_edit = function (e) {
-        Controller.activate_menubar("add_math_fomula");
+        ComponentController.activate_menubar("add_math_fomula");
         $('#formula_method').val(this.operation);
         $('#formula_column').val(this.column_idx);
         $('#formula_constant').val(this.constant);

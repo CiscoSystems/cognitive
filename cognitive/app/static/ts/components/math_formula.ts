@@ -73,7 +73,7 @@ class MathFormula extends ComponentBase {
     }
 
     private click_edit(e): void {
-        Controller.activate_menubar("add_math_fomula");
+        ComponentController.activate_menubar("add_math_fomula");
         $('#formula_method').val(this.operation);
         $('#formula_column').val(this.column_idx);
         $('#formula_constant').val(this.constant);

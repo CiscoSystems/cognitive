@@ -49,107 +49,107 @@ $(function(){
     }
 
     $(".menu_bar.introduction").click(function(){
-        Controller.activate_menubar('introduction');
+        ComponentController.activate_menubar('introduction');
     });
 
     $(".menu_bar.data_input").click(function(){
-        Controller.activate_menubar('data_input');
+        ComponentController.activate_menubar('data_input');
     });
 
     $(".menu_bar.add_row").click(function(){
-        Controller.activate_menubar("add_row");
+        ComponentController.activate_menubar("add_row");
         description_addrow();
     });
 
     $(".menu_bar.add_math_fomula").click(function(){
-        Controller.activate_menubar("add_math_fomula");
+        ComponentController.activate_menubar("add_math_fomula");
         description_formula();
     });
 
     $(".menu_bar.projection").click(function(){
-        Controller.activate_menubar("projection");
+        ComponentController.activate_menubar("projection");
         initializa_projection_column();
         add_column_for_projection();
     });
 
     $(".menu_bar.normalization").click(function(){
-        Controller.activate_menubar("normalization");
+        ComponentController.activate_menubar("normalization");
         description_normalization();
     });
 
     $(".menu_bar.remove_column").click(function(){
-        Controller.activate_menubar("remove_column");
+        ComponentController.activate_menubar("remove_column");
         initializa_remove_duplicates_column();
         add_column_for_remove_duplicates();
     });
 
     $(".menu_bar.remove_missing_value").click(function(){
-        Controller.activate_menubar("remove_missing_value");
+        ComponentController.activate_menubar("remove_missing_value");
     });
 
     $(".menu_bar.transform").click(function(){
-        Controller.activate_menubar("transform");
+        ComponentController.activate_menubar("transform");
     });
 
     $(".menu_bar.metadata").click(function(){
-        Controller.activate_menubar("metadata");
+        ComponentController.activate_menubar("metadata");
         description_metadata();
     });
 
     $(".menu_bar.formula").click(function(){
-        Controller.activate_menubar("formula");
+        ComponentController.activate_menubar("formula");
     });
 
     $(".menu_bar.filter").click(function(){
-        Controller.activate_menubar("filter");
+        ComponentController.activate_menubar("filter");
     });
 
     $(".menu_bar.machine_learning").click(function(){
-        Controller.activate_menubar("machine_learning");
+        ComponentController.activate_menubar("machine_learning");
         description_machine_learning();
     });
 
     $(".menu_bar.data_output").click(function(){
-        Controller.activate_menubar("data_output");
+        ComponentController.activate_menubar("data_output");
     });
 
     $(".add_btn").click(function(){
 
         if ($(this).hasClass('add_input')){
 
-            Controller.create_input_component();
+            ComponentController.create_input_component();
 
         } else if ($(this).hasClass('add_row')) {
 
-            Controller.create_add_row_component();
+            ComponentController.create_add_row_component();
 
         } else if ($(this).hasClass('add_math_fomula')) {
 
-            Controller.create_math_fomula_component();
+            ComponentController.create_math_fomula_component();
 
         } else if ($(this).hasClass('add_normalization')) {
 
-            Controller.create_normalization_component();
+            ComponentController.create_normalization_component();
 
         } else if ($(this).hasClass('add_projection')) {
 
-            Controller.create_projection_component();
+            ComponentController.create_projection_component();
 
         } else if ($(this).hasClass('add_remove_duplicates')) {
 
-            Controller.create_remove_duplicates_component();
+            ComponentController.create_remove_duplicates_component();
 
         } else if ($(this).hasClass('add_remove_missing_value')) {
 
-            Controller.create_remove_missing_value_component();
+            ComponentController.create_remove_missing_value_component();
 
         } else if ($(this).hasClass('add_metadata')) {
 
-            Controller.create_metadata_component();
+            ComponentController.create_metadata_component();
 
         } else if ($(this).hasClass('add_machine_learning')) {
 
-            Controller.create_machine_learning_component();
+            ComponentController.create_machine_learning_component();
 
         }
 
@@ -477,12 +477,12 @@ function description_metadata() {
     }
 }
 
-class Controller {
+class ComponentController {
 
     static active_menu;
 
     constructor(){
-        Controller.active_menu = null;
+        ComponentController.active_menu = null;
     }
 
     static activate_menubar(elm): void {
@@ -664,7 +664,6 @@ class Controller {
 
         node.create_request(params);
     }
-
 }
 
-var Manager = new Controller();
+var Manager = new ComponentController();
