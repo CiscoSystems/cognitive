@@ -1,12 +1,16 @@
+// Will remove these global variables
 var _uploaded_file_as_text   = "";
 var _uploaded_file_name      = "";
 var _uploaded_file_as_arrays = [];
-
 
 class ViewController {
 
     static projections: number;
     static remove_duplicates_columns: number;
+
+    /*
+     * TODO: uploaded file related variable should not be global
+     */
 
     //static uploaded_file_as_text   = "";
     //static uploaded_file_name      = "";
@@ -21,17 +25,17 @@ class ViewController {
                 ComponentController.activate_menubar('data_input');
             } else if ($(this).hasClass("add_row")) {
                 ComponentController.activate_menubar("add_row");
-                description_addrow();
+                ViewController.description_addrow();
             } else if ($(this).hasClass("add_math_fomula")) {
                 ComponentController.activate_menubar("add_math_fomula");
-                description_formula();
+                ViewController.description_formula();
             } else if ($(this).hasClass("projection")) {
                 ComponentController.activate_menubar("projection");
                 ViewController.initialize_projection_column();
                 ViewController.add_column_for_projection();
             } else if ($(this).hasClass("normalization")) {
                 ComponentController.activate_menubar("normalization");
-                description_normalization();
+                ViewController.description_normalization();
             } else if ($(this).hasClass("remove_column")) {
                 ComponentController.activate_menubar("remove_column");
                 ViewController.initialize_remove_duplicates_column();
@@ -42,14 +46,14 @@ class ViewController {
                 ComponentController.activate_menubar("transform");
             } else if ($(this).hasClass("metadata")) {
                 ComponentController.activate_menubar("metadata");
-                description_metadata();
+                ViewController.description_metadata();
             } else if ($(this).hasClass("formula")) {
                 ComponentController.activate_menubar("formula");
             } else if ($(this).hasClass("filter")) {
                 ComponentController.activate_menubar("filter");
             } else if ($(this).hasClass("machine_learning")) {
                 ComponentController.activate_menubar("machine_learning");
-                description_machine_learning();
+                ViewController.description_machine_learning();
             }
         });
 
@@ -81,6 +85,18 @@ class ViewController {
 
         $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
         $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
+
+        $('#inputFile').change(function(evt) {
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                _uploaded_file_as_text = e.target.result;
+                _uploaded_file_as_arrays = $.csv.toArrays(_uploaded_file_as_text);
+            };
+            reader.readAsText(file);
+
+            _uploaded_file_name = file.name
+        });
     }
 
     static initialize_projection_column(): void {
@@ -187,281 +203,56 @@ class ViewController {
         setTimeout("$.colorbox.close()", 700);
     }
 
-}
-
-$(function(){
-
-    var m = Manager;
-    var svg = d3.selectAll("svg");
-    var t = new ViewController();
-
-
-    $('#inputFile').change(function(evt) {
-        var file = evt.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            _uploaded_file_as_text   = e.target.result;
-            _uploaded_file_as_arrays = $.csv.toArrays(_uploaded_file_as_text);
-        };
-        reader.readAsText(file);
-
-        _uploaded_file_name = file.name
-    });
-
-    $(".show_result_graph").click(getResult);
-
-    function getResult() {
-
-        var component = ComponentBase.get_current_focus_component();
-        console.log(component);
-
-        if (component == null) {return;}
-
-        $.ajax({
-            url:  '/api/v1/results/?experiment=1&component_id=' + component.get_backend_id(),
-            type: "GET",
-            data: "",
-            success: function(result) {
-                a = result;
-                console.log(result);
-                var z = serialize_result_to_html(result);
-
-                $.colorbox({html:"<h1><i class='fa.fa-bar-chart'></i> Results</h1><p>"+z+"</p>", width: "90%"});
-
-                render_result_graphs(result);
-            }
-        });
-
-    }
-
-    function render_result_graphs(result) {
-
-        var w = 100;
-        var h = 100;
-
-        for (var i=0; i < result['feature_names'].length; i++ ){
-            var target_area = d3.select("svg[class='graph column_"+i+"']");
-            var dataset = result.graph_data[i][1];
-
-            if (d3.max(dataset) == d3.min(dataset)) {
-                dataset = [100,100,100,100];
-            }
-
-            for (var j=0; j < dataset.length; j++) {
-                if (dataset[j] >= 96) {
-                    dataset[j] -= 4;
-                }
-            }
-
-            if (dataset.length == 3){
-                dataset.push(0);
-            } else if (dataset.length == 2) {
-                var _t = [0];
-                _t.push(dataset[0]);
-                _t.push(0);
-                _t.push(dataset[1]);
-                dataset = _t;
-            } else if (dataset.length == 1) {
-                var _t = [0];
-                _t.push(dataset[0]);
-                _t.push(0);
-                _t.push(0);
-                dataset = _t;
-            }
-
-            var svg = d3.select("svg[class='graph column_"+i+"']");
-
-            svg.selectAll("rect")
-                .data(dataset)
-                .enter()
-                .append("rect")
-                .attr("x", function(d,i){ return i * 22 + 7; })
-                .attr("y", function(d){ return h - d; })
-                .attr('class', 'bar')
-                .attr('height', function(d){ return d -4; })
-                .attr("width", (w/dataset.length - 6));
-
-            svg.append('rect')
-                .attr("x", 3)
-                .attr("y", 3)
-                .attr('width',  w - 6 )
-                .attr('height', h - 6 )
-                .attr('stroke', "black" )
-                .attr('fill', 'none')
-                .attr('stroke-width', "1" )
+    static description_addrow(): void {
+        $(".add_row_form").empty();
+        _uploaded_file_as_arrays[0];
+        console.log(_uploaded_file_as_arrays[0]);
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $(".add_row_form").append('<li class="add_row column_' + i + '" style="padding-top: 10px"></li>');
+            $(".add_row_form li.column_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '<p/>');
+            $("<input/>", {
+                "class": "add_row form-control floating-label" + " _column_" + i,
+                id: "_column_" + i,
+                type: "text",
+                placeholder: "value"
+            }).appendTo(".add_row_form li.column_" + i);
         }
     }
 
-    function serialize_result_to_html(result) {
-
-        var _html ="<div id='result_wrapper'>";
-
-        if (Object.keys(result).indexOf('output') >= 0) {
-            _html += "<h2 style='border-left: solid 35px midnightblue;padding-left: 8px;'>Model Evaluation</h2>";
-            _html += "<table class='result_table machine_learning_result'>";
-
-            var ml_output = result['output'];
-            var keys = Object.keys(ml_output);
-
-            _html += "<tr class='metrics'>";
-            for (var i=0; i<keys.length; i++) {
-                _html += "<th>"+keys[i]+"</th>"
-            }
-            _html += "</tr><tr>";
-            for (var i=0; i<keys.length; i++) {
-                _html += "<th>"+ml_output[keys[i]]+"</th>"
-            }
-            _html += "</tr></table>"
+    static description_formula(): void {
+        $("#formula_column").empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#formula_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
         }
-
-        _html += "<h2 style='border-left: solid 35px midnightblue;padding-left: 8px;'></i>Statistics</h2>";
-        _html += "<table class='result_table'>";
-
-        _html +="<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>";
-
-        for (var i=0; i < result['feature_names'].length; i++ ){
-            _html += "<th><svg class='graph column_"+i+"'></svg></th>"
-        }
-        _html +="</tr>";
-
-        _html += '<tr class="metrics">';
-        _html +="<th>Statistics</th>";
-        for (var i=0; i < result['feature_names'].length; i++ ){
-            _html += "<th>" + result['feature_names'][i] + "</th>"
-        }
-        _html += "</tr>";
-
-        _html += "<tr class='result_row static_results'>";
-        _html +="<th>Std Deviation</th>";
-        for (var i=0; i < result['std'].length; i++ ){
-            _html += "<th>" + result['std'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>75 Quartile</th>";
-        for (var i=0; i < result['75_quartile'].length; i++ ){
-            _html += "<th>" + result['75_quartile'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>50 Quartile</th>";
-        for (var i=0; i < result['50_quartile'].length; i++ ){
-            _html += "<th>" + result['50_quartile'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>25 Quartile</th>";
-        for (var i=0; i < result['25_quartile'].length; i++ ){
-            _html += "<th>" + result['25_quartile'][i] + "</th>"
-        }
-
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>Max</th>";
-        for (var i=0; i < result['max'].length; i++ ){
-            _html += "<th>" + result['max'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>Mean</th>";
-        for (var i=0; i < result['mean'].length; i++ ){
-            _html += "<th>" + result['mean'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>Median</th>";
-        for (var i=0; i < result['median'].length; i++ ){
-            _html += "<th>" + result['median'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>Min</th>";
-        for (var i=0; i < result['min'].length; i++ ){
-            _html += "<th>" + result['min'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>Missing Values</th>";
-        for (var i=0; i < result['missing_values'].length; i++ ){
-            _html += "<th>" + result['missing_values'][i] + "</th>"
-        }
-        _html += "</tr><tr class='result_row static_results'>";
-
-        _html +="<th>Unique Values</th>";
-        for (var i=0; i < result['unique_values'].length; i++ ){
-            _html += "<th>" + result['unique_values'][i] + "</th>"
-        }
-
-        _html += "</tr><tr class='metrics static_results'><td></td>";
-        for (var i=0; i < result['feature_names'].length; i++ ){
-            _html += "<th>" + result['feature_names'][i] + "</th>"
-        }
-        _html += "</tr>";
-
-        for (var i=0; i < result['data'].length; i++ ){
-            _html +="<tr class='result_row'><th></th>";
-            for (var j=0; j < result['data'][i].length; j++ ){
-                _html += "<th>" + result['data'][i][j] + "</th>"
-            }
-            _html +="</tr>"
-        }
-        _html += "</table></div>";
-
-        return _html;
     }
 
-
-});
-
-function description_addrow() {
-    $(".add_row_form").empty();
-    _uploaded_file_as_arrays[0];
-    console.log(_uploaded_file_as_arrays[0]);
-    if (_uploaded_file_as_text == "") {return;}
-    for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $(".add_row_form").append('<li class="add_row column_'+i+'" style="padding-top: 10px"></li>');
-        $(".add_row_form li.column_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'<p/>');
-        $("<input/>", {
-            "class": "add_row form-control floating-label"+" _column_" + i,
-            id: "_column_" + i,
-            type:"text",
-            placeholder: "value"
-        }).appendTo(".add_row_form li.column_"+i);
+    static description_normalization(): void {
+        $("#normalization_column").empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#normalization_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
     }
-}
 
-function description_formula() {
-    $("#formula_column").empty();
-    if (_uploaded_file_as_text == "") {return;}
-    for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $("#formula_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
+    static description_machine_learning(): void {
+        $('.machine_learning_target').empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $('.machine_learning_target').append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
     }
-}
 
-function description_normalization() {
-    $("#normalization_column").empty();
-    if (_uploaded_file_as_text == "") {return;}
-    for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $("#normalization_column").append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
-    }
-}
-
-function description_machine_learning() {
-    $('.machine_learning_target').empty();
-    if (_uploaded_file_as_text == "") {return;}
-    for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $('.machine_learning_target').append('<option value="'+i+'">'+_uploaded_file_as_arrays[0][i]+'</option>');
-    }
-}
-
-function description_metadata() {
-    $("#metadata_discriptions").empty();
-    if (_uploaded_file_as_text == "") {return;}
-    for (var i =0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $("#metadata_discriptions").append('<div class="row meta_'+i+'" style="padding-top:25px;"></div>');
-        $("#metadata_discriptions div.meta_"+i).append('<p>'+_uploaded_file_as_arrays[0][i]+'</p>');
-        $("#metadata_discriptions div.meta_"+i)
-            .append('<select class="form-control metadata column'+i+'" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
+    static description_metadata(): void {
+        $("#metadata_discriptions").empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#metadata_discriptions").append('<div class="row meta_' + i + '" style="padding-top:25px;"></div>');
+            $("#metadata_discriptions div.meta_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '</p>');
+            $("#metadata_discriptions div.meta_" + i)
+                .append('<select class="form-control metadata column' + i + '" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
+        }
     }
 }
 
@@ -655,3 +446,215 @@ class ComponentController {
 }
 
 var Manager = new ComponentController();
+
+$(function(){
+
+    var m = Manager;
+    var svg = d3.selectAll("svg");
+    var t = new ViewController();
+
+    /*
+     * TODO: getting results and rendering results should be implemented
+     *       into Component Class and ViewController Class...(?)
+     *       1) show should be implemented into VC
+     *       2) the differences are implemented into Component
+     */
+
+    $(".show_result_graph").click(getResult);
+
+    function getResult() {
+
+        var component = ComponentBase.get_current_focus_component();
+        if (component == null) {return;}
+
+        $.ajax({
+            url:  '/api/v1/results/?experiment=1&component_id=' + component.get_backend_id(),
+            type: "GET",
+            data: "",
+            success: function(result) {
+                a = result;
+                console.log(result);
+                var z = serialize_result_to_html(result);
+
+                $.colorbox({html:"<h1><i class='fa.fa-bar-chart'></i> Results</h1><p>"+z+"</p>", width: "90%"});
+
+                render_result_graphs(result);
+            }
+        });
+    }
+
+    function render_result_graphs(result) {
+        var w = 100;
+        var h = 100;
+
+        for (var i=0; i < result['feature_names'].length; i++ ){
+            var target_area = d3.select("svg[class='graph column_"+i+"']");
+            var dataset = result.graph_data[i][1];
+
+            if (d3.max(dataset) == d3.min(dataset)) {
+                dataset = [100,100,100,100];
+            }
+
+            for (var j=0; j < dataset.length; j++) {
+                if (dataset[j] >= 96) {
+                    dataset[j] -= 4;
+                }
+            }
+
+            if (dataset.length == 3){
+                dataset.push(0);
+            } else if (dataset.length == 2) {
+                var _t = [0];
+                _t.push(dataset[0]);
+                _t.push(0);
+                _t.push(dataset[1]);
+                dataset = _t;
+            } else if (dataset.length == 1) {
+                var _t = [0];
+                _t.push(dataset[0]);
+                _t.push(0);
+                _t.push(0);
+                dataset = _t;
+            }
+
+            var svg = d3.select("svg[class='graph column_"+i+"']");
+
+            svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                .attr("x", function(d,i){ return i * 22 + 7; })
+                .attr("y", function(d){ return h - d; })
+                .attr('class', 'bar')
+                .attr('height', function(d){ return d -4; })
+                .attr("width", (w/dataset.length - 6));
+
+            svg.append('rect')
+                .attr("x", 3)
+                .attr("y", 3)
+                .attr('width',  w - 6 )
+                .attr('height', h - 6 )
+                .attr('stroke', "black" )
+                .attr('fill', 'none')
+                .attr('stroke-width', "1" )
+        }
+    }
+
+    function serialize_result_to_html(result) {
+
+        var _html ="<div id='result_wrapper'>";
+
+        if (Object.keys(result).indexOf('output') >= 0) {
+            _html += "<h2 style='border-left: solid 35px midnightblue;padding-left: 8px;'>Model Evaluation</h2>";
+            _html += "<table class='result_table machine_learning_result'>";
+
+            var ml_output = result['output'];
+            var keys = Object.keys(ml_output);
+
+            _html += "<tr class='metrics'>";
+            for (var i=0; i<keys.length; i++) {
+                _html += "<th>"+keys[i]+"</th>"
+            }
+            _html += "</tr><tr>";
+            for (var i=0; i<keys.length; i++) {
+                _html += "<th>"+ml_output[keys[i]]+"</th>"
+            }
+            _html += "</tr></table>"
+        }
+
+        _html += "<h2 style='border-left: solid 35px midnightblue;padding-left: 8px;'></i>Statistics</h2>";
+        _html += "<table class='result_table'>";
+
+        _html +="<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>";
+
+        for (var i=0; i < result['feature_names'].length; i++ ){
+            _html += "<th><svg class='graph column_"+i+"'></svg></th>"
+        }
+        _html +="</tr>";
+
+        _html += '<tr class="metrics">';
+        _html +="<th>Statistics</th>";
+        for (var i=0; i < result['feature_names'].length; i++ ){
+            _html += "<th>" + result['feature_names'][i] + "</th>"
+        }
+        _html += "</tr>";
+
+        _html += "<tr class='result_row static_results'>";
+        _html +="<th>Std Deviation</th>";
+        for (var i=0; i < result['std'].length; i++ ){
+            _html += "<th>" + result['std'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>75 Quartile</th>";
+        for (var i=0; i < result['75_quartile'].length; i++ ){
+            _html += "<th>" + result['75_quartile'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>50 Quartile</th>";
+        for (var i=0; i < result['50_quartile'].length; i++ ){
+            _html += "<th>" + result['50_quartile'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>25 Quartile</th>";
+        for (var i=0; i < result['25_quartile'].length; i++ ){
+            _html += "<th>" + result['25_quartile'][i] + "</th>"
+        }
+
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>Max</th>";
+        for (var i=0; i < result['max'].length; i++ ){
+            _html += "<th>" + result['max'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>Mean</th>";
+        for (var i=0; i < result['mean'].length; i++ ){
+            _html += "<th>" + result['mean'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>Median</th>";
+        for (var i=0; i < result['median'].length; i++ ){
+            _html += "<th>" + result['median'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>Min</th>";
+        for (var i=0; i < result['min'].length; i++ ){
+            _html += "<th>" + result['min'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>Missing Values</th>";
+        for (var i=0; i < result['missing_values'].length; i++ ){
+            _html += "<th>" + result['missing_values'][i] + "</th>"
+        }
+        _html += "</tr><tr class='result_row static_results'>";
+
+        _html +="<th>Unique Values</th>";
+        for (var i=0; i < result['unique_values'].length; i++ ){
+            _html += "<th>" + result['unique_values'][i] + "</th>"
+        }
+
+        _html += "</tr><tr class='metrics static_results'><td></td>";
+        for (var i=0; i < result['feature_names'].length; i++ ){
+            _html += "<th>" + result['feature_names'][i] + "</th>"
+        }
+        _html += "</tr>";
+
+        for (var i=0; i < result['data'].length; i++ ){
+            _html +="<tr class='result_row'><th></th>";
+            for (var j=0; j < result['data'][i].length; j++ ){
+                _html += "<th>" + result['data'][i][j] + "</th>"
+            }
+            _html +="</tr>"
+        }
+        _html += "</table></div>";
+
+        return _html;
+    }
+});

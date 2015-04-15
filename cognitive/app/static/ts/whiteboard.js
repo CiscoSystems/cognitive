@@ -1,7 +1,11 @@
+// Will remove these global variables
 var _uploaded_file_as_text = "";
 var _uploaded_file_name = "";
 var _uploaded_file_as_arrays = [];
 var ViewController = (function () {
+    /*
+     * TODO: uploaded file related variable should not be global
+     */
     //static uploaded_file_as_text   = "";
     //static uploaded_file_name      = "";
     //static uploaded_file_as_arrays = [];
@@ -15,11 +19,11 @@ var ViewController = (function () {
             }
             else if ($(this).hasClass("add_row")) {
                 ComponentController.activate_menubar("add_row");
-                description_addrow();
+                ViewController.description_addrow();
             }
             else if ($(this).hasClass("add_math_fomula")) {
                 ComponentController.activate_menubar("add_math_fomula");
-                description_formula();
+                ViewController.description_formula();
             }
             else if ($(this).hasClass("projection")) {
                 ComponentController.activate_menubar("projection");
@@ -28,7 +32,7 @@ var ViewController = (function () {
             }
             else if ($(this).hasClass("normalization")) {
                 ComponentController.activate_menubar("normalization");
-                description_normalization();
+                ViewController.description_normalization();
             }
             else if ($(this).hasClass("remove_column")) {
                 ComponentController.activate_menubar("remove_column");
@@ -43,7 +47,7 @@ var ViewController = (function () {
             }
             else if ($(this).hasClass("metadata")) {
                 ComponentController.activate_menubar("metadata");
-                description_metadata();
+                ViewController.description_metadata();
             }
             else if ($(this).hasClass("formula")) {
                 ComponentController.activate_menubar("formula");
@@ -53,7 +57,7 @@ var ViewController = (function () {
             }
             else if ($(this).hasClass("machine_learning")) {
                 ComponentController.activate_menubar("machine_learning");
-                description_machine_learning();
+                ViewController.description_machine_learning();
             }
         });
         $(".add_btn").click(function () {
@@ -90,6 +94,16 @@ var ViewController = (function () {
         });
         $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
         $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
+        $('#inputFile').change(function (evt) {
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                _uploaded_file_as_text = e.target.result;
+                _uploaded_file_as_arrays = $.csv.toArrays(_uploaded_file_as_text);
+            };
+            reader.readAsText(file);
+            _uploaded_file_name = file.name;
+        });
     }
     ViewController.initialize_projection_column = function () {
         $('.form-group.projection_form').empty();
@@ -180,26 +194,228 @@ var ViewController = (function () {
         $('#cboxBottomRight').remove();
         setTimeout("$.colorbox.close()", 700);
     };
+    ViewController.description_addrow = function () {
+        $(".add_row_form").empty();
+        _uploaded_file_as_arrays[0];
+        console.log(_uploaded_file_as_arrays[0]);
+        if (_uploaded_file_as_text == "") {
+            return;
+        }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $(".add_row_form").append('<li class="add_row column_' + i + '" style="padding-top: 10px"></li>');
+            $(".add_row_form li.column_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '<p/>');
+            $("<input/>", {
+                "class": "add_row form-control floating-label" + " _column_" + i,
+                id: "_column_" + i,
+                type: "text",
+                placeholder: "value"
+            }).appendTo(".add_row_form li.column_" + i);
+        }
+    };
+    ViewController.description_formula = function () {
+        $("#formula_column").empty();
+        if (_uploaded_file_as_text == "") {
+            return;
+        }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#formula_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
+    };
+    ViewController.description_normalization = function () {
+        $("#normalization_column").empty();
+        if (_uploaded_file_as_text == "") {
+            return;
+        }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#normalization_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
+    };
+    ViewController.description_machine_learning = function () {
+        $('.machine_learning_target').empty();
+        if (_uploaded_file_as_text == "") {
+            return;
+        }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $('.machine_learning_target').append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
+    };
+    ViewController.description_metadata = function () {
+        $("#metadata_discriptions").empty();
+        if (_uploaded_file_as_text == "") {
+            return;
+        }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#metadata_discriptions").append('<div class="row meta_' + i + '" style="padding-top:25px;"></div>');
+            $("#metadata_discriptions div.meta_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '</p>');
+            $("#metadata_discriptions div.meta_" + i)
+                .append('<select class="form-control metadata column' + i + '" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
+        }
+    };
     return ViewController;
 })();
+var ComponentController = (function () {
+    function ComponentController() {
+        ComponentController.active_menu = null;
+    }
+    ComponentController.activate_menubar = function (elm) {
+        this._activate_menubar(elm);
+    };
+    ComponentController._activate_menubar = function (elm) {
+        menubar = $('li.' + elm);
+        description = $('.detail.' + elm);
+        menubar
+            .css("background-color", "#1e8cff")
+            .css("color", "white");
+        description.toggle("slide", { direction: "left" }, 700);
+        if (this._active_menu === null) {
+            this._active_menu = elm;
+            return (menubar.addClass("active"));
+        }
+        if (this._active_menu == elm) {
+            if (menubar.hasClass("active")) {
+                this._active_menu = null;
+                return menubar
+                    .css("background-color", "")
+                    .css("color", "")
+                    .removeClass("active");
+            }
+        }
+        previous_menubar = $('li.' + this._active_menu);
+        previous_description = $('.detail.' + this._active_menu);
+        previous_description.toggle("slide");
+        previous_menubar
+            .css("background-color", "")
+            .css("color", "")
+            .removeClass("active");
+        this._active_menu = elm;
+        return (menubar.addClass("active"));
+    };
+    ComponentController.create_input_component = function () {
+        var node = new InputData();
+        var params = {
+            file_name: _uploaded_file_name,
+            text_data: _uploaded_file_as_text
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_add_row_component = function () {
+        var node = new AddRow();
+        var request_text = "[";
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
+        }
+        request_text = request_text.slice(0, request_text.length - 1);
+        request_text += "]";
+        var params = {
+            values: request_text
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_math_fomula_component = function () {
+        var node = new MathFormula();
+        var method = $('select#formula_method').val();
+        var column_num = $('select#formula_column').val();
+        var constant = $('#formula_constant').val();
+        var params = {
+            component_type: "Column",
+            component_id: column_num,
+            op_type: method,
+            op_constant: constant
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_normalization_component = function () {
+        var node = new Normalization();
+        var method = $('select#normalization_method').val();
+        var column_num = $('select#normalization_column').val();
+        var params = {
+            component_type: "Column",
+            component_id: column_num,
+            op_type: method
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_projection_component = function () {
+        /* TODO: [refactor] projection to column_selection */
+        var node = new ColumnSelection();
+        var len = $('.projection_selects').length;
+        var projection_columns = "[";
+        for (var i = 0; i < len; i++) {
+            console.log($('.projection_selects._selects_' + i).val());
+            projection_columns += $('.projection_selects._selects_' + i).val() + ",";
+        }
+        projection_columns = projection_columns.slice(0, projection_columns.length - 1);
+        projection_columns += "]";
+        var params = {
+            component_id: projection_columns
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_remove_duplicates_component = function () {
+        var node = new RemoveDuplicates();
+        var len = $('.remove_duplicates_selects').length;
+        var remove_duplicates_columns = "[";
+        for (var i = 0; i < len; i++) {
+            console.log($('.remove_duplicates_selects._selects_' + i).val());
+            remove_duplicates_columns += $('.remove_duplicates_selects._selects_' + i).val() + ",";
+        }
+        remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length - 1);
+        remove_duplicates_columns += "]";
+        RemoveDuplicatesComponentCreateParams = {
+            component_id: remove_duplicates_columns
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_remove_missing_value_component = function () {
+        var node = new RemoveMissingValues();
+        var method = $('#remove_missing_value_method').val();
+        var params = {
+            op_action: method //"Replace_mean" or Drop_row
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_metadata_component = function () {
+        var node = new MetadataEditor();
+        var metadata_types = "[";
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            console.log($(".metadata.column" + i).val());
+            metadata_types += "\"" + $(".metadata.column" + i).val() + "\",";
+        }
+        metadata_types = metadata_types.slice(0, metadata_types.length - 1);
+        metadata_types += "]";
+        var params = {
+            column_type: metadata_types
+        };
+        node.create_request(params);
+    };
+    ComponentController.create_machine_learning_component = function () {
+        var node = new MachineLearning();
+        var argo = $('.machine_learning_select').val();
+        var target = $('.machine_learning_target').val();
+        var parcentage = $('.machine_learning_target_parcentage').val();
+        var params = {
+            model_type: argo,
+            train_data_percentage: parcentage,
+            target_column: target
+        };
+        node.create_request(params);
+    };
+    return ComponentController;
+})();
+var Manager = new ComponentController();
 $(function () {
     var m = Manager;
     var svg = d3.selectAll("svg");
     var t = new ViewController();
-    $('#inputFile').change(function (evt) {
-        var file = evt.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            _uploaded_file_as_text = e.target.result;
-            _uploaded_file_as_arrays = $.csv.toArrays(_uploaded_file_as_text);
-        };
-        reader.readAsText(file);
-        _uploaded_file_name = file.name;
-    });
+    /*
+     * TODO: getting results and rendering results should be implemented
+     *       into Component Class and ViewController Class...(?)
+     *       1) show should be implemented into VC
+     *       2) the differences are implemented into Component
+     */
     $(".show_result_graph").click(getResult);
     function getResult() {
         var component = ComponentBase.get_current_focus_component();
-        console.log(component);
         if (component == null) {
             return;
         }
@@ -363,211 +579,4 @@ $(function () {
         return _html;
     }
 });
-function description_addrow() {
-    $(".add_row_form").empty();
-    _uploaded_file_as_arrays[0];
-    console.log(_uploaded_file_as_arrays[0]);
-    if (_uploaded_file_as_text == "") {
-        return;
-    }
-    for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $(".add_row_form").append('<li class="add_row column_' + i + '" style="padding-top: 10px"></li>');
-        $(".add_row_form li.column_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '<p/>');
-        $("<input/>", {
-            "class": "add_row form-control floating-label" + " _column_" + i,
-            id: "_column_" + i,
-            type: "text",
-            placeholder: "value"
-        }).appendTo(".add_row_form li.column_" + i);
-    }
-}
-function description_formula() {
-    $("#formula_column").empty();
-    if (_uploaded_file_as_text == "") {
-        return;
-    }
-    for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $("#formula_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
-    }
-}
-function description_normalization() {
-    $("#normalization_column").empty();
-    if (_uploaded_file_as_text == "") {
-        return;
-    }
-    for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $("#normalization_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
-    }
-}
-function description_machine_learning() {
-    $('.machine_learning_target').empty();
-    if (_uploaded_file_as_text == "") {
-        return;
-    }
-    for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $('.machine_learning_target').append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
-    }
-}
-function description_metadata() {
-    $("#metadata_discriptions").empty();
-    if (_uploaded_file_as_text == "") {
-        return;
-    }
-    for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-        $("#metadata_discriptions").append('<div class="row meta_' + i + '" style="padding-top:25px;"></div>');
-        $("#metadata_discriptions div.meta_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '</p>');
-        $("#metadata_discriptions div.meta_" + i)
-            .append('<select class="form-control metadata column' + i + '" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
-    }
-}
-var ComponentController = (function () {
-    function ComponentController() {
-        ComponentController.active_menu = null;
-    }
-    ComponentController.activate_menubar = function (elm) {
-        this._activate_menubar(elm);
-    };
-    ComponentController._activate_menubar = function (elm) {
-        menubar = $('li.' + elm);
-        description = $('.detail.' + elm);
-        menubar
-            .css("background-color", "#1e8cff")
-            .css("color", "white");
-        description.toggle("slide", { direction: "left" }, 700);
-        if (this._active_menu === null) {
-            this._active_menu = elm;
-            return (menubar.addClass("active"));
-        }
-        if (this._active_menu == elm) {
-            if (menubar.hasClass("active")) {
-                this._active_menu = null;
-                return menubar
-                    .css("background-color", "")
-                    .css("color", "")
-                    .removeClass("active");
-            }
-        }
-        previous_menubar = $('li.' + this._active_menu);
-        previous_description = $('.detail.' + this._active_menu);
-        previous_description.toggle("slide");
-        previous_menubar
-            .css("background-color", "")
-            .css("color", "")
-            .removeClass("active");
-        this._active_menu = elm;
-        return (menubar.addClass("active"));
-    };
-    ComponentController.create_input_component = function () {
-        var node = new InputData();
-        var params = {
-            file_name: _uploaded_file_name,
-            text_data: _uploaded_file_as_text
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_add_row_component = function () {
-        var node = new AddRow();
-        var request_text = "[";
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
-        }
-        request_text = request_text.slice(0, request_text.length - 1);
-        request_text += "]";
-        var params = {
-            values: request_text
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_math_fomula_component = function () {
-        var node = new MathFormula();
-        var method = $('select#formula_method').val();
-        var column_num = $('select#formula_column').val();
-        var constant = $('#formula_constant').val();
-        var params = {
-            component_type: "Column",
-            component_id: column_num,
-            op_type: method,
-            op_constant: constant
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_normalization_component = function () {
-        var node = new Normalization();
-        var method = $('select#normalization_method').val();
-        var column_num = $('select#normalization_column').val();
-        var params = {
-            component_type: "Column",
-            component_id: column_num,
-            op_type: method
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_projection_component = function () {
-        /* TODO: [refactor] projection to column_selection */
-        var node = new ColumnSelection();
-        var len = $('.projection_selects').length;
-        var projection_columns = "[";
-        for (var i = 0; i < len; i++) {
-            console.log($('.projection_selects._selects_' + i).val());
-            projection_columns += $('.projection_selects._selects_' + i).val() + ",";
-        }
-        projection_columns = projection_columns.slice(0, projection_columns.length - 1);
-        projection_columns += "]";
-        var params = {
-            component_id: projection_columns
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_remove_duplicates_component = function () {
-        var node = new RemoveDuplicates();
-        var len = $('.remove_duplicates_selects').length;
-        var remove_duplicates_columns = "[";
-        for (var i = 0; i < len; i++) {
-            console.log($('.remove_duplicates_selects._selects_' + i).val());
-            remove_duplicates_columns += $('.remove_duplicates_selects._selects_' + i).val() + ",";
-        }
-        remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length - 1);
-        remove_duplicates_columns += "]";
-        RemoveDuplicatesComponentCreateParams = {
-            component_id: remove_duplicates_columns
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_remove_missing_value_component = function () {
-        var node = new RemoveMissingValues();
-        var method = $('#remove_missing_value_method').val();
-        var params = {
-            op_action: method //"Replace_mean" or Drop_row
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_metadata_component = function () {
-        var node = new MetadataEditor();
-        var metadata_types = "[";
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            console.log($(".metadata.column" + i).val());
-            metadata_types += "\"" + $(".metadata.column" + i).val() + "\",";
-        }
-        metadata_types = metadata_types.slice(0, metadata_types.length - 1);
-        metadata_types += "]";
-        var params = {
-            column_type: metadata_types
-        };
-        node.create_request(params);
-    };
-    ComponentController.create_machine_learning_component = function () {
-        var node = new MachineLearning();
-        var argo = $('.machine_learning_select').val();
-        var target = $('.machine_learning_target').val();
-        var parcentage = $('.machine_learning_target_parcentage').val();
-        var params = {
-            model_type: argo,
-            train_data_percentage: parcentage,
-            target_column: target
-        };
-        node.create_request(params);
-    };
-    return ComponentController;
-})();
-var Manager = new ComponentController();
 //# sourceMappingURL=whiteboard.js.map
