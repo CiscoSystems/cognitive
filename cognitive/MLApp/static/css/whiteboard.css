@@ -220,12 +220,23 @@ tr.result_row:hover {
 .close-icon {
     font-family: 'FontAwesome';
     font-size: 16pt;
-    fill: #dddddd;
+    fill: #ddc9c9;
     display: none;
 }
 
 .close-icon:hover {
-    fill: #aa1852;
+    fill: #c43b27;
+}
+
+.edit-icon {
+    font-family: 'FontAwesome';
+    font-size: 13pt;
+    fill: #ceddc9;
+    display: none;
+}
+
+.edit-icon:hover {
+    fill: #5edd73;
 }
 
 #layer-0 {

@@ -22,9 +22,15 @@ var RemoveDuplicates = (function (_super) {
         var api_url = '/api/v1' + '/operations/remove_duplicates/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    RemoveDuplicates.prototype.put_request = function (params) {
+        var json_data = {
+            component_id: params.component_id
+        };
+        var api_url = '/api/v1' + '/operations/remove_duplicates/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     RemoveDuplicates.prototype.delete_request = function () {
-        var api_url = '/api/v1' + '/operations/remove_duplicates' +
-            '/' + this.get_backend_id();
+        var api_url = '/api/v1' + '/operations/remove_duplicates' + '/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
     return RemoveDuplicates;

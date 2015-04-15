@@ -22,6 +22,13 @@ var ColumnSelection = (function (_super) {
         var api_url = '/api/v1' + '/operations/projection/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    ColumnSelection.prototype.put_request = function (params) {
+        var json_data = {
+            component_id: params.component_id
+        };
+        var api_url = '/api/v1' + '/operations/projection/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     ColumnSelection.prototype.delete_request = function () {
         var api_url = '/api/v1' + '/operations/projection/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);

@@ -2,6 +2,10 @@ interface MetadataEditorComponentCreateParams {
     column_type;
 }
 
+interface MetadataEditorComponentPutParams {
+    column_type;
+}
+
 class MetadataEditor extends ComponentBase {
     constructor() {
         super({
@@ -20,6 +24,15 @@ class MetadataEditor extends ComponentBase {
 
         var api_url = '/api/v1' + '/operations/metadata/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
+    }
+
+    public put_request(params: MetadataEditorComponentPutParams) {
+        var json_data = {
+            column_type: params.column_type
+        };
+
+        var api_url = '/api/v1' + '/operations/metadata/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
     }
 
     public delete_request() {

@@ -3,6 +3,11 @@ interface InputDataComponentCreateParams {
     text_data: string;
 }
 
+interface InputDataComponentPutParams {
+    file_name: string;
+    text_data: string;
+}
+
 class InputData extends ComponentBase {
     constructor(){
         super({
@@ -23,6 +28,18 @@ class InputData extends ComponentBase {
 
         var api_url = '/api/v1'  + '/operations/input/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
+    }
+
+    public put_request(params: InputDataComponentPutParams) {
+        var json_data = {
+            input_file: params.file_name,
+            input_file_type: "csv",
+            data_values: params.text_data
+        };
+
+        var api_url = '/api/v1'  + '/operations/input/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+
     }
 
     public delete_request() {

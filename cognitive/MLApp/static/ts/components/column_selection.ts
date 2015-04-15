@@ -2,6 +2,10 @@ interface ColumnSelectionComponentCreateParams {
     component_id: number;
 }
 
+interface ColumnSelectionComponentPutParams {
+    component_id: number;
+}
+
 class ColumnSelection extends ComponentBase {
     constructor () {
         super({
@@ -20,6 +24,15 @@ class ColumnSelection extends ComponentBase {
 
         var api_url = '/api/v1' + '/operations/projection/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
+    }
+
+    public put_request(params: ColumnSelectionComponentPutParams) {
+        var json_data = {
+            component_id: params.component_id
+        };
+
+        var api_url = '/api/v1' + '/operations/projection/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
     }
 
     public delete_request() {

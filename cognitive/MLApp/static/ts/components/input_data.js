@@ -24,6 +24,15 @@ var InputData = (function (_super) {
         var api_url = '/api/v1' + '/operations/input/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    InputData.prototype.put_request = function (params) {
+        var json_data = {
+            input_file: params.file_name,
+            input_file_type: "csv",
+            data_values: params.text_data
+        };
+        var api_url = '/api/v1' + '/operations/input/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     InputData.prototype.delete_request = function () {
         var api_url = '/api/v1' + '/operations/input/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);

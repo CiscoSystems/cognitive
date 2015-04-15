@@ -22,6 +22,13 @@ var RemoveMissingValues = (function (_super) {
         var api_url = '/api/v1' + '/operations/remove_missing/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    RemoveMissingValues.prototype.put_request = function (params) {
+        var json_data = {
+            op_action: params.op_action
+        };
+        var api_url = '/api/v1' + '/operations/remove_missing/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     RemoveMissingValues.prototype.delete_request = function () {
         var api_url = '/api/v1' + '/operations/remove_missing/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);

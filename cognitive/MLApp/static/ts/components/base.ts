@@ -83,6 +83,8 @@ class ComponentBase {
             .on("mouseenter", function() {
                 var id = this.id.split("-")[2];
                 $("#close-icon-id-" + id).css("display", "block");
+                $("#edit-icon-id-" + id).css("display", "block");
+
             });
 
         g.append('rect')
@@ -129,6 +131,7 @@ class ComponentBase {
             .on("mouseleave", function(){
                 var id = this.id.split("-")[2];
                 $("#close-icon-id-" + id).css("display", "none");
+                $("#edit-icon-id-" + id).css("display", "none");
             });
 
         scope.append('rect')
@@ -153,7 +156,24 @@ class ComponentBase {
             .attr('id', 'close-icon-id-' + this._id)
             .text('\uf00d')  // icon: fa-close
             .on("click",  this.eliminate.bind(this) )
-            .on("mouseenter", function(){$(this).css("display", "block")});
+            .on("mouseenter", function(){
+                $(this).css("display", "block");
+                var id = $(this).attr("id").split("-")[3];
+                $("#edit-icon-id-" + id).css("display", "block");
+
+            });
+
+        g.append('text')
+            .attr('x',this.x)
+            .attr('y', this.y - 5)
+            .attr('class', 'edit-icon')
+            .attr('id', 'edit-icon-id-' + this._id)
+            .text('\uf044') // icon: fa-edit
+            .on("mouseenter", function(){
+                $(this).css("display", "block")
+                var id = $(this).attr("id").split("-")[3];
+                $("#close-icon-id-" + id).css("display", "block");
+            });
     }
 
 
@@ -186,6 +206,13 @@ class ComponentBase {
         functionality_group
             .attr('x', sx - 20 + parseInt(group.attr('abs_x')))
             .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
+
+        var edit_icon = d3.selectAll($('#edit-icon-id-' + node_id));
+
+        edit_icon
+            .attr('x', sx + parseInt(group.attr('abs_x')))
+            .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
+
     }
 
     private _click(e) {
@@ -326,7 +353,7 @@ class ComponentBase {
 
         /* authentication information */
         json_data["user_id"] = 1;
-        json_data["token"] = "aaa";
+        json_data["token"] = "token";
         json_data["experiment"] = 1;
 
         if (method === "DELETE") {
@@ -342,6 +369,7 @@ class ComponentBase {
             data: json_data,
             success: function(result) {
                 console.log(result);
+                if (method === "PUT") { return ;}
                 if (node !== null){ node.set_backend_id(result.id);}
             }
         });

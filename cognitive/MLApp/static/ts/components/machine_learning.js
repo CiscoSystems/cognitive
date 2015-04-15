@@ -24,6 +24,15 @@ var MachineLearning = (function (_super) {
         var api_url = '/api/v1' + '/operations/machine_learning/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    MachineLearning.prototype.put_request = function (params) {
+        var json_data = {
+            model_type: params.model_type,
+            train_data_percentage: params.train_data_percentage,
+            target_column: params.target_column
+        };
+        var api_url = '/api/v1' + '/operations/machine_learning/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     MachineLearning.prototype.delete_request = function () {
         var api_url = '/api/v1' + '/operations/machine_learning/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);

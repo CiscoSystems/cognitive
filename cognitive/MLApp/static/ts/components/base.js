@@ -47,6 +47,7 @@ var ComponentBase = (function () {
             .on("mouseenter", function () {
             var id = this.id.split("-")[2];
             $("#close-icon-id-" + id).css("display", "block");
+            $("#edit-icon-id-" + id).css("display", "block");
         });
         g.append('rect')
             .attr('x', this.x)
@@ -87,6 +88,7 @@ var ComponentBase = (function () {
             .on("mouseleave", function () {
             var id = this.id.split("-")[2];
             $("#close-icon-id-" + id).css("display", "none");
+            $("#edit-icon-id-" + id).css("display", "none");
         });
         scope.append('rect')
             .attr('x', this.x - 35)
@@ -108,7 +110,22 @@ var ComponentBase = (function () {
             .attr('id', 'close-icon-id-' + this._id)
             .text('\uf00d') // icon: fa-close
             .on("click", this.eliminate.bind(this))
-            .on("mouseenter", function () { $(this).css("display", "block"); });
+            .on("mouseenter", function () {
+            $(this).css("display", "block");
+            var id = $(this).attr("id").split("-")[3];
+            $("#edit-icon-id-" + id).css("display", "block");
+        });
+        g.append('text')
+            .attr('x', this.x)
+            .attr('y', this.y - 5)
+            .attr('class', 'edit-icon')
+            .attr('id', 'edit-icon-id-' + this._id)
+            .text('\uf044') // icon: fa-edit
+            .on("mouseenter", function () {
+            $(this).css("display", "block");
+            var id = $(this).attr("id").split("-")[3];
+            $("#close-icon-id-" + id).css("display", "block");
+        });
     };
     ComponentBase.prototype._drag = function () {
         var group = d3.select(this);
@@ -130,6 +147,10 @@ var ComponentBase = (function () {
         var functionality_group = d3.selectAll($('#close-icon-id-' + node_id));
         functionality_group
             .attr('x', sx - 20 + parseInt(group.attr('abs_x')))
+            .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
+        var edit_icon = d3.selectAll($('#edit-icon-id-' + node_id));
+        edit_icon
+            .attr('x', sx + parseInt(group.attr('abs_x')))
             .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
     };
     ComponentBase.prototype._click = function (e) {
@@ -241,7 +262,7 @@ var ComponentBase = (function () {
     ComponentBase._send_request = function (api_url, method, json_data, node) {
         /* authentication information */
         json_data["user_id"] = 1;
-        json_data["token"] = "aaa";
+        json_data["token"] = "token";
         json_data["experiment"] = 1;
         if (method === "DELETE") {
             $.ajax({ url: api_url, type: method, data: json_data,
@@ -255,6 +276,9 @@ var ComponentBase = (function () {
             data: json_data,
             success: function (result) {
                 console.log(result);
+                if (method === "PUT") {
+                    return;
+                }
                 if (node !== null) {
                     node.set_backend_id(result.id);
                 }

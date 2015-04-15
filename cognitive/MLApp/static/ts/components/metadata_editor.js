@@ -22,6 +22,13 @@ var MetadataEditor = (function (_super) {
         var api_url = '/api/v1' + '/operations/metadata/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    MetadataEditor.prototype.put_request = function (params) {
+        var json_data = {
+            column_type: params.column_type
+        };
+        var api_url = '/api/v1' + '/operations/metadata/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     MetadataEditor.prototype.delete_request = function () {
         var api_url = '/api/v1' + '/operations/metadata/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);

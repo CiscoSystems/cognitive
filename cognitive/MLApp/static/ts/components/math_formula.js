@@ -25,6 +25,16 @@ var MathFormula = (function (_super) {
         var api_url = '/api/v1' + '/operations/math_formula/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
+    MathFormula.prototype.put_request = function (params) {
+        var json_data = {
+            component_type: params.component_type,
+            component_id: params.component_id,
+            op_type: params.op_type,
+            op_constant: params.op_constant
+        };
+        var api_url = '/api/v1' + '/operations/math_formula/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
+    };
     MathFormula.prototype.delete_request = function () {
         var api_url = '/api/v1' + '/operations/math_formula/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);

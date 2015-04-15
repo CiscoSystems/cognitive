@@ -4,6 +4,12 @@ interface MachineLearningComponentCreateParams {
     target_column;
 }
 
+interface MachineLearningComponentPutParams {
+    model_type;
+    train_data_percentage;
+    target_column;
+}
+
 class MachineLearning extends ComponentBase {
     constructor() {
         super({
@@ -24,6 +30,17 @@ class MachineLearning extends ComponentBase {
 
         var api_url = '/api/v1' + '/operations/machine_learning/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
+    }
+
+    public put_request(params: MachineLearningComponentPutParams) {
+        var json_data = {
+            model_type: params.model_type,
+            train_data_percentage: params.train_data_percentage,
+            target_column: params.target_column
+        };
+
+        var api_url = '/api/v1' + '/operations/machine_learning/' + this.get_backend_id();
+        ComponentBase._send_request(api_url, "PUT", json_data, this);
     }
 
     public delete_request() {
