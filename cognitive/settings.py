@@ -40,7 +40,8 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_LOADERS = (
     'hamlpy.template.loaders.HamlPyFilesystemLoader',
-    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader'
+    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
+    'django.template.loaders.eggs.Loader',
 )
 
 ALLOWED_HOSTS = []
@@ -58,6 +59,7 @@ INSTALLED_APPS = (
     # 'djangobower',
     'rest_framework',
     'cognitive.MLApp',
+    'rest_framework_swagger',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,7 +109,6 @@ DRPC_HOST = 'bd-1-3'
 REDIS_HOST = "bd-1-3"
 REDIS_PORT = "6379"
 
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
@@ -136,3 +137,28 @@ def get_staticfiles_dirs(webroot='/'):
 
 STATICFILES_DIRS = get_staticfiles_dirs()
 STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/MLApp', "static")))
+
+
+# Swagger Documentation Setting
+SWAGGER_SETTINGS = {
+    'exclude_namespaces': [],
+    'api_version': '1.0',
+    'api_path': '/',
+    'enabled_methods': [
+        'get',
+        'post',
+        'put',
+        'delete'
+    ],
+    'api_key': '',
+    'is_authenticated': False,
+    'is_superuser': False,
+    'permission_denied_handler': None,
+    'info': {
+        'description': 'Cognitive API Documentation',
+        'license': 'Apache 2.0',
+        'licenseUrl': 'http://www.apache.org/licenses/LICENSE-2.0.html',
+        'title': 'Cognitive - Machine Learning as a Service (MLaaS)',
+    },
+    'doc_expansion': 'none',
+}

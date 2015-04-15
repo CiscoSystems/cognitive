@@ -22,4 +22,5 @@ urlpatterns = patterns(
     url(r'^$', views.index, name="home"),
     url(r'^whiteboard$', views.whiteboard, name="whiteboard"),
     url(r'^api/v1/', include(urls)),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
 )
