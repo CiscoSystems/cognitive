@@ -121,11 +121,15 @@ var ComponentBase = (function () {
             .attr('class', 'edit-icon')
             .attr('id', 'edit-icon-id-' + this._id)
             .text('\uf044') // icon: fa-edit
+            .on("click", this.click_edit.bind(this))
             .on("mouseenter", function () {
             $(this).css("display", "block");
             var id = $(this).attr("id").split("-")[3];
             $("#close-icon-id-" + id).css("display", "block");
         });
+    };
+    ComponentBase.prototype.click_edit = function (e) {
+        console.log("edit function is not implemented");
     };
     ComponentBase.prototype._drag = function () {
         var group = d3.select(this);

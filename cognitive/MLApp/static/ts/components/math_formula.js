@@ -39,6 +39,9 @@ var MathFormula = (function (_super) {
         var api_url = '/api/v1' + '/operations/math_formula/' + this.get_backend_id();
         ComponentBase._send_request(api_url, "DELETE", {}, null);
     };
+    MathFormula.prototype.click_edit = function (e) {
+        console.log("test");
+    };
     return MathFormula;
 })(ComponentBase);
 //# sourceMappingURL=math_formula.js.map

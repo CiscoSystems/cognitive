@@ -4,7 +4,7 @@ var _uploaded_file_as_arrays = [];
 
 $(function(){
 
-    var m = new Manager();
+    var m = Manager;
     var cognitive_client = new CognitiveAPIClientV1();
     var svg = d3.selectAll("svg");
 
@@ -48,68 +48,68 @@ $(function(){
     }
 
     $(".menu_bar.introduction").click(function(){
-        m.activate_menubar('introduction');
+        Controller.activate_menubar('introduction');
     });
 
     $(".menu_bar.data_input").click(function(){
-        m.activate_menubar('data_input');
+        Controller.activate_menubar('data_input');
     });
 
     $(".menu_bar.add_row").click(function(){
-        m.activate_menubar("add_row");
+        Controller.activate_menubar("add_row");
         description_addrow();
     });
 
     $(".menu_bar.add_math_fomula").click(function(){
-        m.activate_menubar("add_math_fomula");
+        Controller.activate_menubar("add_math_fomula");
         description_formula();
     });
 
     $(".menu_bar.projection").click(function(){
-        m.activate_menubar("projection");
+        Controller.activate_menubar("projection");
         initializa_projection_column();
         add_column_for_projection();
     });
 
     $(".menu_bar.normalization").click(function(){
-        m.activate_menubar("normalization");
+        Controller.activate_menubar("normalization");
         description_normalization();
     });
 
     $(".menu_bar.remove_column").click(function(){
-        m.activate_menubar("remove_column");
+        Controller.activate_menubar("remove_column");
         initializa_remove_duplicates_column();
         add_column_for_remove_duplicates();
     });
 
     $(".menu_bar.remove_missing_value").click(function(){
-        m.activate_menubar("remove_missing_value");
+        Controller.activate_menubar("remove_missing_value");
     });
 
     $(".menu_bar.transform").click(function(){
-        m.activate_menubar("transform");
+        Controller.activate_menubar("transform");
     });
 
     $(".menu_bar.metadata").click(function(){
-        m.activate_menubar("metadata");
+        Controller.activate_menubar("metadata");
         description_metadata();
     });
 
     $(".menu_bar.formula").click(function(){
-        m.activate_menubar("formula");
+        Controller.activate_menubar("formula");
     });
 
     $(".menu_bar.filter").click(function(){
-        m.activate_menubar("filter");
+        Controller.activate_menubar("filter");
     });
 
     $(".menu_bar.machine_learning").click(function(){
-        m.activate_menubar("machine_learning");
+        Controller.activate_menubar("machine_learning");
         description_machine_learning();
     });
 
     $(".menu_bar.data_output").click(function(){
-        m.activate_menubar("data_output");
+        Controller.activate_menubar("data_output");
     });
 
     $(".add_btn").click(function(){
@@ -616,3 +616,53 @@ function adjust_result_table(t) {
         }
     }
 }
+
+class Controller extends Object {
+
+    static active_menu;
+
+    constructor(){
+        Controller.active_menu = null;
+    }
+
+    static activate_menubar(elm) {
+        menubar = $('li.'+elm);
+        description = $('.detail.'+elm);
+
+        menubar
+            .css("background-color", "#1e8cff")
+            .css("color", "white");
+
+        description.toggle("slide", {direction: "left"}, 700);
+
+        if (this._active_menu === null) {
+            this._active_menu = elm;
+            return(menubar.addClass("active"));
+        }
+
+        if (this._active_menu == elm) {
+            if (menubar.hasClass("active")) {
+                this._active_menu = null;
+                return menubar
+                    .css("background-color", "")
+                    .css("color", "")
+                    .removeClass("active");
+            }
+        }
+
+        previous_menubar = $('li.'+ this._active_menu);
+        previous_description = $('.detail.'+ this._active_menu);
+
+        previous_description.toggle("slide");
+        previous_menubar
+            .css("background-color", "")
+            .css("color", "")
+            .removeClass("active");
+
+        this._active_menu = elm;
+
+        return(menubar.addClass("active"));
+    }
+}
+
+var Manager = new Controller();

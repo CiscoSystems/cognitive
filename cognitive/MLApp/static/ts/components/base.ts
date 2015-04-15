@@ -169,6 +169,7 @@ class ComponentBase {
             .attr('class', 'edit-icon')
             .attr('id', 'edit-icon-id-' + this._id)
             .text('\uf044') // icon: fa-edit
+            .on("click", this.click_edit.bind(this))
             .on("mouseenter", function(){
                 $(this).css("display", "block")
                 var id = $(this).attr("id").split("-")[3];
@@ -176,6 +177,9 @@ class ComponentBase {
             });
     }
 
+    public click_edit(e) {
+        console.log("edit function is not implemented");
+    }
 
     private _drag() {
 
