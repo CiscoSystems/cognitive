@@ -5,7 +5,7 @@ var _uploaded_file_as_arrays = [];
 $(function(){
 
     var m = Manager;
-    var cognitive_client = new CognitiveAPIClientV1();
+
     var svg = d3.selectAll("svg");
 
     $('.projection.plus-bottom').click(add_column_for_projection);
@@ -21,6 +21,7 @@ $(function(){
         $('.form-group.projection_form').append('<select class="form-control projection_selects _selects_'+projections+'">'+option_string+'</select>');
         projections++;
     }
+
 
     function initializa_projection_column() {
         $('.form-group.projection_form').empty();
@@ -303,11 +304,23 @@ $(function(){
             return t.substr(0,t.length-1);
         }(components_id_list);
 
-        cognitive_client.executeAll({
-            user_id: 1,
-            experiment: 1,
-            graph_data: flow_path
+        //_send_request(api_url, "POST", json_data, null);
+
+        $.ajax({
+            url:  '/api/v1/workflows/',
+            type: "POST", data: {
+                user_id: 1,
+                experiment: 1,
+                graph_data: flow_path
+            },
+            success: function(result) { console.log(result); }
         });
+
+        //cognitive_client.executeAll({
+        //    user_id: 1,
+        //    experiment: 1,
+        //    graph_data: flow_path
+        //});
 
         $.colorbox({html:"<img src='/static/img/spinner.gif' alt='Smiley face' height='200px' width='200px'/>", closeButton:false, transition:"none", opacity:0, arrowKey:false, overlayClose:false, fastIframe:false, width:"300px", height:"300px"});
         $('#cboxClose').remove();
@@ -617,7 +630,7 @@ function adjust_result_table(t) {
     }
 }
 
-class Controller extends Object {
+class Controller {
 
     static active_menu;
 
