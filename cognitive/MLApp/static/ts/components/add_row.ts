@@ -7,6 +7,9 @@ interface AddRowComponentPutParams {
 }
 
 class AddRow extends ComponentBase {
+
+    private values: string;
+
     constructor () {
         super({
             "name": "Add Row",
@@ -18,6 +21,9 @@ class AddRow extends ComponentBase {
     }
 
     public create_request(params: AddRowComponentCreateParams) {
+
+        this.values = params.values;
+
         var json_data = {
             user_id: 1,
             token: "aaa",
@@ -30,6 +36,9 @@ class AddRow extends ComponentBase {
     }
 
     public put_request(params: AddRowComponentPutParams) {
+
+        this.values = params.values;
+
         var json_data = {
             user_id: 1,
             token: "aaa",

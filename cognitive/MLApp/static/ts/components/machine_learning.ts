@@ -11,6 +11,11 @@ interface MachineLearningComponentPutParams {
 }
 
 class MachineLearning extends ComponentBase {
+
+    private model_type;
+    private train_data_percentage;
+    private target_column;
+
     constructor() {
         super({
             "name": "Machine Learning",
@@ -22,6 +27,11 @@ class MachineLearning extends ComponentBase {
     }
 
     public create_request(params: MachineLearningComponentCreateParams){
+
+        this.model_type = params.model_type;
+        this.train_data_percentage = params.train_data_percentage;
+        this.target_column = params.target_column;
+
         var json_data = {
             model_type: params.model_type,
             train_data_percentage: params.train_data_percentage,
@@ -33,6 +43,11 @@ class MachineLearning extends ComponentBase {
     }
 
     public put_request(params: MachineLearningComponentPutParams) {
+
+        this.model_type = params.model_type;
+        this.train_data_percentage = params.train_data_percentage;
+        this.target_column = params.target_column;
+
         var json_data = {
             model_type: params.model_type,
             train_data_percentage: params.train_data_percentage,

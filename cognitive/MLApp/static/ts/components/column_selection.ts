@@ -7,6 +7,9 @@ interface ColumnSelectionComponentPutParams {
 }
 
 class ColumnSelection extends ComponentBase {
+
+    private column_idx: number;
+
     constructor () {
         super({
             "name": "Column Selection",
@@ -18,6 +21,9 @@ class ColumnSelection extends ComponentBase {
     }
 
     public create_request(params: ColumnSelectionComponentCreateParams) {
+
+        this.column_idx = params.component_id;
+
         var json_data = {
             component_id: params.component_id
         };
@@ -27,6 +33,9 @@ class ColumnSelection extends ComponentBase {
     }
 
     public put_request(params: ColumnSelectionComponentPutParams) {
+
+        this.column_idx = params.component_id;
+
         var json_data = {
             component_id: params.component_id
         };

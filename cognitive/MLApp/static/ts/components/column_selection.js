@@ -16,6 +16,7 @@ var ColumnSelection = (function (_super) {
         });
     }
     ColumnSelection.prototype.create_request = function (params) {
+        this.column_idx = params.component_id;
         var json_data = {
             component_id: params.component_id
         };
@@ -23,6 +24,7 @@ var ColumnSelection = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     ColumnSelection.prototype.put_request = function (params) {
+        this.column_idx = params.component_id;
         var json_data = {
             component_id: params.component_id
         };

@@ -16,6 +16,7 @@ var RemoveMissingValues = (function (_super) {
         });
     }
     RemoveMissingValues.prototype.create_request = function (params) {
+        this.operation = params.op_action;
         var json_data = {
             op_action: params.op_action
         };
@@ -23,6 +24,7 @@ var RemoveMissingValues = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     RemoveMissingValues.prototype.put_request = function (params) {
+        this.operation = params.op_action;
         var json_data = {
             op_action: params.op_action
         };

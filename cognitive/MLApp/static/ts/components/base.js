@@ -129,7 +129,7 @@ var ComponentBase = (function () {
         });
     };
     ComponentBase.prototype.click_edit = function (e) {
-        console.log("edit function is not implemented");
+        console.log("click_edit function is not implemented");
     };
     ComponentBase.prototype._drag = function () {
         var group = d3.select(this);

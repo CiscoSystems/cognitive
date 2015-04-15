@@ -16,6 +16,8 @@ var InputData = (function (_super) {
         });
     }
     InputData.prototype.create_request = function (params) {
+        this.file_name = params.file_name;
+        this.text_data = params.text_data;
         var json_data = {
             input_file: params.file_name,
             input_file_type: "csv",
@@ -25,6 +27,8 @@ var InputData = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     InputData.prototype.put_request = function (params) {
+        this.file_name = params.file_name;
+        this.text_data = params.text_data;
         var json_data = {
             input_file: params.file_name,
             input_file_type: "csv",

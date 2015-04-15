@@ -517,6 +517,9 @@ var Controller = (function (_super) {
         Controller.active_menu = null;
     }
     Controller.activate_menubar = function (elm) {
+        this._activate_menubar(elm);
+    };
+    Controller._activate_menubar = function (elm) {
         menubar = $('li.' + elm);
         description = $('.detail.' + elm);
         menubar

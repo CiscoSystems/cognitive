@@ -16,6 +16,9 @@ var MachineLearning = (function (_super) {
         });
     }
     MachineLearning.prototype.create_request = function (params) {
+        this.model_type = params.model_type;
+        this.train_data_percentage = params.train_data_percentage;
+        this.target_column = params.target_column;
         var json_data = {
             model_type: params.model_type,
             train_data_percentage: params.train_data_percentage,
@@ -25,6 +28,9 @@ var MachineLearning = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     MachineLearning.prototype.put_request = function (params) {
+        this.model_type = params.model_type;
+        this.train_data_percentage = params.train_data_percentage;
+        this.target_column = params.target_column;
         var json_data = {
             model_type: params.model_type,
             train_data_percentage: params.train_data_percentage,

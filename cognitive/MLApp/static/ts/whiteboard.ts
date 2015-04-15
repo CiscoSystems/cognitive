@@ -625,7 +625,11 @@ class Controller extends Object {
         Controller.active_menu = null;
     }
 
-    static activate_menubar(elm) {
+    static activate_menubar(elm): void {
+        this._activate_menubar(elm);
+    }
+
+    static _activate_menubar(elm): void {
         menubar = $('li.'+elm);
         description = $('.detail.'+elm);
 

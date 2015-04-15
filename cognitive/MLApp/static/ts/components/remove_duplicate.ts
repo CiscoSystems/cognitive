@@ -7,6 +7,9 @@ interface RemoveDuplicatesComponentPutParams {
 }
 
 class RemoveDuplicates extends ComponentBase {
+
+    private column_idx: number;
+
     constructor () {
         super({
             "name": "Remove Duplicates",
@@ -18,6 +21,9 @@ class RemoveDuplicates extends ComponentBase {
     }
 
     public create_request(params: RemoveDuplicatesComponentCreateParams){
+
+        this.column_idx = params.component_id;
+
         var json_data = {
             component_id: params.component_id
         };
@@ -27,6 +33,9 @@ class RemoveDuplicates extends ComponentBase {
     }
 
     public put_request(params: RemoveDuplicatesComponentPutParams) {
+
+        this.column_idx = params.component_id;
+
         var json_data = {
             component_id: params.component_id
         };

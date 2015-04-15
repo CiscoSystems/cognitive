@@ -178,7 +178,7 @@ class ComponentBase {
     }
 
     public click_edit(e) {
-        console.log("edit function is not implemented");
+        console.log("click_edit function is not implemented");
     }
 
     private _drag() {

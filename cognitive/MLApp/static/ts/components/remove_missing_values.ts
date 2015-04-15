@@ -7,6 +7,9 @@ interface RemoveMissingValuesComponentPutParams {
 }
 
 class RemoveMissingValues extends ComponentBase {
+
+    private operation: string;
+
     constructor () {
         super({
             "name": "Remove Missing Values",
@@ -18,6 +21,9 @@ class RemoveMissingValues extends ComponentBase {
     }
 
     public create_request(params: RemoveMissingValuesComponentCreateParams){
+
+        this.operation = params.op_action;
+
         var json_data = {
             op_action: params.op_action
         };
@@ -27,6 +33,9 @@ class RemoveMissingValues extends ComponentBase {
     }
 
     public put_request(params: RemoveMissingValuesComponentPutParams) {
+
+        this.operation = params.op_action;
+
         var json_data = {
             op_action: params.op_action
         };

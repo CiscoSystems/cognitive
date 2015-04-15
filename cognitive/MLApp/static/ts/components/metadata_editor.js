@@ -16,6 +16,7 @@ var MetadataEditor = (function (_super) {
         });
     }
     MetadataEditor.prototype.create_request = function (params) {
+        this.column_type = params.column_type;
         var json_data = {
             column_type: params.column_type
         };
@@ -23,6 +24,7 @@ var MetadataEditor = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     MetadataEditor.prototype.put_request = function (params) {
+        this.column_type = params.column_type;
         var json_data = {
             column_type: params.column_type
         };

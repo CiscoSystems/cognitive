@@ -16,6 +16,7 @@ var AddRow = (function (_super) {
         });
     }
     AddRow.prototype.create_request = function (params) {
+        this.values = params.values;
         var json_data = {
             user_id: 1,
             token: "aaa",
@@ -26,6 +27,7 @@ var AddRow = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     AddRow.prototype.put_request = function (params) {
+        this.values = params.values;
         var json_data = {
             user_id: 1,
             token: "aaa",

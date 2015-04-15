@@ -16,6 +16,9 @@ var Normalization = (function (_super) {
         });
     }
     Normalization.prototype.create_request = function (params) {
+        this.column_type = params.component_type;
+        this.column_idx = params.component_id;
+        this.operation = params.op_type;
         var json_data = {
             component_type: params.component_type,
             component_id: params.component_id,
@@ -25,6 +28,9 @@ var Normalization = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     Normalization.prototype.put_request = function (params) {
+        this.column_type = params.component_type;
+        this.column_idx = params.component_id;
+        this.operation = params.op_type;
         var json_data = {
             component_type: params.component_type,
             component_id: params.component_id,

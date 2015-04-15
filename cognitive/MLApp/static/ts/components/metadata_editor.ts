@@ -7,6 +7,9 @@ interface MetadataEditorComponentPutParams {
 }
 
 class MetadataEditor extends ComponentBase {
+
+    private column_type;
+
     constructor() {
         super({
             "name": "Metadata",
@@ -18,6 +21,9 @@ class MetadataEditor extends ComponentBase {
     }
 
     public create_request(params: MetadataEditorComponentCreateParams){
+
+        this.column_type = params.column_type;
+
         var json_data = {
             column_type: params.column_type
         };
@@ -27,6 +33,9 @@ class MetadataEditor extends ComponentBase {
     }
 
     public put_request(params: MetadataEditorComponentPutParams) {
+
+        this.column_type = params.column_type;
+
         var json_data = {
             column_type: params.column_type
         };

@@ -16,6 +16,7 @@ var RemoveDuplicates = (function (_super) {
         });
     }
     RemoveDuplicates.prototype.create_request = function (params) {
+        this.column_idx = params.component_id;
         var json_data = {
             component_id: params.component_id
         };
@@ -23,6 +24,7 @@ var RemoveDuplicates = (function (_super) {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     };
     RemoveDuplicates.prototype.put_request = function (params) {
+        this.column_idx = params.component_id;
         var json_data = {
             component_id: params.component_id
         };

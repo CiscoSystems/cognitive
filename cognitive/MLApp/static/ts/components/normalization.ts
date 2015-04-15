@@ -12,6 +12,11 @@ interface NormalizationComponentPutParams {
 
 
 class Normalization extends ComponentBase {
+
+    private column_type: string;
+    private column_idx: number;
+    private operation: string;
+
     constructor () {
         super({
             "name": "Normalization",
@@ -23,6 +28,11 @@ class Normalization extends ComponentBase {
     }
 
     public create_request(params: NormalizationComponentCreateParams){
+
+        this.column_type = params.component_type;
+        this.column_idx = params.component_id;
+        this.operation = params.op_type;
+
         var json_data = {
             component_type: params.component_type,
             component_id: params.component_id,
@@ -34,6 +44,11 @@ class Normalization extends ComponentBase {
     }
 
     public put_request(params: NormalizationComponentPutParams) {
+
+        this.column_type = params.component_type;
+        this.column_idx = params.component_id;
+        this.operation = params.op_type;
+
         var json_data = {
             component_type: params.component_type,
             component_id: params.component_id,
