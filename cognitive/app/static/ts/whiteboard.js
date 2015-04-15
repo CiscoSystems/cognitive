@@ -92,120 +92,32 @@ $(function () {
         Controller.activate_menubar("data_output");
     });
     $(".add_btn").click(function () {
-        var node;
         if ($(this).hasClass('add_input')) {
-            node = new InputData();
-            var params = {
-                file_name: _uploaded_file_name,
-                text_data: _uploaded_file_as_text
-            };
-            node.create_request(params);
+            Controller.create_input_component();
         }
         else if ($(this).hasClass('add_row')) {
-            node = new AddRow();
-            var request_text = "[";
-            for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-                request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
-            }
-            request_text = request_text.slice(0, request_text.length - 1);
-            request_text += "]";
-            console.log(request_text);
-            var params = {
-                values: request_text
-            };
-            node.create_request(params);
+            Controller.create_add_row_component();
         }
         else if ($(this).hasClass('add_math_fomula')) {
-            node = new MathFormula();
-            var method = $('select#formula_method').val();
-            var column_num = $('select#formula_column').val();
-            var constant = $('#formula_constant').val();
-            var params = {
-                component_type: "Column",
-                component_id: column_num,
-                op_type: method,
-                op_constant: constant
-            };
-            node.create_request(params);
+            Controller.create_math_fomula_component();
         }
         else if ($(this).hasClass('add_normalization')) {
-            node = new Normalization();
-            var method = $('select#normalization_method').val();
-            var column_num = $('select#normalization_column').val();
-            var params = {
-                component_type: "Column",
-                component_id: column_num,
-                op_type: method
-            };
-            node.create_request(params);
+            Controller.create_normalization_component();
         }
         else if ($(this).hasClass('add_projection')) {
-            /* TODO: [refactor] projection to column_selection */
-            node = new ColumnSelection();
-            var len = $('.projection_selects').length;
-            var projection_columns = "[";
-            for (var i = 0; i < len; i++) {
-                console.log($('.projection_selects._selects_' + i).val());
-                projection_columns += $('.projection_selects._selects_' + i).val() + ",";
-            }
-            projection_columns = projection_columns.slice(0, projection_columns.length - 1);
-            projection_columns += "]";
-            var params = {
-                component_id: projection_columns
-            };
-            node.create_request(params);
+            Controller.create_projection_component();
         }
         else if ($(this).hasClass('add_remove_duplicates')) {
-            node = new RemoveDuplicates();
-            var len = $('.remove_duplicates_selects').length;
-            var remove_duplicates_columns = "[";
-            for (var i = 0; i < len; i++) {
-                console.log($('.remove_duplicates_selects._selects_' + i).val());
-                remove_duplicates_columns += $('.remove_duplicates_selects._selects_' + i).val() + ",";
-            }
-            remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length - 1);
-            remove_duplicates_columns += "]";
-            console.log(remove_duplicates_columns);
-            params: RemoveDuplicatesComponentCreateParams = {
-                component_id: remove_duplicates_columns
-            };
-            node.create_request(params);
+            Controller.create_remove_duplicates_component();
         }
         else if ($(this).hasClass('add_remove_missing_value')) {
-            node = new RemoveMissingValues();
-            var method = $('#remove_missing_value_method').val();
-            var params = {
-                op_action: method //"Replace_mean" or Drop_row
-            };
-            node.create_request(params);
+            Controller.create_remove_missing_value_component();
         }
         else if ($(this).hasClass('add_metadata')) {
-            node = new MetadataEditor();
-            var metadata_types = "[";
-            for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-                console.log($(".metadata.column" + i).val());
-                metadata_types += "\"" + $(".metadata.column" + i).val() + "\",";
-            }
-            metadata_types = metadata_types.slice(0, metadata_types.length - 1);
-            metadata_types += "]";
-            console.log(metadata_types);
-            var params = {
-                column_type: metadata_types
-            };
-            node.create_request(params);
+            Controller.create_metadata_component();
         }
         else if ($(this).hasClass('add_machine_learning')) {
-            node = new MachineLearning();
-            var argo = $('.machine_learning_select').val();
-            var target = $('.machine_learning_target').val();
-            var parcentage = $('.machine_learning_target_parcentage').val();
-            console.log(argo);
-            var params = {
-                model_type: argo,
-                train_data_percentage: parcentage,
-                target_column: target
-            };
-            node.create_request(params);
+            Controller.create_machine_learning_component();
         }
     });
     $("#execute-btn").click(function () {
@@ -521,6 +433,116 @@ var Controller = (function () {
             .removeClass("active");
         this._active_menu = elm;
         return (menubar.addClass("active"));
+    };
+    Controller.create_input_component = function () {
+        var node = new InputData();
+        var params = {
+            file_name: _uploaded_file_name,
+            text_data: _uploaded_file_as_text
+        };
+        node.create_request(params);
+    };
+    Controller.create_add_row_component = function () {
+        var node = new AddRow();
+        var request_text = "[";
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
+        }
+        request_text = request_text.slice(0, request_text.length - 1);
+        request_text += "]";
+        var params = {
+            values: request_text
+        };
+        node.create_request(params);
+    };
+    Controller.create_math_fomula_component = function () {
+        var node = new MathFormula();
+        var method = $('select#formula_method').val();
+        var column_num = $('select#formula_column').val();
+        var constant = $('#formula_constant').val();
+        var params = {
+            component_type: "Column",
+            component_id: column_num,
+            op_type: method,
+            op_constant: constant
+        };
+        node.create_request(params);
+    };
+    Controller.create_normalization_component = function () {
+        var node = new Normalization();
+        var method = $('select#normalization_method').val();
+        var column_num = $('select#normalization_column').val();
+        var params = {
+            component_type: "Column",
+            component_id: column_num,
+            op_type: method
+        };
+        node.create_request(params);
+    };
+    Controller.create_projection_component = function () {
+        /* TODO: [refactor] projection to column_selection */
+        var node = new ColumnSelection();
+        var len = $('.projection_selects').length;
+        var projection_columns = "[";
+        for (var i = 0; i < len; i++) {
+            console.log($('.projection_selects._selects_' + i).val());
+            projection_columns += $('.projection_selects._selects_' + i).val() + ",";
+        }
+        projection_columns = projection_columns.slice(0, projection_columns.length - 1);
+        projection_columns += "]";
+        var params = {
+            component_id: projection_columns
+        };
+        node.create_request(params);
+    };
+    Controller.create_remove_duplicates_component = function () {
+        var node = new RemoveDuplicates();
+        var len = $('.remove_duplicates_selects').length;
+        var remove_duplicates_columns = "[";
+        for (var i = 0; i < len; i++) {
+            console.log($('.remove_duplicates_selects._selects_' + i).val());
+            remove_duplicates_columns += $('.remove_duplicates_selects._selects_' + i).val() + ",";
+        }
+        remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length - 1);
+        remove_duplicates_columns += "]";
+        params: RemoveDuplicatesComponentCreateParams = {
+            component_id: remove_duplicates_columns
+        };
+        node.create_request(params);
+    };
+    Controller.create_remove_missing_value_component = function () {
+        var node = new RemoveMissingValues();
+        var method = $('#remove_missing_value_method').val();
+        var params = {
+            op_action: method //"Replace_mean" or Drop_row
+        };
+        node.create_request(params);
+    };
+    Controller.create_metadata_component = function () {
+        var node = new MetadataEditor();
+        var metadata_types = "[";
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            console.log($(".metadata.column" + i).val());
+            metadata_types += "\"" + $(".metadata.column" + i).val() + "\",";
+        }
+        metadata_types = metadata_types.slice(0, metadata_types.length - 1);
+        metadata_types += "]";
+        var params = {
+            column_type: metadata_types
+        };
+        node.create_request(params);
+    };
+    Controller.create_machine_learning_component = function () {
+        var node = new MachineLearning();
+        var argo = $('.machine_learning_select').val();
+        var target = $('.machine_learning_target').val();
+        var parcentage = $('.machine_learning_target_parcentage').val();
+        var params = {
+            model_type: argo,
+            train_data_percentage: parcentage,
+            target_column: target
+        };
+        node.create_request(params);
     };
     return Controller;
 })();
