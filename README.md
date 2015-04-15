@@ -1,7 +1,7 @@
 Cognitive
 =========
 
-ML as a Service
+Machine Learning as a Service (MLaaS)
 
 It is still in development. If you find any errors, please let us know.
 
@@ -53,4 +53,8 @@ Missing features
             Applying ML algorithm on an input that has some missing entries
             Applying ML algorithm on an input that has non-numerical values
 
- 
+API Documentation
+-----------------
+
+Swagger API Documentation is available via `http://127.0.0.1:8000/docs` after launchnig Django server.
+
