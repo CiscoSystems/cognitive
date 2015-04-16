@@ -11,3 +11,4 @@ venv
 .tags_sorted_by_file
 *.js.map
 *.sqlite3
+node_modules
