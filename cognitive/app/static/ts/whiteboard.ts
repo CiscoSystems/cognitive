@@ -36,47 +36,70 @@ class ViewController {
                 ComponentController.activate_menubar('introduction');
             } else if ($(this).hasClass("data_input")) {
                 ComponentController.activate_menubar('data_input');
+                InputData.add_btn.removeClass("disabled");
+                InputData.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("add_row")) {
                 ComponentController.activate_menubar("add_row");
-                ViewController.description_addrow();
+                AddRow.generate_detail_view();
+                AddRow.add_btn.removeClass("disabled");
+                AddRow.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("add_math_fomula")) {
                 ComponentController.activate_menubar("add_math_fomula");
                 ViewController.description_formula();
+                MathFormula.add_btn.removeClass("disabled");
+                MathFormula.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("projection")) {
                 ComponentController.activate_menubar("projection");
                 ViewController.initialize_projection_column();
                 ViewController.add_column_for_projection();
+                ColumnSelection.add_btn.removeClass("disabled");
+                ColumnSelection.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("normalization")) {
                 ComponentController.activate_menubar("normalization");
                 ViewController.description_normalization();
+                Normalization.add_btn.removeClass("disabled");
+                Normalization.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("remove_column")) {
                 ComponentController.activate_menubar("remove_column");
                 ViewController.initialize_remove_duplicates_column();
                 ViewController.add_column_for_remove_duplicates();
+                RemoveDuplicates.add_btn.removeClass("disabled");
+                RemoveDuplicates.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("remove_missing_value")) {
                 ComponentController.activate_menubar("remove_missing_value");
+                RemoveMissingValues.add_btn.removeClass("disabled");
+                RemoveMissingValues.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("transform")) {
                 ComponentController.activate_menubar("transform");
+                MathFormula.add_btn.removeClass("disabled");
+                MathFormula.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("metadata")) {
                 ComponentController.activate_menubar("metadata");
                 ViewController.description_metadata();
-            } else if ($(this).hasClass("formula")) {
-                ComponentController.activate_menubar("formula");
-            } else if ($(this).hasClass("filter")) {
-                ComponentController.activate_menubar("filter");
+                MetadataEditor.add_btn.removeClass("disabled");
+                MetadataEditor.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("machine_learning")) {
                 ComponentController.activate_menubar("machine_learning");
                 ViewController.description_machine_learning();
+                MachineLearning.add_btn.removeClass("disabled");
+                MachineLearning.edit_btn.addClass("disabled");
             }
         });
 
         $(".add_btn").click(function() {
+
+            /*
+             * TODO: [refactor] create_component method will be defined in ComponentBase class
+             * in create_component method, they call _create method which can be override
+             * by sub class.
+             */
+
             if ($(this).hasClass('add_input')) {
                 ComponentController.create_input_component();
             } else if ($(this).hasClass('add_row')) {
                 ComponentController.create_add_row_component();
             } else if ($(this).hasClass('add_math_fomula')) {
-                ComponentController.create_math_fomula_component();
+                ComponentController.create_math_formula_component();
             } else if ($(this).hasClass('add_normalization')) {
                 ComponentController.create_normalization_component();
             } else if ($(this).hasClass('add_projection')) {
@@ -113,21 +136,51 @@ class ViewController {
 
         var t = document.getElementById('root');
         var root_drag_frag;
+        var root_drag_frag_reverse;
         var drag_start_x: number;
         var drag_start_y: number;
+        var current_line_id: number;
+        var previous_line_id: number;
+
         t.addEventListener('mousedown', function (e) {
             root_drag_frag = 0;
-
+            root_drag_frag_reverse = 1;
+            drag_start_x = e.x;
+            drag_start_y = e.y;
+            previous_line_id = 0;
+            current_line_id = 1;
         }, false);
-        t.addEventListener('mousemove', function () {
+
+        t.addEventListener('mousemove', function (e) {
             root_drag_frag = 1;
-
+            /*
+             * [WIP] mouse drag should eneble to select some areas.
+             */
+            if (root_drag_frag_reverse === 1) {
+                console.log(e.x, " ", e.y);
+                var func_lay = d3.selectAll(ViewController.functionality_layer);
+                func_lay.append("rect")
+                    .attr("class", "mouse-select-range")
+                    .attr("id", "mouse-select-range-" + current_line_id)
+                    .attr("x", drag_start_x - 280).attr("y", drag_start_y - 45)
+                    .attr("width", e.x - drag_start_x).attr("height", e.y - drag_start_y)
+                    .attr('stroke', "steelblue" ).attr('stroke-width', "1")
+                    .attr('fill', 'none');
+            }
+            $("#mouse-select-range-" + previous_line_id).remove();
+            previous_line_id = current_line_id;
         }, false);
+
         t.addEventListener('mouseup', function () {
             // this is click
-            if (root_drag_frag === 0) { ComponentController.deacitive_menubar(); }
+            if (root_drag_frag === 0) {
+                ComponentController.deacitive_menubar();
+                ComponentController.deactivate_focus();
+            }
+            root_drag_frag = 0;
+            root_drag_frag_reverse = 0;
+            $("#mouse-select-range-" + previous_line_id).remove();
         }, false);
-
     }
 
     static initialize_projection_column(): void {
@@ -350,6 +403,12 @@ class ComponentController {
         return(menubar.addClass("active"));
     }
 
+    static deactivate_focus(): void {
+        if (ComponentBase.current_focus === null) {return;}
+        ComponentBase.current_focus.classed("clicked", false);
+        ComponentBase.current_focus = null;
+    }
+
     static create_input_component(): void {
         var node = new InputData();
         var params: InputDataComponentCreateParams = {
@@ -377,7 +436,7 @@ class ComponentController {
         node.create_request(params)
     }
 
-    static create_math_fomula_component(): void {
+    static create_math_formula_component(): void {
         var node = new MathFormula();
         var method = $('select#formula_method').val();
         var column_num = $('select#formula_column').val();

@@ -17,7 +17,14 @@ class Normalization extends ComponentBase {
     private column_idx: number;
     private operation: string;
 
+    static add_btn: any;
+    static edit_btn: any;
+
     constructor () {
+
+        Normalization.add_btn = $("#normalization-add-btn");
+        Normalization.edit_btn = $("#normalization-edit-btn");
+
         super({
             "name": "Normalization",
             "width": 0,
@@ -43,6 +50,17 @@ class Normalization extends ComponentBase {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     }
 
+    public update(): void {
+
+        var params: NormalizationComponentPutParams = {
+            component_type: string,
+            component_id: number,
+            op_type: string
+        };
+
+        this.put_request(params);
+    }
+
     public put_request(params: NormalizationComponentPutParams) {
 
         this.column_type = params.component_type;
@@ -65,6 +83,15 @@ class Normalization extends ComponentBase {
     }
 
     private click_edit(e): void {
+        ComponentController.activate_menubar("normalization");
+        ViewController.description_normalization();
+        this.activate_edit_btn();
+    }
 
+    private activate_edit_btn(): void {
+        Normalization.add_btn.addClass("disabled");
+        Normalization.edit_btn.removeClass("disabled");
+        Normalization.edit_btn.val(this.get_id())
+        Normalization.edit_btn.click(this.update.bind(this));
     }
 }

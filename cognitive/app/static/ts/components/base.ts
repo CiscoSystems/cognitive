@@ -221,6 +221,8 @@ class ComponentBase {
 
     private _click(e) {
 
+        // following procedures should be separate function like: focus_on(elm)
+
         if (d3.event.defaultPrevented) return;
 
         var component = d3.select(e);
@@ -396,4 +398,7 @@ class ComponentBase {
         return this.leave_path;
     }
 
+    static generate_detail(){
+        console.log("generate_detail is not implemented.");
+    }
 }

@@ -16,7 +16,14 @@ class MachineLearning extends ComponentBase {
     private train_data_percentage;
     private target_column;
 
+    static add_btn: any;
+    static edit_btn: any;
+
     constructor() {
+
+        MachineLearning.add_btn = $("#machine_learning-add-btn");
+        MachineLearning.edit_btn = $("#machine_learning-edit-btn");
+
         super({
             "name": "Machine Learning",
             "width": 0,
@@ -42,6 +49,17 @@ class MachineLearning extends ComponentBase {
         ComponentBase._send_request(api_url, "POST", json_data, this);
     }
 
+    public update(): void {
+
+        var params: MachineLearningComponentPutParams = {
+            model_type: a,
+            train_data_percentage: a,
+            target_column: a
+        };
+
+        this.put_request(params);
+    }
+
     public put_request(params: MachineLearningComponentPutParams) {
 
         this.model_type = params.model_type;
@@ -64,5 +82,14 @@ class MachineLearning extends ComponentBase {
     }
 
     private click_edit(e): void {
+        ComponentController.activate_menubar("machine_learning");
+        this.activate_edit_btn();
+    }
+
+    private activate_edit_btn(): void {
+        MachineLearning.add_btn.addClass("disabled");
+        MachineLearning.edit_btn.removeClass("disabled");
+        MachineLearning.edit_btn.val(this.get_id())
+        MachineLearning.edit_btn.click(this.update.bind(this));
     }
 }

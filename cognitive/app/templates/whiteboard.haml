@@ -61,18 +61,6 @@
         %li.menu_bar.machine_learning 
           %i.fa.fa-yelp
           Machine Learning
-        %li.menu_bar.kafka
-          %i.fa.fa-yelp
-          Apache Kafka
-        %li.menu_bar.influx_db
-          %i.fa.fa-yelp
-          InfluxDB
-        %li.menu_bar.kibana
-          %i.fa.fa-yelp
-          Kibana
-        %li.menu_bar.elastic_search
-          %i.fa.fa-yelp
-          Elastic Search
 
   #visualization
     %svg#root.root
@@ -105,7 +93,8 @@
           %label.col-lg-2.control-label{for:"inputFile"} File
           .col-lg-10
             %input#inputFile{type:"file", accept:".csv"}
-        %button.btn.btn-material-indigo.add_btn.add_input.right{type:"button"} ADD
+        %button#input-add-btn.btn.btn-material-indigo.add_btn.add_input.right{type:"button"} Add
+        %button#input-edit-btn.btn.btn-material-orange.add_btn.add_input.right.disabled{type:"button"} Edit
 
     .detail.add_row.display_none
       .content
@@ -113,7 +102,8 @@
           %i.fa.fa-list-ol
           Add Row
         .add_row_form{style:"list-style:none; font-size: 18pt;"}
-        %button.btn.btn-material-indigo.add_btn.add_row.right{type:"button"} ADD
+        %button#add_row-add-btn.btn.btn-material-indigo.add_btn.add_row.right{type:"button"} Add
+        %button#add_row-edit-btn.btn.btn-material-orange.add_btn.add_row.right.disabled{type:"button"} Edit
 
     .detail.add_math_fomula.display_none
       .content
@@ -138,7 +128,8 @@
           %label.col-lg-3.control-label{for:"select"} Constant
           .col-lg-9
             %input#formula_constant.form-control.floating-label#focusedInput{type:"text", placeholder: "value"}
-        %button.btn.btn-material-indigo.add_btn.add_math_fomula.right{type:"button"} ADD
+        %button#math_formula-add-btn.btn.btn-material-indigo.add_btn.add_math_fomula.right{type:"button"} ADD
+        %button#math_formula-edit-btn.btn.btn-material-orange.edit_btn.edit_math_fomula.right.disabled{type:"button"} Edit
 
     .detail.normalization.display_none
       .content
@@ -156,7 +147,8 @@
             %label.col-lg-3.control-label{for:"select"} Column
             .col-lg-9
               %select#normalization_column.form-control
-        %button.btn.btn-material-indigo.add_btn.add_normalization.right{type:"button"} ADD
+        %button#normalization-add-btn.btn.btn-material-indigo.add_btn.add_normalization.right{type:"button"} Add
+        %button#normalization-edit-btn.btn.btn-material-orange.add_btn.add_normalization.right.disabled{type:"button"} Edit
 
     .detail.projection.display_none
       .content
@@ -164,7 +156,8 @@
           %i.fa.fa-cogs
           Column Selection     
         .form-group.projection_form
-        %button.btn.btn-material-indigo.add_btn.add_projection.right{type:"button"} ADD
+        %button#projection-add-btn.btn.btn-material-indigo.add_btn.add_projection.right{type:"button"} Add
+        %button#projection-edit-btn.btn.btn-material-orange.add_btn.add_projection.right.disabled{type:"button"} Edit
         .projection.minus-bottom.right
           %i.fa.fa-minus.minus-icon
         .projection.plus-bottom.right
@@ -176,7 +169,8 @@
           %i.fa.fa-cut
           Remove Duplicates
         .form-group.remove_duplicates_form
-        %button.btn.btn-material-indigo.add_btn.add_remove_duplicates.right{type:"button"} ADD
+        %button#remove_dupplicates-add-btn.btn.btn-material-indigo.add_btn.add_remove_duplicates.right{type:"button"} Add
+        %button#remove_dupplicates-edit-btn.btn.btn-material-orange.add_btn.add_remove_duplicates.right.disabled{type:"button"} Edit
         .remove_duplicates.minus-bottom.right
           %i.fa.fa-minus.minus-icon
         .remove_duplicates.plus-bottom.right
@@ -195,7 +189,8 @@
               %option Replace_median
               %option Replace_mode
               %option Drop_row
-        %button.btn.btn-material-indigo.add_btn.add_remove_missing_value.right{type:"button"} ADD
+        %button#remove_missing_value-add-btn.btn.btn-material-indigo.add_btn.add_remove_missing_value.right{type:"button"} Add
+        %button#remove_missing_value-edit-btn.btn.btn-material-orange.add_btn.add_remove_missing_value.right.disabled{type:"button"} Edit
 
     .detail.metadata.display_none
       .content
@@ -204,7 +199,8 @@
           Metadata
         .form-group
           #metadata_discriptions{style:"padding: 30px;"}
-        %button.btn.btn-material-indigo.add_btn.add_metadata.right{type:"button", style:" margin-top: 40px;"} ADD
+        %button#metadata-add-btn.btn.btn-material-indigo.add_btn.add_metadata.right{type:"button", style:" margin-top: 40px;"} Add
+        %button#metadata-edit-btn.btn.btn-material-orange.add_btn.add_metadata.right.disabled{type:"button", style:" margin-top: 40px;"} Edit
 
     .detail.machine_learning.display_none
       .content
@@ -241,7 +237,8 @@
                 %option 70
                 %option 80
                 %option 90
-        %button.btn.btn-material-indigo.add_btn.add_machine_learning.right{type:"button"} ADD
+        %button#machine_learning-add-btn.btn.btn-material-indigo.add_btn.add_machine_learning.right{type:"button"} Add
+        %button#machine_learning-edit-btn.btn.btn-material-orange.add_btn.add_machine_learning.right.disabled{type:"button"} Edit
 
   #whiteboard-right-menu
     %p#execute-btn.add-btn.execute-btn

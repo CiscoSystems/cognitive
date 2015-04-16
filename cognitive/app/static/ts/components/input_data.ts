@@ -13,7 +13,14 @@ class InputData extends ComponentBase {
     private file_name: string;
     private text_data: string;
 
+    static add_btn: any;
+    static edit_btn: any;
+
     constructor(){
+
+        InputData.add_btn = $("#input-add-btn");
+        InputData.edit_btn = $("#input-edit-btn");
+
         super({
             "name": "Input Data",
             "width": 0,
@@ -36,6 +43,15 @@ class InputData extends ComponentBase {
 
         var api_url = '/api/v1'  + '/operations/input/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
+    }
+    public update(): void {
+
+        var params: InputDataComponentPutParams = {
+            file_name: string,
+            text_data: string
+        };
+
+        this.put_request(params);
     }
 
     public put_request(params: InputDataComponentPutParams) {
@@ -60,6 +76,14 @@ class InputData extends ComponentBase {
     }
 
     private click_edit(e): void {
+        ComponentController.activate_menubar('data_input');
+        this.activate_edit_btn();
+    }
 
+    private activate_edit_btn(): void {
+        InputData.add_btn.addClass("disabled");
+        InputData.edit_btn.removeClass("disabled");
+        InputData.edit_btn.val(this.get_id())
+        InputData.edit_btn.click(this.update.bind(this));
     }
 }
