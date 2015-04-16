@@ -8,6 +8,12 @@ class ViewController {
     static projections: number;
     static remove_duplicates_columns: number;
 
+    static svg_root: any;
+    static layer_0: any;
+    static scope_layer: any;
+    static connection_layer: any;
+    static component_layer: any;
+    static functionality_layer: any;
     /*
      * TODO: uploaded file related variable should not be global
      */
@@ -17,6 +23,13 @@ class ViewController {
     //static uploaded_file_as_arrays = [];
 
     constructor() {
+
+        ViewController.svg_root = $("#root");
+        ViewController.layer_0 = $("#layer-0");
+        ViewController.scope_layer = $("#layer-1");
+        ViewController.connection_layer = $("#layer-2");
+        ViewController.component_layer = $("#layer-3");
+        ViewController.functionality_layer = $("#layer-4");
 
         $(".menu_bar").click(function(){
             if ($(this).hasClass("introduction")){
@@ -81,7 +94,7 @@ class ViewController {
 
         $("#execute-btn").click(function () {
             ViewController.run();
-        })
+        });
 
         $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
         $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
@@ -97,6 +110,24 @@ class ViewController {
 
             _uploaded_file_name = file.name
         });
+
+        var t = document.getElementById('root');
+        var root_drag_frag;
+        var drag_start_x: number;
+        var drag_start_y: number;
+        t.addEventListener('mousedown', function (e) {
+            root_drag_frag = 0;
+
+        }, false);
+        t.addEventListener('mousemove', function () {
+            root_drag_frag = 1;
+
+        }, false);
+        t.addEventListener('mouseup', function () {
+            // this is click
+            if (root_drag_frag === 0) { ComponentController.deacitive_menubar(); }
+        }, false);
+
     }
 
     static initialize_projection_column(): void {
@@ -266,6 +297,18 @@ class ComponentController {
 
     static activate_menubar(elm): void {
         this._activate_menubar(elm);
+    }
+
+    static deacitive_menubar(): void {
+        if (ComponentController._active_menu !== null) {
+            var previous_menubar = $('li.'+ this._active_menu);
+            var previous_description = $('.detail.'+ this._active_menu);
+            previous_description.toggle("slide");
+            previous_menubar
+                .css("background-color", "")
+                .css("color", "").removeClass("active");
+            ComponentController._active_menu = null;
+        }
     }
 
     static _activate_menubar(elm): void {
