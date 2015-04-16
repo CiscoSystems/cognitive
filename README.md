@@ -11,19 +11,21 @@ Installation
 
 1. Install all python packages listed in requirements file. Start your Django server(Optionally using a public ip).  It is advised to use virtualenv to isolate other python environments.
 
-    virtualenv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    python manage.py syncdb
-    python manage.py runserver <optional IP:PORT>
+        virtualenv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+        python manage.py syncdb
+        python manage.py runserver <optional IP:PORT>
+
 
 2. Compile Typescript files to Javascript. This operation requires Node.js environment with npm.
 
-    npm install gulp
-    npm install gulp-typescript
-    npm install gulp-sourcemaps
-    npm install merge-stream
-    gulp typescript # Compiling Typescript files
+        npm install gulp
+        npm install gulp-typescript
+        npm install gulp-sourcemaps
+        npm install merge-stream
+        gulp typescript # Compiling Typescript files
+
 
 Now, UI can be accessed at the specified IP:port. If nothing is specified, UI is started at http://127.0.0.1:8000
 
