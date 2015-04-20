@@ -52,6 +52,7 @@ class ColumnSelection extends ComponentBase {
 
         var params = ColumnSelection.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: ColumnSelectionRequestParams) {

@@ -52,6 +52,7 @@ class MachineLearning extends ComponentBase {
     public update(): void {
         var params = MachineLearning.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: MachineLearningRequestParams) {

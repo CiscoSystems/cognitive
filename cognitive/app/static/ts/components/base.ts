@@ -152,7 +152,7 @@ class ComponentBase {
         g.append('text')
             .attr('x',this.x - 20)
             .attr('y', this.y - 5)
-            .attr('class', 'close-icon')
+            .attr('class', 'fa-icon close-icon')
             .attr('id', 'close-icon-id-' + this._id)
             .text('\uf00d')  // icon: fa-close
             .on("click",  this.eliminate.bind(this) )
@@ -166,12 +166,12 @@ class ComponentBase {
         g.append('text')
             .attr('x',this.x)
             .attr('y', this.y - 5)
-            .attr('class', 'edit-icon')
+            .attr('class', 'fa-icon edit-icon')
             .attr('id', 'edit-icon-id-' + this._id)
             .text('\uf044') // icon: fa-edit
             .on("click", this.click_edit.bind(this))
             .on("mouseenter", function(){
-                $(this).css("display", "block")
+                $(this).css("display", "block");
                 var id = $(this).attr("id").split("-")[3];
                 $("#close-icon-id-" + id).css("display", "block");
             });
@@ -179,6 +179,12 @@ class ComponentBase {
 
     public click_edit(e) {
         console.log("click_edit function is not implemented");
+    }
+
+    public update(){
+        var id = this.get_id();
+        var node =  $("#node-group-" +id+ " > .node ");
+        node.attr("class", node.attr("class").replace(/processed/g, ""));
     }
 
     private _drag() {
@@ -280,7 +286,13 @@ class ComponentBase {
         this.delete_request();
 
         return false;
+    }
 
+    public processed () {
+        var id = this.get_id();
+        var node = $("#node-group-" + id + " > .node");
+
+        node.attr("class", node.attr("class") + " processed");
     }
 
     public delete_request() {

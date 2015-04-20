@@ -193,7 +193,7 @@ class ViewController {
         var node_list = ComponentBase.get_workflow_from(start.get_id());
 
         if (node_list.length < 1) {
-            alert("no workflow or input files");
+            console.log("no workflow or input files");
             return;
         }
 
@@ -242,6 +242,10 @@ class ViewController {
         $('#cboxBottomLeft').remove();
         $('#cboxBottomRight').remove();
         setTimeout("$.colorbox.close()", 700);
+
+        node_list.map(function(n) {
+            n.processed();
+        })
     }
 }
 

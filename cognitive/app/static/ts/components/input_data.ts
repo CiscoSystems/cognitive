@@ -52,6 +52,7 @@ class InputData extends ComponentBase {
         };
 
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: InputDataRequestParams) {

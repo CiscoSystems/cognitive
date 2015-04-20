@@ -53,6 +53,7 @@ class Normalization extends ComponentBase {
     public update(): void {
         var params = Normalization.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: NormalizationRequestParams) {

@@ -61,6 +61,7 @@ class MathFormula extends ComponentBase {
     public update(): void {
         var params = MathFormula.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: MathFormulaRequestParams): void {

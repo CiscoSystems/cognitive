@@ -155,6 +155,10 @@ svg.graph {
     height: 100px;
 }
 
+.processed {
+    fill: aliceblue;
+}
+
 .bar {
     fill:steelblue;
 }
@@ -233,7 +237,6 @@ tr.result_row:hover {
 }
 
 .close-icon {
-    font-family: 'FontAwesome';
     font-size: 16pt;
     fill: #ddc9c9;
     display: none;
@@ -244,10 +247,13 @@ tr.result_row:hover {
 }
 
 .edit-icon {
-    font-family: 'FontAwesome';
     font-size: 13pt;
     fill: #ceddc9;
     display: none;
+}
+
+.fa-icon {
+    font-family: 'FontAwesome', serif;
 }
 
 .edit-icon:hover {

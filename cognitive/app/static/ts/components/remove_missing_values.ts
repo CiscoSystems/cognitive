@@ -44,6 +44,7 @@ class RemoveMissingValues extends ComponentBase {
     public update(): void {
         var params = RemoveMissingValues.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: RemoveMissingValuesRequestParams) {

@@ -43,6 +43,7 @@ class RemoveDuplicates extends ComponentBase {
     public update(): void {
         var params = RemoveDuplicates.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: RemoveDuplicatesRequestParams) {

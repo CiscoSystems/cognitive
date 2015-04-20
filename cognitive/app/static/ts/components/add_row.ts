@@ -49,6 +49,7 @@ class AddRow extends ComponentBase {
     public update(): void {
         var params = AddRow.generate_request();
         this.put_request(params);
+        super.update();
     }
 
     public put_request(params: AddRowRequestParams) {
