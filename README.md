@@ -56,9 +56,7 @@ Usage
 Missing features
 ----------------
 
-1. In this version, UI doesn't support 'update' and 'delete' of components. Once created, it is not possible to edit the component parameters or workflow graph. If you messed up accidentally, the only solution is to refresh the page and create the workflow again.  'Update' and 'Delete' features will be included in the next version of UI. However, all these features are supported through REST API. You can try them using any rest api client. Each workflow step has a corresponding rest API call.
-
-2.  Validations are missing in UI. UI doesn't report any error even if the user creates a component with wrong parameters.
+1.  Validations are missing in UI. UI doesn't report any error even if the user creates a component with wrong parameters.
     
         eg: Applying mathematical operations on  non numerical columns
             Applying operations on columns that are non-existent. (Once 'Column selection' feature is applied to project lesser number of columns, un-selected columns cannot be used in any of the future operations)
