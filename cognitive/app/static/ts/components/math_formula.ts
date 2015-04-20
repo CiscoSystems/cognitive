@@ -5,7 +5,7 @@ interface MathFormulaComponentCreateParams {
     op_constant: number;
 }
 
-interface MathFormulaComponentPutParams {
+interface MathFormulaRequestParams {
     component_type: string;
     component_id: number;
     op_type: string;  // Add or Sub, Mul, Div
@@ -59,18 +59,11 @@ class MathFormula extends ComponentBase {
     }
 
     public update(): void {
-
-        var params: MathFormulaComponentPutParams = {
-                component_type: "Column",
-                component_id: $('#formula_column').val(),
-                op_type: $('#formula_method').val(),
-                op_constant: $('#formula_constant').val()
-        };
-
+        var params = MathFormula.generate_request();
         this.put_request(params);
     }
 
-    public put_request(params: MathFormulaComponentPutParams): void {
+    public put_request(params: MathFormulaRequestParams): void {
 
         this.column_type = params.component_type;
         this.column_idx = params.component_id;
@@ -114,5 +107,27 @@ class MathFormula extends ComponentBase {
         MathFormula.edit_btn.val(this.get_id())
 
         MathFormula.edit_btn.click(this.update.bind(this));
+    }
+
+    static generate_detail_view(): void {
+        $("#formula_column").empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            $("#formula_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
+    }
+
+    static generate_request(): MathFormulaRequestParams {
+        var method = $('select#formula_method').val();
+        var column_num = $('select#formula_column').val();
+        var constant = $('#formula_constant').val();
+        var params: MathFormulaRequestParams = {
+            component_type: "Column",
+            component_id: column_num, // should be index number
+            op_type: method, // or Sub, Mul, Div
+            op_constant: constant
+        };
+
+        return params;
     }
 }

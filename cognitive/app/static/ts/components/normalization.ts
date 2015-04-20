@@ -4,7 +4,7 @@ interface NormalizationComponentCreateParams {
     op_type: string;
 }
 
-interface NormalizationComponentPutParams {
+interface NormalizationRequestParams {
     component_type: string;
     component_id: number;
     op_type: string;
@@ -51,17 +51,11 @@ class Normalization extends ComponentBase {
     }
 
     public update(): void {
-
-        var params: NormalizationComponentPutParams = {
-            component_type: string,
-            component_id: number,
-            op_type: string
-        };
-
+        var params = Normalization.generate_request();
         this.put_request(params);
     }
 
-    public put_request(params: NormalizationComponentPutParams) {
+    public put_request(params: NormalizationRequestParams) {
 
         this.column_type = params.component_type;
         this.column_idx = params.component_id;
@@ -84,7 +78,8 @@ class Normalization extends ComponentBase {
 
     private click_edit(e): void {
         ComponentController.activate_menubar("normalization");
-        ViewController.description_normalization();
+        //ViewController.description_normalization();
+        Normalization.generate_detail_view();
         this.activate_edit_btn();
     }
 
@@ -93,5 +88,26 @@ class Normalization extends ComponentBase {
         Normalization.edit_btn.removeClass("disabled");
         Normalization.edit_btn.val(this.get_id())
         Normalization.edit_btn.click(this.update.bind(this));
+    }
+
+    static generate_detail_view(): void {
+        var form_root = $("#normalization_column");
+        form_root.empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            form_root.append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
+    }
+
+    static generate_request(): NormalizationRequestParams {
+        var method = $('select#normalization_method').val();
+        var column_num = $('select#normalization_column').val();
+        var params: NormalizationRequestParams = {
+            component_type: "Column",
+            component_id: column_num,
+            op_type: method
+        };
+
+        return params;
     }
 }

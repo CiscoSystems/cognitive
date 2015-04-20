@@ -5,7 +5,6 @@ var _uploaded_file_as_arrays = [];
 
 class ViewController {
 
-    static projections: number;
     static remove_duplicates_columns: number;
 
     static svg_root: any;
@@ -45,24 +44,22 @@ class ViewController {
                 AddRow.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("add_math_fomula")) {
                 ComponentController.activate_menubar("add_math_fomula");
-                ViewController.description_formula();
+                MathFormula.generate_detail_view();
                 MathFormula.add_btn.removeClass("disabled");
                 MathFormula.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("projection")) {
                 ComponentController.activate_menubar("projection");
-                ViewController.initialize_projection_column();
-                ViewController.add_column_for_projection();
+                ColumnSelection.generate_detail_view();
                 ColumnSelection.add_btn.removeClass("disabled");
                 ColumnSelection.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("normalization")) {
                 ComponentController.activate_menubar("normalization");
-                ViewController.description_normalization();
+                Normalization.generate_detail_view();
                 Normalization.add_btn.removeClass("disabled");
                 Normalization.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("remove_column")) {
                 ComponentController.activate_menubar("remove_column");
-                ViewController.initialize_remove_duplicates_column();
-                ViewController.add_column_for_remove_duplicates();
+                RemoveDuplicates.generate_detail_view();
                 RemoveDuplicates.add_btn.removeClass("disabled");
                 RemoveDuplicates.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("remove_missing_value")) {
@@ -75,12 +72,12 @@ class ViewController {
                 MathFormula.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("metadata")) {
                 ComponentController.activate_menubar("metadata");
-                ViewController.description_metadata();
+                MetadataEditor.generate_detail_view();
                 MetadataEditor.add_btn.removeClass("disabled");
                 MetadataEditor.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("machine_learning")) {
                 ComponentController.activate_menubar("machine_learning");
-                ViewController.description_machine_learning();
+                MachineLearning.generate_detail_view();
                 MachineLearning.add_btn.removeClass("disabled");
                 MachineLearning.edit_btn.addClass("disabled");
             }
@@ -119,7 +116,7 @@ class ViewController {
             ViewController.run();
         });
 
-        $('.projection.plus-bottom').click(ViewController.add_column_for_projection);
+        $('.projection.plus-bottom').click(ColumnSelection.append_column);
         $('.remove_duplicates.plus-bottom').click(ViewController.add_column_for_remove_duplicates);
 
         $('#inputFile').change(function(evt) {
@@ -181,46 +178,6 @@ class ViewController {
             root_drag_frag_reverse = 0;
             $("#mouse-select-range-" + previous_line_id).remove();
         }, false);
-    }
-
-    static initialize_projection_column(): void {
-        $('.form-group.projection_form').empty();
-        ViewController.projections = 0;
-    }
-
-    static add_column_for_projection(): void {
-        if (_uploaded_file_as_text == ""){ return; }
-        var column_names = _uploaded_file_as_arrays[0];
-        var option_string = "";
-        for (var i=0; i < column_names.length; i++ ){
-            option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
-        }
-        $('.form-group.projection_form').append(
-            '<select class="form-control projection_selects _selects_'
-            +ViewController.projections+'">'+option_string+'</select>'
-        );
-
-        ViewController.projections++;
-    }
-
-    static initialize_remove_duplicates_column():void {
-        $('.form-group.remove_duplicates_form').empty();
-        ViewController.remove_duplicates_columns = 0;
-    }
-
-    static add_column_for_remove_duplicates(): void {
-        if (_uploaded_file_as_text == ""){ return;}
-        var column_names = _uploaded_file_as_arrays[0];
-        var option_string = "";
-        for (var i=0; i < column_names.length; i++ ){
-            option_string += '<option value="'+i+'">'+ column_names[i] +'</option>'
-        }
-        $('.form-group.remove_duplicates_form').append(
-            '<select class="form-control remove_duplicates_selects _selects_'
-            +ViewController.remove_duplicates_columns+'">'+option_string+'</select>'
-        );
-
-        ViewController.remove_duplicates_columns++;
     }
 
     static run(): void {
@@ -285,58 +242,6 @@ class ViewController {
         $('#cboxBottomLeft').remove();
         $('#cboxBottomRight').remove();
         setTimeout("$.colorbox.close()", 700);
-    }
-
-    static description_addrow(): void {
-        $(".add_row_form").empty();
-        _uploaded_file_as_arrays[0];
-        console.log(_uploaded_file_as_arrays[0]);
-        if (_uploaded_file_as_text == "") { return; }
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            $(".add_row_form").append('<li class="add_row column_' + i + '" style="padding-top: 10px"></li>');
-            $(".add_row_form li.column_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '<p/>');
-            $("<input/>", {
-                "class": "add_row form-control floating-label" + " _column_" + i,
-                id: "_column_" + i,
-                type: "text",
-                placeholder: "value"
-            }).appendTo(".add_row_form li.column_" + i);
-        }
-    }
-
-    static description_formula(): void {
-        $("#formula_column").empty();
-        if (_uploaded_file_as_text == "") { return; }
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            $("#formula_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
-        }
-    }
-
-    static description_normalization(): void {
-        $("#normalization_column").empty();
-        if (_uploaded_file_as_text == "") { return; }
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            $("#normalization_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
-        }
-    }
-
-    static description_machine_learning(): void {
-        $('.machine_learning_target').empty();
-        if (_uploaded_file_as_text == "") { return; }
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            $('.machine_learning_target').append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
-        }
-    }
-
-    static description_metadata(): void {
-        $("#metadata_discriptions").empty();
-        if (_uploaded_file_as_text == "") { return; }
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            $("#metadata_discriptions").append('<div class="row meta_' + i + '" style="padding-top:25px;"></div>');
-            $("#metadata_discriptions div.meta_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '</p>');
-            $("#metadata_discriptions div.meta_" + i)
-                .append('<select class="form-control metadata column' + i + '" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
-        }
     }
 }
 
@@ -421,128 +326,50 @@ class ComponentController {
 
     static create_add_row_component(): void {
         var node = new AddRow();
-        var request_text = "[";
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
-        }
-
-        request_text = request_text.slice(0, request_text.length - 1);
-        request_text += "]";
-
-        var params: AddRowComponentCreateParams = {
-            values: request_text
-        };
-
-        node.create_request(params)
+        var params =AddRow.generate_request();
+        node.create_request(params);
     }
 
     static create_math_formula_component(): void {
         var node = new MathFormula();
-        var method = $('select#formula_method').val();
-        var column_num = $('select#formula_column').val();
-        var constant = $('#formula_constant').val();
-
-        var params: MathFormulaComponentCreateParams = {
-            component_type: "Column",
-            component_id: column_num, // should be index number
-            op_type: method, // or Sub, Mul, Div
-            op_constant: constant
-        };
-
+        var params = MathFormula.generate_request();
         node.create_request(params)
     }
 
     static create_normalization_component(): void {
         var node = new Normalization();
-        var method = $('select#normalization_method').val();
-        var column_num = $('select#normalization_column').val();
-        var params: NormalizationComponentCreateParams = {
-            component_type: "Column",
-            component_id: column_num,
-            op_type: method
-        };
-
+        var params = Normalization.generate_request();
         node.create_request(params);
     }
 
     static create_projection_component(): void {
         /* TODO: [refactor] projection to column_selection */
         var node = new ColumnSelection();
-        var len = $('.projection_selects').length;
-        var projection_columns = "[";
-
-        for (var i = 0; i < len; i++) {
-            console.log($('.projection_selects._selects_' + i).val());
-            projection_columns += $('.projection_selects._selects_' + i).val() + ","
-        }
-
-        projection_columns = projection_columns.slice(0, projection_columns.length - 1);
-        projection_columns += "]";
-
-        var params: ColumnSelection = {
-            component_id: projection_columns
-        };
-
+        var params = ColumnSelection.generate_request();
         node.create_request(params);
     }
 
     static create_remove_duplicates_component(): void {
         var node = new RemoveDuplicates();
-        var len = $('.remove_duplicates_selects').length;
-        var remove_duplicates_columns = "[";
-
-        for (var i = 0; i < len; i++) {
-            console.log($('.remove_duplicates_selects._selects_' + i).val());
-            remove_duplicates_columns += $('.remove_duplicates_selects._selects_' + i).val() + ","
-        }
-        remove_duplicates_columns = remove_duplicates_columns.slice(0, remove_duplicates_columns.length - 1);
-        remove_duplicates_columns += "]";
-
-        RemoveDuplicatesComponentCreateParams = {
-            component_id: remove_duplicates_columns
-        };
-
+        var params = RemoveDuplicates.generate_request();
         node.create_request(params);
     }
 
     static create_remove_missing_value_component(): void {
         var node = new RemoveMissingValues();
-        var method = $('#remove_missing_value_method').val();
-        var params: RemoveMissingValuesComponentCreateParams = {
-            op_action: method //"Replace_mean" or Drop_row
-        };
-
+        var params = RemoveMissingValues.generate_request();
         node.create_request(params);
     }
 
     static create_metadata_component(): void {
         var node = new MetadataEditor();
-        var metadata_types = "[";
-        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            console.log($(".metadata.column" + i).val());
-            metadata_types += "\"" + $(".metadata.column" + i).val() + "\",";
-        }
-        metadata_types = metadata_types.slice(0, metadata_types.length - 1);
-        metadata_types += "]";
-
-        var params: MetadataEditorComponentCreateParams = {
-            column_type: metadata_types
-        };
-
+        var params = MetadataEditor.generate_request();
         node.create_request(params);
     }
 
     static create_machine_learning_component(): void {
         var node = new MachineLearning();
-        var argo = $('.machine_learning_select').val();
-        var target = $('.machine_learning_target').val();
-        var parcentage = $('.machine_learning_target_parcentage').val();
-        var params: MachineLearningComponentCreateParams = {
-            model_type: argo,
-            train_data_percentage: parcentage,
-            target_column: target
-        };
-
+        var params = MachineLearning.generate_request();
         node.create_request(params);
     }
 }

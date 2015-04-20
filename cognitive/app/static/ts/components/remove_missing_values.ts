@@ -4,7 +4,7 @@ interface RemoveMissingValuesComponentCreateParams {
 
 //enum MissValueOperation {ReplaceMean, DropRow};
 
-interface RemoveMissingValuesComponentPutParams {
+interface RemoveMissingValuesRequestParams {
     op_action: string; //"Replace_mean" or Drop_row
 }
 
@@ -42,15 +42,11 @@ class RemoveMissingValues extends ComponentBase {
     }
 
     public update(): void {
-
-        var params: RemoveMissingValuesComponentPutParam = {
-            op_action: string
-        };
-
+        var params = RemoveMissingValues.generate_request();
         this.put_request(params);
     }
 
-    public put_request(params: RemoveMissingValuesComponentPutParams) {
+    public put_request(params: RemoveMissingValuesRequestParams) {
 
         this.operation = params.op_action;
 
@@ -75,7 +71,15 @@ class RemoveMissingValues extends ComponentBase {
     private activate_edit_btn(): void {
         RemoveMissingValues.add_btn.addClass("disabled");
         RemoveMissingValues.edit_btn.removeClass("disabled");
-        RemoveMissingValues.edit_btn.val(this.get_id())
+        RemoveMissingValues.edit_btn.val(this.get_id());
         RemoveDuplicates.edit_btn.click(this.update.bind(this));
+    }
+
+    static generate_request(): RemoveMissingValuesRequestParams {
+        var method = $('#remove_missing_value_method').val();
+        var params: RemoveMissingValuesRequestParams = {
+            op_action: method //"Replace_mean" or Drop_row
+        };
+        return params;
     }
 }

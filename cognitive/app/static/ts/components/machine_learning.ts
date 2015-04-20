@@ -4,7 +4,7 @@ interface MachineLearningComponentCreateParams {
     target_column;
 }
 
-interface MachineLearningComponentPutParams {
+interface MachineLearningRequestParams {
     model_type;
     train_data_percentage;
     target_column;
@@ -50,17 +50,11 @@ class MachineLearning extends ComponentBase {
     }
 
     public update(): void {
-
-        var params: MachineLearningComponentPutParams = {
-            model_type: a,
-            train_data_percentage: a,
-            target_column: a
-        };
-
+        var params = MachineLearning.generate_request();
         this.put_request(params);
     }
 
-    public put_request(params: MachineLearningComponentPutParams) {
+    public put_request(params: MachineLearningRequestParams) {
 
         this.model_type = params.model_type;
         this.train_data_percentage = params.train_data_percentage;
@@ -91,5 +85,27 @@ class MachineLearning extends ComponentBase {
         MachineLearning.edit_btn.removeClass("disabled");
         MachineLearning.edit_btn.val(this.get_id())
         MachineLearning.edit_btn.click(this.update.bind(this));
+    }
+
+    static generate_detail_view(): void {
+        var form_root = $('.machine_learning_target');
+        form_root.empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            form_root.append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+        }
+    }
+
+    static generate_request():MachineLearningRequestParams {
+        var argo = $('.machine_learning_select').val();
+        var target = $('.machine_learning_target').val();
+        var parcentage = $('.machine_learning_target_parcentage').val();
+        var params: MachineLearningRequestParams = {
+            model_type: argo,
+            train_data_percentage: parcentage,
+            target_column: target
+        };
+
+        return params;
     }
 }

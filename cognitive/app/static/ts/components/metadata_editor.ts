@@ -2,7 +2,7 @@ interface MetadataEditorComponentCreateParams {
     column_type;
 }
 
-interface MetadataEditorComponentPutParams {
+interface MetadataEditorRequestParams {
     column_type;
 }
 
@@ -40,15 +40,11 @@ class MetadataEditor extends ComponentBase {
     }
 
     public update(): void {
-
-        var params:  MetadataEditorComponentPutParams = {
-            column_type: a
-        };
-
+        var params = MetadataEditor.generate_request()
         this.put_request(params);
     }
 
-    public put_request(params: MetadataEditorComponentPutParams) {
+    public put_request(params: MetadataEditorRequestParams) {
 
         this.column_type = params.column_type;
 
@@ -67,14 +63,42 @@ class MetadataEditor extends ComponentBase {
 
     private click_edit(e): void {
         ComponentController.activate_menubar("metadata");
-        ViewController.description_metadata();
+        //ViewController.description_metadata();
+        MachineLearning.generate_detail_view();
         this.activate_edit_btn();
     }
 
     private activate_edit_btn(): void {
         MetadataEditor.add_btn.addClass("disabled");
         MetadataEditor.edit_btn.removeClass("disabled");
-        MetadataEditor.edit_btn.val(this.get_id())
+        MetadataEditor.edit_btn.val(this.get_id());
         MetadataEditor.edit_btn.click(this.update.bind(this));
+    }
+
+    static generate_detail_view(): void {
+        var form_root = $("#metadata_discriptions");
+        form_root.empty();
+        if (_uploaded_file_as_text == "") { return; }
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            form_root.append('<div class="row meta_' + i + '" style="padding-top:25px;"></div>');
+            $("#metadata_discriptions div.meta_" + i).append('<p>' + _uploaded_file_as_arrays[0][i] + '</p>');
+            $("#metadata_discriptions div.meta_" + i)
+                .append('<select class="form-control metadata column' + i + '" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
+        }
+    }
+
+    static generate_request():MetadataEditorRequestParams {
+        var metadata_types = "[";
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            metadata_types += "\"" + $(".metadata.column" + i).val() + "\",";
+        }
+        metadata_types = metadata_types.slice(0, metadata_types.length - 1);
+        metadata_types += "]";
+
+        var params: MetadataEditorRequestParams = {
+            column_type: metadata_types
+        };
+
+        return params;
     }
 }

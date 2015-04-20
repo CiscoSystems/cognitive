@@ -2,7 +2,7 @@ interface AddRowComponentCreateParams {
     values: string;
 }
 
-interface AddRowComponentPutParams {
+interface AddRowRequestParams {
     values: string;
 }
 
@@ -44,20 +44,14 @@ class AddRow extends ComponentBase {
 
         var api_url = '/api/v1' + '/operations/row/';
         ComponentBase._send_request(api_url, "POST", json_data, this);
-
-        this.generate_detail_view();
     }
 
     public update(): void {
-
-        var params:  AddRowComponentPutParams = {
-            values: string
-        };
-
+        var params = AddRow.generate_request();
         this.put_request(params);
     }
 
-    public put_request(params: AddRowComponentPutParams) {
+    public put_request(params: AddRowRequestParams) {
 
         this.values = params.values;
 
@@ -110,7 +104,22 @@ class AddRow extends ComponentBase {
     private activate_edit_btn(): void {
         AddRow.add_btn.addClass("disabled");
         AddRow.edit_btn.removeClass("disabled");
-        AddRow.edit_btn.val(this.get_id())
+        AddRow.edit_btn.val(this.get_id());
         AddRow.edit_btn.click(this.update.bind(this));
     }
+
+    static generate_request(): AddRowRequestParams {
+        var request_text = "[";
+        for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
+            request_text += "\"" + $(".add_row._column_" + i).val() + "\",";
+        }
+        request_text = request_text.slice(0, request_text.length - 1);
+        request_text += "]";
+
+        var params: AddRowRequestParams = {
+            values: request_text
+        };
+        return params;
+    }
+
 }

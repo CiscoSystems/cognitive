@@ -3,7 +3,7 @@ interface InputDataComponentCreateParams {
     text_data: string;
 }
 
-interface InputDataComponentPutParams {
+interface InputDataRequestParams {
     file_name: string;
     text_data: string;
 }
@@ -46,7 +46,7 @@ class InputData extends ComponentBase {
     }
     public update(): void {
 
-        var params: InputDataComponentPutParams = {
+        var params: InputDataRequestParams = {
             file_name: string,
             text_data: string
         };
@@ -54,7 +54,7 @@ class InputData extends ComponentBase {
         this.put_request(params);
     }
 
-    public put_request(params: InputDataComponentPutParams) {
+    public put_request(params: InputDataRequestParams) {
 
         this.file_name = params.file_name;
         this.text_data = params.text_data;
@@ -83,7 +83,7 @@ class InputData extends ComponentBase {
     private activate_edit_btn(): void {
         InputData.add_btn.addClass("disabled");
         InputData.edit_btn.removeClass("disabled");
-        InputData.edit_btn.val(this.get_id())
+        InputData.edit_btn.val(this.get_id());
         InputData.edit_btn.click(this.update.bind(this));
     }
 }
