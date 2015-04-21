@@ -35,51 +35,32 @@ class ViewController {
                 ComponentController.activate_menubar('introduction');
             } else if ($(this).hasClass("data_input")) {
                 ComponentController.activate_menubar('data_input');
-                InputData.add_btn.removeClass("disabled");
-                InputData.edit_btn.addClass("disabled");
+                InputData.generate_detail_view();
             } else if ($(this).hasClass("add_row")) {
                 ComponentController.activate_menubar("add_row");
                 AddRow.generate_detail_view();
-                AddRow.add_btn.removeClass("disabled");
-                AddRow.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("add_math_fomula")) {
                 ComponentController.activate_menubar("add_math_fomula");
                 MathFormula.generate_detail_view();
-                MathFormula.add_btn.removeClass("disabled");
-                MathFormula.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("projection")) {
                 ComponentController.activate_menubar("projection");
                 ColumnSelection.generate_detail_view();
-                ColumnSelection.add_btn.removeClass("disabled");
-                ColumnSelection.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("normalization")) {
                 ComponentController.activate_menubar("normalization");
                 Normalization.generate_detail_view();
-                Normalization.add_btn.removeClass("disabled");
-                Normalization.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("remove_column")) {
                 ComponentController.activate_menubar("remove_column");
                 RemoveDuplicates.generate_detail_view();
-                RemoveDuplicates.add_btn.removeClass("disabled");
-                RemoveDuplicates.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("remove_missing_value")) {
                 ComponentController.activate_menubar("remove_missing_value");
-                RemoveMissingValues.add_btn.removeClass("disabled");
-                RemoveMissingValues.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("transform")) {
                 ComponentController.activate_menubar("transform");
-                MathFormula.add_btn.removeClass("disabled");
-                MathFormula.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("metadata")) {
                 ComponentController.activate_menubar("metadata");
                 MetadataEditor.generate_detail_view();
-                MetadataEditor.add_btn.removeClass("disabled");
-                MetadataEditor.edit_btn.addClass("disabled");
             } else if ($(this).hasClass("machine_learning")) {
                 ComponentController.activate_menubar("machine_learning");
                 MachineLearning.generate_detail_view();
-                MachineLearning.add_btn.removeClass("disabled");
-                MachineLearning.edit_btn.addClass("disabled");
             }
         });
 

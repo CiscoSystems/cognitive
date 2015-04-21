@@ -17,7 +17,7 @@ class RemoveDuplicates extends ComponentBase {
     constructor () {
 
         RemoveDuplicates.add_btn = $("#remove_dupplicates-add-btn");
-        RemoveDuplicates.edit_btn = $("#remove_dupplicates-edit-btn")
+        RemoveDuplicates.edit_btn = $("#remove_dupplicates-edit-btn");
 
         super({
             "name": "Remove Duplicates",
@@ -70,7 +70,7 @@ class RemoveDuplicates extends ComponentBase {
     private activate_edit_btn(): void {
         RemoveDuplicates.add_btn.addClass("disabled");
         RemoveDuplicates.edit_btn.removeClass("disabled");
-        RemoveDuplicates.edit_btn.val(this.get_id())
+        RemoveDuplicates.edit_btn.val(this.get_id());
         RemoveDuplicates.edit_btn.click(this.update.bind(this));
     }
 
@@ -90,6 +90,9 @@ class RemoveDuplicates extends ComponentBase {
         );
 
         ViewController.remove_duplicates_columns++;
+
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
     }
 
     static generate_request(): RemoveDuplicatesRequestParams {

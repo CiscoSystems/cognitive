@@ -95,6 +95,8 @@ class MachineLearning extends ComponentBase {
         for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
             form_root.append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
         }
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
     }
 
     static generate_request():MachineLearningRequestParams {

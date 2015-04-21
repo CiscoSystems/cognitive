@@ -87,6 +87,7 @@ class AddRow extends ComponentBase {
                 placeholder: "value"
             }).appendTo("#add-row-column-" + i);
         }
+        super.generate_detail_view();
     }
 
     static delete_detail_view(): void {

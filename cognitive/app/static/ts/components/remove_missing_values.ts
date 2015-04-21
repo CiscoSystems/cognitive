@@ -73,7 +73,7 @@ class RemoveMissingValues extends ComponentBase {
         RemoveMissingValues.add_btn.addClass("disabled");
         RemoveMissingValues.edit_btn.removeClass("disabled");
         RemoveMissingValues.edit_btn.val(this.get_id());
-        RemoveDuplicates.edit_btn.click(this.update.bind(this));
+        RemoveMissingValues.edit_btn.click(this.update.bind(this));
     }
 
     static generate_request(): RemoveMissingValuesRequestParams {

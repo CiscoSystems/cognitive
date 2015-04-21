@@ -105,17 +105,21 @@ class MathFormula extends ComponentBase {
     private activate_edit_btn(): void {
         MathFormula.add_btn.addClass("disabled");
         MathFormula.edit_btn.removeClass("disabled");
-        MathFormula.edit_btn.val(this.get_id())
+        MathFormula.edit_btn.val(this.get_id());
 
         MathFormula.edit_btn.click(this.update.bind(this));
     }
 
     static generate_detail_view(): void {
-        $("#formula_column").empty();
+        var form_root = $("#formula_column");
+        form_root.empty();
         if (_uploaded_file_as_text == "") { return; }
         for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
-            $("#formula_column").append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
+            form_root.append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
         }
+
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
     }
 
     static generate_request(): MathFormulaRequestParams {

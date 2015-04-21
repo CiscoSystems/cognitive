@@ -87,4 +87,17 @@ class InputData extends ComponentBase {
         InputData.edit_btn.val(this.get_id());
         InputData.edit_btn.click(this.update.bind(this));
     }
+
+    static generate_detail_view(): void {
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
+    }
+
+    static get_add_btn() {
+        return this.add_btn;
+    }
+
+    static get_edit_btn() {
+        return this.edit_btn;
+    }
 }

@@ -80,7 +80,7 @@ class Normalization extends ComponentBase {
     private click_edit(e): void {
         ComponentController.activate_menubar("normalization");
         //ViewController.description_normalization();
-        Normalization.generate_detail_view();
+        this.generate_detail_view();
         this.activate_edit_btn();
     }
 
@@ -98,6 +98,9 @@ class Normalization extends ComponentBase {
         for (var i = 0; i < _uploaded_file_as_arrays[0].length; i++) {
             form_root.append('<option value="' + i + '">' + _uploaded_file_as_arrays[0][i] + '</option>');
         }
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
+
     }
 
     static generate_request(): NormalizationRequestParams {

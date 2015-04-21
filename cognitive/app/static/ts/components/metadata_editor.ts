@@ -65,7 +65,7 @@ class MetadataEditor extends ComponentBase {
     private click_edit(e): void {
         ComponentController.activate_menubar("metadata");
         //ViewController.description_metadata();
-        MachineLearning.generate_detail_view();
+        this.generate_detail_view();
         this.activate_edit_btn();
     }
 
@@ -86,6 +86,9 @@ class MetadataEditor extends ComponentBase {
             $("#metadata_discriptions div.meta_" + i)
                 .append('<select class="form-control metadata column' + i + '" id="formula_method select"><option>string</option><option>integer</option><option>categorical</option></select>');
         }
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
+
     }
 
     static generate_request():MetadataEditorRequestParams {

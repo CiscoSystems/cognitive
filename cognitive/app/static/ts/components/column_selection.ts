@@ -107,6 +107,9 @@ class ColumnSelection extends ComponentBase {
         );
 
         ColumnSelection.projections++;
+
+        this.get_add_btn().removeClass("disabled");
+        this.get_edit_btn().addClass("disabled");
     }
 
     static generate_request(): ColumnSelectionRequestParams {

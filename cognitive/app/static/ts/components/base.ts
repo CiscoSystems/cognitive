@@ -17,6 +17,8 @@ class ComponentBase {
     private avilable_output_links: number;
     private enter_path;
     private leave_path;
+    static add_btn: any;
+    static edit_btn: any;
 
     static function_layer: any;
     static component_layer: any;
@@ -181,7 +183,7 @@ class ComponentBase {
         console.log("click_edit function is not implemented");
     }
 
-    public update(){
+    public update(): void {
         var id = this.get_id();
         var node =  $("#node-group-" +id+ " > .node ");
         node.attr("class", node.attr("class").replace(/processed/g, ""));
@@ -410,7 +412,12 @@ class ComponentBase {
         return this.leave_path;
     }
 
-    static generate_detail(){
-        console.log("generate_detail is not implemented.");
+
+    static get_add_btn() {
+        return this.add_btn
+    }
+
+    static get_edit_btn() {
+        return this.edit_btn;
     }
 }
