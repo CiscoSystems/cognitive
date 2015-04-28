@@ -26,7 +26,6 @@ def index(request):
 def login(request):
     messages = []
     if request.method == "POST":
-        print request.POST
         username_or_email = request.POST.get("username_or_email")
         password = request.POST.get("password")
         user = User.authenticate(
@@ -48,8 +47,8 @@ def login(request):
 
 
 def join(request):
+    messages = []
     if request.method == "POST":
-        print request.POST
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get('email')
@@ -58,9 +57,14 @@ def join(request):
                     email=email, full_name=username, token=token)
         try:
             user.save()
-            request.session["cognitive-user-id"] = user.id
-            request.session["cognitive-user-name"] = user.username
-            request.session["cognitive-user-token"] = user.token
+            request.session["cognitive"] = {}
+            request.session["cognitive"]["user"] = {}
+            request.session["cognitive"]["user"]["id"] = user.id
+            request.session["cognitive"]["user"]["name"] = user.username
+            request.session["cognitive"]["user"]["token"] = user.token
+            msg = {"message": "User is Created Successfully", "tag": "success"}
+            messages.append(msg)
+            return redirect('/whiteboard', {"messages": ""})
         except Exception:
             err_msg = "User is not created"
 
