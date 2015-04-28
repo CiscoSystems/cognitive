@@ -12,21 +12,21 @@
             %b{style:"color:steelblue"}
               %i.fa.fa-tag
               Create Your Account
-        %form
+        %form{method:"POST"}
+          {% csrf_token %}
           .form-group
             %label{for:"username"} Username
-            %input#username.form-control{type:"text"}
+            %input#username.form-control{type:"text", name:"username"}
             %span This will be displayed for other user.
           .form-group
             %label{for:"email"} Email
-            %input#email.form-control{type:"email"}
+            %input#email.form-control{type:"email", name:"email"}
             %span All information will be sent to this mail address.
           .form-group
             %label{for:"password"} Password
-            %input#password.form-control{type:"password"}
+            %input#password.form-control{type:"password", name:"password"}
             %span User have to use at least one lowercase letter, one number, and seven characters.
           .form-group
             %label{for:"password-confirm"} Confirm Password
             %input#password-confirm.form-control{type:"password"}
-
           %button.btn.btn-default{type:"submit", style:"margin-top:20px;"} Create Account

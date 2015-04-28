@@ -301,3 +301,7 @@ tr.result_row:hover {
     height: 100%;
     background:#3D3D3D;
 }
+
+#footer {
+    display: none;
+}

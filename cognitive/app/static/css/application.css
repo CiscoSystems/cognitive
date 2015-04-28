@@ -52,3 +52,11 @@ a:hover {
 .left {
     float: left;
 }
+
+#footer {
+    height: 40px;
+    background: #686869;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}

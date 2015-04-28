@@ -64,10 +64,40 @@ class Data_operation_type(models.Model):
 class User(models.Model):
     username = models.CharField(max_length=50)
     full_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    token = models.CharField(max_length=100)
     max_experiments = models.IntegerField(default=50)
 
     def __str__(self):
         return self.username
+
+    @classmethod
+    def authenticate(cls, username_or_email, password):
+        try:
+            user = User.objects.get(username=username_or_email)
+        except:
+            try:
+                user = User.objects.get(email=username_or_email)
+            except:
+                return None
+        if user.confirm_password(password) == 0:
+            return None
+        return user
+
+    def confirm_password(self, password):
+        # TODO: password must be encrypted
+        if self.password == password:
+            return 1
+        else:
+            return 0
+
+    # TODO: password encryption
+
+    @classmethod
+    def generate_token(cls):
+        # TODO: must  generate token which has enough length and unique
+        return "aaaaaa"
 
 
 class Experiment(models.Model):

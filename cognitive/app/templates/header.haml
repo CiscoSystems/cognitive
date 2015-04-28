@@ -5,9 +5,23 @@
       Cognitive
   %li{style:"font-size:13pt; height:100%; float:left;margin-left:30px;padding-top:10px;"}
     %a{href: "/whiteboard"} WhiteBoard
-  %li.right{style:"font-size:13pt height:100%; margin-right:30px;padding-top:13px;"}
 
+  %li.right{style:"font-size:13pt height:100%; margin-right:30px;padding-top:13px;"}
+    {% if request.session.cognitive %}
+
+    .dropdown
+      %span#user-dropdown-menu.dropdown-toggle{type:"button",data-toggle:"dropdown", aria-expanded:"true"}
+        %i.fa.fa-user
+        {{request.session.cognitive.user.name}}
+        %span.caret
+      %ul.dropdown-menu
+        %li{role:"presentation"}
+          %a{role:"menuitem", tabindex:"10", href:"/logout"}
+            Log out
+
+    {% else %}
     %a{href: "/join"} Sign up
     |
     %a{href: "/login"} Sign in
+    {% endif %}
 
