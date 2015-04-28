@@ -24,11 +24,6 @@ body {
     bottom: 0;
 }
 
-#footer {
-    margin-top: -45px;
-    background: white;
-}
-
 .zero_padding_margin {
     margin: 0;
     padding: 0;

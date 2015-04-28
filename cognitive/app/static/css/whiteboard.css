@@ -79,7 +79,7 @@ li.component {
     width: 30%;
     position: fixed;
     left: 275px;
-    top:45px;
+    top:63px;
     background:white;
     display:none;
     height: 100%;
@@ -87,6 +87,21 @@ li.component {
     padding: 5px 0 0px;
     max-width: 600px;
 
+}
+
+.whiteboard-top-menu{
+    height:18px;
+    width:100%;
+    position:absolute;
+    top:0px;
+}
+
+.whiteboard-top-menu-wrapper{
+    margin-left:275px;
+    height:100%;
+    padding-top:0;
+    padding-bottom:0;
+    border-bottom: solid 1px #cccccc;
 }
 
 .content {
@@ -127,7 +142,7 @@ li.component {
 #whiteboard-right-menu {
     position:fixed;
     right:0;
-    top:45px;
+    top:63px;
     height:100%;
     width:60px;
     float:right;
