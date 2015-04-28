@@ -21,6 +21,16 @@ def index(request):
         'index.haml', context_instance=RequestContext(request))
 
 
+def login(request):
+    return render_to_response(
+        'login.haml', context_instance=RequestContext(request))
+
+
+def join(request):
+    return render_to_response(
+        'join.haml', context_instance=RequestContext(request))
+
+
 def whiteboard(request):
     return render_to_response(
         'whiteboard.haml', context_instance=RequestContext(request))

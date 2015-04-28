@@ -1,0 +1,26 @@
+- extends 'base.haml'
+
+- block 'extrahead'
+
+  - load staticfiles
+  %link{href: "{{STATIC_URL}}css/login.css", rel: "stylesheet"}
+
+- block 'contents'
+  #content-wrapper{style:"margin:0 auto;"}
+    .centering{style:"width:500px;height:100%; margin:auto;"}
+      %h1 Login Cognitive
+      .form-wrapper{style:"margin-top:20px;padding-left:50px;padding-right:50px; padding-top:35px; padding-bottom: 35px; border: solid 1px #dddddd;"}
+        %form
+          .form-group
+            %label{for:"username"} Username or Email
+            %input#username.form-control{type:"text", style:" padding-left:2px;" }
+          .form-group
+            %label{for:"password"}
+              Password (
+              %a Forgot Password?
+              )
+            %input#password.form-control{type:"password", style:"padding-left:2px;"}
+
+          %button.btn.btn-default{type:"submit", style:"margin-top:5px;"} Login
+
+

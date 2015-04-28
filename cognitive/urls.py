@@ -20,6 +20,8 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name="home"),
+    url(r'^login$', views.login, name="login"),
+    url(r'^join$', views.join, name="join"),
     url(r'^whiteboard$', views.whiteboard, name="whiteboard"),
     url(r'^api/v1/', include(urls)),
     url(r'^docs/', include('rest_framework_swagger.urls')),
