@@ -1,13 +1,32 @@
 - extends 'base.haml'
 
 - block 'contents'
-  %h1 Join Cognitive
-  %h3 The Best Way for Machine Learning in Your Hand
-  %form
-    %table
-      %tr
-        %td
-          Username or Email
-        %td
-          %input{type:"text"}
+  .container
+    .center-block{style:"width:600px;"}
+      %h1 Join Cognitive
+      %h4 The Best Way for Machine Learning in Your Hand
 
+      .content-wrapper{style:"padding-left: 40px;padding-right: 40px;"}
+        .content-title{style:"padding-bottom:10px;padding-top:5px;"}
+          %h3
+            %b{style:"color:steelblue"}
+              %i.fa.fa-tag
+              Create Your Account
+        %form
+          .form-group
+            %label{for:"username"} Username
+            %input#username.form-control{type:"text"}
+            %span This will be displayed for other user.
+          .form-group
+            %label{for:"email"} Email
+            %input#email.form-control{type:"email"}
+            %span All information will be sent to this mail address.
+          .form-group
+            %label{for:"password"} Password
+            %input#password.form-control{type:"password"}
+            %span User have to use at least one lowercase letter, one number, and seven characters.
+          .form-group
+            %label{for:"password-confirm"} Confirm Password
+            %input#password-confirm.form-control{type:"password"}
+
+          %button.btn.btn-default{type:"submit", style:"margin-top:20px;"} Create Account
