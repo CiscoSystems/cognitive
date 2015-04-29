@@ -178,11 +178,25 @@ class ViewController {
                 data: request,
                 success: function(result) {
                     console.log(result);
+                    $("#template-whiteboard-name")[0].innerHTML = result["name"];
+                    template = $("#template-whiteboard-tab").clone();
+                    template.css("display", "block");
+                    $("#whiteboard-nav-tabs").append(template);
                 },
                 error: function(result) {
                     alert("To Create Whiteboard, You Need to Login")
                 }
             });
+        });
+
+        $("#open-experiment").click(function () {
+            var opts = $("#user-whiteboards");
+            var id = opts.val();
+            var name = opts.find("> option[value=" + id + "]")[0].innerHTML;
+            $("#template-whiteboard-name")[0].innerHTML = name;
+            template = $("#template-whiteboard-tab").clone();
+            template.css("display", "block");
+            $("#whiteboard-nav-tabs").append(template);
         });
 
         $("#plusWhiteboard").click(function () {

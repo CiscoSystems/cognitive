@@ -34,17 +34,19 @@
     .whiteboard-top-menu-wrapper
       -# this will be the tab ui which compose multipble whiteboard
       -#.whiteboard-tab.left{style:"height:17px; width:200px; border-top: solid 1px steelblue; border-right: solid 1px steelblue; margin-top:0px;"}
-
-      %ul.nav.nav-tabs{style:"height:18px;"}
-        %li{role:"presentation", style:"height:18px; padding:0; margin:0;"}
-          %a{href:"#", style:"height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0;"}
+      %ul#whiteboard-nav-tabs.nav.nav-tabs{style:"height:18px; background: steelblue;"}
+        %li{role:"presentation",style:"height:18px;padding:0; margin:0;"}
+          #plusWhiteboard{style:"padding-left: 2px;height:17px; width:25px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;background: steelblue;", data-toggle:"modal", data-target:"#plusWhiteboardModal"}
+            %i.fa.fa-plus{style:"margin-top:1px; margin-left:4px; color:white"}
+        %li.active{role:"presentation", style:"height:18px; padding:0; margin:0;"}
+          %a{href:"#", style:"font-size:10pt;height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0;background:white; color:steelblue;"}
+            %i.fa.fa-file-o
             Untitled
-        %li{role:"presentation",style:"height:18px;padding:0; margin:0;"}
-          %a{href:"#", style:"height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0;"}
-            Whiteboard-A
-        %li{role:"presentation",style:"height:18px;padding:0; margin:0;"}
-          #plusWhiteboard{style:"padding-left: 2px;height:17px; width:25px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;", data-toggle:"modal", data-target:"#plusWhiteboardModal"}
-            %i.fa.fa-plus{style:"margin-top:1px; margin-left:4px; color:steelblue"}
+        %li#template-whiteboard-tab{role:"presentation",style:"height:18px;padding:0; margin-left:1px;border-bottom: solid 1px #cccccc; display:none"}
+          %a{href:"#", style:"font-size:9pt; height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0; color:black; background:#DFDFDF; border-bottom: solid 1px #cccccc;"}
+            %i.fa.fa-file-o
+            %span#template-whiteboard-name Whiteboard-A
+
 
       #plusWhiteboardModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
         .modal-dialog
@@ -79,15 +81,15 @@
 
 
 
-  .whiteboard-option{style:"position:fixed; top:63px; right:60px;height:50px;width:300px;"}
-    .whiteboard-option-wrapper{style:"padding-top:13px;"}
-      %ul{style:"list-style-type:none;"}
-        %li.left
-          %input.icheck{type:"radio", name:"backend-environment"}
-          Storm
-        %li.left{style:"margin-left: 20px;"}
-          %input{type:"radio", name:"backend-environment"}
-          Local
+  -#.whiteboard-option{style:"position:fixed; top:63px; right:60px;height:50px;width:300px;"}
+  -#  .whiteboard-option-wrapper{style:"padding-top:13px;"}
+  -#    %ul{style:"list-style-type:none;"}
+  -#      %li.left
+  -#        %input.icheck{type:"radio", name:"backend-environment"}
+  -#        Storm
+  -#      %li.left{style:"margin-left: 20px;"}
+  -#        %input{type:"radio", name:"backend-environment"}
+  -#        Local
   .whiteboard-flyout{style:"left: 55px;"}
     .flyout-wrapper
       %ul
