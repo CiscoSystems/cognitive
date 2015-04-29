@@ -5,7 +5,7 @@
   - load staticfiles
   %link{href: "{{STATIC_URL}}lib/jquery-ui/jquery-ui.css", rel: "stylesheet"}
   %link{href: "{{STATIC_URL}}css/lib/colorbox.css", rel: "stylesheet"}
-  %link{href: "{{STATIC_URL}}css/lib/material.min.css", rel: "stylesheet"}
+  -#%link{href: "{{STATIC_URL}}css/lib/material.min.css", rel: "stylesheet"}
   %link{href: "{{STATIC_URL}}css/whiteboard.css", rel: "stylesheet"}
   %link{href: "{{STATIC_URL}}css/lib/square/blue.css", rel: "stylesheet"}
 
@@ -33,9 +33,51 @@
   .whiteboard-top-menu
     .whiteboard-top-menu-wrapper
       -# this will be the tab ui which compose multipble whiteboard
-      .whiteboard-tab.left{style:"height:17px; width:200px; border-top: solid 1px steelblue; border-right: solid 1px steelblue; margin-top:0px;"}
-      .whiteboard-tab.left{style:"height:17px; width:20px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;" }
-        %i.fa.fa-plus{style:"margin-top:1px; margin-left:4px; color:steelblue"}
+      -#.whiteboard-tab.left{style:"height:17px; width:200px; border-top: solid 1px steelblue; border-right: solid 1px steelblue; margin-top:0px;"}
+
+      %ul.nav.nav-tabs{style:"height:18px;"}
+        %li{role:"presentation", style:"height:18px; padding:0; margin:0;"}
+          %a{href:"#", style:"height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0;"}
+            Untitled
+        %li{role:"presentation",style:"height:18px;padding:0; margin:0;"}
+          %a{href:"#", style:"height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0;"}
+            Whiteboard-A
+        %li{role:"presentation",style:"height:18px;padding:0; margin:0;"}
+          #plusWhiteboard{style:"padding-left: 2px;height:17px; width:25px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;", data-toggle:"modal", data-target:"#plusWhiteboardModal"}
+            %i.fa.fa-plus{style:"margin-top:1px; margin-left:4px; color:steelblue"}
+
+      #plusWhiteboardModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                %span{"aria-hidden" => "true"} &times;
+              %h4#myModalLabel.modal-title Make Whiteboard
+            .modal-body
+              .row-fluid
+                %h2 Create Whiteboard
+              .row-fluid
+                %label.left{for:"whiteboard-name"} Whiteboard Name
+                %input#whiteboard-name.form-control{type:"text", name:"name"}
+                %span.left The name of new whiteboard - each environment is separated by this.
+                .clear_float
+              .row-fluid
+                %button#create-experiment.btn.btn-primary.right{:type => "button", data-dismiss: "modal"} Create
+                .clear_float
+              .row-fluid
+                %h2 Open Whiteboard
+              .row-fluid
+                %select#user-whiteboards.form-control
+                  -#%option{value:"1"} whiteboard
+                  -#%option{value:"123"} whiteboard123
+                %span.left Open the whiteboard you saved before.
+                .clear_float
+              .row-fluid
+                %button#open-experiment.btn.btn-primary.right{:type => "button", data-dismiss: "modal"} Open
+                .clear_float
+            .modal-footer
+
+
 
   .whiteboard-option{style:"position:fixed; top:63px; right:60px;height:50px;width:300px;"}
     .whiteboard-option-wrapper{style:"padding-top:13px;"}
@@ -104,15 +146,18 @@
 
     .detail.data_input
       .content
-        %h2 
+        %h2
           %i.fa.fa-arrow-up
           Input
+
         .form-group{style:"margin-top: 30px;"}
           %label.col-lg-2.control-label{for:"inputFile"} File
           .col-lg-10
             %input#inputFile{type:"file", accept:".csv"}
-        %button#input-add-btn.btn.btn-material-indigo.add_btn.add_input.right{type:"button"} Add
-        %button#input-edit-btn.btn.btn-material-orange.edit_btn.edit_input.right.disabled{type:"button"} Edit
+
+        .col-lg-12
+          %button#input-add-btn.btn.btn-primary.add_btn.add_input.right{type:"button"} Add
+          %button#input-edit-btn.btn.btn-warning.edit_input.right.disabled{type:"button"} Edit
 
     .detail.add_row.display_none
       .content
@@ -120,8 +165,8 @@
           %i.fa.fa-list-ol
           Add Row
         .add_row_form{style:"list-style:none; font-size: 18pt;"}
-        %button#add_row-add-btn.btn.btn-material-indigo.add_btn.add_row.right{type:"button"} Add
-        %button#add_row-edit-btn.btn.btn-material-orange.edit_add_btn.edit_add_row.right.disabled{type:"button"} Edit
+        %button#add_row-add-btn.btn.btn-primary.add_btn.add_row.right{type:"button"} Add
+        %button#add_row-edit-btn.btn.btn-warning.edit_add_row.right.disabled{type:"button"} Edit
 
     .detail.add_math_fomula.display_none
       .content
@@ -146,8 +191,8 @@
           %label.col-lg-3.control-label{for:"select"} Constant
           .col-lg-9
             %input#formula_constant.form-control.floating-label#focusedInput{type:"text", placeholder: "value"}
-        %button#math_formula-add-btn.btn.btn-material-indigo.add_btn.add_math_fomula.right{type:"button"} ADD
-        %button#math_formula-edit-btn.btn.btn-material-orange.edit_btn.edit_math_fomula.right.disabled{type:"button"} Edit
+        %button#math_formula-add-btn.btn.btn-primary.add_btn.add_math_fomula.right{type:"button"} ADD
+        %button#math_formula-edit-btn.btn.btn-warning.edit_math_fomula.right.disabled{type:"button"} Edit
 
     .detail.normalization.display_none
       .content
@@ -165,8 +210,8 @@
             %label.col-lg-3.control-label{for:"select"} Column
             .col-lg-9
               %select#normalization_column.form-control
-        %button#normalization-add-btn.btn.btn-material-indigo.add_btn.add_normalization.right{type:"button"} Add
-        %button#normalization-edit-btn.btn.btn-material-orange.edit_btn.edit_normalization.right.disabled{type:"button"} Edit
+        %button#normalization-add-btn.btn.btn-primary.add_btn.add_normalization.right{type:"button"} Add
+        %button#normalization-edit-btn.btn.btn-warning.edit_normalization.right.disabled{type:"button"} Edit
 
     .detail.projection.display_none
       .content
@@ -174,8 +219,8 @@
           %i.fa.fa-cogs
           Column Selection     
         .form-group.projection_form
-        %button#projection-add-btn.btn.btn-material-indigo.add_btn.add_projection.right{type:"button"} Add
-        %button#projection-edit-btn.btn.btn-material-orange.edit_btn.edit_projection.right.disabled{type:"button"} Edit
+        %button#projection-add-btn.btn.btn-primary.add_btn.add_projection.right{type:"button"} Add
+        %button#projection-edit-btn.btn.btn-warning.edit_projection.right.disabled{type:"button"} Edit
         .projection.minus-bottom.right
           %i.fa.fa-minus.minus-icon
         .projection.plus-bottom.right
@@ -187,8 +232,8 @@
           %i.fa.fa-cut
           Remove Duplicates
         .form-group.remove_duplicates_form
-        %button#remove_dupplicates-add-btn.btn.btn-material-indigo.add_btn.add_remove_duplicates.right{type:"button"} Add
-        %button#remove_dupplicates-edit-btn.btn.btn-material-orange.edit_btn.edit_remove_duplicates.right.disabled{type:"button"} Edit
+        %button#remove_dupplicates-add-btn.btn.btn-primary.add_btn.add_remove_duplicates.right{type:"button"} Add
+        %button#remove_dupplicates-edit-btn.btn.btn-warning.edit_remove_duplicates.right.disabled{type:"button"} Edit
         .remove_duplicates.minus-bottom.right
           %i.fa.fa-minus.minus-icon
         .remove_duplicates.plus-bottom.right
@@ -207,8 +252,8 @@
               %option Replace_median
               %option Replace_mode
               %option Drop_row
-        %button#remove_missing_value-add-btn.btn.btn-material-indigo.add_btn.add_remove_missing_value.right{type:"button"} Add
-        %button#remove_missing_value-edit-btn.btn.btn-material-orange.edit_btn.edit_remove_missing_value.right.disabled{type:"button"} Edit
+        %button#remove_missing_value-add-btn.btn.btn-primary.add_btn.add_remove_missing_value.right{type:"button"} Add
+        %button#remove_missing_value-edit-btn.btn.btn-warning.edit_remove_missing_value.right.disabled{type:"button"} Edit
 
     .detail.metadata.display_none
       .content
@@ -217,8 +262,8 @@
           Metadata
         .form-group
           #metadata_discriptions{style:"padding: 30px;"}
-        %button#metadata-add-btn.btn.btn-material-indigo.add_btn.add_metadata.right{type:"button", style:" margin-top: 40px;"} Add
-        %button#metadata-edit-btn.btn.btn-material-orange.edit_btn.edit_metadata.right.disabled{type:"button", style:" margin-top: 40px;"} Edit
+        %button#metadata-add-btn.btn.btn-primary.add_btn.add_metadata.right{type:"button", style:" margin-top: 40px;"} Add
+        %button#metadata-edit-btn.btn.btn-warning.edit_metadata.right.disabled{type:"button", style:" margin-top: 40px;"} Edit
 
     .detail.machine_learning.display_none
       .content
@@ -255,8 +300,8 @@
                 %option 70
                 %option 80
                 %option 90
-        %button#machine_learning-add-btn.btn.btn-material-indigo.add_btn.add_machine_learning.right{type:"button"} Add
-        %button#machine_learning-edit-btn.btn.btn-material-orange.edit_btn.edit_machine_learning.right.disabled{type:"button"} Edit
+        %button#machine_learning-add-btn.btn.btn-primary.add_btn.add_machine_learning.right{type:"button"} Add
+        %button#machine_learning-edit-btn.btn.btn-warning.edit_machine_learning.right.disabled{type:"button"} Edit
 
   #whiteboard-right-menu
     %p#execute-btn.add-btn.execute-btn

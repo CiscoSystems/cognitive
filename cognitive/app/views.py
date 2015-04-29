@@ -15,6 +15,7 @@ from django.template import RequestContext
 from rest_framework import status
 from rest_framework.response import Response
 
+from models import Experiment
 from models import User
 
 
@@ -42,7 +43,6 @@ def login(request):
             msg = {"message": "Login Successfully", "tag": "success"}
             messages.append(msg)
             return redirect('/whiteboard', {"messages": messages})
-    print(messages)
     return render(request, 'login.haml', {"messages": messages})
 
 
@@ -64,7 +64,7 @@ def join(request):
             request.session["cognitive"]["user"]["token"] = user.token
             msg = {"message": "User is Created Successfully", "tag": "success"}
             messages.append(msg)
-            return redirect('/whiteboard', {"messages": ""})
+            return redirect('/whiteboard', {"messages": messages})
         except Exception:
             err_msg = "User is not created"
 
@@ -78,8 +78,25 @@ def logout(request):
 
 
 def whiteboard(request):
-    return render_to_response(
-        'whiteboard.haml', context_instance=RequestContext(request))
+    messages = []
+    try:
+        user_id = request.session.get("cognitive").get("user").get("id")
+        user_token = request.session.get("cognitive").get("user").get("token")
+        user = User.objects.get(id=user_id)
+    except Exception as e:
+        return render(request, 'whiteboard.haml', {"messages": messages})
+
+    if not user.has_correct_token(user_token):
+        return redirect('/', {messages: messages})
+
+    experiments = []
+
+    try:
+        experiments = Experiment.objects.all().filter(user=user_id)
+    except Exception as e:
+        print e.message
+
+    return render(request, 'whiteboard.haml', {"messages": messages, "experiments": experiments})
 
 
 def send_response(method, serializer):

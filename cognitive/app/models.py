@@ -81,16 +81,16 @@ class User(models.Model):
                 user = User.objects.get(email=username_or_email)
             except:
                 return None
-        if user.confirm_password(password) == 0:
+        if not user.confirm_password(password):
             return None
         return user
 
     def confirm_password(self, password):
         # TODO: password must be encrypted
         if self.password == password:
-            return 1
+            return True
         else:
-            return 0
+            return False
 
     # TODO: password encryption
 
@@ -98,6 +98,9 @@ class User(models.Model):
     def generate_token(cls):
         # TODO: must  generate token which has enough length and unique
         return "aaaaaa"
+
+    def has_correct_token(self, token):
+        return self.token == token
 
 
 class Experiment(models.Model):

@@ -7,8 +7,10 @@
     %a{href: "/whiteboard"} WhiteBoard
 
   %li.right{style:"font-size:13pt height:100%; margin-right:30px;padding-top:13px;"}
-    {% if request.session.cognitive %}
 
+    {% if request.session.cognitive %}
+    %span#user-id{value:"{{request.session.cognitive.user.id}}"}
+    %span#user-token{value:"{{request.session.cognitive.user.token}}"}
     .dropdown
       %span#user-dropdown-menu.dropdown-toggle{type:"button",data-toggle:"dropdown", aria-expanded:"true"}
         %i.fa.fa-user

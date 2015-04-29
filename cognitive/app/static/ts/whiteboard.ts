@@ -159,6 +159,50 @@ class ViewController {
             root_drag_frag_reverse = 0;
             $("#mouse-select-range-" + previous_line_id).remove();
         }, false);
+
+        $("#create-experiment").click(function(){
+
+            // will consider the session information
+            var request = {
+                "name": $("#whiteboard-name").val(),
+                "status": "Draft",
+                "user": $("#user-id").attr("value"),
+                "token": $("#user-token").attr("value")
+            };
+
+            console.log(request);
+
+            $.ajax({
+                url:  "/api/v1/experiments/",
+                type: "POST",
+                data: request,
+                success: function(result) {
+                    console.log(result);
+                },
+                error: function(result) {
+                    alert("To Create Whiteboard, You Need to Login")
+                }
+            });
+        });
+
+        $("#plusWhiteboard").click(function () {
+            $.ajax({
+                url: "/api/v1/experiments",
+                type: "GET",
+                success: function(result) {
+                    console.log(result);
+                    $("#user-whiteboards > option").remove();
+                    for(var i=0; i<result.length; i++) {
+                        var id = result[i].id;
+                        var name = result[i].name;
+                        var option = $("<option>").val(id).append(name);
+                        $("#user-whiteboards").append(option);
+                    }
+                }
+            })
+        });
+
+
     }
 
     static run(): void {
