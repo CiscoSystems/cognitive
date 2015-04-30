@@ -328,6 +328,17 @@ class ViewController {
             }
         }
 
+        if (typeof start === "undefined") {
+            $("#danger-message")[0].innerHTML=" There are no input source or topology have something wrong.";
+            var alert_area = $("#cognitiveAlert");
+            var danger = alert_area.find("> #template-alert-danger").clone();
+            danger.attr("id", "");
+            alert_area.append(danger);
+            danger.show();
+            //danger.fadeOut(30000);
+            return;
+        }
+
         var node_list = ComponentBase.get_workflow_from(start.get_id());
 
         if (node_list.length < 1) {

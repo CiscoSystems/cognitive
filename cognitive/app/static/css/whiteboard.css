@@ -52,7 +52,8 @@ li.component {
     float:right;
     background-color:white;
     padding-left: 275px;
-    padding-right: 60px;
+    padding-bottom: 60px;
+    padding-top: 18px;
     width:100%;
     height: calc(100%);
 }
@@ -326,4 +327,12 @@ tr.result_row:hover {
 .list-group-item-cognitive:active {
     background: rgb(30, 140, 255);
     color: white;
+}
+
+.alert-cognitive {
+    display: none;
+}
+
+.alert-cognitive:active {
+    display: block;
 }

@@ -270,6 +270,42 @@
         %button#machine_learning-add-btn.btn.btn-primary.add_btn.add_machine_learning.right{type:"button"} Add
         %button#machine_learning-edit-btn.btn.btn-warning.edit_machine_learning.right.disabled{type:"button"} Edit
 
+  #cognitiveAlert.col-lg-3{style:"position:absolute; top: 40px; right: 20px;"}
+    #template-alert-success.alert.alert-cognitive.alert-success.alert-dismissable.fade.in{role:"alert"}
+      .row
+        .col-lg-12
+          %button.close{type:"button", data-dismiss:"alert", aria-label:"Close"}
+            %span{aria-hidden:"true"}
+              &times;
+          %strong
+            Success:
+          %span#success-message aaaaaca aaaaaca
+    #template-alert-warning.alert.alert-cognitive.alert-warning.alert-dismissable.fade.in{role:"alert"}
+      .row
+        .col-lg-12
+          %button.close{type:"button", data-dismiss:"alert", aria-label:"Close"}
+            %span{aria-hidden:"true"}
+              &times;
+          %strong
+            Error:
+          %span#error-message aaaaaca aaaaaca
+    #template-alert-info.alert.alert-cognitive.alert-info.alert-dismissable.fade.in{role:"alert"}
+      .row
+        .col-lg-12
+          %button.close{type:"button", data-dismiss:"alert", aria-label:"Close"}
+            %span{aria-hidden:"true"}
+              &times;
+          %strong
+            Info:
+          %span#info-message aaaaaca aaaaaca
+    #template-alert-danger.alert.alert-cognitive.alert-danger.alert-dismissable.fade.in{role:"alert"}
+      %button.close{type:"button", data-dismiss:"alert", aria-label:"Close"}
+        %span{aria-hidden:"true"}
+          &times;
+      %strong
+        Danger:
+      %span#danger-message aaaaaca aaaaaca
+
 - block 'footer'
   .row{style:"height:inherit"}
     .container{style:"height:inherit"}
