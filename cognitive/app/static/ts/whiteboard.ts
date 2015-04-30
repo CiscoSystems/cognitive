@@ -531,7 +531,7 @@ $(function(){
      *       2) the differences are implemented into Component
      */
 
-    $(".show_result_graph").click(getResult);
+    $("#show_component").click(getResult);
 
     function getResult() {
 

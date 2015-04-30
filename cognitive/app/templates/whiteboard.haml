@@ -66,34 +66,34 @@
   .whiteboard-flyout{style:"left: 55px;"}
     .flyout-wrapper
       %ul
-        %li.menu_bar.introduction
+        %li.list-group-item-cognitive.menu_bar.introduction
           %i.fa.fa-file-text-o
           Introduction
-        %li.menu_bar.data_input 
+        %li.list-group-item-cognitive.menu_bar.data_input
           %i.fa.fa-arrow-up
           Input Data
-        %li.menu_bar.add_row 
+        %li.list-group-item-cognitive.menu_bar.add_row
           %i.fa.fa-list-ol
           Add Row
-        %li.menu_bar.add_math_fomula
+        %li.list-group-item-cognitive.menu_bar.add_math_fomula
           %i.fa.fa-xing
           Math formula
-        %li.menu_bar.normalization 
+        %li.list-group-item-cognitive.menu_bar.normalization
           %i.fa.fa-align-center
           Normalization
-        %li.menu_bar.projection 
+        %li.list-group-item-cognitive.menu_bar.projection
           %i.fa.fa-cogs
           Column Selection
-        %li.menu_bar.remove_column
+        %li.list-group-item-cognitive.menu_bar.remove_column
           %i.fa.fa-cut
           Remove Duplicates
-        %li.menu_bar.remove_missing_value
+        %li.list-group-item-cognitive.menu_bar.remove_missing_value
           %i.fa.fa-sliders
           Remove Missing Value
-        %li.menu_bar.metadata 
+        %li.list-group-item-cognitive.menu_bar.metadata
           %i.fa.fa-share-alt
           Metadata Editor
-        %li.menu_bar.machine_learning 
+        %li.list-group-item-cognitive.menu_bar.machine_learning
           %i.fa.fa-yelp
           Machine Learning
 
@@ -270,11 +270,25 @@
         %button#machine_learning-add-btn.btn.btn-primary.add_btn.add_machine_learning.right{type:"button"} Add
         %button#machine_learning-edit-btn.btn.btn-warning.edit_machine_learning.right.disabled{type:"button"} Edit
 
-  #whiteboard-right-menu
-    %p#execute-btn.add-btn.execute-btn
-      %i.fa.fa-play-circle-o.zero_padding_margin{style:"font-size:32pt;"}
-      Run
-    %a.show_result_graph{href:"#result_table", style:"color:black;"}
-      %p.show_result_icon
-        %i.fa.fa-bar-chart.zero_padding_margin{style:"font-size:27pt;"}
-        Show
+- block 'footer'
+  .row{style:"height:inherit"}
+    .container{style:"height:inherit"}
+      .text-center{style:"height:inherit"}
+        .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:inherit; width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
+          #execute-btn.container-fluid
+            .row
+              %i.fa.fa-play.fa-align-center{style:"font-size:27pt;"}
+            .row
+              RUN
+        .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:100%;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
+          #show_component.container-fluid
+            .row
+              %i.glyphicon.glyphicon-signal.glyphicon-align-center.zero_padding_margin{style:"font-size:26pt;"}
+            .row
+              Show
+        .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:inherit;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
+          .container-fluid{style:"padding-right:20px;padding-left:20px;"}
+            .row
+              %i.glyphicon.glyphicon-floppy-disk.glyphicon-align-center{style:"font-size:28pt;"}
+            .row
+              %span.text-center SAVE

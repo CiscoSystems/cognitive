@@ -53,10 +53,20 @@ a:hover {
     float: left;
 }
 
-#footer {
-    height: 40px;
-    background: #686869;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
+.btn-group-cognitive:hover {
+    background: #ffd124;
+}
+
+.btn-group-cognitive:active {
+    background: rgb(30, 140, 255);
+    color: white;
+}
+
+.list-group-item-cognitive:hover {
+    background: #ffd124;
+}
+
+.list-group-item-cognitive:active {
+    background: rgb(30, 140, 255);
+    color: white;
 }
