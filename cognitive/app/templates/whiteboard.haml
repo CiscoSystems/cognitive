@@ -5,7 +5,6 @@
   - load staticfiles
   %link{href: "{{STATIC_URL}}lib/jquery-ui/jquery-ui.css", rel: "stylesheet"}
   %link{href: "{{STATIC_URL}}css/lib/colorbox.css", rel: "stylesheet"}
-  -#%link{href: "{{STATIC_URL}}css/lib/material.min.css", rel: "stylesheet"}
   %link{href: "{{STATIC_URL}}css/whiteboard.css", rel: "stylesheet"}
   %link{href: "{{STATIC_URL}}css/lib/square/blue.css", rel: "stylesheet"}
 
@@ -28,68 +27,42 @@
 
 - block 'contents'
 
+  - include '_add_whiteboard_modal.haml'
+
   #main-menu.zero_padding_margin
   -#  new tabs like `setting`, `experiment` will be appeared here
-  .whiteboard-top-menu
-    .whiteboard-top-menu-wrapper
-      -# this will be the tab ui which compose multipble whiteboard
-      -#.whiteboard-tab.left{style:"height:17px; width:200px; border-top: solid 1px steelblue; border-right: solid 1px steelblue; margin-top:0px;"}
-      %ul#whiteboard-nav-tabs.nav.nav-tabs{style:"height:18px; background: steelblue;"}
-        %li{role:"presentation",style:"height:18px;padding:0; margin:0;"}
-          #plusWhiteboard{style:"padding-left: 2px;height:17px; width:25px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;background: steelblue;", data-toggle:"modal", data-target:"#plusWhiteboardModal"}
-            %i.fa.fa-plus{style:"margin-top:1px; margin-left:4px; color:white"}
-        %li.active{role:"presentation", style:"height:18px; padding:0; margin:0;"}
-          %a{href:"#", style:"font-size:10pt;height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0;background:white; color:steelblue;"}
-            %i.fa.fa-file-o
-            Untitled
-        %li#template-whiteboard-tab{role:"presentation",style:"height:18px;padding:0; margin-left:1px;border-bottom: solid 1px #cccccc; display:none"}
-          %a{href:"#", style:"font-size:9pt; height:18px;padding-top:0;padding-bottom:0; padding-right:20px; padding-left:20px; margin:0; color:black; background:#DFDFDF; border-bottom: solid 1px #cccccc;"}
-            %i.fa.fa-file-o
-            %span#template-whiteboard-name Whiteboard-A
+  %div{role:"tabpanel"}
+    .whiteboard-top-menu
+      .whiteboard-top-menu-wrapper
+        -# this will be the tab ui which compose multipble whiteboard
+        -#.whiteboard-tab.left{style:"height:17px; width:200px; border-top: solid 1px steelblue; border-right: solid 1px steelblue; margin-top:0px;"}
+        %ul#whiteboard-nav-tabs.nav.nav-tabs{role:"tablist", style:"height:18px; background: steelblue;"}
+          %li{style:"height:18px;padding:0; margin:0;"}
+            #plusWhiteboard{style:"padding-left: 2px;height:17px; width:25px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;background: steelblue;", data-toggle:"modal", data-target:"#plusWhiteboardModal"}
+              %i.fa.fa-plus{style:"margin-top:1px; margin-left:4px; color:white"}
+          %li#template-whiteboard-tab{role:"presentation",style:"height:18px;padding:0; margin-left:1px;border-bottom: solid 1px #cccccc; display:none"}
+            %a{href:"#", role:"tab", data-toggle:"tab", aria-controls:"whiteboard-draw-area"}
+              %i.fa.fa-file-o
+              %span.template-whiteboard-name template name
 
+  #whiteboard-draw-area.tab-content{style:"height:100%;"}
+    .tab-pane.active{role:"tabpanel",style:"height:100%;"}
+      .whiteboard-draw-area-wrapper
+        %svg#root.whiteboard-root
+          %g#layer-0
+          %g#layer-1
+          %g#layer-2
+          %g#layer-3
+          %g#layer-4
+    #template-whiteboard-draw-area.tab-pane{role:"tabpanel", style:"height:100%; display: none;"}
+      .whiteboard-draw-area-wrapper
+        %svg#template-whiteboard-id.whiteboard-root{style:"width:100%; height:100%"}
+          %g.layer.layer-0
+          %g.layer.layer-1
+          %g.layer.layer-2
+          %g.layer.layer-3
+          %g.layer.layer-4
 
-      #plusWhiteboardModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
-        .modal-dialog
-          .modal-content
-            .modal-header
-              %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
-                %span{"aria-hidden" => "true"} &times;
-              %h4#myModalLabel.modal-title Make Whiteboard
-            .modal-body
-              .row-fluid
-                %h2 Create Whiteboard
-              .row-fluid
-                %label.left{for:"whiteboard-name"} Whiteboard Name
-                %input#whiteboard-name.form-control{type:"text", name:"name"}
-                %span.left The name of new whiteboard - each environment is separated by this.
-                .clear_float
-              .row-fluid
-                %button#create-experiment.btn.btn-primary.right{:type => "button", data-dismiss: "modal"} Create
-                .clear_float
-              .row-fluid
-                %h2 Open Whiteboard
-              .row-fluid
-                %select#user-whiteboards.form-control
-                  -#%option{value:"1"} whiteboard
-                  -#%option{value:"123"} whiteboard123
-                %span.left Open the whiteboard you saved before.
-                .clear_float
-              .row-fluid
-                %button#open-experiment.btn.btn-primary.right{:type => "button", data-dismiss: "modal"} Open
-                .clear_float
-            .modal-footer
-
-
-
-  -#.whiteboard-option{style:"position:fixed; top:63px; right:60px;height:50px;width:300px;"}
-  -#  .whiteboard-option-wrapper{style:"padding-top:13px;"}
-  -#    %ul{style:"list-style-type:none;"}
-  -#      %li.left
-  -#        %input.icheck{type:"radio", name:"backend-environment"}
-  -#        Storm
-  -#      %li.left{style:"margin-left: 20px;"}
-  -#        %input{type:"radio", name:"backend-environment"}
-  -#        Local
   .whiteboard-flyout{style:"left: 55px;"}
     .flyout-wrapper
       %ul
@@ -123,14 +96,6 @@
         %li.menu_bar.machine_learning 
           %i.fa.fa-yelp
           Machine Learning
-
-  #visualization
-    %svg#root.root
-      %g#layer-0
-      %g#layer-1
-      %g#layer-2
-      %g#layer-3
-      %g#layer-4
 
   #component_arguments
     .detail.introduction

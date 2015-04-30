@@ -47,10 +47,10 @@ class ComponentBase {
         this.enter_path = null; // should be number?
         this.leave_path = null;
 
-        ComponentBase.function_layer= $('#layer-4');
-        ComponentBase.component_layer = $('#layer-3');
-        ComponentBase.connection_layer = $('#layer-2');
-        ComponentBase.scope_layer = $('#layer-1');
+        ComponentBase.function_layer= ViewController.functionality_layer;
+        ComponentBase.component_layer = ViewController.component_layer;
+        ComponentBase.connection_layer = ViewController.connection_layer;
+        ComponentBase.scope_layer = ViewController.scope_layer;
 
         this.render_component();
         this.render_scope();
@@ -86,7 +86,6 @@ class ComponentBase {
                 var id = this.id.split("-")[2];
                 $("#close-icon-id-" + id).css("display", "block");
                 $("#edit-icon-id-" + id).css("display", "block");
-
             });
 
         g.append('rect')
@@ -124,7 +123,6 @@ class ComponentBase {
                 .attr('fill', '#5264ae')
                 .style('stroke-width', 1);
         }
-
     }
 
     private render_scope() {
@@ -224,7 +222,6 @@ class ComponentBase {
         edit_icon
             .attr('x', sx + parseInt(group.attr('abs_x')))
             .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
-
     }
 
     private _click(e) {
@@ -411,7 +408,6 @@ class ComponentBase {
     public getOutputPath() {
         return this.leave_path;
     }
-
 
     static get_add_btn() {
         return this.add_btn

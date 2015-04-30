@@ -179,9 +179,14 @@ class ViewController {
                 success: function(result) {
                     console.log(result);
                     $("#template-whiteboard-name")[0].innerHTML = result["name"];
-                    template = $("#template-whiteboard-tab").clone();
-                    template.css("display", "block");
+                    var template = $("#template-whiteboard-tab").clone();
+                    template.css("display", "");
                     $("#whiteboard-nav-tabs").append(template);
+                    template.click(function (e) {
+                        e.preventDefault();
+                        $(this).tab('show');
+                    });
+                    template.tab('show')
                 },
                 error: function(result) {
                     alert("To Create Whiteboard, You Need to Login")
@@ -191,12 +196,50 @@ class ViewController {
 
         $("#open-experiment").click(function () {
             var opts = $("#user-whiteboards");
+            var template = $("#template-whiteboard-tab");
+            var whiteboard_tab_bar = $("#whiteboard-nav-tabs");
             var id = opts.val();
             var name = opts.find("> option[value=" + id + "]")[0].innerHTML;
-            $("#template-whiteboard-name")[0].innerHTML = name;
-            template = $("#template-whiteboard-tab").clone();
-            template.css("display", "block");
-            $("#whiteboard-nav-tabs").append(template);
+            var generated_tab = template.clone();
+
+            generated_tab.find(">a>.template-whiteboard-name")[0].innerHTML = name;
+            generated_tab.find(">a").attr("href", "#whiteboard-content-" + id);
+            generated_tab.attr("id", "").attr("whiteboard", id);
+            generated_tab.css("display", "");
+
+            whiteboard_tab_bar.append(generated_tab);
+
+            generated_tab.click(function (e) {
+                e.preventDefault();
+                var whiteboard_draw_area = $("#whiteboard-draw-area");
+                whiteboard_draw_area.find("> .active").removeClass("active");
+                $(this).tab('show');
+                $("#whitebord-content-" + $(this).attr("whiteboard")).addClass("active");
+                ViewController.focus_on_whiteboard($(this).attr("whiteboard"));
+            });
+
+
+            var template_drawarea = $("#template-whiteboard-draw-area").clone();
+            template_drawarea.css("display", "");
+            var svg = template_drawarea.find(">.whiteboard-draw-area-wrapper > svg");
+            svg.children().attr("whiteboard", id);
+            svg.attr("id", "whiteboard-root-" + id);
+            template_drawarea.attr("id", "whitebord-content-" + id);
+            template_drawarea.addClass("active");
+            var whiteboard_draw_area = $("#whiteboard-draw-area");
+
+
+            // This part should be bootstrap's tab('show') function.
+            whiteboard_tab_bar.find(">li.active").removeClass("active");
+            generated_tab.addClass("active");
+
+            whiteboard_draw_area.find("> .active").removeClass("active");
+            whiteboard_draw_area.append(template_drawarea);
+
+            ViewController.focus_on_whiteboard(id);
+
+            // --------------------------
+
         });
 
         $("#plusWhiteboard").click(function () {
@@ -216,7 +259,63 @@ class ViewController {
             })
         });
 
+    }
 
+    static focus_on_whiteboard(whiteboard_id: string): void{
+        ViewController.svg_root = $("#whiteboard-root-" + whiteboard_id);
+        ViewController.layer_0 = $("g.layer-0[whiteboard="+whiteboard_id+"]");
+        ViewController.scope_layer = $("g.layer-1[whiteboard="+whiteboard_id+"]");
+        ViewController.connection_layer = $("g.layer-2[whiteboard="+whiteboard_id+"]");
+        ViewController.component_layer = $("g.layer-3[whiteboard="+whiteboard_id+"]");
+        ViewController.functionality_layer = $("g.layer-4[whiteboard="+whiteboard_id+"]");
+
+        var t = document.getElementById('whiteboard-root-' + whiteboard_id);
+        var root_drag_frag;
+        var root_drag_frag_reverse;
+        var drag_start_x: number;
+        var drag_start_y: number;
+        var current_line_id: number;
+        var previous_line_id: number;
+
+        t.addEventListener('mousedown', function (e) {
+            root_drag_frag = 0;
+            root_drag_frag_reverse = 1;
+            drag_start_x = e.x;
+            drag_start_y = e.y;
+            previous_line_id = 0;
+            current_line_id = 1;
+        }, false);
+
+        t.addEventListener('mousemove', function (e) {
+            root_drag_frag = 1;
+            /*
+             * [WIP] mouse drag should eneble to select some areas.
+             */
+            if (root_drag_frag_reverse === 1) {
+                console.log(e.x, " ", e.y);
+                var func_lay = d3.selectAll(ViewController.functionality_layer);
+                func_lay.append("rect")
+                    .attr("class", "mouse-select-range")
+                    .attr("id", "mouse-select-range-" + current_line_id)
+                    .attr("x", drag_start_x - 280).attr("y", drag_start_y - 45)
+                    .attr("width", e.x - drag_start_x).attr("height", e.y - drag_start_y)
+                    .attr('stroke', "steelblue" ).attr('stroke-width', "1")
+                    .attr('fill', 'none');
+            }
+            $("#mouse-select-range-" + previous_line_id).remove();
+            previous_line_id = current_line_id;
+        }, false);
+
+        t.addEventListener('mouseup', function () {
+            // this is click
+            if (root_drag_frag === 0) {
+                ComponentController.deacitive_menubar();
+                ComponentController.deactivate_focus();
+            }
+            root_drag_frag = 0;
+            root_drag_frag_reverse = 0;
+            $("#mouse-select-range-" + previous_line_id).remove();
+        }, false);
     }
 
     static run(): void {
