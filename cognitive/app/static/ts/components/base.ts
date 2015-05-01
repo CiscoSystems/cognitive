@@ -228,6 +228,9 @@ class ComponentBase {
 
         // following procedures should be separate function like: focus_on(elm)
 
+        $("#whiteboard-right-menu").toggle("slide", {direction: "right"}, 300);
+        console.log("------------------------");
+
         if (d3.event.defaultPrevented) return;
 
         var component = d3.select(e);

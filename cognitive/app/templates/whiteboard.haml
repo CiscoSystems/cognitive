@@ -31,7 +31,7 @@
 
   #main-menu.zero_padding_margin
   -#  new tabs like `setting`, `experiment` will be appeared here
-  %div{role:"tabpanel"}
+  %div{role:"tabpanel", style:"position: absolute; top: 51px;width: 100%;"}
     .whiteboard-top-menu
       .whiteboard-top-menu-wrapper
         -# this will be the tab ui which compose multipble whiteboard
@@ -306,6 +306,174 @@
         Danger:
       %span#danger-message aaaaaca aaaaaca
 
+  -##whiteboard-right-menu.col-lg-4{style: "position:fixed; padding:0;right:0px;top:62px;height:100%;float:right;border-left: solid 1px gray;display:none"}
+  -#  .cognitive-right-menu-content
+  -#    .cognitive-right-menu-header{style:"border-bottom: solid 1px #eeeeee; height:60px; padding:10px;"}
+  -#      %h4.cognitive-right-menu-header
+  -#        %i.fa.fa-arrow-up
+  -#        Input
+  -#    .cognitive-right-menu-body{style:"padding-left:30px;"}
+  -#      .form-group{style:"margin-top: 30px;"}
+  -#        %label.control-label{for:"inputFile"} File Upload
+  -#        %input#inputFile{type:"file", accept:".csv"}
+  -#        %button.btn.btn-warning.right{type:"button", style:"margin-top: 20px; margin-right:30px;"} Edit
+  -#    .cognitive-right-menu-footer
+  -#      -# will be inplemented
+  -#
+  -#  .cognitive-right-menu-content
+  -#    .cognitive-right-menu-header{style:"border-bottom: solid 1px #eeeeee; height:60px; padding:10px;"}
+  -#      %h4.cognitive-right-menu-header
+  -#        %i.fa.fa-list-ol
+  -#        Add Row
+  -#    .cognitive-right-menu-body{style:"padding-left:30px;"}
+  -#      .form-group{style:"margin-top: 30px;"}
+  -#      .add_row_form{style:"list-style:none; font-size: 18pt;"}
+  -#      %button#add_row-add-btn.btn.btn-primary.add_btn.add_row.right{type:"button"} Add
+  -#      %button#add_row-edit-btn.btn.btn-warning.edit_add_row.right.disabled{type:"button"} Edit
+  -#
+  -#    .cognitive-right-menu-footer
+
+
+        -# will be inplemented
+
+    -#.detail.add_math_fomula.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-xing
+    -#      Math Formula
+    -#    .row
+    -#      %label.col-lg-3.control-label{for:"select"} Method
+    -#      .col-lg-9
+    -#        %select#formula_method.form-control{style:"font-size:12pt;"}
+    -#          %option Add
+    -#          %option Sub
+    -#          %option Mult
+    -#          %option Div
+    -#
+    -#    .row{style:"padding-top:20px;"}
+    -#      %label.col-lg-3.control-label{for:"select"} Column
+    -#      .col-lg-9
+    -#        %select#formula_column.form-control
+    -#
+    -#    .row{style:"padding-top:20px;"}
+    -#      %label.col-lg-3.control-label{for:"select"} Constant
+    -#      .col-lg-9
+    -#        %input#formula_constant.form-control.floating-label#focusedInput{type:"text", placeholder: "value"}
+    -#    %button#math_formula-add-btn.btn.btn-primary.add_btn.add_math_fomula.right{type:"button"} ADD
+    -#    %button#math_formula-edit-btn.btn.btn-warning.edit_math_fomula.right.disabled{type:"button"} Edit
+    -#
+    -#.detail.normalization.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-align-center
+    -#      Normalization
+    -#    .form-group
+    -#      .row{style:"padding-top:20px;"}
+    -#        %label.col-lg-3.control-label{for:"select"} Method
+    -#        .col-lg-9
+    -#          %select#normalization_method.form-control
+    -#            %option{value: 0, style:"font-size:20pt;"} Standard
+    -#
+    -#      .row{style:"padding-top:20px;"}
+    -#        %label.col-lg-3.control-label{for:"select"} Column
+    -#        .col-lg-9
+    -#          %select#normalization_column.form-control
+    -#    %button#normalization-add-btn.btn.btn-primary.add_btn.add_normalization.right{type:"button"} Add
+    -#    %button#normalization-edit-btn.btn.btn-warning.edit_normalization.right.disabled{type:"button"} Edit
+    -#
+    -#.detail.projection.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-cogs
+    -#      Column Selection
+    -#    .form-group.projection_form
+    -#    %button#projection-add-btn.btn.btn-primary.add_btn.add_projection.right{type:"button"} Add
+    -#    %button#projection-edit-btn.btn.btn-warning.edit_projection.right.disabled{type:"button"} Edit
+    -#    .projection.minus-bottom.right
+    -#      %i.fa.fa-minus.minus-icon
+    -#    .projection.plus-bottom.right
+    -#      %i.fa.fa-plus.plus-icon
+    -#
+    -#.detail.remove_column.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-cut
+    -#      Remove Duplicates
+    -#    .form-group.remove_duplicates_form
+    -#    %button#remove_dupplicates-add-btn.btn.btn-primary.add_btn.add_remove_duplicates.right{type:"button"} Add
+    -#    %button#remove_dupplicates-edit-btn.btn.btn-warning.edit_remove_duplicates.right.disabled{type:"button"} Edit
+    -#    .remove_duplicates.minus-bottom.right
+    -#      %i.fa.fa-minus.minus-icon
+    -#    .remove_duplicates.plus-bottom.right
+    -#      %i.fa.fa-plus.plus-icon
+    -#
+    -#.detail.remove_missing_value.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-sliders
+    -#      Remove Missing Values
+    -#    .form-group
+    -#      %label.col-lg-3.control-label{for:"select"} Method
+    -#      .col-lg-9
+    -#        %select#remove_missing_value_method.form-control
+    -#          %option Replace_mean
+    -#          %option Replace_median
+    -#          %option Replace_mode
+    -#          %option Drop_row
+    -#    %button#remove_missing_value-add-btn.btn.btn-primary.add_btn.add_remove_missing_value.right{type:"button"} Add
+    -#    %button#remove_missing_value-edit-btn.btn.btn-warning.edit_remove_missing_value.right.disabled{type:"button"} Edit
+    -#
+    -#.detail.metadata.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-share-alt
+    -#      Metadata
+    -#    .form-group
+    -#      #metadata_discriptions{style:"padding: 30px;"}
+    -#    %button#metadata-add-btn.btn.btn-primary.add_btn.add_metadata.right{type:"button", style:" margin-top: 40px;"} Add
+    -#    %button#metadata-edit-btn.btn.btn-warning.edit_metadata.right.disabled{type:"button", style:" margin-top: 40px;"} Edit
+    -#
+    -#.detail.machine_learning.display_none
+    -#  .content
+    -#    %h2
+    -#      %i.fa.fa-yelp
+    -#      Machine Learning
+    -#    .form-group
+    -#      .row
+    -#        %label.col-lg-3.control-label{for:"select"} Method
+    -#        .col-lg-9
+    -#          %select.form-control.machine_learning_select#formula_method#select{style:"font-size:20pt;"}
+    -#            %option Linear_SVM
+    -#            %option Nearest_Neighbours
+    -#            %option Decision_Tree
+    -#            %option Random_Forest
+    -#            %option Naive_Bayes
+    -#    .form-group
+    -#      .row
+    -#        %label.col-lg-3.control-label{for:"select"} Target Column
+    -#        .col-lg-9
+    -#          %select.form-control.machine_learning_target#formula_method#select{style:"font-size:20pt;"}
+    -#
+    -#    .form-group
+    -#      .row
+    -#        %label.col-lg-3.control-label{for:"select"} Train Data Percentage
+    -#        .col-lg-9
+    -#          %select.form-control.machine_learning_target_parcentage#formula_method#select{style:"font-size:20pt;"}
+    -#            %option 10
+    -#            %option 20
+    -#            %option 30
+    -#            %option 40
+    -#            %option 50
+    -#            %option 60
+    -#            %option 70
+    -#            %option 80
+    -#            %option 90
+    -#    %button#machine_learning-add-btn.btn.btn-primary.add_btn.add_machine_learning.right{type:"button"} Add
+    -#    %button#machine_learning-edit-btn.btn.btn-warning.edit_machine_learning.right.disabled{type:"button"} Edit
+
+
+
+
 - block 'footer'
   .row{style:"height:inherit"}
     .container{style:"height:inherit"}
@@ -328,3 +496,4 @@
               %i.glyphicon.glyphicon-floppy-disk.glyphicon-align-center{style:"font-size:28pt;"}
             .row
               %span.text-center SAVE
+

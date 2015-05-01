@@ -1,29 +1,34 @@
-%ul{style:"height:100%;list-style:none; padding:0;margin:0;"}
-  %li{style:"height:100%;font-size:12pt;padding-top:5px;padding-left:30px; padding-right:35px; float:left; border-right: solid 1px #cccccc; "}
-    %a{href: "/", style:"font-size:16pt; border-right: solid 1px white;"}
-      %i.fa.fa-cube{style:"padding:0;margin:0;"}
-      Cognitive
-  %li{style:"font-size:13pt; height:100%; float:left;margin-left:30px;padding-top:10px;"}
-    %a{href: "/whiteboard"} WhiteBoard
+%nav.navbar.navbar-fixed-top
+  .container-fluid{style:"border-bottom: solid 2px #eeeeee"}
+    .navbar-header
+      %a.navbar-brand{href: "/"}
+        .text-info
+          %i.fa.fa-cube{style:"padding:0;margin:0;"}
+          Cognitive
 
-  %li.right{style:"font-size:13pt height:100%; margin-right:30px;padding-top:13px;"}
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li
+          %a{href: "/whiteboard"} WhiteBoard
 
-    {% if request.session.cognitive %}
-    %span#user-id{value:"{{request.session.cognitive.user.id}}"}
-    %span#user-token{value:"{{request.session.cognitive.user.token}}"}
-    .dropdown
-      %span#user-dropdown-menu.dropdown-toggle{type:"button",data-toggle:"dropdown", aria-expanded:"true"}
-        %i.fa.fa-user
-        {{request.session.cognitive.user.name}}
-        %span.caret
-      %ul.dropdown-menu
-        %li{role:"presentation"}
-          %a{role:"menuitem", tabindex:"10", href:"/logout"}
-            Log out
+      %ul.nav.navbar-nav.navbar-right
+        {% if request.session.cognitive %}
+        %li.dropdown
+          %a#user-dropdown-menu.dropdown-toggle{type:"button",data-toggle:"dropdown", aria-expanded:"true"}
+            %i.fa.fa-user
+            {{request.session.cognitive.user.name}}
+            %span.caret
+          %ul.dropdown-menu
+            %li{role:"presentation"}
+              %a{role:"menuitem", tabindex:"10", href:"/logout"}
+                Log out
 
-    {% else %}
-    %a{href: "/join"} Sign up
-    |
-    %a{href: "/login"} Sign in
-    {% endif %}
+        %span#user-id{value:"{{request.session.cognitive.user.id}}"}
+        %span#user-token{value:"{{request.session.cognitive.user.token}}"}
 
+        {% else %}
+        %li
+          %a{href: "/join"} Sign up
+        %li
+          %a{href: "/login"} Sign in
+        {% endif %}

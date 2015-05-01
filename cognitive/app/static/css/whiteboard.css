@@ -12,7 +12,7 @@ li.component {
     border-right: solid 1px #afafaf;
     position: fixed;
     left: 0;
-    top: 45px;
+    top: 50px;
     right: 0;
     height: 100%;
     width: 220px;
@@ -26,13 +26,6 @@ li.component {
     padding-bottom: 40px;
 }
 
-#contents {
-    position:absolute;
-    top: 45px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
 
 .whiteboard-flyout i{
     font-size:22pt;
@@ -75,7 +68,7 @@ li.component {
     width: 30%;
     position: fixed;
     left: 275px;
-    top:63px;
+    top:68px;
     background:white;
     display:none;
     height: 100%;
@@ -133,22 +126,6 @@ li.component {
     padding-top: 10px;
 }
 
-
-#whiteboard-right-menu {
-    position:fixed;
-    right:0;
-    top:63px;
-    height:100%;
-    width:60px;
-    float:right;
-    border-left: solid 1px gray;
-    text-align:center;
-}
-
-#whiteboard-right-menu p:hover{
-    background-color: #1e8cff;
-    color: white;
-}
 
 .result_table {
     text-align: center;
@@ -273,7 +250,7 @@ tr.result_row:hover {
 
 #main-menu {
     position: fixed;
-    top: 45px;
+    top: 50px;
     bottom: 0;
     left: 0;
     width: 55px;

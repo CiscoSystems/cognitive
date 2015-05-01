@@ -21,7 +21,6 @@ import xstatic.main
 import xstatic.pkg.bootstrap
 import xstatic.pkg.d3
 import xstatic.pkg.font_awesome
-import xstatic.pkg.jasmine
 import xstatic.pkg.jquery
 import xstatic.pkg.jquery_ui
 

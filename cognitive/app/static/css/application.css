@@ -1,31 +1,17 @@
 body {
     background-color: #577691;
     padding: 0;
+    margin: 0;
 }
 
 body, h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
 }
 
-#header {
-    height: 45px;
-    padding: 0;
-    border-bottom: solid 1px #cccccc;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    background-color:white;
-    z-index: 10;
-}
-
 #contents {
+    padding-top: 40px;
     background: white;
-    position: absolute;
-    top: 45px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    height: 100vh;
 }
 
 .zero_padding_margin {

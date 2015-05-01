@@ -6,24 +6,29 @@
   %link{href: "{{STATIC_URL}}css/login.css", rel: "stylesheet"}
 
 - block 'contents'
-  #content-wrapper{style:"margin:0 auto;"}
-    .center-block{style:"width:500px"}
-      %h1 Login Cognitive
 
+  .row{style:"margin-top:80px;"}
+    .col-lg-4
+    .col-lg-4
       - include '_message.haml'
 
-      .form-wrapper{style:"margin-top:20px;padding-left:50px;padding-right:50px; padding-top:35px; padding-bottom: 35px; border: solid 1px #dddddd;"}
-        %form{method:"POST"}
-          {% csrf_token %}
-          .form-group
-            %label{for:"username_or_email"} Username or Email
-            %input#username_or_email.form-control{type:"text", name:"username_or_email", style:" padding-left:2px;"}
-          .form-group
-            %label{for:"password"}
-              Password (
-              %a Forgot Password?
-              )
-            %input#password.form-control{type:"password", name:"password",style:"padding-left:2px;"}
-          %button.btn.btn-default{type:"submit", style:"margin-top:5px;"} Login
-
-
+      .panel.panel-default
+        .panel-heading
+          .panel-title
+            %h4
+              %b
+                %i.fa.fa-tag
+                Login Cognitive
+        .panel-body
+          %form{method:"POST"}
+            {% csrf_token %}
+            .form-group
+              %label{for:"username_or_email"} Username or Email
+              %input#username_or_email.form-control{type:"text", name:"username_or_email", style:" padding-left:2px;"}
+            .form-group
+              %label{for:"password"}
+                Password (
+                %a Forgot Password?
+                )
+              %input#password.form-control{type:"password", name:"password",style:"padding-left:2px;"}
+            %button.btn.btn-default{type:"submit", style:"margin-top:5px;"} Login

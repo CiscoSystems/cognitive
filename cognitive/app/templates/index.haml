@@ -7,37 +7,46 @@
   %script{src: "{{STATIC_URL}}js/index.js", type: "text/javascript"}
 
 - block 'contents'
-
-  #in_content
-    %div{style:"width:100%; margin-bottom:45px;"}
-      %h2 Machine Learning as a Service (MLaaS) - Cognitive
-    %div{style:"width:100%; text-align:center"}
-
-    .datasource
-      .datasource-image{style:"width:35%; height:250px; float:right;  text-align:left"}
-        %i.fa.fa-cubes{style:"font-size:220pt;"}
-      .datasource-text{style:" text-align:left; padding-right: 60px;"}
-        %h2.feature_statement
+  .container
+    .page-header
+      %h1
+        %span.text-info Cognitive
+        %small
+          Machine Learning as a Service (MLaaS)
+    .row
+      .col-lg-11
+        %blockquote
           1. Each system user has a separate workspace of experiments.
           The number is limited as per the user quota set by the admin.
-        %h2.feature_statement
+    .row
+      .col-lg-11
+        %blockquote
           2. Each user is authenticated using token mechanism.
           The client is expected to send token as an argument for every api call.
-        %h2.feature_statement
+    .row
+      .col-lg-11
+        %blockquote
           3. Each experiment has multiple components which are connected to form a single workflow.
           Workflows specify the flow of data from the data source to data sink through various data transformations.
           Each component knows its parent so that whole workflow can be re-excuted on failures.
           In this version, web client supports only single inheritance.
           However, Multiple inheritance can be created using rest api calls.
-        %h2.feature_statement
+    .row
+      .col-lg-11
+        %blockquote
           4. For iterative executions, the client can specify whether the results should be cached.
           If caching is enabled, parent operations are skipped.
-        %h2.feature_statement
+    .row
+      .col-lg-11
+        %blockquote
           5. Every workflow is persisted that enables user to load or update previously created workflows.
-        %h2.feature_statement
+    .row
+      .col-lg-11
+        %blockquote
           6. Data source/Data output can be a CSV file, plain text file or a HTTP file.
-        %h2.feature_statement
+    .row
+      .col-lg-11
+        %blockquote
           7. Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.
           The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions.
           The client is expected to poll using GET requests to get the list of successful/errored operations.
-    .clear_float
