@@ -8,7 +8,7 @@ li.component {
 .whiteboard-flyout{
     overflow: scroll;
     margin-bottom:0;
-    padding: 0 0 35px;
+    padding: 0 0 130px;
     border-right: solid 1px #afafaf;
     position: fixed;
     left: 0;
@@ -81,8 +81,6 @@ li.component {
 .whiteboard-top-menu{
     height:18px;
     width:100%;
-    position:absolute;
-    top:0px;
 }
 
 .whiteboard-top-menu-wrapper{
@@ -256,16 +254,6 @@ tr.result_row:hover {
     width: 55px;
     height: 100%;
     background:#3D3D3D;
-}
-
-#footer {
-    height: 60px;
-    /*background: #686869;*/
-    width: 100%;
-    position: fixed;
-    background: white;
-    border-top: solid 1px steelblue;
-    bottom: 0;
 }
 
 .nav-tabs>li>a {

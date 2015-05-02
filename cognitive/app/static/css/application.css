@@ -14,6 +14,20 @@ body, h1, h2, h3, h4, h5, h6 {
     height: 100vh;
 }
 
+.cognitive-header {
+    background: white;
+}
+
+.cognitive-content{
+    height: calc(100vh - 50px);
+    background: white;
+    padding: 0;
+}
+
+.cognitive-footer{
+    background: white;
+}
+
 .zero_padding_margin {
     margin: 0;
     padding: 0;

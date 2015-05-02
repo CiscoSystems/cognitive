@@ -475,25 +475,26 @@
 
 
 - block 'footer'
-  .row{style:"height:inherit"}
-    .container{style:"height:inherit"}
-      .text-center{style:"height:inherit"}
-        .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:inherit; width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
-          #execute-btn.container-fluid
-            .row
-              %i.fa.fa-play.fa-align-center{style:"font-size:27pt;"}
-            .row
-              RUN
-        .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:100%;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
-          #show_component.container-fluid
-            .row
-              %i.glyphicon.glyphicon-signal.glyphicon-align-center.zero_padding_margin{style:"font-size:26pt;"}
-            .row
-              Show
-        .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:inherit;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
-          .container-fluid{style:"padding-right:20px;padding-left:20px;"}
-            .row
-              %i.glyphicon.glyphicon-floppy-disk.glyphicon-align-center{style:"font-size:28pt;"}
-            .row
-              %span.text-center SAVE
+  .navbar.navbar-default.navbar-fixed-bottom{style:"background:white"}
+    .navbar-inner
+      .row{style:"height:inherit"}
+        .text-center{style:"height:inherit"}
+          .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:inherit; width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
+            #execute-btn.container-fluid
+              .row
+                %i.fa.fa-play.fa-align-center{style:"font-size:27pt;"}
+              .row
+                RUN
+          .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:100%;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
+            #show_component.container-fluid
+              .row
+                %i.glyphicon.glyphicon-signal.glyphicon-align-center.zero_padding_margin{style:"font-size:26pt;"}
+              .row
+                Show
+          .btn-group.btn-group-cognitive{role:"group", aria-label:"footbar-btn", style:"height:inherit;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0"}
+            .container-fluid{style:"padding-right:20px;padding-left:20px;"}
+              .row
+                %i.glyphicon.glyphicon-floppy-disk.glyphicon-align-center{style:"font-size:28pt;"}
+              .row
+                %span.text-center SAVE
 

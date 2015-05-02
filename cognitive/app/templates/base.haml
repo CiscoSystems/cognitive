@@ -17,10 +17,10 @@
 
     - block 'extrahead'
 
-  %body
-    #header
+  %body{style:"padding-top:51px;"}
+    .container-fluid.cognitive-header
       - include 'header.haml'
-    #contents
+    .container-fluid.cognitive-content
       - block 'contents'
-    #footer
+    .container-fluid.cognitive-footer
       - block 'footer'
