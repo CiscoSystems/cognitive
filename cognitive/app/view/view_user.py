@@ -10,11 +10,16 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import json
+
 from ..models import User
 from ..serializers import UserSerializer
 from ..views import send_response
-from rest_framework import viewsets
 
+from django.core import serializers
+from rest_framework import viewsets
+from rest_framework.decorators import list_route
+from rest_framework.response import Response
 
 class UserViewSet(viewsets.ViewSet):
     """
@@ -42,11 +47,22 @@ class UserViewSet(viewsets.ViewSet):
         serializer = UserSerializer(user)
         return send_response(request.method, serializer)
 
+    # this implementation is tempral for front end developers
     def create(self, request):
-        serializer = UserSerializer(data=request.DATA)
-        if serializer.is_valid():
-            serializer.save()
-        return send_response(request.method, serializer)
+        # serializer = UserSerializer(data=request.DATA)
+        # if serializer.is_valid():
+        #     serializer.save()
+        # return send_response(request.method, serializer)
+        try:
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            token = User.generate_token()
+            user = User(username=username, email=email,password=password, token=token)
+            user.save()
+            return Response({'id': user.id, 'username': user.username, 'token': user.token, 'email': user.email})
+        except:
+            return Response({'status': 'failure'})
 
     def update(self, request, pk=None):
         user = User.objects.get(pk=pk)
@@ -60,3 +76,16 @@ class UserViewSet(viewsets.ViewSet):
         serializer = None
         user.delete()
         return send_response(request.method, serializer)
+
+
+    # this implementation is temporal not to stop front end developers
+    # users/login?username_or_email=some_user_name&password=some_password
+    @list_route(methods=["GET"])
+    def login(self, request):
+        try:
+            username_or_email = request.GET.get('username_or_email')
+            password = request.GET.get('password')
+            user = User.authenticate(username_or_email, password)
+            return Response({'id': user.id, 'username': user.username, 'email': user.email, 'token': user.token})
+        except:
+            return Response({'status': 'failure'})
