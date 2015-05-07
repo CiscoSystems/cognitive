@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="page-header">
+    <h1>
+      <span class="text-info">Cognitive</span>
+      <small>
+        Machine Learning as a Service (MLaaS)
+      </small>
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        1. Each system user has a separate workspace of experiments.
+        The number is limited as per the user quota set by the admin.
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        2. Each user is authenticated using token mechanism.
+        The client is expected to send token as an argument for every api call.
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        3. Each experiment has multiple components which are connected to form a single workflow.
+        Workflows specify the flow of data from the data source to data sink through various data transformations.
+        Each component knows its parent so that whole workflow can be re-excuted on failures.
+        In this version, web client supports only single inheritance.
+        However, Multiple inheritance can be created using rest api calls.
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        4. For iterative executions, the client can specify whether the results should be cached.
+        If caching is enabled, parent operations are skipped.
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        5. Every workflow is persisted that enables user to load or update previously created workflows.
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        6. Data source/Data output can be a CSV file, plain text file or a HTTP file.
+      </blockquote>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-11">
+      <blockquote>
+        7. Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.
+        The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions.
+        The client is expected to poll using GET requests to get the list of successful/errored operations.
+      </blockquote>
+    </div>
+  </div>
+</div>

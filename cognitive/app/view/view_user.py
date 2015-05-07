@@ -51,18 +51,26 @@ class UserViewSet(viewsets.ViewSet):
 
     # this implementation is tempral for front end developers
     def create(self, request):
+        print "test"
         # serializer = UserSerializer(data=request.DATA)
         # if serializer.is_valid():
         #     serializer.save()
         # return send_response(request.method, serializer)
         try:
-            username = request.POST.get('username')
-            email = request.POST.get('email')
-            password = request.POST.get('password')
+            username = request.DATA.get('username')
+            email = request.DATA.get('email')
+            password = request.DATA.get('password')
+            print(username)
+            print(email)
+            print(password)
             token = User.generate_token()
-            user = User(username=username, email=email,password=password, token=token)
+            user = User(username=username, email=email,
+                        password=password, token=token)
             user.save()
-            return Response({'id': user.id, 'username': user.username, 'token': user.token, 'email': user.email})
+            return Response({
+                'id': user.id, 'username': user.username,
+                'token': user.token, 'email': user.email,
+                'status': 'success'})
         except:
             return Response({'status': 'failure'})
 
@@ -88,6 +96,9 @@ class UserViewSet(viewsets.ViewSet):
             username_or_email = request.GET.get('username_or_email')
             password = request.GET.get('password')
             user = User.authenticate(username_or_email, password)
-            return Response({'id': user.id, 'username': user.username, 'email': user.email, 'token': user.token})
+            return Response({
+                'id': user.id, 'username': user.username,
+                'email': user.email, 'token': user.token,
+                'status': 'success'})
         except:
             return Response({'status': 'failure'})

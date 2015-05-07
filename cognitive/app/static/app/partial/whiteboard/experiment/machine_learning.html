@@ -1,0 +1,78 @@
+<div class="cognitive-detail-content" ng-controller="MachineLearningController">
+  <div class="cognitive-detail-header">
+    <h2>
+      <i class="fa fa-yelp"></i>
+      Machine Learning
+    </h2>
+  </div>
+    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;"  ng-hide="uploadExist()">
+        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+            <i class="fa fa-close"></i>Need to Upload Data Before.
+        </span>
+    </div>
+
+  <div class="cognitive-detail-body">
+    <div class="form-group">
+      <div class="row">
+        <label class="col-lg-3 control-label" for="select">
+            Method
+        </label>
+        <div class="col-lg-9">
+          <select class="form-control" ng-model="algorithm">
+            <option value="Linear_SVM">
+                Linear_SVM
+            </option>
+            <option value="Nearest_Neighbours">
+                Nearest_Neighbours
+            </option>
+            <option value="Decision_Tree">
+                Decision_Tree
+            </option>
+            <option value="Random_Forest">
+                Random_Forest
+            </option>
+            <option value="Naive_Bayes">
+                Naive_Bayes
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <label class="col-lg-3 control-label" for="select"> Target Column</label>
+        <div class="col-lg-9">
+          <select class="form-control" ng-model="target">
+            <option ng-model="target_column" ng-repeat="column in columns" value="{{$index}}">
+              {{column}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <label class="col-lg-3 control-label" for="select">
+            Train Data Percentage
+        </label>
+        <div class="col-lg-9">
+          <select class="form-control" ng-model="trainning_percentage">
+            <option value="10"> 10</option>
+            <option value="20"> 20</option>
+            <option value="30"> 30</option>
+            <option value="40"> 40</option>
+            <option value="50"> 50</option>
+            <option value="60"> 60</option>
+            <option value="70"> 70</option>
+            <option value="80"> 80</option>
+            <option value="90"> 90</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary right" type="button" ng-click="createNode()">
+        Add
+    </button>
+  </div>
+</div>

@@ -1,52 +1,89 @@
-- extends 'base.haml'
+!!!
+%html{lang: "en", xmlns: "http://www.w3.org/1999/xhtml", ng-app:"cognitive"}
+  %head
+    %meta{charset: "utf-8"}
+    %title Cognitive
 
-- block 'extrahead'
+    - load staticfiles
 
-  - load staticfiles
-  %link{href: "{{STATIC_URL}}css/index.css", rel: "stylesheet"}
-  %script{src: "{{STATIC_URL}}js/index.js", type: "text/javascript"}
+    %link{href: "{{STATIC_URL}}lib/bootstrap/css/bootstrap.min.css", rel: "stylesheet"}
+    %link{href: "{{STATIC_URL}}lib/font-awesome/css/font-awesome.min.css", rel: "stylesheet"}
+    %link{href: "{{STATIC_URL}}css/application.css", rel: "stylesheet"}
+    %script{src: "{{STATIC_URL}}lib/jquery/jquery.min.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}lib/bootstrap/js/bootstrap.min.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}lib/js/angular.min.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}lib/js/angular-ui-router.min.js", type: "text/javascript"}
+    %script{src: "https:////cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js", type: "text/javascript"}
+    %script{src: "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}lib/js/ngStorage.min.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/app.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/authentication.js", type: "text/javascript"}
 
-- block 'contents'
-  .container
-    .page-header
-      %h1
-        %span.text-info Cognitive
-        %small
-          Machine Learning as a Service (MLaaS)
-    .row
-      .col-lg-11
-        %blockquote
-          1. Each system user has a separate workspace of experiments.
-          The number is limited as per the user quota set by the admin.
-    .row
-      .col-lg-11
-        %blockquote
-          2. Each user is authenticated using token mechanism.
-          The client is expected to send token as an argument for every api call.
-    .row
-      .col-lg-11
-        %blockquote
-          3. Each experiment has multiple components which are connected to form a single workflow.
-          Workflows specify the flow of data from the data source to data sink through various data transformations.
-          Each component knows its parent so that whole workflow can be re-excuted on failures.
-          In this version, web client supports only single inheritance.
-          However, Multiple inheritance can be created using rest api calls.
-    .row
-      .col-lg-11
-        %blockquote
-          4. For iterative executions, the client can specify whether the results should be cached.
-          If caching is enabled, parent operations are skipped.
-    .row
-      .col-lg-11
-        %blockquote
-          5. Every workflow is persisted that enables user to load or update previously created workflows.
-    .row
-      .col-lg-11
-        %blockquote
-          6. Data source/Data output can be a CSV file, plain text file or a HTTP file.
-    .row
-      .col-lg-11
-        %blockquote
-          7. Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.
-          The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions.
-          The client is expected to poll using GET requests to get the list of successful/errored operations.
+    %script{src: "{{STATIC_URL}}app/service/experiment/duplicate_removal.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/file_input.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/formula.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/introduction.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/machine_learning.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/metadata.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/missing_data_removal.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/normalization.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/projection.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/experiment/row_addition.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/component.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/workspace.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/service/node_event_handler.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/directive/cognitive_edge.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/directive/cognitive_node.js", type: "text/javascript"}
+
+    -# /whitboead needs following files
+    %link{href: "{{STATIC_URL}}lib/jquery-ui/jquery-ui.css", rel: "stylesheet"}
+    %link{href: "{{STATIC_URL}}css/whiteboard.css", rel: "stylesheet"}
+    %script{src: "{{STATIC_URL}}lib/jquery-ui/jquery-ui.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}lib/d3/d3.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/whiteboard.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}lib/js/jquery.csv-0.71.min.js", type: "text/javascript"}
+
+    %script{src: "{{STATIC_URL}}app/controller/experiment/duplicate_removal.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/file_input.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/formula.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/machine_learning.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/missing_data_removal.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/normalization.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/projection.js", type: "text/javascript"}
+    %script{src: "{{STATIC_URL}}app/controller/experiment/row_addition.js", type: "text/javascript"}
+
+    - block 'extrahead'
+
+  %body{ng-controller:"CognitiveController", style:"padding-top:51px;"}
+    .container-fluid{ng-controller:"CognitiveHeaderController"}
+      %nav.navbar.navbar-fixed-top{style:"background:white; border-bottom: solid 1px #eeeeee;"}
+        .navbar-inner
+          .container-fluid
+            .navbar-header
+              %a.navbar-brand{ui-sref: "index"}
+                .text-info
+                  %i.fa.fa-cube{style:"padding:0;margin:0;"}
+                  Cognitive
+            .collapse.navbar-collapse{ng-controller:"AuthenticationController"}
+              %ul.nav.navbar-nav
+                %li{ng-show: "isAuthenticated()"}
+                  %a{ui-sref: "whiteboard.experiment"} WhiteBoard
+                %li{ng-hide: "isAuthenticated()"}
+                  %a{ng-click: "openLoginModal()"} WhiteBoard
+              %ul.nav.navbar-nav.navbar-right
+                %li.dropdown{ng-show:"isAuthenticated()"}
+                  %a#user-dropdown-menu.dropdown-toggle{type:"button",data-toggle:"dropdown", aria-expanded:"true"}
+                    %i.fa.fa-user
+                    {% verbatim %}{{user.name}}{% endverbatim %}
+                    %span.caret
+                  %ul.dropdown-menu
+                    %li{role:"presentation", ng-click:"logout()"}
+                      %a{role:"menuitem", tabindex:"10"}
+                        Log out
+
+                %li{ng-hide:"isAuthenticated()", ng-click: "openLoginModal()"}
+                  %a Login
+
+    .container-fluid.cognitive-content{ng-controller:"CognitiveContentController"}
+      %div{ui-view:"main"}

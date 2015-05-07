@@ -1,5 +1,28 @@
+.cognitive-modal-window .modal-dialog {
+  width: 95%;
+}
+
+#login-modal {
+     background:white;
+}
+input {
+    border-radius: 0 !important;
+}
+
+select {
+    border-radius: 0 !important;
+    -webkit-appearance: none !important;
+}
+
+button {
+    border-radius: 0 !important;
+}
+.login-modal-window .modal-dialog {
+    width: 800px;
+}
+
 body {
-    background-color: #577691;
+    /*background-color: #577691;*/
     padding: 0;
     margin: 0;
 }
