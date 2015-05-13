@@ -5,6 +5,11 @@ Machine Learning as a Service (MLaaS)
 
 It is still in development. If you find any errors, please let us know.
 
+![Alt text](/doc/img/demo-login.png?raw=true "Optional Title")
+
+![Alt text](/doc/img/demo-main.png?raw=true "Optional Title")
+
+![Alt text](/doc/img/demo-result.png?raw=true "Optional Title")
 
 Installation
 ------------
