@@ -15,7 +15,7 @@ cognitive.factory('CognitiveComponentService', function(
         ProjectionService.definition,
         DuplicateRemovalService.definition,
         MissingDataRemovalService.definition,
-        MetaDataService.definition,
+        //MetaDataService.definition,
         MachineLearningService.definition,
     ];
 

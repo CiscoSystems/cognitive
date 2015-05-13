@@ -1,4 +1,3 @@
-"use strict";
 var cognitive = angular.module("cognitive",['ui.router', 'ui.bootstrap', 'ngStorage']);
 
 cognitive.config(function($stateProvider, $urlRouterProvider){
@@ -66,6 +65,7 @@ cognitive.controller('CognitiveHeaderController', function($scope, $http, $sessi
             windowClass: 'login-modal-window',
             resolve: {}
         });
+
         login_modal.opened.then(function () {
            if ($.browser.webkit) {
               $('input[name="password"]').attr('autocomplete', 'off');
@@ -88,6 +88,11 @@ cognitive.controller('CognitiveHeaderController', function($scope, $http, $sessi
 });
 
 cognitive.controller('CognitiveLoginModalController', function ($scope, $http, $state, $modalInstance) {
+
+    $scope.register_error = 0;
+    $scope.login_error = 0;
+    $scope.message = "";
+
     $scope.loginForm = {
         username_or_email: "",
         password: ""
@@ -99,13 +104,23 @@ cognitive.controller('CognitiveLoginModalController', function ($scope, $http, $
         password: ""
     }
 
+    $scope.isRegisterError = function () {
+        return $scope.register_error !== 0;
+    }
+
+    $scope.isLoginError = function () {
+        return $scope.login_error !== 0;
+    }
+
     $scope.login = function (username_or_email, password) {
         $http.get("/api/v1/users/login?username_or_email=" + username_or_email + "&password=" + password)
             .success(function (data, status, headers, config) {
                 if (data.status !== "success") {
                     // some error suggestion
+                    $scope.login_error = 1;
                     return;
                 }
+                $scope.login_error = 0;
                 $modalInstance.close({
                     status: "success",
                     user: {
@@ -119,10 +134,15 @@ cognitive.controller('CognitiveLoginModalController', function ($scope, $http, $
         $http.post("/api/v1/users/", {username: username, email: email, password:password})
             .success(function (data, status, headers, config) {
                 console.log(data)
+                console.log("test")
                 if (data.status !== "success") {
                     // some error suggestion
+                    console.log("error")
+                    $scope.register_error = 1;
+                    $scope.message = data.message;
                     return;
                 }
+                $scope.error = 0;
                 $modalInstance.close({
                     status: "success",
                     user: {

@@ -1,4 +1,5 @@
-cognitive.controller("AuthenticationController", function ($scope, $http, $state) {
+cognitive.controller("AuthenticationController", function (
+    $scope, $http, $state) {
 
     $scope.name = ""
     $scope.pass = ""

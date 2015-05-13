@@ -1,4 +1,6 @@
-cognitive.factory('RowAdditionService', function ($http, CognitiveWorkspaceService) {
+cognitive.factory('RowAdditionService', function (
+    $http, CognitiveWorkspaceService) {
+
     var RowAdditionService = {};
     var definition = {
         name:"add_row",

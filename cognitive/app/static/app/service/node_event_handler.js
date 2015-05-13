@@ -13,33 +13,6 @@ cognitive.factory('CognitiveNodeEventHandlerService', function () {
         cognitive_node.x += sx;
         cognitive_node.y += sy;
         scope.$apply();
-
-        //d3.selectAll('g[from_id="' + group.attr('id') + '"]').selectAll('line')
-        //    .attr('x1', sx + parseInt(group.attr('abs_x')) + 90)
-        //    .attr('y1', sy + parseInt(group.attr('abs_y')) + 40);
-
-        //d3.selectAll('g[to_id="' + group.attr('id') + '"]').selectAll('line')
-        //    .attr('x2', sx + parseInt(group.attr('abs_x')) + 90)
-        //    .attr('y2', sy + parseInt(group.attr('abs_y')));
-
-        //var node_id = group.attr('id').split("-")[2];
-        //var scope = d3.selectAll($('#scope-' + node_id));
-        //
-        //scope
-        //    .attr('x', sx - 30 + parseInt(group.attr('abs_x')))
-        //    .attr('y', sy - 30 + parseInt(group.attr('abs_y')));
-        //
-        //var functionality_group = d3.selectAll($('#close-icon-id-' + node_id));
-        //
-        //functionality_group
-        //    .attr('x', sx - 20 + parseInt(group.attr('abs_x')))
-        //    .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
-        //
-        //var edit_icon = d3.selectAll($('#edit-icon-id-' + node_id));
-        //
-        //edit_icon
-        //    .attr('x', sx + parseInt(group.attr('abs_x')))
-        //    .attr('y', sy - 5 + parseInt(group.attr('abs_y')));
     }
 
     var prepareDrawingConnection = function prepareDrawingConnection(){
@@ -72,8 +45,16 @@ cognitive.factory('CognitiveNodeEventHandlerService', function () {
         }
 
         dest = d3.select(dest[0]);
+
         var src_node_id = d3.select(this).attr('node');
         var dest_node_id = dest.attr('node');
+
+        if (dest.attr("class").match(/input/) == null) {
+            var t = src_node_id;
+            src_node_id = dest_node_id;
+            dest_node_id = t;
+        }
+
         angular.element(this).scope().appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
         d3.select(this).classed('src', false);
     }

@@ -1,4 +1,6 @@
-cognitive.controller('MathFormulaController', function($scope, CognitiveWorkspaceService, FormulaService) {
+cognitive.controller('MathFormulaController', function(
+    $scope, CognitiveWorkspaceService, FormulaService) {
+
     $scope.columns = parsed_file[0];
     $scope.formula = ""
     $scope.target_column = -1;

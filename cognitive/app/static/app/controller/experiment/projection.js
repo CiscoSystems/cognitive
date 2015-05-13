@@ -1,4 +1,6 @@
-cognitive.controller('ProjectionController', function($scope, CognitiveWorkspaceService, ProjectionService) {
+cognitive.controller('ProjectionController', function(
+    $scope, CognitiveWorkspaceService, ProjectionService) {
+
     $scope.columns = parsed_file[0];
     $scope.targets = [-1];
 

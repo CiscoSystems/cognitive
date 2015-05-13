@@ -1,21 +1,20 @@
 <div class="cognitive-detail-content" ng-controller="MachineLearningController">
   <div class="cognitive-detail-header">
     <h2>
-      <i class="fa fa-yelp"></i>
+      <i class="fa fa-spinner"></i>
       Machine Learning
     </h2>
   </div>
-    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;"  ng-hide="uploadExist()">
-        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
-            <i class="fa fa-close"></i>Need to Upload Data Before.
-        </span>
-    </div>
-
+  <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;"  ng-hide="uploadExist()">
+    <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+      <i class="fa fa-close"></i>Need to Upload Data Before.
+    </span>
+  </div>
   <div class="cognitive-detail-body">
     <div class="form-group">
       <div class="row">
         <label class="col-lg-3 control-label" for="select">
-            Method
+          Method
         </label>
         <div class="col-lg-9">
           <select class="form-control" ng-model="algorithm">
@@ -70,7 +69,6 @@
         </div>
       </div>
     </div>
-
     <button class="btn btn-primary right" type="button" ng-click="createNode()">
         Add
     </button>

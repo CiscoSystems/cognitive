@@ -1,12 +1,11 @@
-cognitive.factory('CognitiveWorkspaceService', function($http, $sessionStorage) {
-    var CognitiveWorkspaceService = {}
+cognitive.factory('CognitiveWorkspaceService', function(
+    $http, $sessionStorage) {
 
+    var CognitiveWorkspaceService = {}
     var workspaces = [
         //{
         //    id: 1, name: "Workspace 1",
         //    nodes: [
-        //
-        //
         //    ],
         //    edges: [],
         //    active: false},
@@ -72,7 +71,6 @@ cognitive.factory('CognitiveWorkspaceService', function($http, $sessionStorage) 
     }
 
     var getCurrentFocusNode = function() {
-        console.log(workspaces);
         var workspace = getCurrentWorkspace();
         var nodes =  workspace.nodes
             .filter(function (node) {return node.focus;});

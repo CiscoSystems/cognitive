@@ -1,10 +1,14 @@
-cognitive.controller('RemoveDuplicateController', function($scope, CognitiveWorkspaceService, DuplicateRemovalService) {
+cognitive.controller('RemoveDuplicateController', function(
+    $scope, CognitiveWorkspaceService, DuplicateRemovalService) {
+
     $scope.columns = parsed_file[0];
     $scope.targets = [-1];
 
     $scope.createNode = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
-        DuplicateRemovalService.createNode($scope.user.id, workspace.id, $scope.user.token, $scope.targets);
+        DuplicateRemovalService.createNode(
+            $scope.user.id, workspace.id,
+            $scope.user.token, $scope.targets);
     };
 
     $scope.addTarget = function () {

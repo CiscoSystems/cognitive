@@ -1,50 +1,47 @@
 <div id="workspace-modal" style="background: white">
-
-
-    <div class="modal-header">
-        <button class="close" ng-click="cancel()">
-            <span aria-hidden="true"> &times;</span>
-        </button>
-        <h4 id="myModalLabel" class="modal-title">Make Workspace</h4>
+  <div class="modal-header">
+    <button class="close" ng-click="cancel()">
+      <span aria-hidden="true"> &times;</span>
+    </button>
+    <h4 id="myModalLabel" class="modal-title">Make Workspace</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <h2>Create Workspace</h2>
     </div>
-    <div class="modal-body">
-        <div class="row-fluid">
-             <h2>Create Workspace</h2>
-        </div>
-        <div class="row-fluid">
-            <label class="left" for="whiteboard-name"> Whiteboard Name</label>
-            <input class="form-control" ng-model="create_name" />
-            <span class="left">The name of new workspace - each environment is separated by this.</span>
-            <div class="clear_float"></div>
-        </div>
-        <div class="row-fluid">
-            <button id="create-experiment" class="btn btn-primary right" ng-click="create_whiteboard()" style="border-radius: 0"> Create </button>
-            <div class="clear_float"></div>
-        </div>
-        <div class="row-fluid">
-            <h2>Open Workspace
-                <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt;">
-                    <i class="fa fa-close"></i>
-                    Not Implemanted
-                </span>
-            </h2>
-
-        </div>
-        <div class="row-fluid">
-            <select class="form-control" ng-model="saved_whiteboard" disabled>
-                <option ng-repeat="workspace in user_workspace_list" value="{{workspace.id}}">
-                    {{workspace.name}}
-                </option>
-            </select>
-            <span class="left">Open the workspace you saved before.</span>
-            <div class="clear_float"></div>
-        </div>
-        <div class="row-fluid">
-            <button class="btn btn-primary right" ng-click="open_whiteboard()" style="border-radius: 0" disabled> Open</button>
-            <div class="clear_float"></div>
-        </div>
+    <div class="row-fluid">
+      <label class="left" for="whiteboard-name"> Workspace Name</label>
+      <input class="form-control" ng-model="create_name" />
+      <span class="left">The name of new workspace - each environment is separated by this.</span>
+      <div class="clear_float"></div>
     </div>
-    <div class="modal-footer">
-        <button class="btn btn-default" ng-click="cancel()" style="border-radius: 0"> Close</button>
+    <div class="row-fluid">
+      <button id="create-experiment" class="btn btn-primary right" ng-click="create_whiteboard()" style="border-radius: 0"> Create </button>
+      <div class="clear_float"></div>
     </div>
+    <div class="row-fluid">
+      <h2>Open Workspace
+        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt;">
+          <i class="fa fa-close"></i>
+          Not Implemanted
+        </span>
+      </h2>
+    </div>
+    <div class="row-fluid">
+      <select class="form-control" ng-model="saved_whiteboard" disabled>
+        <option ng-repeat="workspace in user_workspace_list" value="{{workspace.id}}">
+          {{workspace.name}}
+        </option>
+      </select>
+      <span class="left">Open the workspace you saved before.</span>
+      <div class="clear_float"></div>
+    </div>
+    <div class="row-fluid">
+      <button class="btn btn-primary right" ng-click="open_whiteboard()" style="border-radius: 0" disabled> Open</button>
+      <div class="clear_float"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()" style="border-radius: 0"> Close</button>
+  </div>
 </div>

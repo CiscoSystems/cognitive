@@ -6,18 +6,22 @@ var parsed_file = [];
 
 cognitive.controller("WhiteboardMainController", function () {
 
-
 });
 
-cognitive.controller('ComponentController', function($scope, $location, CognitiveComponentService) {
+
+cognitive.controller('ComponentController', function(
+    $scope, $location, CognitiveComponentService) {
+
     $scope.parsed_file = [];
     $scope.file_body = "";
     $scope.file_name = "";
-
     $scope.components = CognitiveComponentService.getCognitiveComponents();
 });
 
-cognitive.controller('MetadataController', function($scope, CognitiveWorkspaceService, MetaDataService) {
+
+cognitive.controller('MetadataController', function(
+    $scope, CognitiveWorkspaceService, MetaDataService) {
+
     $scope.columns = parsed_file[0];
     $scope.createNode = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
@@ -25,7 +29,10 @@ cognitive.controller('MetadataController', function($scope, CognitiveWorkspaceSe
     };
 });
 
-cognitive.controller("WhiteboardTabController", function ($scope, $modal, $log, $http) {
+
+cognitive.controller("WhiteboardTabController", function (
+    $scope, $modal, $log, $http) {
+
     $scope.open = function() {
         var modal_instance = $modal.open({
             animation: true,
@@ -57,10 +64,10 @@ cognitive.controller("WhiteboardTabController", function ($scope, $modal, $log, 
 });
 
 
+cognitive.controller("WhiteboardBottomMenuController", function (
+    $scope, $modal, $log, $http, CognitiveWorkspaceService) {
 
-cognitive.controller("WhiteboardBottomMenuController", function ($scope, $modal, $log, $http, CognitiveWorkspaceService) {
     $scope.run = function() {
-
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
         var topology = CognitiveWorkspaceService.getTopology();
 
@@ -135,7 +142,7 @@ cognitive.controller("WhiteboardBottomMenuController", function ($scope, $modal,
 
                 var modal_instance = $modal.open({
                     animation: true,
-                    templateUrl: 'modal-show',
+                    templateUrl: '/static/app/partial/whiteboard/experiment/result_modal.html',
                     controller: "ResultDisplayModalController",
                     size: "",
                     windowClass:"cognitive-modal-window",
@@ -147,7 +154,6 @@ cognitive.controller("WhiteboardBottomMenuController", function ($scope, $modal,
     };
 
     $scope.save = function () { console.log("workspace save has not been implemented yet") };
-
 });
 
 cognitive.controller('ResultDisplayModalController', function ($scope, $modalInstance, data) {
@@ -163,10 +169,11 @@ cognitive.controller('ResultDisplayModalController', function ($scope, $modalIns
     }
 });
 
-cognitive.controller('WhiteboardTabModalController', function ($scope, $modalInstance, $http) {
+
+cognitive.controller('WhiteboardTabModalController', function (
+    $scope, $modalInstance, $http) {
 
     $scope.user_workspace_list = [];
-
 
     $http.get("/api/v1/experiments").success(function (data, status, headers, config) {
         data.forEach(function(datum) {
@@ -188,9 +195,6 @@ cognitive.controller('WhiteboardTabModalController', function ($scope, $modalIns
    };
 
     $scope.open_whiteboard = function() {
-
-        console.log($scope.saved_whiteboard);
-
         var whiteboard = {id: $scope.saved_whiteboard};
 
         for (var i in $scope.user_workspace_list){

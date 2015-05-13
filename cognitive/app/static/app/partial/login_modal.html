@@ -9,17 +9,14 @@
                         <div class="form-group">
                             <label for="#username">Username</label>
                             <input id="username" class="form-control" type="text" name="username" ng-model="registerForm.username" placeholder="username">
-                            <span>This will be displayed for other user.</span>
                         </div>
                         <div class="form-group">
                             <label for="#email"> Email</label>
                             <input id="email" class="form-control" type="email" name="email" ng-model="registerForm.email" placeholder="email@email.com">
-                            <span>All information will be sent to this mail address.</span>
                         </div>
                         <div class="form-group">
                             <label for="#password"> Password </label>
                             <input autocomplete="off" id="password" class="form-control" type="password" name="password" ng-model="registerForm.password" placeholder="password">
-                            <span>User have to use at least one lowercase letter, one number, and seven characters.</span>
                         </div>
                         <!--<div class="form-group">
                             <label for="#password-confirm">
@@ -27,6 +24,13 @@
                             </label>
                             <input id="password-confirm" class="form-control" type="password" />
                         </div>-->
+
+                        <div class="form-group" ng-show="isRegisterError()" style="background: ">
+                            <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+                                <i class="fa fa-close"></i>{{ message }}
+                            </span>
+                        </div>
+
                         <button class="btn btn-primary right" type="submit" style="border-radius: 0">
                             Create Account
                         </button>
@@ -44,6 +48,11 @@
                         <div class="form-group">
                             <label for="#password">Password</label>
                             <input placeholder="password" id="password" class="form-control" type="password" name="password" ng-model="loginForm.password" />
+                        </div>
+                        <div class="form-group" ng-show="isLoginError()" style="background: ">
+                            <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+                                <i class="fa fa-close"></i> Wrong credentials
+                            </span>
                         </div>
                         <button class="btn btn-primary right" type="submit" style="margin-top:5px;border-radius: 0">Login</button>
                     </form>

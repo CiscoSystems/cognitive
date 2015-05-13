@@ -1,4 +1,6 @@
-cognitive.controller('NormalizationController', function($scope, CognitiveWorkspaceService, NormalizationService) {
+cognitive.controller('NormalizationController', function(
+    $scope, CognitiveWorkspaceService, NormalizationService) {
+
     $scope.columns = parsed_file[0];
     $scope.component_type = "Column",
     $scope.component_id =- 1;

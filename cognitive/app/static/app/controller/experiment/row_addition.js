@@ -1,8 +1,8 @@
-cognitive.controller('AddRowController', function($scope, CognitiveWorkspaceService, RowAdditionService) {
+cognitive.controller('AddRowController', function(
+    $scope, CognitiveWorkspaceService, RowAdditionService) {
 
     $scope.columns = parsed_file[0];
     $scope.values = [];
-
 
     for(var i=0; i<$scope.columns.length; ++i) {
         $scope.values.push("")
