@@ -142,7 +142,7 @@ cognitive.controller("WhiteboardBottomMenuController", function (
 
                 var modal_instance = $modal.open({
                     animation: true,
-                    templateUrl: 'modal-show',
+                    templateUrl: '/static/app/partial/whiteboard/experiment/result_modal.html',
                     controller: "ResultDisplayModalController",
                     size: "",
                     windowClass:"cognitive-modal-window",
