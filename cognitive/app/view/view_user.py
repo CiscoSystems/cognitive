@@ -12,18 +12,19 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-import json
 
 from ..models import User
 from ..serializers import UserSerializer
 from ..views import send_response
 
-from django.core import serializers
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
 
 class UserViewSet(viewsets.ViewSet):
+    permission_classes = [AllowAny, ]
     """
     A simple ViewSet that for listing or retrieving users.
 
@@ -40,18 +41,30 @@ class UserViewSet(viewsets.ViewSet):
     })
     """
     def list(self, request):
+        """
+        Lists all users in the system
+        ---
+        """
         user = User.objects.all()
         serializer = UserSerializer(user, many=True)
         return send_response(request.method, serializer)
 
     def retrieve(self, request, pk=None):
+        """
+        Retrieve a user in the system
+        ---
+        """
         user = User.objects.get(pk=pk)
         serializer = UserSerializer(user)
         return send_response(request.method, serializer)
 
     # this implementation is tempral for front end developers
     def create(self, request):
-        print "test"
+        """
+        Create a new user in the system
+        ---
+        request_serializer: UserSerializer
+        """
         # serializer = UserSerializer(data=request.DATA)
         # if serializer.is_valid():
         #     serializer.save()
@@ -60,9 +73,8 @@ class UserViewSet(viewsets.ViewSet):
             username = request.DATA.get('username')
             email = request.DATA.get('email')
             password = request.DATA.get('password')
-            print(username)
-            print(email)
-            print(password)
+            if not User.validate(username, email, password):
+                return Response({'status': 'failure'})
             token = User.generate_token()
             user = User(username=username, email=email,
                         password=password, token=token)
@@ -71,10 +83,15 @@ class UserViewSet(viewsets.ViewSet):
                 'id': user.id, 'username': user.username,
                 'token': user.token, 'email': user.email,
                 'status': 'success'})
-        except:
-            return Response({'status': 'failure'})
+        except Exception as e:
+            return Response({'status': 'failure', 'message': str(e)})
 
     def update(self, request, pk=None):
+        """
+        Update all users in the system
+        ---
+        request_serializer: UserSerializer
+        """
         user = User.objects.get(pk=pk)
         serializer = UserSerializer(user, data=request.DATA)
         if serializer.is_valid():
@@ -82,11 +99,14 @@ class UserViewSet(viewsets.ViewSet):
         return send_response(request.method, serializer)
 
     def destroy(self, request, pk=None):
+        """
+        Delete a user in the system
+        ---
+        """
         user = User.objects.get(pk=pk)
         serializer = None
         user.delete()
         return send_response(request.method, serializer)
-
 
     # this implementation is temporal not to stop front end developers
     # users/login?username_or_email=some_user_name&password=some_password
