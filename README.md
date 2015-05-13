@@ -34,7 +34,7 @@ Usage
 
 2. You can add any operation from the left pane and apply it on the input data. The sequence of execution is determined by the workflow graph displayed on the right pane. Create links between components to show the relationship.
 
-      a) You can create a link between two components by 'drag and drop'.
+      a) You can connect two components by 'drag and drop' a link between them.
 
       b) Click “Run” if you add a new component. This registers the new component and adds it to your saved workflow. Or in other words, you won't see the effect unless you click 'Run' after adding the new component. 
 
@@ -53,12 +53,14 @@ Upcoming features
             Applying operations on columns that are non-existent. (Once 'Column selection' feature is applied to project lesser number of columns, un-selected columns cannot be used in any of the future operations)
             Applying ML algorithm on an input that has some missing entries
             Applying ML algorithm on an input that has non-numerical values
+            Applying ML algorithm on a non-existent target column
 
 2. Run the topology in remote storm cluster for parallelizing heavy jobs.
 3. Error reporting is missing in UI. It will not display any result if the user creates a component with wrong parameters. Please check console for errors.
+4. Cognitive will support real time streaming inputs like Kafka. It will have support to save the output to databases like Influx, Elastic Search etc.
 
 API Documentation
 -----------------
 
-Swagger API Documentation is available via `http://127.0.0.1:8000/docs` after launchnig Django server.
+Swagger API Documentation is available via `http://127.0.0.1:8000/docs` after launching Django server.
 
