@@ -1,4 +1,6 @@
-cognitive.factory('MissingDataRemovalService', function ($http, CognitiveWorkspaceService) {
+cognitive.factory('MissingDataRemovalService', function (
+    $http, CognitiveWorkspaceService) {
+
     var MissingDataRemovalService = {};
     var definition = {
         name:"remove_missing_value",

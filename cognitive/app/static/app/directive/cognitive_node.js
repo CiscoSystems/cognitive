@@ -1,4 +1,6 @@
-cognitive.directive('cognitiveNode', function($compile, CognitiveNodeEventHandlerService) {
+cognitive.directive('cognitiveNode', function(
+    $compile, CognitiveNodeEventHandlerService) {
+
     return {
         restrict: 'AEC',
         replace: 'true',
@@ -6,26 +8,17 @@ cognitive.directive('cognitiveNode', function($compile, CognitiveNodeEventHandle
             var g = d3.select(element[0]).append('g')
                 .attr('class', 'node-group')
                 .attr('ng-class', '{active: isActiveCognitiveNode(workspace.id, node.id)}')
-                //.attr('abs_x', '{node.x}')
-                //.attr('abs_y', this.y)
-                //.attr('x', '{{node.x}}').attr('y', '{{node.y}}')
-                //.attr('x', '{{node.x}}').attr('y', '{{node.y}}')
                 .attr('x', 0).attr('y', 0)
                 .attr('node', '{{node.id}}')
                 .attr('id', 'node-group-{{node.id}}')
                 .attr('ng-click', "clickCognitiveNode($event, workspace.id, node.id)")
-                //.attr('ng-mousedown', "mouseDownCognitiveNode($event, workspace.id, $index)")
-                //.attr('ng-mousemove', "mouseMoveCognitiveNode($event, workspace.id, $index)")
-                //.attr('ng-mouseup', "mouseUpCognitiveNode($event, workspace.id, $index)")
-                //.attr('ng-mouseleave', "mouseLeaveCognitiveNode($event, workspace.id, $index)")
-                .call(d3.behavior.drag().on("drag", CognitiveNodeEventHandlerService.dragCognitiveNode))
-                //.on("click", function () {_click(this)})
+                .call(d3.behavior.drag()
+                    .on("drag", CognitiveNodeEventHandlerService.dragCognitiveNode))
                 .on("mouseenter", function() {
                     var id = this.id.split("-")[2];
                     $("#close-icon-id-" + 1).css("display", "block");
                     $("#edit-icon-id-" + 1).css("display", "block");})
-                .on("mouseover", function () {
-                });
+                .on("mouseover", function () {});
 
             g.append('rect')
                 .attr('x', '{{node.x}}')

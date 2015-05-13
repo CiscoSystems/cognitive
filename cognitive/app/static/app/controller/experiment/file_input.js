@@ -1,7 +1,11 @@
-cognitive.controller('DataInputController', function($scope, CognitiveWorkspaceService, FileInputService) {
+cognitive.controller('DataInputController', function(
+    $scope, CognitiveWorkspaceService, FileInputService) {
+
     $scope.createNode = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
-        FileInputService.createNode($scope.user.id, workspace.id,  $scope.user.token, file_name, file_body);
+        FileInputService.createNode(
+            $scope.user.id, workspace.id,
+            $scope.user.token, file_name, file_body);
     };
 
     $scope.uploadFile = function (event) {

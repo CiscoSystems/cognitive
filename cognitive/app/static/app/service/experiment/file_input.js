@@ -1,6 +1,7 @@
-cognitive.factory('FileInputService', function ($http, CognitiveWorkspaceService) {
-    var FileInputService = {};
+cognitive.factory('FileInputService', function (
+    $http, CognitiveWorkspaceService) {
 
+    var FileInputService = {};
     var definition =  {
         title:"Input Data",
         icon_class:"fa fa-arrow-up",

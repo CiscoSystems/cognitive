@@ -1,4 +1,3 @@
-"use strict";
 var cognitive = angular.module("cognitive",['ui.router', 'ui.bootstrap', 'ngStorage']);
 
 cognitive.config(function($stateProvider, $urlRouterProvider){

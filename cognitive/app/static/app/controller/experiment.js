@@ -43,7 +43,6 @@ cognitive.controller('ExperimentController', function (
     }
 
     $scope.appendEdgeOnCurrentWorkspace = function (src_node_id, dest_node_id) {
-        console.log("apppendEdge")
         var workspace = $scope.currentWorkspace();
         $scope.createEdge(workspace.id, src_node_id, dest_node_id);
     }
@@ -135,7 +134,6 @@ cognitive.controller('ExperimentController', function (
     //};
 
     $scope.clickCognitiveNode = function (event, workspace_id, index) {
-        console.log("----------------")
         var node = $scope.getNodeByWorkspaceAndIndex(workspace_id, index);
         if (node.focus) {
             node.focus = false;
@@ -152,49 +150,6 @@ cognitive.controller('ExperimentController', function (
         }
 
         node.focus = true;
-
-
-
-        //if (d3.event.defaultPrevented) return;
-        //
-        //var component = d3.select(e);
-        //
-        //if (ComponentBase.current_focus == null) {
-        //    component.classed('clicked', true);
-        //    ComponentBase.current_focus = component;
-        //    return;
-        //}
-        //
-        //if (ComponentBase.current_focus.attr('id') == component.attr('id')) {
-        //    component.classed('clicked', false);
-        //    ComponentBase.current_focus = null;
-        //    return;
-        //}
-        //
-        //var svg = d3.selectAll(ComponentBase.connection_layer);
-        //var g = svg.append('g')
-        //    .attr('from_id', ComponentBase.current_focus.attr('id'))
-        //    .attr('to_id', component.attr('id'));
-        //
-        //var line  = g.append("line")
-        //    .attr('x1',  parseInt(ComponentBase.current_focus.attr('x')) +  parseInt(ComponentBase.current_focus.attr('abs_x')) + 90)
-        //    .attr('y1',  parseInt(ComponentBase.current_focus.attr('y')) +  parseInt(ComponentBase.current_focus.attr('abs_y')) + 40)
-        //    .attr('x2',  parseInt(component.attr('x')) +  parseInt(component.attr('abs_x'))+ 90)
-        //    .attr('y2',  parseInt(component.attr('y')) +  parseInt(component.attr('abs_y')))
-        //    .attr("stroke", "gray")
-        //    .attr('stroke-width', 2);
-        //
-        //var current_focus_node_id = ComponentBase.current_focus.attr('id').split("-")[2];
-        //var next_node_id = component.attr('id').split("-")[2];
-        //
-        //ComponentBase.find_by_id(current_focus_node_id).setOutputPath(g);
-        //ComponentBase.find_by_id(next_node_id).setInputPath(g);
-        //ComponentBase.current_focus.classed('clicked', false);
-        //
-        //component.classed('clicked', false);
-        //ComponentBase.current_focus = null;
-        //
-        //$(".whiteboard-right-menu").toggle()
     };
 
     $scope.getNodeByWorkspaceAndIndex = function(workspace_id, index) {

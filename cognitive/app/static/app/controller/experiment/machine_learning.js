@@ -1,4 +1,6 @@
-cognitive.controller('MachineLearningController', function($scope, CognitiveWorkspaceService, MachineLearningService) {
+cognitive.controller('MachineLearningController', function(
+    $scope, CognitiveWorkspaceService, MachineLearningService) {
+
     $scope.algorithm = "";
     $scope.target = -1;
     $scope.trainning_percentage = 0;
