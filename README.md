@@ -1,15 +1,15 @@
-Cognitive
+![Alt tag](/doc/img/cognitive-icon-small.png?raw=true "Cognitive Icon") Cognitive
 =========
 
 Machine Learning as a Service (MLaaS)
 
 It is still in development. If you find any errors, please let us know.
 
-![Alt text](/doc/img/demo-login.png?raw=true "Optional Title")
+<!--![Alt text](/doc/img/demo-login.png?raw=true "Cognitive Login")-->
 
-![Alt text](/doc/img/demo-main.png?raw=true "Optional Title")
+![Alt text](/doc/img/demo-main.png?raw=true "Cognitive Workspace")
 
-![Alt text](/doc/img/demo-result.png?raw=true "Optional Title")
+<!--![Alt text](/doc/img/demo-result.png?raw=true "Cognitive Result")-->
 
 Installation
 ------------
