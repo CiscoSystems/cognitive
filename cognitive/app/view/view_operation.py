@@ -107,7 +107,8 @@ class OperationViewSet(viewsets.ViewSet):
         elif operation == 'input':
             print data
             if data["input_file_type"] == "csv":
-                print data["data_values"], data["input_file"], data["input_file_type"]
+                # print data["data_values"]
+                print data["input_file"], data["input_file_type"]
                 filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"]
                 print "Filename ", filename
                 f = open(filename, 'w')
@@ -144,16 +145,29 @@ class OperationViewSet(viewsets.ViewSet):
         return op
 
     def list(self, request, operation):
+        """
+        List all components for a particular experiment
+        ---
+        """
         comp = Component.objects.all()
         serializer = ComponentSerializer(comp, many=True)
         return send_response(request.method, serializer)
 
     def retrieve(self, request, operation, pk=None):
+        """
+        Retrieve a component for a particular experiment
+        ---
+        """
         comp = Component.objects.get(pk=int(pk))
         serializer = ComponentSerializer(comp)
         return send_response(request.method, serializer)
 
     def create(self, request, operation):
+        """
+        Create a component for a particular experiment
+        ---
+        request_serializer: ComponentSerializer
+        """
         data = json.loads(JSONRenderer().render(request.DATA))
 
         op = None  # TODO: [refactor] This value is probably not needed
@@ -174,6 +188,11 @@ class OperationViewSet(viewsets.ViewSet):
         return send_response("GET", serializer)
 
     def update(self, request, operation, pk=None):
+        """
+        Update a component for a particular experiment
+        ---
+        request_serializer: ComponentSerializer
+        """
         data = json.loads(JSONRenderer().render(request.DATA))
 
         op = None  # TODO: [refactor] This value is probably not needed
@@ -190,6 +209,10 @@ class OperationViewSet(viewsets.ViewSet):
         return send_response(request.method, serializer)
 
     def destroy(self, request, operation, pk=None):
+        """
+        Delete a component for a particular experiment
+        ---
+        """
         user = Component.objects.get(pk=pk)
         serializer = None
         user.delete()

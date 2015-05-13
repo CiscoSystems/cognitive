@@ -23,16 +23,29 @@ import json
 class WorkFlowViewSet(viewsets.ViewSet):
 
     def list(self, request):
+        """
+        List all workflows for an experiment
+        ---
+        """
         exp = Workflow.objects.all()
         serializer = WorkflowSerializer(exp, many=True)
         return send_response(request.method, serializer)
 
     def retrieve(self, request, pk=None):
+        """
+        Retrieve a workflow for an experiment
+        ---
+        """
         workflow = Workflow.objects.get(pk=pk)
         serializer = WorkflowSerializer(workflow)
         return send_response(request.method, serializer)
 
     def create(self, request):
+        """
+        Create a workflow for an experiment
+        ---
+        request_serializer: WorkflowSerializer
+        """
         data = json.loads(JSONRenderer().render(request.DATA))
         exp_id = int(data["experiment"])
         exp = Experiment.objects.get(pk=exp_id)
@@ -53,6 +66,11 @@ class WorkFlowViewSet(viewsets.ViewSet):
             return send_response(request.method, serializer)
 
     def update(self, request, pk=None):
+        """
+        Update a workflow for an experiment
+        ---
+        request_serializer: WorkflowSerializer
+        """
         exp = Workflow.objects.get(pk=pk)
         serializer = WorkflowSerializer(exp, data=request.DATA)
         if serializer.is_valid():
@@ -60,6 +78,10 @@ class WorkFlowViewSet(viewsets.ViewSet):
         return send_response(request.method, serializer)
 
     def destroy(self, request, pk=None):
+        """
+        Delete a workflow for an experiment
+        ---
+        """
         exp = Workflow.objects.get(pk=pk)
         serializer = None
         exp.delete()
