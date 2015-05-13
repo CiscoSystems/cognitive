@@ -13,6 +13,10 @@
 # under the License.
 
 from django.db import models
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+import string
+import random
 
 
 class Data_operation_type(models.Model):
@@ -68,7 +72,7 @@ class User(models.Model):
     full_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    token = models.CharField(max_length=100)
+    token = models.CharField(max_length=100, blank=True, null=True)
     max_experiments = models.IntegerField(default=50)
 
     def __str__(self):
@@ -87,6 +91,27 @@ class User(models.Model):
             return None
         return user
 
+    @classmethod
+    def validate(cls, username, email, password):
+        err_msg = ""
+        if not username:
+            err_msg = "Empty username field"
+            raise ValidationError(err_msg)
+        if not password:
+            err_msg = "Empty password field"
+            raise ValidationError(err_msg)
+        if not email:
+            err_msg = "Empty email field"
+            raise ValidationError(err_msg)
+        validate_email(email)
+        if User.objects.filter(username=username).count() > 0:
+            err_msg = "Username already exists"
+            raise ValidationError(err_msg)
+        if User.objects.filter(email=email).count() > 0:
+            err_msg = "Email already exists"
+            raise ValidationError(err_msg)
+        return True
+
     def confirm_password(self, password):
         # TODO: password must be encrypted
         if self.password == password:
@@ -98,8 +123,9 @@ class User(models.Model):
 
     @classmethod
     def generate_token(cls):
-        # TODO: must  generate token which has enough length and unique
-        return "aaaaaa"
+        def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+            return ''.join(random.choice(chars) for _ in range(size))
+        return id_generator()
 
     def has_correct_token(self, token):
         return self.token == token

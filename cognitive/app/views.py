@@ -12,13 +12,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from rest_framework import status
 from rest_framework.response import Response
-
-from models import Experiment
-from models import User
 
 
 def index(request):
@@ -27,7 +24,6 @@ def index(request):
 
 
 def send_response(method, serializer):
-    print "method", method
     if method == 'GET':
         return Response(serializer.data)
     elif method == 'POST':

@@ -17,11 +17,23 @@ from ..serializers import ComponentSerializer
 from ..views import send_response
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
-from pandas import *
+from pandas import read_csv, datetime
 import json
 import urllib2
 
 MAX_COMPONENTS_PER_EXP = 100
+
+#####
+# Operation      function_type function_arg function_subtype function_arg_id function_subtype_arg
+# mathformula       Update      {comp_type}  {op_type}        {comp_id}       {op_constant}
+# metadata          Update      Table        Metadata         -               {column_type}
+# normalization     Update      {comp_type}  Normalize        {comp_id}       {op_type}
+# projection        Filter      Table        Project          {comp_id}       -
+# remove_duplicates Filter      Table        RemoveDup        {comp_id}       -
+# remove_missing    Filter      Table        RemoveMissing    {comp_id}       {op_action}
+# row               Create      Row          Row              -               {row_values}
+# input             Create      Table        Input            -               {filename}
+# machine learning  Create      Model        {model_type}     {Train-test}    {ML arguments}
 
 
 class OperationViewSet(viewsets.ViewSet):
