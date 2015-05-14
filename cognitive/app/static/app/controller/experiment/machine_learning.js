@@ -2,7 +2,7 @@ cognitive.controller('MachineLearningController', function(
     $scope, CognitiveWorkspaceService, MachineLearningService) {
 
     $scope.algorithm = "Linear_SVM";
-    $scope.target = 1;
+    $scope.target = 0;
     $scope.trainning_percentage = 10;
     $scope.columns = parsed_file[0];
 
