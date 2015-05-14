@@ -55,7 +55,7 @@ cognitive.factory('CognitiveWorkspaceService', function(
         })[0]
         var topology = ""
         if (typeof start_node === "undefined") return "";
-        var s=start_node.id
+        var s = start_node.id
 
         while (true) {
             var edge = workspace.edges.filter(function (edge) {
@@ -65,7 +65,7 @@ cognitive.factory('CognitiveWorkspaceService', function(
             topology += edge[0].from + ":" + edge[0].to + ",";
             s = edge[0].to;
         }
-        if (topology === "") return "";
+        if (topology === "") return start_node.id.toString();
         topology = topology.substr(0, topology.length - 1);
         return topology;
     }

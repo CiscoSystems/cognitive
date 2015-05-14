@@ -107,18 +107,15 @@ cognitive.controller("WhiteboardBottomMenuController", function (
             return;
         }
 
-        $.ajax({
-            url: '/api/v1/workflows/',
-            type: "POST", data: {
-                user_id: $scope.user.id,
-                token: $scope.user.token,
-                experiment: workspace.id,
-                graph_data: topology
-            },
-            success: function (result) {
-                console.log(result);
-            }
-        });
+        $http.post("/api/v1/workflows/", {
+            user_id: $scope.user.id,
+            token: $scope.user.token,
+            experiment: workspace.id,
+            graph_data: topology
+        }).success(function(data, status, headers, config) {
+            console.log(data);
+        })
+
     }
 
     $scope.show = function () {
