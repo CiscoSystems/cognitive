@@ -2,8 +2,8 @@ cognitive.controller('MathFormulaController', function(
     $scope, CognitiveWorkspaceService, FormulaService) {
 
     $scope.columns = parsed_file[0];
-    $scope.formula = ""
-    $scope.target_column = -1;
+    $scope.formula = "Add"
+    $scope.target_column = 1;
     $scope.constant_number = 1;
 
     $scope.createNode = function() {

@@ -2,7 +2,7 @@ cognitive.controller('RemoveMissingValueController', function(
     $scope, CognitiveWorkspaceService, MissingDataRemovalService) {
 
     $scope.columns = parsed_file[0];
-    $scope.method = "";
+    $scope.method = "Replace_mean";
 
     $scope.createNode = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace()

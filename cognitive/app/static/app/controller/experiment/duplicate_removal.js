@@ -2,7 +2,7 @@ cognitive.controller('RemoveDuplicateController', function(
     $scope, CognitiveWorkspaceService, DuplicateRemovalService) {
 
     $scope.columns = parsed_file[0];
-    $scope.targets = [-1];
+    $scope.targets = [1];
 
     $scope.createNode = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
@@ -12,7 +12,7 @@ cognitive.controller('RemoveDuplicateController', function(
     };
 
     $scope.addTarget = function () {
-        $scope.targets.push(-1)
+        $scope.targets.push(1)
     }
 
     $scope.uploadExist = function () {
