@@ -105,7 +105,6 @@ class OperationViewSet(viewsets.ViewSet):
             op.save()
 
         elif operation == 'input':
-            print data
             if data["input_file_type"] == "csv":
                 print data["data_values"], data["input_file"], data["input_file_type"]
                 filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"]

@@ -45,6 +45,8 @@ class myThread(threading.Thread):
         graph = exp.workflow.graph_data
         graph_data = {}
         print graph
+        status = "success"
+        err_msg = ""
         tmp = graph.split(',')
 
         for elem in tmp:
@@ -96,14 +98,21 @@ class myThread(threading.Thread):
                         model_type = op.function_arg_id
                         print model_type, train_data_percentage, target_column
                         target_feature = feature_names[target_column]
-                        actual_target_column = input_data.columns.get_loc(target_feature)
-                        input_feature_columns = range(len(input_data.columns))
-                        input_feature_columns.remove(actual_target_column)
-                        input_features = input_data.columns[input_feature_columns]
-                        classifier = Classifier(
-                            input_data, model_type, train_data_percentage,
-                            input_features, target_feature)
-                        output_data = classifier.learn()
+                        try:
+                            actual_target_column = input_data.columns.get_loc(target_feature)
+                            input_feature_columns = range(len(input_data.columns))
+                            input_feature_columns.remove(actual_target_column)
+                            input_features = input_data.columns[input_feature_columns]
+                            classifier = Classifier(
+                                input_data, model_type, train_data_percentage,
+                                input_features, target_feature)
+                            output_data = classifier.learn()
+                        except ValueError as e:
+                            status = "failure"
+                            err_msg = " Invalid input for the model training"
+                        except KeyError as e:
+                            status = "failure"
+                            err_msg = target_feature + " column is not available for Model Training"
 
             # TODO: [refactor] elif?
             if op.function_type == 'Update':
@@ -118,54 +127,77 @@ class myThread(threading.Thread):
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ", column_name, " not present. Skipping"
-                            continue  # throw error in module status
-                        if input_data[column_name].dtype == 'object':
-                            print "Column name ", column_name, " is not integer/float. Skipping"
-                            continue  # throw error in module status
-                        input_data[column_name] += constant_value
+                            #print "Column name ", column_name, " not present. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = column_name + " column is not available for current operation"
+                        elif input_data[column_name].dtype == 'object':
+                            #print "Column name ", column_name, " is not integer/float. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                        else:
+                            input_data[column_name] += constant_value
                     if op.function_subtype == 'Sub':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ", column_name, " not present. Skipping"
-                            continue  # throw error in module status
-                        if input_data[column_name].dtype == 'object':
-                            print "Column name ", column_name, " is not integer/float. Skipping"
-                            continue  # throw error in module status
-                        input_data[column_name] -= constant_value
+                            #print "Column name ", column_name, " not present. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = column_name + " column is not available for current operation"
+                        elif input_data[column_name].dtype == 'object':
+                            #print "Column name ", column_name, " is not integer/float. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                        else:
+                            input_data[column_name] -= constant_value
                     if op.function_subtype == 'Mult':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ", column_name, " not present. Skipping"
-                            continue  # throw error in module status
-                        if input_data[column_name].dtype == 'object':
-                            print "Column name ", column_name, " is not integer/float. Skipping"
-                            continue  # throw error in module status
-                        input_data[column_name] *= constant_value
+                            #print "Column name ", column_name, " not present. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = column_name + " column is not available for current operation"
+                        elif input_data[column_name].dtype == 'object':
+                            #print "Column name ", column_name, " is not integer/float. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                        else:
+                            input_data[column_name] *= constant_value
                     if op.function_subtype == 'Div':
                         constant_value = float(op.function_subtype_arg)
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            print "Column name ", column_name, " not present. Skipping"
-                            continue  # throw error in module status
-                        if input_data[column_name].dtype == 'object':
-                            print "Column name ", column_name, " is not integer/float. Skipping"
-                            continue  # throw error in module status
-                        input_data[column_name] /= constant_value
+                            #print "Column name ", column_name, " not present. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = column_name + " column is not available for current operation"
+                        elif input_data[column_name].dtype == 'object':
+                            #print "Column name ", column_name, " is not integer/float. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                        else:
+                            input_data[column_name] /= constant_value
                     if op.function_subtype == 'Normalize':
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         sum_array = input_data.sum(axis=0)
                         if column_name not in sum_array:
-                            print "Column name ", column_name, " not present. Skipping"
-                            continue  # throw error in module status
-                        normalization_value = sum_array[column_name]
-                        input_data[column_name] = input_data[column_name] / normalization_value
+                            #print "Column name ", column_name, " not present. Skipping"
+                            #continue  # throw error in module status
+                            status = "failure"
+                            err_msg = column_name + " column is not available for current operation"
+                        else:
+                            normalization_value = sum_array[column_name]
+                            input_data[column_name] = input_data[column_name] / normalization_value
 
             # TODO: [refactor] elif?
             if op.function_type == 'Filter':
@@ -185,9 +217,12 @@ class myThread(threading.Thread):
                         for elem in column_id_list:
                             column_name = feature_names[elem]
                             if column_name not in input_data:
-                                print "Column name ", column_name, " not present. Skipping"
-                                continue  # throw error in module status
-                            column_name_list.append(column_name)
+                                #print "Column name ", column_name, " not present. Skipping"
+                                #continue  # throw error in module status
+                                status = "failure"
+                                err_msg = column_name + " column is not available for current operation"
+                            else:
+                                column_name_list.append(column_name)
                         if column_name_list:
                             input_data = input_data.drop_duplicates(subset=column_name_list)
                     if op.function_subtype == 'RemoveMissing':
@@ -234,6 +269,9 @@ class myThread(threading.Thread):
 
                 if output_data is not None:
                     self.result["output"] = output_data
+
+                self.result["status"] = status
+                self.result["message"] = err_msg
 
                 self.result["missing_values"] = list(input_data.isnull().sum().values)
                 mean = input_data.mean().round(2)
@@ -288,6 +326,8 @@ class myThread(threading.Thread):
                     CACHE[self.experiment] = input_data
 
                 print self.result
+                print self.result["status"]
+                print self.result["message"]
                 break
 
 
