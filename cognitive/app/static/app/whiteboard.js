@@ -33,6 +33,28 @@ cognitive.controller('MetadataController', function(
 cognitive.controller("WhiteboardTabController", function (
     $scope, $modal, $log, $http) {
 
+    function init() {
+        if ($scope.workspaces.length === 0) {
+            // Make default workspace
+            $http.post("/api/v1/experiments/", {
+                name: "default",
+                user: $scope.user.id,
+                token: $scope.user.token
+            }).success(function (data, status, headers, config) {
+                console.log(data)
+                $scope.workspaces.push({
+                    id: data.id,
+                    name: data.name,
+                    nodes:[],
+                    edges: [],
+                    active: true
+                });
+            });
+        }
+    };
+
+    init();
+
     $scope.open = function() {
         var modal_instance = $modal.open({
             animation: true,
@@ -40,6 +62,9 @@ cognitive.controller("WhiteboardTabController", function (
             controller: "WhiteboardTabModalController",
             size: "",
             resolve: {
+                current_user: function(){
+                    return $scope.user;
+                }
             }
         });
 
@@ -59,7 +84,7 @@ cognitive.controller("WhiteboardTabController", function (
                 default:
                     break;
             }
-        })
+        });
     };
 });
 
@@ -171,7 +196,7 @@ cognitive.controller('ResultDisplayModalController', function ($scope, $modalIns
 
 
 cognitive.controller('WhiteboardTabModalController', function (
-    $scope, $modalInstance, $http) {
+    $scope, $modalInstance, $http, current_user) {
 
     $scope.user_workspace_list = [];
 
@@ -183,7 +208,7 @@ cognitive.controller('WhiteboardTabModalController', function (
 
     $scope.create_whiteboard = function() {
         $http.post("/api/v1/experiments/", {
-            name: $scope.create_name, user: 1, token: "aaaa"
+            name: $scope.create_name, user: current_user.id, token: current_user.token
         }).success(function (data, status, headers, config) {
             $modalInstance.close({
                 action: "create",
