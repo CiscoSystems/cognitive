@@ -106,7 +106,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'input':
             if data["input_file_type"] == "csv":
-                print data["data_values"], data["input_file"], data["input_file_type"]
+                print data["input_file"], data["input_file_type"]
                 filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"]
                 print "Filename ", filename
                 f = open(filename, 'w')
@@ -162,7 +162,7 @@ class OperationViewSet(viewsets.ViewSet):
         # TODO: [required] this statement should be surrounded by try-catch
         exp = Experiment.objects.get(pk=exp_id)
 
-        print "Experiment ", exp_id, " Operation ", operation, "data ", data
+        print "Experiment ", exp_id, " Operation ", operation
         op = self.set_operation(operation, data)
 
         component = Component(

@@ -50,8 +50,13 @@ class myThread(threading.Thread):
         tmp = graph.split(',')
 
         for elem in tmp:
-            first_node = elem.split(":")[0]
-            second_node = elem.split(":")[1]
+            node = elem.split(":")
+            if len(node) > 1:
+                first_node = node[0]
+                second_node = node[1]
+            else:
+                first_node = node[0]
+                second_node = ''
             if second_node in graph_data:
                 depend_nodes = graph_data[second_node]
                 depend_nodes.add(first_node)
@@ -325,7 +330,7 @@ class myThread(threading.Thread):
                 if self.cache_results is True:
                     CACHE[self.experiment] = input_data
 
-                print self.result
+                #print self.result
                 print self.result["status"]
                 print self.result["message"]
                 break
