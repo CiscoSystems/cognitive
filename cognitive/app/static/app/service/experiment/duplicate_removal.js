@@ -3,9 +3,9 @@ cognitive.factory('DuplicateRemovalService', function (
 
     var DuplicateRemovalService = {};
     var definition = {
-        name:"remove_column",
-        title:"Remove Duplicates",
-        icon_class:"fa fa-cut",
+        name:"Remove Duplicates",
+        type: "remove_column",
+        icon_class: "fa fa-cut",
         template: "/static/app/partial/whiteboard/experiment/duplication_removal.html"
     };
 
@@ -13,11 +13,14 @@ cognitive.factory('DuplicateRemovalService', function (
         targets = "["+targets.toString()+"]";
         console.log(targets)
         $http.post('/api/v1/operations/remove_duplicates/', {
-            user_id: user_id, token: token, experiment: experiment_id, component_id: targets
+            user_id: user_id,
+            token: token,
+            experiment: experiment_id,
+            component_id: targets
         }).success(function (data, status, headers, config) {
             console.log(data);
             CognitiveWorkspaceService
-                .appendNode(data.id, definition.title, definition.name)
+                .appendNode(data.id, definition)
         });
     }
 

@@ -31,12 +31,13 @@ cognitive.factory('CognitiveWorkspaceService', function(
         })[0];
     };
 
-    var appendNode = function (id, name, type) {
+    //var appendNode = function (id, name, type) {
+    var appendNode = function (id, definition) {
         var workspace = getCurrentWorkspace();
         var xy = nextNodeCoordination()
         workspace.nodes.push({
             id: id, workspace_id: workspace.id,
-            name: name, type: type, x: xy[0], y: xy[1],
+            name: definition.name, type: definition.type, x: xy[0], y: xy[1],
             focus: false, mouse: ""});
     }
 
@@ -51,7 +52,7 @@ cognitive.factory('CognitiveWorkspaceService', function(
     var getTopology = function () {
         var workspace = getCurrentWorkspace()
         var start_node = workspace.nodes.filter(function(node) {
-            return node.type === "Input Data";
+            return node.type === "file_input";
         })[0]
         var topology = ""
         if (typeof start_node === "undefined") return "";

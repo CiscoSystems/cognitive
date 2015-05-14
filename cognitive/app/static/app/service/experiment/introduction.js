@@ -2,9 +2,9 @@ cognitive.factory('IntroductionService', function() {
     var IntroductionService = {};
 
     var definition = {
-        name:"introduction",
+        name:"Introduction",
+        type:"introduction",
         icon_class:"fa fa-file-text-o",
-        title:"Introduction",
         template: "/static/app/partial/whiteboard/experiment/introduction.html"
     }
 

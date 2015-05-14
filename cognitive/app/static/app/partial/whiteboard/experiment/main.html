@@ -41,9 +41,9 @@
           <li style="padding:10px">
             <input style="width:100%" placeholder="search ..." ng-model="search_components" />
           </li>
-          <li class="list-group-item-cognitive" ng-repeat="component in components | filter:search_components" ng-click="openDescription($index)" ng-class="{active: isActivated($index)}" component="{{component.name}}">
+          <li class="list-group-item-cognitive" ng-repeat="component in components | filter:search_components" ng-click="openDescription($index)" ng-class="{active: isActivated($index)}" component="{{component.type}}">
             <i class="{{component.icon_class}}"></i>
-              {{ component.title }}
+              {{ component.name }}
           </li>
         </ul>
       </div>
