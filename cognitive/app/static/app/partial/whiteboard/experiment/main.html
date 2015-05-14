@@ -8,7 +8,7 @@
         <tab ng-repeat="workspace in workspaces" heading="{{workspace.name}}" workspace="{{workspace.id}}" ng-click="workspace[$index].active = true" active="workspace.active">
           <div class="tab-pane active" role="tabpanel" style="height:100%;">
             <div class="whiteboard-draw-area-wrapper">
-              <svg class="root" workspace="{{workspace.id}}" style="width:100%; height:100%;" ng-click="select_none()">
+              <svg class="root" workspace="{{workspace.id}}" style="width:100%; height:100%;" ng-click="clickNone()">
                 <g class="layer layer-0" workspace="{{workspace.id}}"></g>
                 <g class="layer layer-1" workspace="{{workspace.id}}"></g>
                 <g class="layer layer-2" workspace="{{workspace.id}}">
