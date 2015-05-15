@@ -3,9 +3,9 @@ cognitive.factory('MachineLearningService', function (
 
     var MachineLearningService = {};
     var definition = {
-        title:"Machine Learning" ,
-        icon_class:"fa fa-spinner",
-        name:"machine_learning",
+        name: "Machine Learning",
+        type: "machine_learning",
+        icon_class: "fa fa-spinner",
         template: "/static/app/partial/whiteboard/experiment/machine_learning.html"
     };
 
@@ -15,14 +15,15 @@ cognitive.factory('MachineLearningService', function (
 
         $http.post('/api/v1/operations/machine_learning/', {
             user_id: user_id,
-            token: token, experiment: experiment_id,
+            token: token,
+            experiment: experiment_id,
             model_type: algorithm,
             train_data_percentage: trainning_percentage,
             target_column: target
         }).success(function (data, status, headers, config) {
             console.log(data);
             CognitiveWorkspaceService
-                .appendNode(data.id, definition.title, definition.name)
+                .appendNode(data.id, definition)
         });
     };
 

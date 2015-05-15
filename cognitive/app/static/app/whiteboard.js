@@ -4,8 +4,7 @@ var file_name = "";
 var parsed_file = [];
 
 
-cognitive.controller("WhiteboardMainController", function () {
-
+cognitive.controller("WhiteboardMainController", function ($scope) {
 });
 
 
@@ -33,6 +32,28 @@ cognitive.controller('MetadataController', function(
 cognitive.controller("WhiteboardTabController", function (
     $scope, $modal, $log, $http) {
 
+    function init() {
+        if ($scope.workspaces.length === 0) {
+            // Make default workspace
+            $http.post("/api/v1/experiments/", {
+                name: "default",
+                user: $scope.user.id,
+                token: $scope.user.token
+            }).success(function (data, status, headers, config) {
+                console.log(data)
+                $scope.workspaces.push({
+                    id: data.id,
+                    name: data.name,
+                    nodes:[],
+                    edges: [],
+                    active: true
+                });
+            });
+        }
+    };
+
+    init();
+
     $scope.open = function() {
         var modal_instance = $modal.open({
             animation: true,
@@ -40,6 +61,9 @@ cognitive.controller("WhiteboardTabController", function (
             controller: "WhiteboardTabModalController",
             size: "",
             resolve: {
+                current_user: function(){
+                    return $scope.user;
+                }
             }
         });
 
@@ -59,51 +83,51 @@ cognitive.controller("WhiteboardTabController", function (
                 default:
                     break;
             }
-        })
+        });
     };
 });
 
 
 cognitive.controller("WhiteboardBottomMenuController", function (
-    $scope, $modal, $log, $http, CognitiveWorkspaceService) {
+    $scope, $modal, $log, $http, CognitiveWorkspaceService, MessageService) {
 
     $scope.run = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
         var topology = CognitiveWorkspaceService.getTopology();
 
         if (topology === "") {
-            $("#danger-message")[0].innerHTML = " There are no input source or topology have something wrong.";
-            var alert_area = $("#cognitiveAlert");
-            var danger = alert_area.find("> #template-alert-danger").clone();
-            danger.attr("id", "");
-            alert_area.append(danger);
-            danger.show();
-            //danger.fadeOut(30000);
+            MessageService.
+                pushDangerMessage("No input source")
             return;
         }
 
-        $.ajax({
-            url: '/api/v1/workflows/',
-            type: "POST", data: {
-                user_id: $scope.user.id,
-                token: $scope.user.token,
-                experiment: workspace.id,
-                graph_data: topology
-            },
-            success: function (result) {
-                console.log(result);
-            }
-        });
+        $http.post("/api/v1/workflows/", {
+            user_id: $scope.user.id,
+            token: $scope.user.token,
+            experiment: workspace.id,
+            graph_data: topology
+        }).success(function(data, status, headers, config) {
+            console.log(data);
+        })
+
     }
 
     $scope.show = function () {
         var focused_node = CognitiveWorkspaceService.getCurrentFocus()
-        if (focused_node == null) { return; }  // will show error message
+        if (focused_node == null) {
+            MessageService.
+                pushDangerMessage("No component is selected")
+            return;
+        }
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
 
         $http.get("/api/v1/results/?experiment=" + workspace.id + "&component_id=" + focused_node.id)
             .success(function (data, status, headers, config) {
                 console.log(data)
+                if (data.status !== "success") {
+                    MessageService.pushDangerMessage("No Input data or RUN is not executed")
+                    return;
+                }
 
                 for (var i = 0; i < data['feature_names'].length; i++) {
                     var target_area = d3.select("svg[class='graph column_" + i + "']");
@@ -171,7 +195,7 @@ cognitive.controller('ResultDisplayModalController', function ($scope, $modalIns
 
 
 cognitive.controller('WhiteboardTabModalController', function (
-    $scope, $modalInstance, $http) {
+    $scope, $modalInstance, $http, current_user) {
 
     $scope.user_workspace_list = [];
 
@@ -183,7 +207,7 @@ cognitive.controller('WhiteboardTabModalController', function (
 
     $scope.create_whiteboard = function() {
         $http.post("/api/v1/experiments/", {
-            name: $scope.create_name, user: 1, token: "aaaa"
+            name: $scope.create_name, user: current_user.id, token: current_user.token
         }).success(function (data, status, headers, config) {
             $modalInstance.close({
                 action: "create",
@@ -214,3 +238,8 @@ cognitive.controller('WhiteboardTabModalController', function (
         });
     };
 });
+
+cognitive.controller("MessageController", function($scope, MessageService) {
+    $scope.messages = MessageService.getMessages();
+    $scope.closeMessage = MessageService.closeMessage;
+})

@@ -94,8 +94,12 @@ cognitive.controller('ExperimentController', function (
             .animate({"left":0}, 700);
     };
 
-    $scope.select_none = function () {
+    $scope.clickNone = function () {
         $scope.closeDescription();
+        var current_node = $scope.getCurrentFocusNode()
+        if (typeof current_node !== "undefined") {
+            current_node.focus = false;
+        }
     };
 
     $scope.existFocusedNodeOnCurrentWorkspace = function() {
@@ -134,6 +138,7 @@ cognitive.controller('ExperimentController', function (
     //};
 
     $scope.clickCognitiveNode = function (event, workspace_id, index) {
+        event.stopPropagation();
         var node = $scope.getNodeByWorkspaceAndIndex(workspace_id, index);
         if (node.focus) {
             node.focus = false;

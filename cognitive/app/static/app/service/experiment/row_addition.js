@@ -3,9 +3,9 @@ cognitive.factory('RowAdditionService', function (
 
     var RowAdditionService = {};
     var definition = {
-        name:"add_row",
-        title:"Add Row",
+        name: "Add Row",
         icon_class:"fa fa-list-ol",
+        type: "add_row",
         template: "/static/app/partial/whiteboard/experiment/row_addition.html"
     }
 
@@ -15,11 +15,14 @@ cognitive.factory('RowAdditionService', function (
         console.log(values);
 
         $http.post('/api/v1/operations/row/', {
-            user_id: user_id, token: token, experiment: experiment_id, row_values: values
+            user_id: user_id,
+            token: token,
+            experiment: experiment_id,
+            row_values: values
         }).success(function (data, status, headers, config) {
             console.log(data);
             CognitiveWorkspaceService
-                .appendNode(data.id, definition.title, definition.name)
+                .appendNode(data.id, definition)
         });
     };
 

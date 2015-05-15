@@ -8,7 +8,7 @@
         <tab ng-repeat="workspace in workspaces" heading="{{workspace.name}}" workspace="{{workspace.id}}" ng-click="workspace[$index].active = true" active="workspace.active">
           <div class="tab-pane active" role="tabpanel" style="height:100%;">
             <div class="whiteboard-draw-area-wrapper">
-              <svg class="root" workspace="{{workspace.id}}" style="width:100%; height:100%;" ng-click="select_none()">
+              <svg class="root" workspace="{{workspace.id}}" style="width:100%; height:100%;" ng-click="clickNone()">
                 <g class="layer layer-0" workspace="{{workspace.id}}"></g>
                 <g class="layer layer-1" workspace="{{workspace.id}}"></g>
                 <g class="layer layer-2" workspace="{{workspace.id}}">
@@ -32,8 +32,8 @@
       <div style="height: 100%; width: 100%; background: lightgrey">
           <span>Please Create Workspace</span>
       </div>
-
   </div>
+
   <div class="cognitive-left-menu" ng-controller="ComponentController">
     <div class="whiteboard-flyout" style="left: 55px;">
       <div class="flyout-wrapper">
@@ -41,9 +41,9 @@
           <li style="padding:10px">
             <input style="width:100%" placeholder="search ..." ng-model="search_components" />
           </li>
-          <li class="list-group-item-cognitive" ng-repeat="component in components | filter:search_components" ng-click="openDescription($index)" ng-class="{active: isActivated($index)}" component="{{component.name}}">
+          <li class="list-group-item-cognitive" ng-repeat="component in components | filter:search_components" ng-click="openDescription($index)" ng-class="{active: isActivated($index)}" component="{{component.type}}">
             <i class="{{component.icon_class}}"></i>
-              {{ component.title }}
+              {{ component.name }}
           </li>
         </ul>
       </div>
@@ -54,33 +54,38 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="navbar navbar-default navbar-fixed-bottom" style="background:white; margin-left: 56px;" ng-controller="WhiteboardBottomMenuController">
-  <div class="navbar-inner">
-    <div class="row" style="height: inherit">
-      <div class="text-center" style="height:inherit">
-        <div class="btn-group btn-group-cognitive" role="group" aria-label="footbar-btn" style="height:inherit; width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0">
-          <div class="container-fluid" ng-click="run()">
-            <div class="row">
-              <i class="fa fa-play fa-align-center" style="font-size:27pt;"></i>
-            </div>
-            <div class="row">
-              RUN
+  <div class="navbar navbar-default navbar-fixed-bottom" style="background:white; margin-left: 56px;" ng-controller="WhiteboardBottomMenuController">
+    <div class="navbar-inner">
+      <div class="row" style="height: inherit">
+        <div class="text-center" style="height:inherit">
+          <div class="btn-group btn-group-cognitive" role="group" aria-label="footbar-btn" style="height:inherit; width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0">
+            <div class="container-fluid" ng-click="run()">
+              <div class="row">
+                <i class="fa fa-play fa-align-center" style="font-size:27pt;"></i>
+              </div>
+              <div class="row">
+                RUN
+              </div>
             </div>
           </div>
-        </div>
-        <div class="btn-group btn-group-cognitive" role="group" aria-label="footbar-btn" style="height:100%;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0">
-          <div class="container-fluid" ng-click="show()">
-            <div class="row">
-              <i class="glyphicon glyphicon-signal glyphicon-align-center zero_padding_margin" style="font-size:26pt;"></i>
-            </div>
-            <div class="row">
-              SHOW
+          <div class="btn-group btn-group-cognitive" role="group" aria-label="footbar-btn" style="height:100%;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0">
+            <div class="container-fluid" ng-click="show()">
+              <div class="row">
+                <i class="glyphicon glyphicon-signal glyphicon-align-center zero_padding_margin" style="font-size:26pt;"></i>
+              </div>
+              <div class="row">
+                SHOW
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="messages">
+    <div ng-include="'/static/app/partial/message.html'"></div>
+  </div>
+
 </div>

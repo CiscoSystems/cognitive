@@ -2,7 +2,7 @@ cognitive.controller('ProjectionController', function(
     $scope, CognitiveWorkspaceService, ProjectionService) {
 
     $scope.columns = parsed_file[0];
-    $scope.targets = [-1];
+    $scope.targets = [0];
 
     $scope.createNode = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
@@ -10,7 +10,7 @@ cognitive.controller('ProjectionController', function(
     };
 
     $scope.addTarget = function () {
-        $scope.targets.push(-1)
+        $scope.targets.push(0)
     }
 
     $scope.uploadExist = function () {

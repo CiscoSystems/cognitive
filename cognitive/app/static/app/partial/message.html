@@ -1,0 +1,45 @@
+<!-- Currently this is only used for whiteboard workspace error.
+     will change later to deal with more general cases. -->
+<div ng-controller="MessageController" style="padding-top: 20px;">
+  <div ng-repeat="message in messages" style="padding-right: 20px; padding-left: 20px;">
+    <div class="alert alert-info alert-dismissable fade.in" ng-show="message.type === 'Info'" style="position: fixed; right: 10px; top: {{ 15 + 65 * ($index+1) }}px; width: 400px; z-index: 100;">
+      <button class="close" type="button" data-dismiss="alert" area-label="close">
+        <span ng-click="closeMessage($index)"> &times; </span>
+      </button>
+      <p>
+        <strong>Info:</strong>
+        {{ message.text }}
+      </p>
+    </div>
+
+    <div class="alert alert-warning alert-dismissable fade.in" ng-show="message.type === 'Warning'" style="position: fixed; right: 10px; top: {{ 15 + 65 * ($index+1) }}px; width: 400px; z-index: 100;">
+      <button class="close" type="button" data-dismiss="alert" area-label="close">
+        <span ng-click="closeMessage($index)"> &times; </span>
+      </button>
+      <p>
+        <strong>Warning:</strong>
+        {{ message.text }}
+      </p>
+    </div>
+
+    <div class="alert alert-success alert-dismissable fade.in" ng-show="message.type === 'Success'" style="position: fixed; right: 10px; top: {{ 15 + 65 * ($index+1) }}px; width: 400px; z-index: 100;">
+      <button class="close" type="button" data-dismiss="alert" area-label="close">
+        <span ng-click="closeMessage($index)"> &times; </span>
+      </button>
+      <p>
+        <strong>Success:</strong>
+        {{ message.text }}
+      </p>
+    </div>
+
+    <div class="alert alert-danger alert-dismissable fade.in" ng-show="message.type === 'Danger'" style="position: fixed; right: 10px; top: {{ 15 + 65 * ($index+1) }}px; width: 400px; z-index: 100;">
+      <button class="close" type="button" data-dismiss="alert" area-label="close">
+        <span ng-click="closeMessage($index)"> &times; </span>
+      </button>
+      <p>
+        <strong>Error:</strong>
+        {{ message.text }}
+      </p>
+    </div>
+  </div>
+</div>

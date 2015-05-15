@@ -3,7 +3,7 @@ cognitive.controller('NormalizationController', function(
 
     $scope.columns = parsed_file[0];
     $scope.component_type = "Column",
-    $scope.component_id =- 1;
+    $scope.component_id = 0;
     $scope.op_type = "";
 
     $scope.createNode = function() {
