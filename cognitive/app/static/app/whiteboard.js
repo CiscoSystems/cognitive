@@ -124,6 +124,10 @@ cognitive.controller("WhiteboardBottomMenuController", function (
         $http.get("/api/v1/results/?experiment=" + workspace.id + "&component_id=" + focused_node.id)
             .success(function (data, status, headers, config) {
                 console.log(data)
+                if (data.status !== "success") {
+                    MessageService.pushDangerMessage("No Input data or RUN is not executed")
+                    return;
+                }
 
                 for (var i = 0; i < data['feature_names'].length; i++) {
                     var target_area = d3.select("svg[class='graph column_" + i + "']");
