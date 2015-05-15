@@ -97,7 +97,9 @@ cognitive.controller('ExperimentController', function (
     $scope.clickNone = function () {
         $scope.closeDescription();
         var current_node = $scope.getCurrentFocusNode()
-        current_node.focus = false;
+        if (typeof current_node !== "undefined") {
+            current_node.focus = false;
+        }
     };
 
     $scope.existFocusedNodeOnCurrentWorkspace = function() {

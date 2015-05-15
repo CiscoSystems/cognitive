@@ -4,8 +4,7 @@ var file_name = "";
 var parsed_file = [];
 
 
-cognitive.controller("WhiteboardMainController", function () {
-
+cognitive.controller("WhiteboardMainController", function ($scope) {
 });
 
 
@@ -90,20 +89,15 @@ cognitive.controller("WhiteboardTabController", function (
 
 
 cognitive.controller("WhiteboardBottomMenuController", function (
-    $scope, $modal, $log, $http, CognitiveWorkspaceService) {
+    $scope, $modal, $log, $http, CognitiveWorkspaceService, MessageService) {
 
     $scope.run = function() {
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
         var topology = CognitiveWorkspaceService.getTopology();
 
         if (topology === "") {
-            $("#danger-message")[0].innerHTML = " There are no input source or topology have something wrong.";
-            var alert_area = $("#cognitiveAlert");
-            var danger = alert_area.find("> #template-alert-danger").clone();
-            danger.attr("id", "");
-            alert_area.append(danger);
-            danger.show();
-            //danger.fadeOut(30000);
+            MessageService.
+                pushDangerMessage("No input source")
             return;
         }
 
@@ -120,7 +114,11 @@ cognitive.controller("WhiteboardBottomMenuController", function (
 
     $scope.show = function () {
         var focused_node = CognitiveWorkspaceService.getCurrentFocus()
-        if (focused_node == null) { return; }  // will show error message
+        if (focused_node == null) {
+            MessageService.
+                pushDangerMessage("No component is selected")
+            return;
+        }
         var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
 
         $http.get("/api/v1/results/?experiment=" + workspace.id + "&component_id=" + focused_node.id)
@@ -236,3 +234,8 @@ cognitive.controller('WhiteboardTabModalController', function (
         });
     };
 });
+
+cognitive.controller("MessageController", function($scope, MessageService) {
+    $scope.messages = MessageService.getMessages();
+    $scope.closeMessage = MessageService.closeMessage;
+})
