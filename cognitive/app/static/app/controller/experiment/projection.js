@@ -1,20 +1,26 @@
-cognitive.controller('ProjectionController', function(
-    $scope, CognitiveWorkspaceService, ProjectionService) {
+(function () {
+    'use strict';
+    angular.module("cognitive")
+      .controller("ProjectionController", ProjectionController);
 
-    $scope.columns = parsed_file[0];
-    $scope.targets = [0];
+    function ProjectionController(
+        $scope, CognitiveWorkspaceService, ProjectionService) {
 
-    $scope.createNode = function() {
-        var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
-        ProjectionService.createNode($scope.user.id, workspace.id, $scope.user.token, $scope.targets);
+        $scope.columns = parsed_file[0];
+        $scope.targets = [0];
+
+        $scope.createNode = function() {
+            var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
+            ProjectionService.createNode($scope.user.id, workspace.id, $scope.user.token, $scope.targets);
+        };
+
+        $scope.addTarget = function () {
+            $scope.targets.push(0)
+        }
+
+        $scope.uploadExist = function () {
+            console.log($scope.columns)
+            return $scope.columns.length !== "undefined";
+        }
     };
-
-    $scope.addTarget = function () {
-        $scope.targets.push(0)
-    }
-
-    $scope.uploadExist = function () {
-        console.log($scope.columns)
-        return $scope.columns.length !== "undefined";
-    }
-});
+})();

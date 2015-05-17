@@ -1,25 +1,30 @@
-cognitive.controller('DataInputController', function(
-    $scope, CognitiveWorkspaceService, FileInputService) {
+(function() {
+    "use strict";
+    angular.module("cognitive")
+        .controller('DataInputController', DataInputController);
 
-    $scope.createNode = function() {
-        var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
-        FileInputService.createNode(
-            $scope.user.id, workspace.id,
-            $scope.user.token, file_name, file_body);
-    };
+    function DataInputController (
+        $scope, CognitiveWorkspaceService, FileInputService) {
 
-    $scope.uploadFile = function (event) {
-        var file = event.target.files[0];
-        $scope.file_name = file.name;
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            file_body = event.target.result;
-            $scope.file_body = file_body
-            parsed_file = $.csv.toArrays(file_body);
-            $scope.parsed_file = parsed_file
+        $scope.createNode = function() {
+            var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
+            FileInputService.createNode(
+                $scope.user.id, workspace.id,
+                $scope.user.token, file_name, file_body);
         };
-        reader.readAsText(file);
-        file_name = file.name;
-    }
 
-});
+        $scope.uploadFile = function (event) {
+            var file = event.target.files[0];
+            $scope.file_name = file.name;
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                file_body = event.target.result;
+                $scope.file_body = file_body
+                parsed_file = $.csv.toArrays(file_body);
+                $scope.parsed_file = parsed_file
+            };
+            reader.readAsText(file);
+            file_name = file.name;
+        }
+    };
+})();
