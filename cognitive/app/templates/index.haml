@@ -75,7 +75,7 @@
               %ul.nav.navbar-nav.navbar-right
                 %li.dropdown{ng-show:"isAuthenticated()"}
                   %a#user-dropdown-menu.dropdown-toggle{type:"button",data-toggle:"dropdown", aria-expanded:"true"}
-                    %i.fa.fa-user
+                    %i.glyphicon.glyphicon-user
                     {% verbatim %}{{user.name}}{% endverbatim %}
                     %span.caret
                   %ul.dropdown-menu
@@ -86,5 +86,5 @@
                 %li{ng-hide:"isAuthenticated()", ng-click: "openLoginModal()"}
                   %a Login
 
-    .container-fluid.cognitive-content{ng-controller:"CognitiveContentController"}
+    .container-fluid.cognitive-content
       %div{ui-view:"main"}

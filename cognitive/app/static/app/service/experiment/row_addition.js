@@ -1,35 +1,41 @@
-cognitive.factory('RowAdditionService', function (
-    $http, CognitiveWorkspaceService) {
+(function () {
+    "use strict";
+    angular.module("cognitive")
+        .factory('RowAdditionService', RowAdditionService);
 
-    var RowAdditionService = {};
-    var definition = {
-        name: "Add Row",
-        icon_class:"fa fa-list-ol",
-        type: "add_row",
-        template: "/static/app/partial/whiteboard/experiment/row_addition.html"
-    }
+    function RowAdditionService (
+        $http, CognitiveWorkspaceService) {
 
-    var createNode = function(user_id, experiment_id, token, values) {
-        console.log(values);
-        values = "[" + values.toString() + "]";
-        console.log(values);
+        var RowAdditionService = {};
+        var definition = {
+            name: "Add Row",
+            icon_class:"fa fa-list-ol",
+            type: "add_row",
+            template: "/static/app/partial/whiteboard/experiment/row_addition.html"
+        }
 
-        $http.post('/api/v1/operations/row/', {
-            user_id: user_id,
-            token: token,
-            experiment: experiment_id,
-            row_values: values
-        }).success(function (data, status, headers, config) {
-            console.log(data);
-            CognitiveWorkspaceService
-                .appendNode(data.id, definition)
-        });
+        var createNode = function(user_id, experiment_id, token, values) {
+            console.log(values);
+            values = "[" + values.toString() + "]";
+            console.log(values);
+
+            $http.post('/api/v1/operations/row/', {
+                user_id: user_id,
+                token: token,
+                experiment: experiment_id,
+                row_values: values
+            }).success(function (data, status, headers, config) {
+                console.log(data);
+                CognitiveWorkspaceService
+                    .appendNode(data.id, definition)
+            });
+        };
+
+        RowAdditionService = {
+            definition: definition,
+            createNode: createNode
+        }
+
+        return RowAdditionService;
     };
-
-    RowAdditionService = {
-        definition: definition,
-        createNode: createNode
-    }
-
-    return RowAdditionService;
-});
+})();
