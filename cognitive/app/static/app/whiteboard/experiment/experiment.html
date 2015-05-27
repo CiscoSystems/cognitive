@@ -1,0 +1,91 @@
+<div ng-controller="ExperimentController as vm" role="tabpanel" style="position: fixed; top: 51px;width: 100%; height: calc(100vh - 107px);left:275px;">
+  <div class="whiteboard-top-menu-wrapper">
+    <div style="calc(100vh - 107px);background: steelblue;">
+      <div class="left" ng-click="vm.open()" style="padding-left: 2px;height:17px; width:25px; margin-top:0px; border-top: solid 1px steelblue; border-right: solid 1px steelblue;background: steelblue;">
+        <i class="fa fa-plus" style="margin-top:1px; margin-left:4px; color:white"></i>
+      </div>
+      <tabset>
+        <tab ng-repeat="workspace in vm.workspaces" heading="{{workspace.name}}" workspace="{{workspace.id}}" ng-click="workspace[$index].active = true" active="workspace.active">
+          <div class="tab-pane active" role="tabpanel" style="height:100%;">
+            <div class="whiteboard-draw-area-wrapper">
+              <svg class="root" workspace="{{workspace.id}}" style="width:100%; height:100%;" ng-click="vm.clickNone()">
+                <g class="layer layer-0" workspace="{{workspace.id}}"></g>
+                <g class="layer layer-1" workspace="{{workspace.id}}"></g>
+                <g class="layer layer-2" workspace="{{workspace.id}}">
+                  <g ng-repeat="edge in workspace.edges|filter:edge.workspace_id=workspace.id">
+                    <g cognitive-edge="" to="{{edge.to}}" from="{{edge.from}}" workspace="workspace.id"></g>
+                  </g>
+                </g>
+                <g class="layer layer-3" workspace="{{workspace.id}}">
+                  <g ng-repeat="node in workspace.nodes">
+                    <g cognitive-node="">
+                    </g>
+                  </g>
+                </g>
+                <g class="layer layer-4" workspace="{{workspace.id}}"></g>
+              </svg>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+      <div style="height: 100%; width: 100%; background: lightgrey">
+          <span>Please Create Workspace</span>
+      </div>
+  </div>
+
+  <div class="cognitive-left-menu">
+    <div class="whiteboard-flyout" style="left: 55px;">
+      <div class="flyout-wrapper">
+        <ul>
+          <li style="padding:10px">
+            <input style="width:100%" placeholder="search ..." ng-model="vm.search_components" />
+          </li>
+          <li class="list-group-item-cognitive" ng-repeat="component in vm.components | filter:vm.search_components" ng-click="vm.openDescription($index)" ng-class="{active: vm.isActivated($index)}" component="{{component.type}}">
+            <i class="{{component.icon_class}}"></i>
+              {{ component.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="component_arguments">
+      <div class="detail left-menu-detail-cognitive">
+        <ng-include src="vm.detail_template_url"></ng-include>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar navbar-default navbar-fixed-bottom" style="background:white; margin-left: 56px;">
+    <div class="navbar-inner">
+      <div class="row" style="height: inherit">
+        <div class="text-center" style="height:inherit">
+          <div class="btn-group btn-group-cognitive" role="group" aria-label="footbar-btn" style="height:inherit; width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0">
+            <div class="container-fluid" ng-click="vm.run()">
+              <div class="row">
+                <i class="fa fa-play fa-align-center" style="font-size:27pt;"></i>
+              </div>
+              <div class="row">
+                RUN
+              </div>
+            </div>
+          </div>
+          <div class="btn-group btn-group-cognitive" role="group" aria-label="footbar-btn" style="height:100%;width:70px;border-right: solid 1px #eeeeee;border-left: solid 1px #eeeeee;margin:0">
+            <div class="container-fluid" ng-click="vm.show()">
+              <div class="row">
+                <i class="glyphicon glyphicon-signal glyphicon-align-center zero_padding_margin" style="font-size:26pt;"></i>
+              </div>
+              <div class="row">
+                SHOW
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="messages">
+    <div ng-include="'/static/app/common/message.html'"></div>
+  </div>
+
+</div>

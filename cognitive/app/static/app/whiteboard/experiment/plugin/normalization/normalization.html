@@ -1,0 +1,44 @@
+<div class="cognitive-detail-content" ng-controller="NormalizationController as vm">
+  <div class="cognitive-detail-header">
+    <h2>
+      <i class="fa fa-align-center"></i>
+      Normalization
+    </h2>
+  </div>
+  <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
+    <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+      <i class="fa fa-close"></i>Need to Upload Data Before.
+    </span>
+  </div>
+  <div class="cognitive-detail-body">
+    <div class="form-group">
+      <div class="row" style="padding-top:20px;">
+        <label class="col-lg-3 control-label" for="select">
+            Method
+        </label>
+        <div class="col-lg-9">
+          <select id="normalization_method" class="form-control">
+            <option value="0" style="font-size:20pt;">
+                Standard
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row" style="padding-top:20px;">
+        <label class="col-lg-3 control-label" for="select">
+            Column
+        </label>
+        <div class="col-lg-9">
+          <select class="form-control" ng-model="vm.component_id">
+            <option ng-repeat="column in vm.columns" value="{{$index}}">
+              {{column}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button id="normalization-add-btn" class="btn btn-primary add_btn add_normalization right" type="button" ng-click="vm.createNode()">
+      Add
+    </button>
+  </div>
+</div>

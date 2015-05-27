@@ -7,10 +7,13 @@ django-mptt==0.6.1
 django-treebeard==2.0
 djangorestframework==2.4.4
 hamlpy==0.82.2
+jasmine==2.3.0
+jasmine-core==2.3.4
 numpy==1.9.1
 pandas==0.15.1
 python-dateutil==2.2
 pytz==2014.10
+PyYAML==3.10
 redis==2.10.3
 repoze.lru==0.6
 scikit-learn==0.15.2

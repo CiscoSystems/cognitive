@@ -1,0 +1,21 @@
+<div class="cognitive-detail-content" ng-controller="MetadataController as vm">
+  <div class="cognitive-detail-header">
+    <h2>
+      <i class="fa fa-share-alt"></i>
+      Metadata
+    </h2>
+  </div>
+    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
+      <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+        <i class="fa fa-close"></i>Need to Upload Data Before.
+      </span>
+    </div>
+  <div class="cognitive-detail-body">
+    <div class="form-group">
+      <div id="metadata_discriptions" style="padding: 30px;"></div>
+    </div>
+    <button id="metadata-add-btn" class="btn btn-primary add_btn add_metadata right" type="button" style="margin-top: 40px;" ng-click="vm.createNode()">
+        Add
+    </button>
+  </div>
+</div>
