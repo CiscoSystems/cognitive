@@ -91,6 +91,10 @@
             return nodes[0];
         }
 
+        var getCurrentFocus = function () {
+            return getCurrentFocusNode();
+        }
+
         var createEdge = function (workspace_id, src_node_id, dest_node_id) {
             var workspace = getWorkspaceById(workspace_id);
             workspace.edges.push({id: 10, workspace_id: workspace_id, from: src_node_id, to: dest_node_id});
@@ -125,6 +129,7 @@
             nextNodeCoordination: nextNodeCoordination,
             getTopology: getTopology,
             getCurrentFocusNode: getCurrentFocusNode,
+            getCurrentFocus: getCurrentFocus,
             getNodeByWorkspaceAndIndex: getNodeByWorkspaceAndIndex,
             createEdge: createEdge,
             appendEdgeOnCurrentWorkspace: appendEdgeOnCurrentWorkspace

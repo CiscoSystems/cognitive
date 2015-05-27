@@ -10,11 +10,11 @@
             link: function(scope, element, attrs) {
                 var g = d3.select(element[0]).append('g')
                     .attr('class', 'node-group')
-                    .attr('ng-class', '{active: isActiveCognitiveNode(workspace.id, node.id)}')
+                    .attr('ng-class', '{active: vm.isActiveCognitiveNode(workspace.id, node.id)}')
                     .attr('x', 0).attr('y', 0)
                     .attr('node', '{{node.id}}')
                     .attr('id', 'node-group-{{node.id}}')
-                    .attr('ng-click', "clickCognitiveNode($event, workspace.id, node.id)")
+                    .attr('ng-click', "vm.clickCognitiveNode($event, workspace.id, node.id)")
                     .call(d3.behavior.drag()
                         .on("drag", dragCognitiveNode))
                     .on("mouseenter", function() {
