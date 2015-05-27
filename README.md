@@ -64,3 +64,10 @@ API Documentation
 
 Swagger API Documentation is available via `http://127.0.0.1:8000/docs` after launching Django server.
 
+
+Test
+----
+
+To execute test, simply execute bellow commands on the root directory.
+
+        tox
