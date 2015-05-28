@@ -8,5 +8,4 @@
         'ui.bootstrap',
         'ngStorage'
     ])
-
 })();

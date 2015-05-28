@@ -71,3 +71,9 @@ Test
 To execute test, simply execute bellow commands on the root directory.
 
         tox
+
+For testing Javasctipt codes, use Jasmine (http://jasmine.github.io/) by executing a following command on the root directory.
+
+        jasmine
+
+

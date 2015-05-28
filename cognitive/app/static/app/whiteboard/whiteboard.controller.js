@@ -12,4 +12,3 @@ var parsed_file = [];
     function WhiteboardMainController(){};
 
 })()
-
