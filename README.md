@@ -72,8 +72,29 @@ To execute test, simply execute bellow commands on the root directory.
 
         tox
 
-For testing Javasctipt codes, use Jasmine (http://jasmine.github.io/) by executing a following command on the root directory.
+For testing Javasctipt codes, use [Jasmine](http://jasmine.github.io/) by executing a following command on the root directory.
 
         jasmine
+
+
+How to Contribute
+-----------------
+
+To contribute Cognitive, please fork this repository, and send the pull requests. 
+
+Basic operation workflow is written bellow.
+
+        # click fork button on top-right corner of this repository
+        git clone https://github.com/your_github_account/cognitive.git
+        cd cognitive
+        git remote add upstream https://github.com/CiscoSystems/cognitive.git
+        # change something and commit
+        git fetch upstream
+        git merge upstream/master
+        git push
+        # click pull request on your repository
+
+If you have some problem, ask us through github issues or email.
+[This](https://help.github.com/articles/fork-a-repo/) instruction also can help you.
 
 
