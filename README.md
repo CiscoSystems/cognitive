@@ -1,4 +1,4 @@
-![Alt tag](/doc/img/cognitive-icon-small.png?raw=true "Cognitive Icon") Cognitive
+![Alt tag](/doc/img/cognitive-icon-small.png?raw=true "Cognitive Icon") Cognitive [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 =========
 
 Machine Learning as a Service (MLaaS)
