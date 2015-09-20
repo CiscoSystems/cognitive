@@ -5,70 +5,58 @@
     %title Cognitive
 
     - load staticfiles
-    %link{href: "{{STATIC_URL}}img/favicon.png", rel:"icon", type:"image/x-icon"}
-    <link href='{% static "bootstrap/dist/css/bootstrap.min.css" %}' rel="stylesheet">
-    <link href='{% static "font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
-    %link{href: "{{STATIC_URL}}css/application.css", rel: "stylesheet"}
+    %link{href: '{% static "img/favicon.png" %}', rel:"icon", type:"image/x-icon"}
+    %link{href: '{% static "bootstrap/dist/css/bootstrap.min.css" %}', rel: "stylesheet"}
+    %link{href: '{% static "font-awesome/css/font-awesome.min.css" %}', rel: "stylesheet"}
+    %link{href: '{% static "css/application.css" %}', rel: "stylesheet"}
+    %link{href: '{% static "css/whiteboard.css" %}', rel: "stylesheet"}
+    %link{href: '{% static "jquery-ui/themes/base/jquery-ui.min.css" %}', rel:"stylesheet"}
 
-    <script src='{% static "jquery/dist/jquery.min.js" %}' type="text/javascript"></script>
-    <script src='{% static "angular/angular.min.js" %}' type="text/javascript"></script>
-    <script src='{% static "bootstrap/dist/js/bootstrap.min.js" %}' type="text/javascript"></script>
-
-    <script src='{% static "angular-ui-router/release/angular-ui-router.min.js" %}' type="text/javascript"></script>
-    <script src='{% static "angular-bootstrap/ui-bootstrap-tpls.min.js" %}' type="text/javascript"></script>
-    <script src='{% static "ngstorage/ngStorage.min.js" %}' type="text/javascript"></script>
-    %script{src: "{{STATIC_URL}}app/home/home.module.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/whiteboard.module.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/experiment.module.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/experiment.controller.js", type: "text/javascript"}
-
-    %script{src: "{{STATIC_URL}}app/cognitive.module.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/cognitive.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/cognitive.router.js", type: "text/javascript"}
-
-    %script{src: "{{STATIC_URL}}app/common/header.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/common/message.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/common/message.service.js", type: "text/javascript"}
-
-    %script{src: "{{STATIC_URL}}app/common/login_modal.controller.js", type: "text/javascript"}
-
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/duplication_removal/duplication_removal.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/file_input/file_input.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/formula/formula.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/introduction/introduction.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/machine_learning/machine_learning.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/metadata/metadata.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/missing_data_removal/missing_data_removal.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/normalization/normalization.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/projection/projection.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/row_addition/row_addition.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/plugin.service.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/workspace.service.js", type: "text/javascript"}
-    -#%script{src: "{{STATIC_URL}}app/service/node_event_handler.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/directive/edge.directive.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/directive/node.directive.js", type: "text/javascript"}
-
-    -# /whitboead needs following files
-    %link{href: "{{STATIC_URL}}css/whiteboard.css", rel: "stylesheet"}
-    <link href='{% static "jquery-ui/themes/base/jquery-ui.min.css" %}' rel="stylesheet">
-    <script src='{% static "jquery-ui/jquery-ui.min.js" %}' type="text/javascript"></script>
-    <script src='{% static "d3/d3.js" %}' type="text/javascript"></script>
-
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/result_modal.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/workspace_modal.controller.js", type: "text/javascript"}
-
-    %script{src: "{{STATIC_URL}}app/whiteboard/whiteboard.controller.js", type: "text/javascript"}
-
-    <script src='{% static "jquery-csv/src/jquery.csv.min.js" %}' type="text/javascript"></script>
-
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/duplication_removal/duplication_removal.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/file_input/file_input.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/formula/formula.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/machine_learning/machine_learning.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/missing_data_removal/missing_data_removal.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/normalization/normalization.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/projection/projection.controller.js", type: "text/javascript"}
-    %script{src: "{{STATIC_URL}}app/whiteboard/experiment/plugin/row_addition/row_addition.controller.js", type: "text/javascript"}
+    %script{src: '{% static "jquery/dist/jquery.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "angular/angular.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "bootstrap/dist/js/bootstrap.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "angular-ui-router/release/angular-ui-router.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "angular-bootstrap/ui-bootstrap-tpls.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "ngstorage/ngStorage.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/home/home.module.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/whiteboard.module.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/experiment.module.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/experiment.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/cognitive.module.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/cognitive.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/cognitive.router.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/common/header.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/common/message.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/common/message.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/common/login_modal.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/duplication_removal/duplication_removal.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/file_input/file_input.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/formula/formula.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/introduction/introduction.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/machine_learning/machine_learning.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/metadata/metadata.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/missing_data_removal/missing_data_removal.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/normalization/normalization.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/projection/projection.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/row_addition/row_addition.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/plugin.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/workspace.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/directive/edge.directive.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/directive/node.directive.js" %}', type: "text/javascript"}
+    %script{src: '{% static "jquery-ui/jquery-ui.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "d3/d3.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/result_modal.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/workspace_modal.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/whiteboard.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "jquery-csv/src/jquery.csv.min.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/duplication_removal/duplication_removal.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/file_input/file_input.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/formula/formula.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/machine_learning/machine_learning.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/missing_data_removal/missing_data_removal.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/normalization/normalization.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/projection/projection.controller.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/whiteboard/experiment/plugin/row_addition/row_addition.controller.js" %}', type: "text/javascript"}
 
   %body{ng-controller:"CognitiveController", style:"padding-top:51px;"}
     .container-fluid{ng-controller:"HeaderController as vm"}
