@@ -24,8 +24,8 @@
                     .on("mouseover", function () {});
 
                 g.append('rect')
-                    .attr('x', '{{node.x}}')
-                    .attr('y', '{{node.y}}')
+                    .attr('ng-attr-x', '{{node.x}}')
+                    .attr('ng-attr-y', '{{node.y}}')
                     .attr('width', 180)
                     .attr('height', 40)
                     .attr('class', "node base-node")
@@ -33,8 +33,8 @@
                     .attr('stroke-width', "3");
 
                 g.append('text')
-                    .attr('x', '{{node.x + 90}}')
-                    .attr('y',  '{{node.y + 25}}')
+                    .attr('ng-attr-x', '{{node.x + 90}}')
+                    .attr('ng-attr-y',  '{{node.y + 25}}')
                     .attr('fill', 'black')
                     .style('stroke-width', 1)
                     .style({"font-size":"14px","z-index":"9999999"} )
@@ -42,10 +42,10 @@
                     .text("{{node.name}}");
 
                 g.append('circle')
-                    .attr('cx', '{{node.x + 90}}')
-                    .attr('cy', '{{node.y}}')
+                    .attr('ng-attr-cx', '{{node.x + 90}}')
+                    .attr('ng-attr-cy', '{{node.y}}')
                     .attr('r', 5)
-                    .attr('node', '{{node.id}}')
+                    .attr('ng-attr-node', '{{node.id}}')
                     .attr("class", "cognitive-node-input-circle")
                     .attr('fill', 'white')
                     .attr('stroke', 'gray')
@@ -61,10 +61,10 @@
                         .on("dragend", finishDrawingConnection));
 
                 g.append('circle')
-                    .attr('cx', '{{node.x + 90}}')
-                    .attr('cy', '{{node.y + 40}}')
+                    .attr('ng-attr-cx', '{{node.x + 90}}')
+                    .attr('ng-attr-cy', '{{node.y + 40}}')
                     .attr('r', 5 )
-                    .attr('node', '{{node.id}}')
+                    .attr('ng-attr-node', '{{node.id}}')
                     .attr("class", "cognitive-node-output-circle")
                     .attr('fill', 'white')
                     .attr('stroke', 'gray')

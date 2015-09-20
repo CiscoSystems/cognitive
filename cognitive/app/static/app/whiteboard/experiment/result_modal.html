@@ -41,7 +41,7 @@
             <svg class="graph column_{{$index}}">
               <rect x="3" y="3" height=74 width=74 stroke="black" fill="none" stroke-width=1></rect>
               <g ng-repeat="datum in vm.data['graph_data'][$index][1] track by $index">
-                <rect x="{{$index * 20 + 4}}" y="{{78 - datum}}" ng-class="bar" height="{{datum-1}}" width="12" class="bar">
+                <rect ng-attr-x="{{$index * 20 + 4}}" ng-attr-y="{{78 - datum}}" ng-class="bar" ng-attr-height="{{datum}}" width="12" class="bar">
                 </rect>
               </g>
             </svg>

@@ -12,3 +12,4 @@ venv
 *.js.map
 *.sqlite3
 node_modules
+components
