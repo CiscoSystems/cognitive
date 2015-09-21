@@ -252,7 +252,7 @@ tr.result_row:hover {
 .close-icon {
     font-size: 16pt;
     fill: #ddc9c9;
-    display: none;
+    /*display: none;*/
 }
 
 .close-icon:hover {

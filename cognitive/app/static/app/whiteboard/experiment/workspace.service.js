@@ -12,7 +12,7 @@
             //    id: 1, name: "Workspace 1",
             //    nodes: [
             //    ],
-            //    edges: [],
+            //    edges: [{id:1, to:1, from:2}],
             //    active: false},
             //{
             //    id: 2, name: "Workspace 2",
@@ -110,7 +110,7 @@
 
             return nodes.filter(function (node) {
                 return node.id == index;
-            })[0]
+            })[0];
         };
 
         var getWorkspaceById = function (workspace_id) {
@@ -119,6 +119,42 @@
             })[0];
         }
 
+        var getEdgesOfNode = function (node_id) {
+            var edges = getCurrentWorkspace().edges;
+            return edges.filter(function (edge) {
+                return edge.to === node_id || edge.from === node_id;
+            });
+        }
+
+        var removeNode = function (node_id, user) {
+            console.log(workspaces)
+            var workspace = getCurrentWorkspace();
+            var nodes = workspace.nodes;
+            var edges = workspace.edges;
+            var node_type;
+
+            for (var i = 0; i < edges.length; ++i) {
+                if (edges[i].to === node_id || edges[i].from === node_id) {
+                    edges.splice(i, 1);
+                }
+            }
+
+            for (var j = 0; j < nodes.length; ++j) {
+                if (nodes[j].id === node_id) {
+                    node_type = nodes[j].type;
+                    nodes.splice(j, 1);
+                    break;
+                }
+            }
+
+            $http.delete('/api/v1/operations/' + node_type + '/' + node_id, {
+                user_id: user.id,
+                token: user.token
+            }).success(function (data, status, headers, config) {
+                console.log(data);
+            });
+
+        }
 
         CognitiveWorkspaceService = {
             getWorkspaces: getWorkspaces,
@@ -132,7 +168,9 @@
             getCurrentFocus: getCurrentFocus,
             getNodeByWorkspaceAndIndex: getNodeByWorkspaceAndIndex,
             createEdge: createEdge,
-            appendEdgeOnCurrentWorkspace: appendEdgeOnCurrentWorkspace
+            appendEdgeOnCurrentWorkspace: appendEdgeOnCurrentWorkspace,
+            removeNode: removeNode,
+            getEdgesOfNode: getEdgesOfNode
         }
 
         return CognitiveWorkspaceService;

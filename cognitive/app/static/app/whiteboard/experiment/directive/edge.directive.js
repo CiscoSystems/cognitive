@@ -1,6 +1,6 @@
 (function () {
-    "use strict";
-    angular.module("cognitive")
+    'use strict';
+    angular.module('cognitive.whiteboard.experiment')
         .directive('cognitiveEdge', cognitiveEdge);
     function cognitiveEdge($compile) {
         return {

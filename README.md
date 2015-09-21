@@ -76,6 +76,8 @@ For testing Javasctipt codes, use [Jasmine](http://jasmine.github.io/) by execut
 
         jasmine
 
+After the execution of Jasmine, you can get the results from http://localhost:8888
+
 
 How to Contribute
 -----------------
