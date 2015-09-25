@@ -20,13 +20,10 @@ Django settings for cognitive project.
 import os
 
 import xstatic.main
-import xstatic.pkg.bootstrap
 import xstatic.pkg.d3
-import xstatic.pkg.font_awesome
-import xstatic.pkg.jquery
-import xstatic.pkg.jquery_ui
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '09iat*t%$*l7$3d0)_0*x0*cx356q+il96ivgp15hr!qr5y7-8'
@@ -36,7 +33,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR + '/cognitive/app', 'templates'),
+    os.path.join(PROJECT_ROOT, 'cognitive/app/templates'),
 )
 
 TEMPLATE_LOADERS = (
@@ -57,10 +54,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'djangobower',
+    'djangobower',
     'rest_framework',
-    'cognitive.app',
     'rest_framework_swagger',
+    'cognitive.app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,7 +80,7 @@ WSGI_APPLICATION = 'cognitive.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
     }
 }
 
@@ -121,23 +118,23 @@ def get_staticfiles_dirs(webroot='/'):
     :return: the list of file path for static files
     """
     static_files_dirs = [
-        ('lib/bootstrap',
-         xstatic.main.XStatic(xstatic.pkg.bootstrap, root_url=webroot).base_dir),
+        # ('lib/bootstrap',
+        #  xstatic.main.XStatic(xstatic.pkg.bootstrap, root_url=webroot).base_dir),
         ('lib/d3',
          xstatic.main.XStatic(xstatic.pkg.d3, root_url=webroot).base_dir),
-        ('lib/font-awesome',
-         xstatic.main.XStatic(xstatic.pkg.font_awesome, root_url=webroot).base_dir),
-        ('lib/jquery',
-         xstatic.main.XStatic(xstatic.pkg.jquery, root_url=webroot).base_dir),
-        ('lib/jquery-ui',
-         xstatic.main.XStatic(xstatic.pkg.jquery_ui, root_url=webroot).base_dir)
+        # ('lib/font-awesome',
+        #  xstatic.main.XStatic(xstatic.pkg.font_awesome, root_url=webroot).base_dir),
+        # ('lib/jquery',
+        #  xstatic.main.XStatic(xstatic.pkg.jquery, root_url=webroot).base_dir),
+        # ('lib/jquery-ui',
+        #  xstatic.main.XStatic(xstatic.pkg.jquery_ui, root_url=webroot).base_dir)
     ]
 
     return static_files_dirs
 
 
 STATICFILES_DIRS = get_staticfiles_dirs()
-STATICFILES_DIRS.append((os.path.join(BASE_DIR + '/cognitive/app', "static")))
+STATICFILES_DIRS.append((os.path.join(PROJECT_ROOT + '/cognitive/app', "static")))
 
 
 # Swagger Documentation Setting
@@ -173,4 +170,25 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request'
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
+
+BOWER_INSTALLED_APPS = (
+    'angular#~1.4.6',
+    'angular-ui-router',
+    'angular-bootstrap#~0.13.4',
+    'bootstrap',
+    'd3#3.1.6',
+    'jquery',
+    'jquery-csv',
+    'jquery-ui',
+    'font-awesome#4.4.0',
+    'ngstorage',
 )
