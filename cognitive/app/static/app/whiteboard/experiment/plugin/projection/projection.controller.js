@@ -20,8 +20,7 @@
         }
 
         vm.uploadExist = function () {
-            console.log(vm.columns)
-            return vm.columns.length !== "undefined";
+            return (typeof(vm.columns) == "object") ? true : false;
         }
     };
 })();

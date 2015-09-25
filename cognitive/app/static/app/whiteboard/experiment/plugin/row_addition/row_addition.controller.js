@@ -10,8 +10,10 @@
         vm.columns = parsed_file[0];
         vm.values = [];
 
-        for(var i=0; i < vm.columns.length; ++i) {
-            vm.values.push("")
+        if (typeof(vm.columns) == "function") {
+            for (var i = 0; i < vm.columns.length; ++i) {
+                vm.values.push("")
+            }
         }
 
         vm.createNode = function() {
@@ -20,7 +22,7 @@
         };
 
         vm.uploadExist = function () {
-            return vm.values.length !== 0;
+            return (typeof(vm.columns) == "object") ? true : false;
         }
     };
 

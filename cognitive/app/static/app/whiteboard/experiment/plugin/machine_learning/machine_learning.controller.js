@@ -22,7 +22,7 @@
         };
 
         vm.uploadExist = function () {
-            return vm.columns.length !== 0;
+            return (typeof(vm.columns) == "object") ? true : false;
         }
     };
 })();
