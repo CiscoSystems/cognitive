@@ -121,16 +121,6 @@
             return vm.getNodeByWorkspaceAndIndex(workspace_id, index).focus;
         };
 
-        //vm.openRightMenu = function() {
-        //    $(".whiteboard-right-menu")
-        //        .toggle("slide", {direction: "right"}, 300);
-        //};
-        //
-        //vm.closeRightMenu = function() {
-        //    $(".whiteboard-right-menu")
-        //        .toggle("slide", {direction: "right"}, 300);
-        //};
-
         vm.clickCognitiveNode = function (event, workspace_id, index) {
             event.stopPropagation();
             var node = vm.getNodeByWorkspaceAndIndex(workspace_id, index);

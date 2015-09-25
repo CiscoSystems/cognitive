@@ -3,7 +3,6 @@
     angular.module('cognitive')
         .controller('CognitiveController', CognitiveController)
 
-
     function CognitiveController(
         $scope, $sessionStorage) {
         $scope.user = $sessionStorage

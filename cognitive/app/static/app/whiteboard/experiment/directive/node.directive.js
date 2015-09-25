@@ -1,9 +1,11 @@
 (function () {
-    "use strict";
-    angular.module("cognitive")
+    'use strict';
+    angular.module('cognitive.whiteboard.experiment')
         .directive('cognitiveNode', cognitiveNode);
 
-    function cognitiveNode($compile, CognitiveWorkspaceService) {
+    function cognitiveNode(
+        $compile, CognitiveWorkspaceService) {
+
         return {
             restrict: 'AEC',
             replace: 'true',
@@ -60,6 +62,16 @@
                         .on("drag", drawingConnection)
                         .on("dragend", finishDrawingConnection));
 
+                g.append('text')
+                    .attr('x', '{{node.x - 15}}')
+                    .attr('y', '{{node.y - 5}}')
+                    .attr('font-family', 'FontAwesome')
+                    .attr('class', 'node close-icon')
+                    .attr('node', '{{node.id}}')
+                    .attr('font-size', '12pt')
+                    .text('\uf00d')  // icon: fa-close
+                    .on('click', clickCloseIcon);
+
                 g.append('circle')
                     .attr('ng-attr-cx', '{{node.x + 90}}')
                     .attr('ng-attr-cy', '{{node.y + 40}}')
@@ -83,6 +95,17 @@
                 $compile(element)(scope);
             }
         };
+
+        function clickCloseIcon() {
+            d3.event.stopPropagation();
+            var scope = angular.element($('.whiteboard-draw-area-wrapper')[0]).scope();
+            var close_icon = d3.select(this);
+            var node_id = close_icon.attr('node');
+            //var edges = CognitiveWorkspaceService.getEdgesOfNode(node_id);
+            CognitiveWorkspaceService.removeNode(node_id, scope.user);
+            $('#node-group-'+node_id).parent().remove();
+            scope.$apply();
+        }
 
         function dragCognitiveNode() {
             var group = d3.select(this);
