@@ -42,6 +42,7 @@ class ComponentOutputValue(serializers.ModelSerializer):
         fields = ('function_subtype', 'function_subtype_arg')
         model = Data_operation_type
 
+
 class ComponentSerializer(serializers.ModelSerializer):
     type = serializers.SerializerMethodField('component_type')
     params = serializers.SerializerMethodField('component_params')
@@ -61,6 +62,7 @@ class ComponentSerializer(serializers.ModelSerializer):
         else:
             # TODO(|Less Priority| All Data_operation_type.function_subtype_arg values should be JSON)
             return data
+
 
 class WorkflowSerializer(serializers.ModelSerializer):
 

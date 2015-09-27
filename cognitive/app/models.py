@@ -15,6 +15,7 @@
 from django.db import models
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from jsonfield import JSONField
 import string
 import random
 
@@ -169,6 +170,7 @@ class Component(models.Model):
     execution_end_time = models.DateField(blank=True, null=True)
     data_location = models.CharField(max_length=50, blank=True, null=True)
     preferred_data_location = models.CharField(max_length=50, blank=True, null=True)
+    outputs = JSONField()
     # component_id = models.IntegerField(blank=True, null=True)
 
 
