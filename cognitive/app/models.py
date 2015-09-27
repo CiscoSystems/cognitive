@@ -54,6 +54,8 @@ class Data_operation_type(models.Model):
     function_arg = models.CharField(max_length=50, choices=FUNCTION_ARG)
     function_arg_id = models.CharField(max_length=50, blank=True, null=True)
     function_subtype = models.CharField(max_length=50, choices=FUNCTION_SUBTYPE)
+
+    # This should be JSON format
     function_subtype_arg = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):

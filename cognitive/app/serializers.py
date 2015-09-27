@@ -12,8 +12,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import json
+
 from rest_framework import serializers
-from .models import User, Experiment, Component, Workflow
+from .models import User, Experiment, Component, Workflow, Data_operation_type
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,11 +37,30 @@ class ExperimentSerializer(serializers.ModelSerializer):
         #        'execution_start_time', 'execution_end_time', 'component_start_id')
 
 
+class ComponentOutputValue(serializers.ModelSerializer):
+    class Meta:
+        fields = ('function_subtype', 'function_subtype_arg')
+        model = Data_operation_type
+
 class ComponentSerializer(serializers.ModelSerializer):
+    type = serializers.SerializerMethodField('component_type')
+    params = serializers.SerializerMethodField('component_params')
 
     class Meta:
         model = Component
 
+    def component_type(self, obj):
+        return obj.operation_type.function_subtype
+
+    def component_params(self, obj):
+        data = obj.operation_type.function_subtype_arg
+        if data is None:
+            return ''
+        elif data.startswith(('[', '{')):
+            return json.loads(data)
+        else:
+            # TODO(|Less Priority| All Data_operation_type.function_subtype_arg values should be JSON)
+            return data
 
 class WorkflowSerializer(serializers.ModelSerializer):
 
