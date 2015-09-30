@@ -15,6 +15,7 @@
 from django.db import models
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from jsonfield import JSONField
 import string
 import random
 
@@ -54,6 +55,8 @@ class Data_operation_type(models.Model):
     function_arg = models.CharField(max_length=50, choices=FUNCTION_ARG)
     function_arg_id = models.CharField(max_length=50, blank=True, null=True)
     function_subtype = models.CharField(max_length=50, choices=FUNCTION_SUBTYPE)
+
+    # This should be JSON format
     function_subtype_arg = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
@@ -167,6 +170,7 @@ class Component(models.Model):
     execution_end_time = models.DateField(blank=True, null=True)
     data_location = models.CharField(max_length=50, blank=True, null=True)
     preferred_data_location = models.CharField(max_length=50, blank=True, null=True)
+    outputs = JSONField()
     # component_id = models.IntegerField(blank=True, null=True)
 
 

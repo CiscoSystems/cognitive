@@ -1,18 +1,26 @@
-<div class="cognitive-detail-content">
-  <div class="cognitive-detail-header">
-    <h2>
-      <i class="fa fa-file-text-o"></i>
-      Introduction
-    </h2>
-  </div>
-  <div class="cognitive-detail-body">
-    <p style="font-size:14pt; padding-left: 20px;padding-top: 10px;">
-      User can make any components shown in menu bar on left-side of this page.
-      The details corespond to the component you choose are specified in the
-      center of this page appeared after your click.
-      The most right-side column is for showing the history of your manupuration.
-      To get result, please don't forget click 'Run' button at the bottom of menu
-      bar.
-    </p>
-  </div>
-</div>
+<md-dialog aria-label="Introduction">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>
+        <i class="fa fa-file-text-o"></i>
+        Introduction
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()" aria-label="Close dialog">
+        <ng-md-icon icon="close" style="fill: white;"></ng-md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content style="min-width: 500px;">
+    <div class="cognitive-detail-content">
+      <p style="font-size:14pt; padding-left: 20px;padding-top: 10px;">
+        User can make any components shown in menu bar on left-side of this page.
+        The details corespond to the component you choose are specified in the
+        center of this page appeared after your click.
+        The most right-side column is for showing the history of your manupuration.
+        To get result, please don't forget click 'Run' button at the bottom of menu
+        bar.
+      </p>
+    </div>
+  </md-dialog-content>
+</md-dialog>

@@ -19,9 +19,18 @@ from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
 from pandas import read_csv, datetime
 import json
+import re
 import urllib2
 
 MAX_COMPONENTS_PER_EXP = 100
+
+def get_csv_fields(csv_data):
+    for line in re.split('\n|\r', csv_data):
+        if line == '':
+            continue
+        parsed_line = line.split(',')
+        return [{'id': i,'name': parsed_line[i]} for i in range(len(parsed_line))]
+    return []
 
 #####
 # Operation      function_type function_arg function_subtype function_arg_id function_subtype_arg
@@ -34,7 +43,6 @@ MAX_COMPONENTS_PER_EXP = 100
 # row               Create      Row          Row              -               {row_values}
 # input             Create      Table        Input            -               {filename}
 # machine learning  Create      Model        {model_type}     {Train-test}    {ML arguments}
-
 
 class OperationViewSet(viewsets.ViewSet):
 
@@ -178,9 +186,14 @@ class OperationViewSet(viewsets.ViewSet):
         print "Experiment ", exp_id, " Operation ", operation
         op = self.set_operation(operation, data)
 
+        outputs = []
+        if operation == 'input' and data["input_file_type"] == "csv":
+            outputs = get_csv_fields(data["data_values"])
+
         component = Component(
             experiment=exp, created_time=datetime.now(),
-            modified_time=datetime.now(), operation_type=op)
+            modified_time=datetime.now(), operation_type=op, outputs=outputs)
+
         component.save()
         serializer = ComponentSerializer(component)
         return send_response("GET", serializer)

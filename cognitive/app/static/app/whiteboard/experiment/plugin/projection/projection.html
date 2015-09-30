@@ -1,33 +1,41 @@
-<div class="cognitive-detail-content" ng-controller="ProjectionController as vm">
-  <div class="cognitive-detail-header">
-    <h2>
-      <i class="fa fa-cogs"></i>
-      Column Selection
-    </h2>
-  </div>
-    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
-        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
-            <i class="fa fa-close"></i>Need to Upload Data Before.
-        </span>
+<md-dialog aria-label="ColumnSelection">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>
+        <i class="fa fa-cogs"></i>
+        Column Selection
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()" aria-label="Close dialog">
+        <ng-md-icon icon="close" style="fill: white;"></ng-md-icon>
+      </md-button>
     </div>
-  <div class="cognitive-detail-body">
-    <div class="form-group projection_form">
-      <div ng-repeat="target in vm.targets track by $index">
-        <select class="form-control" ng-model="vm.targets[$index]" type="number">
-          <option ng-repeat="column in vm.columns" value="{{$index}}">
-            {{column}}
-          </option>
-        </select>
+  </md-toolbar>
+  <md-dialog-content style="min-width: 500px;">
+    <div class="cognitive-detail-content" ng-controller="ProjectionController as vm">
+      <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
+          <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+              <i class="fa fa-close"></i>Need to Upload Data Before.
+          </span>
+      </div>
+      <div class="form-group projection_form">
+        <div ng-repeat="target in vm.targets track by $index">
+          <select class="form-control" ng-model="vm.targets[$index]" type="number">
+            <option ng-repeat="column in vm.columns" value="{{$index}}">
+              {{column}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <button id="projection-add-btn" class="btn btn-primary add_btn add_projection right" type="button" ng-click="vm.createNode()">
+          Add
+      </button>
+      <div class="projection minus-bottom right">
+        <i class="fa fa-minus minus-icon"></i>
+      </div>
+      <div class="projection plus-bottom right" ng-click="vm.addTarget()">
+        <i class="fa fa-plus plus-icon"></i>
       </div>
     </div>
-    <button id="projection-add-btn" class="btn btn-primary add_btn add_projection right" type="button" ng-click="vm.createNode()">
-        Add
-    </button>
-    <div class="projection minus-bottom right">
-      <i class="fa fa-minus minus-icon"></i>
-    </div>
-    <div class="projection plus-bottom right" ng-click="vm.addTarget()">
-      <i class="fa fa-plus plus-icon"></i>
-    </div>
-  </div>
-</div>
+  </md-dialog-content>
+</md-dialog>
