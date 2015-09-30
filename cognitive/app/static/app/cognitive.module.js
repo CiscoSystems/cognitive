@@ -6,6 +6,10 @@
         'cognitive.whiteboard',
         'ui.router',
         'ui.bootstrap',
-        'ngStorage'
+        'ngStorage',
+        'ngMaterial',
+        'ngMdIcons',
+        'ngAria',
+        'ngAnimate',
     ])
 })();

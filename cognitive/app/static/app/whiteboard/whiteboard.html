@@ -1,29 +1,28 @@
-<div class="whiteboard-main" ng-controller="WhiteboardMainController">
-
-    <div class="main-menu zero_padding_margin" style="position: fixed; top: 50px;bottom: 0;left: 0;width: 55px;height: 100%;background:#3D3D3D;">
-        <ul class="menu-list-group" style="margin:0;padding:0;">
-            <li class="menu-list-group-item" ui-sref="whiteboard.experiment" style="padding:1px;width:55px;height:55px; padding-top:9px; border-bottom: solid 1px white; text-align:center">
-                <h4 class="menu-list-group-item-icon zero_padding_margin">
-                <i class="fa fa-cube" style="color:white;font-size:28pt;"></i>
-                </h4>
-            </li>
-
-            <li class="menu-list-group-item" ui-sref="whiteboard.workspace_manager" style="padding:1px;width:55px;height:55px; padding-top:4px; border-bottom: solid 1px white; text-align:center">
-                <h4 class="menu-list-group-item-icon zero_padding_margin">
-                    <i class="fa fa-list" style="color:white;font-size:33pt;"></i>
-                </h4>
-            </li>
-            <!--<li class="menu-list-group-item" ui-sref="whiteboard.user_setting" style="padding:1px;width:55px;height:55px; padding-top:4px; border-bottom: solid 1px white; text-align:center">
-                <h4 class="menu-list-group-item-icon zero_padding_margin">
-                    <i class="glyphicon glyphicon-user" style="color:white;font-size:33pt;"></i>
-                </h4>
-            </li>-->
-            <li class="menu-list-group-item" ui-sref="whiteboard.setting" style="padding:1px;width:55px;height:55px; padding-top:4px; border-bottom: solid 1px white; text-align:center">
-                <h4 class="menu-list-group-item-icon zero_padding_margin">
-                    <i class="fa fa-cog" style="color:white;font-size:33pt;"></i>
-                </h4>
-            </li>
-        </ul>
-    </div>
-    <div ui-view="whiteboard_content" style="margin-left: 55px;"></div>
+<div class="whiteboard-main" layout="column" style="height:calc(100vh); background: whitesmoke;" ng-controller="WhiteboardMainController">
+  <!--<section layout="row" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+      <md-content layout-padding>
+        <md-list hide-md show-gt-md>
+          <md-list-item class="md-line" layout-fill>
+            <span flex="20">
+              <ng-md-icon icon="home" style="fill: steelblue;" size="18pt"></ng-md-icon>
+            </span>
+            <a ui-sref="index">
+              <span>Home</span>
+            </a>
+          </md-list-item>
+          <md-list-item class="md-line" layout-fill>
+            <span flex="20">
+              <ng-md-icon icon="view_array" style="fill: steelblue;" size="18pt"></ng-md-icon>
+            </span>
+            <span>Whiteboard</span>
+          </md-list-item>
+          <md-divider ></md-divider>
+        </md-list>
+      </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding style="background: whitesmoke">-->
+      <div ui-view="whiteboard_content"></div>
+    <!--</md-content>
+  </section>-->
 </div>

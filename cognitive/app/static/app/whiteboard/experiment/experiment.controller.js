@@ -3,9 +3,21 @@
     angular.module('cognitive.whiteboard.experiment')
         .controller('ExperimentController', ExperimentController);
 
+    /* This conponent creation controller is temporal, will be moved or removed */
+    angular.module('cognitive.whiteboard.experiment')
+        .controller('ComponentCreationDialogController', ComponentCreationDialogController);
+    function ComponentCreationDialogController($scope, $mdDialog, user) {
+        var vm = this;
+        $scope.user = user;
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+    };
+    /* ------------------------------------------------------------------------ */
+
     function ExperimentController (
-        $scope, $location, $modal, $log, $http, CognitiveComponentService,
-        CognitiveWorkspaceService, FileInputService, MessageService) {
+        $scope, $location, $modal, $log, $http, $mdDialog,
+        CognitiveComponentService, CognitiveWorkspaceService, FileInputService, MessageService) {
 
         var vm = this;
         vm.components = CognitiveComponentService.getCognitiveComponents();
@@ -52,44 +64,22 @@
             vm.contact = "";
         };
 
-        vm.openDescription = function (index) {
-            switch (vm.toggled_menu_idx) {
-                case -1:
-                    vm.detail_template_url = CognitiveComponentService
-                        .getCognitiveComponents()[index].template
-                    var current_workspace = vm.currentWorkspace()
-                    vm.toggled_menu_idx = index;
-                    $(".left-menu-detail-cognitive")
-                        .toggle("slide", {direction: "left"}, 700);
-                    $(".root[workspace=" + current_workspace.id + "]")
-                        .animate({"left": 430}, 700);
-                    break;
-                case index:
-                    vm.detail_template_url = CognitiveComponentService
-                        .getCognitiveComponents()[index].template
-                    vm.closeDescription();
-                    break;
-                default :
-                    vm.detail_template_url = CognitiveComponentService
-                        .getCognitiveComponents()[index].template
-                    vm.toggled_menu_idx = index;
-            }
-        };
-
-        vm.closeDescription = function () {
-            if (vm.toggled_menu_idx === -1) {
-                return;
-            }
-            var current_workspace = vm.currentWorkspace();
-            vm.toggled_menu_idx = -1;
-            $(".left-menu-detail-cognitive")
-                .toggle("slide", {direction: "left"}, 700);
-            $(".root[workspace=" + current_workspace.id + "]")
-                .animate({"left": 0}, 700);
+        vm.showComponentCreationDialog = function(ev, index) {
+            $mdDialog.show({
+                controller: ComponentCreationDialogController,
+                templateUrl: CognitiveComponentService.getCognitiveComponents()[index].template,
+                locals: {user: $scope.user},
+                targetEvent: ev,
+                clickOutsideToClose:true
+            })
+            .then(function(answer) {
+                    console.log(answer);
+                }, function() {
+                    console.log("some error");
+            });
         };
 
         vm.clickNone = function () {
-            vm.closeDescription();
             var current_node = vm.getCurrentFocusNode()
             if (typeof current_node !== "undefined") {
                 current_node.focus = false;

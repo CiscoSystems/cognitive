@@ -183,6 +183,8 @@ BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
 BOWER_INSTALLED_APPS = (
     'angular#~1.4.6',
     'angular-ui-router',
+    'angular-material',
+    'angular-material-icons',
     'angular-bootstrap#~0.13.4',
     'bootstrap',
     'd3#3.1.6',
