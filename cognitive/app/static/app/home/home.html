@@ -1,68 +1,85 @@
-<div class="container">
-  <div class="page-header">
-    <h1>
-      <span class="text-info">Cognitive</span>
-      <small>
-        Machine Learning as a Service (MLaaS)
-      </small>
-    </h1>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        1. Each system user has a separate workspace of experiments.
-        The number is limited as per the user quota set by the admin.
-      </blockquote>
+<md-content ng-controller="HomeController as vm">
+  <md-toolbar layout="row" ng-controller="HeaderController as vm">
+    <div class="md-toolbar-tools">
+      <span flex="5"></span>
+      <span>
+        <a ui-sref="index">
+          <i class="fa fa-cube" style="padding:0;margin:0;"></i>
+          Cognitive
+        </a>
+      </span>
+      <span flex></span>
+      <!--<md-button aria-label="user information">
+        <ng-md-icon icon="person" style="fill: white;"></ng-md-icon>
+      </md-button>-->
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        2. Each user is authenticated using token mechanism.
-        The client is expected to send token as an argument for every api call.
-      </blockquote>
+  </md-toolbar>
+  <md-content>
+    <div class="section-home" layout="column" layout-align="center center">
+      <div>
+        <h1 class="md-display-3">About Cognitive</h1>
+      </div>
+      <md-divider md-inset></md-divider>
+      <div>
+        <p class="md-headline">
+          　　　　Data Operation Platform<br>
+          Easy to Use, Extend, and even Powerful
+        </p>
+      </div>
+      <div class="md-actions" layout="row" layout-align="end">
+        <md-button class="md-raised md-primary" ng-click="vm.openLoginModal()">Start</md-button>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        3. Each experiment has multiple components which are connected to form a single workflow.
-        Workflows specify the flow of data from the data source to data sink through various data transformations.
-        Each component knows its parent so that whole workflow can be re-excuted on failures.
-        In this version, web client supports only single inheritance.
-        However, Multiple inheritance can be created using rest api calls.
-      </blockquote>
+  </md-content>
+
+  <md-content style="background: whitesmoke">
+    <div class="section-home" layout="row">
+      <div flex layout="column" layout-align="center center">
+        <ng-md-icon icon="picture_in_picture" style="fill: steelblue;" size="80pt"></ng-md-icon>
+        <h3 class="md-display-2">Workspaces</h3>
+        <p class="md-body-1">User can save and share own workspaces</p>
+      </div>
+      <div flex layout="column" layout-align="center center">
+        <ng-md-icon icon="security" style="fill: steelblue;" size="80pt"></ng-md-icon>
+        <h3 class="md-display-2">Secure</h3>
+        <p class="md-body-1">User is Authenticated using token mechanism.</p>
+      </div>
+      <div flex layout="column" layout-align="center center">
+        <ng-md-icon icon="open_with" style="fill: steelblue;" size="80pt"></ng-md-icon>
+        <h3 class="md-display-2">Data formats</h3>
+        <p class="md-body-1">Support for CSV, plain text file and HTTP files</p>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        4. For iterative executions, the client can specify whether the results should be cached.
-        If caching is enabled, parent operations are skipped.
-      </blockquote>
+  </md-content>
+  <md-content>
+    <div class="section-home" layout="row">
+      <div flex layout="column" layout-align="center center">
+        <ng-md-icon icon="alarm_on" style="fill: steelblue;" size="80pt"></ng-md-icon>
+        <h3 class="md-display-2">Cache</h3>
+        <p class="md-body-1">The second calcuration can be faster</p>
+      </div>
+      <div flex layout="column" layout-align="center center">
+        <ng-md-icon icon="view_module" style="fill: steelblue;" size="80pt"></ng-md-icon>
+        <h3 class="md-display-2">Persistent</h3>
+        <p class="md-body-1">User can load/update previously created workflows</p>
+      </div>
+      <div flex layout="column" layout-align="center center">
+        <ng-md-icon icon="cloud_queue" style="fill: steelblue;" size="80pt"></ng-md-icon>
+        <h3 class="md-display-2">Cross Platform</h3>
+        <p class="md-body-1">Storm and Hadoop jobs in future versions</p>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        5. Every workflow is persisted that enables user to load or update previously created workflows.
-      </blockquote>
+  </md-content>
+
+  <md-content style="background: whitesmoke">
+    <div class="section-home" layout="row">
+      <div flex layout="column" layout-align="center center">
+        <h3 class="md-display-2">Join the Project!</h3>
+        <a href="https://github.com/CiscoSystems/cognitive">
+          <ng-md-icon icon="github-circle" style="fill: #333333;" size="80pt"></ng-md-icon>
+        </a>
+        <p>Controbute on Github!</p>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        6. Data source/Data output can be a CSV file, plain text file or a HTTP file.
-      </blockquote>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-11">
-      <blockquote>
-        7. Each workflow execution is asynchronously handled in a separate worker thread so that request thread is not blocked.
-        The asynchronous execution can be extended to a remote procedure call or a hadoop job in future versions.
-        The client is expected to poll using GET requests to get the list of successful/errored operations.
-      </blockquote>
-    </div>
-  </div>
-</div>
+  </md-content>
+</md-content>

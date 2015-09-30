@@ -63,8 +63,8 @@
                         .on("dragend", finishDrawingConnection));
 
                 g.append('text')
-                    .attr('x', '{{node.x - 15}}')
-                    .attr('y', '{{node.y - 5}}')
+                    .attr('ng-attr-x', '{{node.x - 15}}')
+                    .attr('ng-attr-y', '{{node.y - 5}}')
                     .attr('font-family', 'FontAwesome')
                     .attr('class', 'node close-icon')
                     .attr('node', '{{node.id}}')

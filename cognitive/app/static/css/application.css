@@ -37,9 +37,10 @@ body, h1, h2, h3, h4, h5, h6 {
     height: 100vh;
 }
 
-.cognitive-header {
-    background: white;
+.section-home {
+    height: 400px;
 }
+
 
 .cognitive-content{
     height: calc(100vh - 50px);
@@ -74,22 +75,4 @@ a:hover {
 
 .left {
     float: left;
-}
-
-.btn-group-cognitive:hover {
-    background: #ffd124;
-}
-
-.btn-group-cognitive:active {
-    background: rgb(30, 140, 255);
-    color: white;
-}
-
-.list-group-item-cognitive:hover {
-    background: #ffd124;
-}
-
-.list-group-item-cognitive:active {
-    background: rgb(30, 140, 255);
-    color: white;
 }

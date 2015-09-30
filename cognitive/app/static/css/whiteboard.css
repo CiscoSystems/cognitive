@@ -5,53 +5,10 @@ li.component {
     color: red;
 }
 
-.whiteboard-flyout{
-    overflow: scroll;
-    margin-bottom:0;
-    padding: 0 0 130px;
-    border-right: solid 1px #afafaf;
-    position: fixed;
-    left: 0;
-    top: 50px;
-    right: 0;
-    height: 100%;
-    width: 220px;
-    background-color:white;
-    font-size:12pt;
-}
-
-.whiteboard-flyout li {
-    padding-top: 15px;
-    padding-left: 15px;
-    padding-bottom: 40px;
-}
-
 .layer {
     height: 100%;
     width: 100%;
 }
-
-.whiteboard-flyout i{
-    font-size:22pt;
-}
-
-.whiteboard-flyout ul {
-    list-style:none;
-    padding:0;
-}
-
-.whiteboard-flyout ul li{
-    width:100%;
-    height:40px;
-}
-
-.whiteboard-draw-area-wrapper {
-    float:right;
-    background-color:white;
-    width:100%;
-    height: calc(100vh - 126px);
-}
-
 
 .root {
     position: relative;
@@ -82,18 +39,6 @@ li.component {
     padding: 0px 0 0px;
     max-width: 600px;
 
-}
-
-.whiteboard-top-menu{
-    height:18px;
-    width:100%;
-}
-
-.whiteboard-top-menu-wrapper{
-    height:100%;
-    padding-top:0;
-    padding-bottom:0;
-    border-bottom: solid 1px #cccccc;
 }
 
 .content {
@@ -127,8 +72,6 @@ li.component {
 
 }
 
-
-
 .base-node:hover {
     fill: #ffd124;
 }
@@ -156,9 +99,6 @@ li.component {
     list-style: none;
 }
 
-.add_btn {
-    margin-bottom: 100px;
-}
 
 .edit_btn {
     background: #ffd124;
@@ -290,49 +230,12 @@ tr.result_row:hover {
     width: 100%;
 }
 
-
-.nav-tabs>li>a {
-    font-size:9pt;
-    height:18px;
-    padding: 0 20px;
-    margin:0;
-    color: black;
-    background:#DFDFDF;
-    border-bottom: solid 1px #cccccc;
+/*Width of Left Menu*/
+md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
+ min-width: 200px !important;
+ width: 80vw !important;
+ max-width: 200px !important;
 }
-
-.nav-tabs>li.active>a {
-    color: steelblue;
-    font-size:10pt;
-    height:18px;
-    padding: 0 20px;
-    margin:0;
-    background:white;
-}
-
-.btn-group-cognitive {
-    color: steelblue;
-}
-
-/*.btn-group-cognitive:hover {*/
-    /*background: rgb(30, 140, 255);*/
-    /*color: white;*/
-/*}*/
-
-li.list-group-item-cognitive:hover {
-    background: #ffd124;
-    color: #333333;
-}
-
-li.list-group-item-cognitive.active {
-    background: rgb(30, 140, 255);
-    color: white;
-}
-
-.alert-cognitive {
-    display: none;
-}
-
-.alert-cognitive:active {
-    display: block;
+md-list-item, md-list-item .md-list-item-inner {
+ min-height: 25px !important;
 }
