@@ -7,8 +7,21 @@ var parsed_file = [];
     'use strict';
 
     angular.module('cognitive.whiteboard')
-        .controller('WhiteboardMainController', WhiteboardMainController)
+        .controller('WhiteboardController', WhiteboardController)
 
-    function WhiteboardMainController(){};
+    function WhiteboardController($resource){
+        var vm = this;
+        vm.experiments = [];
 
+        initialize();
+
+        function initialize() {
+            var Experiment = $resource('/api/v1/experiments/:experimentId', {experimentId: '@id'});
+            Experiment.query()
+                .$promise.then(function(experiments) {
+                    console.log(experiments);
+                    vm.experiments = experiments;
+                });
+        }
+    };
 })()

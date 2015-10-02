@@ -1,28 +1,27 @@
-<div class="whiteboard-main" layout="column" style="height:calc(100vh); background: whitesmoke;" ng-controller="WhiteboardMainController">
-  <!--<section layout="row" flex>
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-      <md-content layout-padding>
-        <md-list hide-md show-gt-md>
-          <md-list-item class="md-line" layout-fill>
-            <span flex="20">
-              <ng-md-icon icon="home" style="fill: steelblue;" size="18pt"></ng-md-icon>
-            </span>
-            <a ui-sref="index">
-              <span>Home</span>
-            </a>
-          </md-list-item>
-          <md-list-item class="md-line" layout-fill>
-            <span flex="20">
-              <ng-md-icon icon="view_array" style="fill: steelblue;" size="18pt"></ng-md-icon>
-            </span>
-            <span>Whiteboard</span>
-          </md-list-item>
-          <md-divider ></md-divider>
-        </md-list>
+<ng-include src="'static/app/common/header.html'"></ng-include>
+
+<ng-content ng-controller="WhiteboardController as vm">
+  <div layout="column" style="height:calc(100vh); background: whitesmoke;">
+    <md-content layout-padding layout="row" layout-align="center start" style="background: whitesmoke">
+      <md-content layout="column" flex="80" style="background: whitesmoke">
+        <md-card ui-sref="experiment" flex layout="row" layout-align="start center">
+          <span style="background: #3F51B5;">
+            <ng-md-icon icon="add" style="fill: white" size="27pt" ></ng-md-icon>
+          </span>
+          <span flex="5"></span>
+          <span>Create Experiment</span>
+        </md-card>
+        <md-card flex layout="row" layout-align="start center" ng-repeat="exp in vm.experiments" >
+          <span style="background: steelblue; padding: 5px;">
+            <ng-md-icon icon="now_widgets" style="fill: whitesmoke" size="20pt" ></ng-md-icon>
+          </span>
+          <span flex="5"></span>
+          <span flex="25">{{ exp.name }}</span>
+          <span flex="15">{{ exp.status }}</span>
+          <span flex="30"></span>
+          <span flex="15">{{ exp.created_time }}</span>
+        </md-card>
       </md-content>
-    </md-sidenav>
-    <md-content flex layout-padding style="background: whitesmoke">-->
-      <div ui-view="whiteboard_content"></div>
-    <!--</md-content>
-  </section>-->
-</div>
+    </md-content>
+  </div>
+</ng-content>

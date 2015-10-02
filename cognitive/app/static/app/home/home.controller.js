@@ -29,7 +29,7 @@
                     $scope.user.name = result.user.name;
                     $scope.user.token = result.user.token;
                     console.log($scope.user)
-                    $state.go("whiteboard.experiment");
+                    $state.go("whiteboard");
                 }
             });
         };
