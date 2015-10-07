@@ -7,5 +7,10 @@
         Cognitive
       </a>
     </span>
+    <span flex></span>
+    <span ng-show="vm.isLoggedIn()">
+      {{ vm.user.name }}
+    </span>
+    <span flex="5"></span>
   </div>
 </md-toolbar>

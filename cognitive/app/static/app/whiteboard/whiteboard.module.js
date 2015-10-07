@@ -3,8 +3,7 @@
 
     angular.module('cognitive.whiteboard', [
         'ui.router',
-        'ui.bootstrap',
-        'ngStorage'
+        'ui.bootstrap'
     ]);
 
 })();

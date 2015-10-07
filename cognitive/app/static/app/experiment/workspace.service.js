@@ -3,8 +3,7 @@
     angular.module('cognitive.experiment')
         .factory("CognitiveWorkspaceService", CognitiveWorkspaceService);
 
-    function CognitiveWorkspaceService(
-        $http, $sessionStorage) {
+    function CognitiveWorkspaceService($http) {
 
         var CognitiveWorkspaceService = {}
         var workspaces = [

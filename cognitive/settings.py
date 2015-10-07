@@ -19,9 +19,6 @@ Django settings for cognitive project.
 
 import os
 
-import xstatic.main
-import xstatic.pkg.d3
-
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 
@@ -110,32 +107,9 @@ REDIS_PORT = "6379"
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-
-def get_staticfiles_dirs(webroot='/'):
-    """Get the value which is for STATICFILES_DIRS option of Django project
-
-    :param webroot: the root url of static files
-    :return: the list of file path for static files
-    """
-    static_files_dirs = [
-        # ('lib/bootstrap',
-        #  xstatic.main.XStatic(xstatic.pkg.bootstrap, root_url=webroot).base_dir),
-        ('lib/d3',
-         xstatic.main.XStatic(xstatic.pkg.d3, root_url=webroot).base_dir),
-        # ('lib/font-awesome',
-        #  xstatic.main.XStatic(xstatic.pkg.font_awesome, root_url=webroot).base_dir),
-        # ('lib/jquery',
-        #  xstatic.main.XStatic(xstatic.pkg.jquery, root_url=webroot).base_dir),
-        # ('lib/jquery-ui',
-        #  xstatic.main.XStatic(xstatic.pkg.jquery_ui, root_url=webroot).base_dir)
-    ]
-
-    return static_files_dirs
-
-
-STATICFILES_DIRS = get_staticfiles_dirs()
-STATICFILES_DIRS.append((os.path.join(PROJECT_ROOT + '/cognitive/app', "static")))
-
+STATICFILES_DIRS = [
+    (os.path.join(PROJECT_ROOT + '/cognitive/app', "static")),
+]
 
 # Swagger Documentation Setting
 SWAGGER_SETTINGS = {
@@ -193,5 +167,5 @@ BOWER_INSTALLED_APPS = (
     'jquery',
     'jquery-csv',
     'jquery-ui',
-    'ngstorage',
+    'angular-cookies#1.4.7',
 )
