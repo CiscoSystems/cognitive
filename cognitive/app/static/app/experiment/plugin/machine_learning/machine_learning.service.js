@@ -4,7 +4,7 @@
         .factory('MachineLearningService', MachineLearningService);
 
     function MachineLearningService(
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var MachineLearningService = {};
         var definition = {
@@ -27,7 +27,7 @@
                 target_column: target
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService
+                ExperimentService
                     .appendNode(data.id, definition)
             });
         };

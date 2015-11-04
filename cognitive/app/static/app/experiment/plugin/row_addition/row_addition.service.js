@@ -4,7 +4,7 @@
         .factory('RowAdditionService', RowAdditionService);
 
     function RowAdditionService (
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var RowAdditionService = {};
         var definition = {
@@ -26,7 +26,7 @@
                 row_values: values
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService
+                ExperimentService
                     .appendNode(data.id, definition)
             });
         };

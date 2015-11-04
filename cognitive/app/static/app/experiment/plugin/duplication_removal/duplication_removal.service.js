@@ -5,7 +5,7 @@
         .factory('DuplicateRemovalService', DuplicateRemovalService);
 
     function DuplicateRemovalService (
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var DuplicateRemovalService = {};
         var definition = {
@@ -25,7 +25,7 @@
                 component_id: targets
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService
+                ExperimentService
                     .appendNode(data.id, definition)
             });
         }

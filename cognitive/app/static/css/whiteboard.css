@@ -235,6 +235,13 @@ tr.result_row:hover {
     padding: 0;
 }
 
+.md-progress-circular--experiment {
+    position: fixed;
+    top:40%;
+    left: 55%;
+}
+
+
 /*Width of Left Menu*/
 md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
  min-width: 200px !important;

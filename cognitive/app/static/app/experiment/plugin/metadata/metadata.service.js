@@ -4,7 +4,7 @@
         .factory('MetaDataService', MetaDataService);
 
     function MetaDataService (
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var MetaDataService = {};
         var definition = {
@@ -22,7 +22,7 @@
                 op_action: ""
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService.appendNode(
+                ExperimentService.appendNode(
                     data.id, definition)
             });
         };

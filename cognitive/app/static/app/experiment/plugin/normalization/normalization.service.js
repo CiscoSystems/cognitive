@@ -3,7 +3,7 @@
     angular.module('cognitive.experiment')
         .factory('NormalizationService', NormalizationService);
 
-    function NormalizationService($http, CognitiveWorkspaceService) {
+    function NormalizationService($http, ExperimentService) {
         var NormalizationService = {};
         var definition = {
             name: "Normalization",
@@ -23,7 +23,7 @@
                 op_type: op_type
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService
+                ExperimentService
                     .appendNode(data.id, definition)
             });
         };

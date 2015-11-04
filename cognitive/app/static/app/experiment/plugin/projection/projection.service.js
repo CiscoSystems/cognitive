@@ -4,7 +4,7 @@
         .factory('ProjectionService', ProjectionService)
 
     function ProjectionService (
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var ProjectionService = {};
         var definition = {
@@ -23,7 +23,7 @@
                 component_id: targets
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService
+                ExperimentService
                     .appendNode(data.id, definition)
             });
 

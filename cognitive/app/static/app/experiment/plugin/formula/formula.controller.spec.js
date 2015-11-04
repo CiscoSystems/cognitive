@@ -7,11 +7,11 @@
         beforeEach(module('cognitive.experiment'));
 
         beforeEach(inject(function(
-            $rootScope, $controller, CognitiveWorkspaceService, FormulaService) {
+            $rootScope, $controller, ExperimentService, FormulaService) {
             scope = $rootScope.$new();
             controller = $controller('FormulaController', {
                 $scope: scope,
-                CognitiveWorkspaceService: CognitiveWorkspaceService,
+                ExperimentService: ExperimentService,
                 FormulaService: FormulaService
             });
         }));
