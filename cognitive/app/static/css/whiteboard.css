@@ -230,6 +230,11 @@ tr.result_row:hover {
     width: 100%;
 }
 
+.card-content--svgboard {
+    height: 100%;
+    padding: 0;
+}
+
 /*Width of Left Menu*/
 md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
  min-width: 200px !important;

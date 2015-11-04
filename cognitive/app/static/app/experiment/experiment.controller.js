@@ -9,18 +9,18 @@
     CognitiveComponentService, CognitiveWorkspaceService, FileInputService, MessageService) {
 
     var vm = this;
-    vm.components = CognitiveComponentService.getCognitiveComponents();
-    vm.detail_template_url = '';
-    vm.toggled_menu_idx = -1;
-    vm.workspaces = CognitiveWorkspaceService.getWorkspaces();
-
     function initialize() {
+      vm.components = CognitiveComponentService.getCognitiveComponents();
+      vm.detail_template_url = '';
+      vm.toggled_menu_idx = -1;
+      vm.workspaces = CognitiveWorkspaceService.getWorkspaces();
       vm.experimentId = $location.search()['id'];
       vm.user = UserService.getCurrentUser();
 
       if (typeof (vm.experimentId) == 'string') {
         $http.get('/api/v1/experiments/' + vm.experimentId)
           .success(function(data,status, headers, config){
+            // We needs to remove the multiple workspace support
             vm.workspaces.push({
               id: data.id,
               name: data.name,

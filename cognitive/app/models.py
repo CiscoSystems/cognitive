@@ -148,6 +148,9 @@ class Experiment(models.Model):
     execution_end_time = models.DateField(blank=True, null=True)
     component_start_id = models.IntegerField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['-modified_time']
+
 
 class Component(models.Model):
     COMPONENT_STATUS = (
