@@ -155,9 +155,9 @@ STATICFILES_FINDERS = (
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
 
 BOWER_INSTALLED_APPS = (
-    'angular#~1.4.6',
+    'angular#~1.4.7',
     'angular-bootstrap#~0.13.4',
-    'angular-material',
+    'angular-material#0.11.4',
     'angular-material-icons',
     'angular-resource',
     'angular-ui-router',

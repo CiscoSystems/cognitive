@@ -80,3 +80,9 @@ a:hover {
     padding-top: 5px;
     color:white;
 }
+
+.md-button-menu-content {
+    width:90%;
+    text-align: left;
+    text-transform: none;
+}
