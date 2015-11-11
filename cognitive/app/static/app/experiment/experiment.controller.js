@@ -19,8 +19,8 @@
       vm.user = UserService.getCurrentUser();
 
       if (typeof (vm.experimentId) == 'string') {
-        ExperimentService.getExperiment(vm.experimentId)
-          .$promise.then(function(experiment){
+        ExperimentService.get(vm.experimentId).then(
+          function(experiment){
             ExperimentService.experiment = experiment;
             ExperimentService.experiment['nodes'] = [];
             ExperimentService.experiment['edges'] = [];
@@ -49,8 +49,6 @@
 
     vm.getCurrentFocusNode = function () {
       var exp = ExperimentService.experiment;
-      ExperimentService.experiment
-      console.log(exp);
       return exp.nodes.filter(function (node) { return node.focus; })[0];
     }
 
@@ -82,10 +80,7 @@
         targetEvent: ev,
         clickOutsideToClose:true
       }).then(function(answer) {
-        console.log('test')
         $mdDialog.close()
-
-        console.log(answer);
       }, function() {});
     };
 
@@ -227,7 +222,6 @@
     vm.show = function () {
       var focused_node = ExperimentService.getFocusedNode()
       if (focused_node == null) {
-        console.log("testtest")
         $mdToast.show(
           $mdToast.simple()
             .content('Error: A target component must be selected')
@@ -278,8 +272,6 @@
 
             data.graph_data[i][1] = dataset;
           }
-
-          console.log(data.graph_data)
 
           var modal_instance = $modal.open({
             animation: true,

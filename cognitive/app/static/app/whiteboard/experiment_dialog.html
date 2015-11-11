@@ -1,4 +1,4 @@
-<md-dialog ng-controller="NewExperimentDialogController as vm" aria-label="NewExperiment" ng-cloak>
+<md-dialog ng-controller="ExperimentDialogController as vm" aria-label="experiment-dialog" ng-cloak>
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -14,8 +14,8 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content class="dialog-content">
-      <md-input-container flex>
+    <md-dialog-content class="dialog-content" layout="center">
+      <md-input-container flex-offset="10" flex="80">
         <label>Title</label>
         <input ng-model="vm.experimentInfo.title">
       </md-input-container>

@@ -5,28 +5,44 @@
 
   function ExperimentService($resource, $http, UserService) {
     var ExperimentService = {}
-    var res = $resource('/api/v1/experiments', { id: '@id' }, {
+    var res = $resource('experiments', null, {
       get: {
         method: 'GET',
         url: '/api/v1/experiments/:id' },
       query: {
         method:'GET',
+        url: '/api/v1/experiments/',
         isArray: true },
       save: {
-        method: 'POST' },
+        method: 'POST',
+        url: '/api/v1/experiments/' },
       update: {
         method: 'PUT',
         url: '/api/v1/experiments/:id' },
       delete: {
-        method: 'DELETE' }
+        method: 'DELETE',
+        url: '/api/v1/experiments/:id' }
     });
 
     var experiment = {};
     ExperimentService.experiment = experiment;
 
-    var getExperiments = function() { return res.query(); }
-    var getExperiment = function(experiment_id) {
-      return res.get({ id: experiment_id });
+    var get = function(experiment_id) {
+      return res.get({ id: experiment_id }).$promise;
+    }
+    var query = function() { return res.query().$promise; }
+
+    var save = function(experiment) {
+      console.log(experiment)
+      return res.save(experiment).$promise;
+    }
+
+    var update = function (experiment) {
+      return res.update({id: experiment.id}, experiment).$promise;
+    }
+
+    var remove = function (experiment_id) {
+      return res.delete({id: experiment_id}).$promise;
     }
 
     var getCurrentWorkspace = function () {
@@ -154,7 +170,11 @@
     }
 
     ExperimentService = {
-      getExperiment: getExperiment,
+      query: query,
+      get: get,
+      save: save,
+      update: update,
+      remove: remove,
       getCurrentWorkspace: getCurrentWorkspace,
       appendNode: appendNode,
       nextNodeCoordination: nextNodeCoordination,
