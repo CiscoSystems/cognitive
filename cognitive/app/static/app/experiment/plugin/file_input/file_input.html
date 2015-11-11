@@ -1,4 +1,4 @@
-<md-dialog aria-label="InputSource">
+<md-dialog aria-label="InputSource" ng-controller="DataInputController">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2>
@@ -11,8 +11,9 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content>
-    <div class="cognitive-detail-content" ng-controller="DataInputController">
+
+  <md-dialog-content layout-padding>
+    <div class="cognitive-detail-content">
       <div class="cognitive-detail-body">
         <div class="form-group" style="margin-top: 30px;">
           <label class="col-lg-2 control-label" for="input-file"> File </label>
@@ -20,8 +21,10 @@
             <input class="input-file" type="file" accept=".csv" onchange="angular.element(this).scope().uploadFile(event)">
           </div>
         </div>
-        <button id="input-add-btn" class="btn btn-primary add_btn add_input right" type="button" ng-click="createNode()"> Add </button>
       </div>
     </div>
   </md-dialog-content>
+  <div class="md-actions">
+    <md-button class="md-primary" ng-click="createNode()">Add</md-button>
+  </div>
 </md-dialog>
