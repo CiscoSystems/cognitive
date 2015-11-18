@@ -4,7 +4,7 @@
         .factory('FormulaService', FormulaService);
 
     function FormulaService (
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var FormulaService = {};
         var definition = {
@@ -25,7 +25,7 @@
                 op_constant: constant_number
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService
+                ExperimentService
                     .appendNode(data.id, definition)
             });
         };

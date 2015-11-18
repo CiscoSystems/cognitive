@@ -4,7 +4,7 @@
   <div layout="column" style="height:calc(100vh); background: whitesmoke;">
     <md-content layout-padding layout="row" layout-align="center start" style="background: whitesmoke">
       <md-content layout="column" flex="80" style="background: whitesmoke">
-        <md-card ng-click="vm.showNewExperimentDialog($event)" flex layout="row" layout-align="start center">
+        <md-card ng-click="vm.createExperiment($event)" flex layout="row" layout-align="start center">
           <span style="background: #3F51B5;">
             <ng-md-icon icon="add" style="fill: white" size="27pt" ></ng-md-icon>
           </span>
@@ -19,9 +19,17 @@
           </span>
           <span flex="5"></span>
           <span flex="25">{{ exp.name }}</span>
-          <span flex="15">{{ exp.status }}</span>
-          <span flex="30"></span>
-          <span flex="15">{{ exp.created_time }}</span>
+          <span flex="10">{{ exp.status }}</span>
+          <span flex="20"></span>
+          <span flex="20">
+            {{ exp.created_time }}
+          </span>
+          <span flex="5" class="card-remove-button" ng-click="vm.deleteExperiment(exp); $event.stopPropagation();">
+            <i class="fa fa-trash-o"></i>
+          </span>
+          <span flex="5" class="card-remove-button" style="background: cadetblue" ng-click="vm.editExperiment(exp); $event.stopPropagation();">
+            <i class="fa fa-pencil"></i>
+          </span>
         </md-card>
       </md-content>
     </md-content>

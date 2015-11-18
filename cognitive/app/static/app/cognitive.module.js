@@ -18,7 +18,10 @@
   angular.module('cognitive').config(CognitiveConfig);
 
   function CognitiveConfig(
-    $stateProvider, $urlRouterProvider){
+    $resourceProvider, $stateProvider, $urlRouterProvider){
+
+    // To enable trailing slash on $resource urls
+    $resourceProvider.defaults.stripTrailingSlashes = false;
 
     $urlRouterProvider.otherwise("index");
     $stateProvider

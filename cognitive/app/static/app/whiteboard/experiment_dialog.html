@@ -1,28 +1,28 @@
-<md-dialog ng-controller="NewExperimentDialogController as vm" aria-label="NewExperiment" ng-cloak>
+<md-dialog ng-controller="ExperimentDialogController as vm" aria-label="experiment-dialog" ng-cloak>
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        <ng-md-icon icon="add" class="icon-white"></ng-md-icon>
         <span flex="5"></span>
         <h2>
           New Experiment
         </h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()" aria-label="Close dialog">
-          <ng-md-icon icon="close" style="fill: white;"></ng-md-icon>
+        <md-button class="md-icon-button" ng-click="vm.close()" aria-label="Close dialog">
+          <ng-md-icon icon="close" class="icon-white"></ng-md-icon>
         </md-button>
       </div>
     </md-toolbar>
 
-    <md-dialog-content style="min-width: 500px;">
-      <md-input-container flex>
+    <md-dialog-content class="dialog-content" layout="center">
+      <md-input-container flex-offset="10" flex="80">
         <label>Title</label>
         <input ng-model="vm.experimentInfo.title">
       </md-input-container>
     </md-dialog-content>
 
     <div class="md-actions" layout="row">
-      <md-button ng-click="vm.close()" >
+      <md-button ng-click="vm.close()">
         Close
       </md-button>
       <md-button ng-click="vm.create()">

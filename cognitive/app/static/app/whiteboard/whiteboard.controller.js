@@ -9,37 +9,79 @@ var parsed_file = [];
   angular.module('cognitive.whiteboard')
     .controller('WhiteboardController', WhiteboardController)
 
-  function WhiteboardController($resource, $mdDialog, $http, UserService){
-    // $http will be removed after all apis are managed by resource
+  function WhiteboardController(
+    $resource, $mdDialog, UserService, ExperimentService){
 
     var vm = this;
     vm.experiments = [];
-    var Experiment = $resource('/api/v1/experiments/:experimentId', {experimentId: '@id'});
 
     function initialize() {
-      Experiment.query()
-        .$promise.then(function(experiments) {
+      ExperimentService.query().then(
+        function(experiments) {
           vm.experiments = experiments;
         });
     }
 
-    vm.showNewExperimentDialog = function(ev) {
+    vm.createExperiment = function(ev) {
       $mdDialog.show({
-        controller: NewExperimentDialogController,
-        templateUrl: '/static/app/whiteboard/new_experiment_dialog.html',
+        controller: ExperimentDialogController,
+        templateUrl: '/static/app/whiteboard/experiment_dialog.html',
         targetEvent: ev,
         clickOutsideToClose: true
       }).then(function(experimentInfo) {
         var currentUser = UserService.getCurrentUser();
-        $http.post("/api/v1/experiments/", {
+
+        ExperimentService.save({
           name: experimentInfo['title'],
           user: currentUser['id'],
           token: currentUser['token']
-        }).success(function (data, status, headers, config) {
+        }).then(function (data) {
           var experimentId = data['id'];
           location.href = '/#/experiment?id=' + experimentId;
         });
-      }, function(err) {});
+      });
+    }
+
+    vm.editExperiment = function (experiment) {
+      var index = vm.experiments.indexOf(experiment);
+      if (index < 0) return;
+
+      $mdDialog.show({
+        controller: ExperimentDialogController,
+        templateUrl: '/static/app/whiteboard/experiment_dialog.html',
+        clickOutsideToClose: true
+      }).then(function(experimentInfo) {
+        var currentUser = UserService.getCurrentUser();
+        ExperimentService.update({
+          id: experiment.id,
+          name: experimentInfo['title'],
+          user: currentUser['id'],
+          token: currentUser['token']
+        }).then(function (data) {
+          vm.experiments[index] = data;
+        });
+      });
+
+      ExperimentService.update(experiment).then(function (data) {
+        vm.experiments[index] = data
+      })
+    }
+
+    vm.deleteExperiment = function (experiment) {
+      var index = vm.experiments.indexOf(experiment);
+      if (index < 0) return;
+      $mdDialog.show(
+        $mdDialog.confirm()
+          .title('Would you like to delete this Experiment?')
+          //.content('name: ' + experiment.name)
+          .ariaLabel('experiment-removal-confirmation')
+          .ok('Remove')
+          .cancel('Cancel')
+      ).then(
+        function(decision) {
+          ExperimentService.remove(experiment.id)
+          vm.experiments.splice(index, 1);
+        })
     }
 
     vm.moveToExperiment = function(index) {
@@ -51,11 +93,13 @@ var parsed_file = [];
   };
 
   angular.module('cognitive.whiteboard')
-    .controller('NewExperimentDialogController', NewExperimentDialogController)
+    .controller('ExperimentDialogController', ExperimentDialogController)
 
-  function NewExperimentDialogController($mdDialog){
+  function ExperimentDialogController($mdDialog){
     var vm = this;
-    vm.experimentInfo = {title: ''};
+    vm.experimentInfo = {
+      title: '',
+    };
     vm.cancel = function() { $mdDialog.cancel(); };
     vm.close = function() { $mdDialog.cancel(); };
     vm.create = function() { $mdDialog.hide(vm.experimentInfo); }

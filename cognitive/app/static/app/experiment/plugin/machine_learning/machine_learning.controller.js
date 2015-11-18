@@ -4,8 +4,11 @@
     .controller('MachineLearningController', MachineLearningController);
 
   function MachineLearningController (
-    UserService, CognitiveWorkspaceService, MachineLearningService) {
+    UserService, ExperimentService,
+    MachineLearningService, $location, $mdDialog) {
     var vm = this;
+    var experiment_id = $location.search()['id'];
+
     vm.user = UserService.getCurrentUser();
     vm.algorithm = "Linear_SVM";
     vm.target = 0;
@@ -13,12 +16,13 @@
     vm.columns = parsed_file[0];
 
     vm.createNode = function() {
-      var workspace = CognitiveWorkspaceService.getCurrentWorkspace()
+      var workspace = ExperimentService.getCurrentWorkspace()
       MachineLearningService.createNode(
-        vm.user.id, workspace.id, vm.user.token,
+        vm.user.id, experiment_id, vm.user.token,
         vm.algorithm,
         vm.target,
         vm.trainning_percentage);
+      $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {

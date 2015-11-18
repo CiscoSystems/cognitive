@@ -4,7 +4,7 @@
         .factory('MissingDataRemovalService', MissingDataRemovalService);
 
     function MissingDataRemovalService (
-        $http, CognitiveWorkspaceService) {
+        $http, ExperimentService) {
 
         var MissingDataRemovalService = {};
         var definition = {
@@ -22,7 +22,7 @@
                 op_action: method
             }).success(function (data, status, headers, config) {
                 console.log(data);
-                CognitiveWorkspaceService.appendNode(
+                ExperimentService.appendNode(
                     data.id, definition)
             });
         };

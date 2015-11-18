@@ -8,7 +8,7 @@
         IntroductionService, FileInputService,
         RowAdditionService, NormalizationService,
         ProjectionService, DuplicateRemovalService,
-        MissingDataRemovalService, MetaDataService,
+        MissingDataRemovalService,
         FormulaService, MachineLearningService) {
 
         var CognitiveComponentService = {}
@@ -21,7 +21,6 @@
             ProjectionService.definition,
             DuplicateRemovalService.definition,
             MissingDataRemovalService.definition,
-            //MetaDataService.definition,
             MachineLearningService.definition,
         ];
 

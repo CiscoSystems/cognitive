@@ -1,4 +1,4 @@
-<md-dialog aria-label="MathFormula">
+<md-dialog ng-controller="FormulaController as vm" aria-label="MathFormula">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2>
@@ -11,41 +11,41 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content style="min-width: 500px;">
-    <div class="cognitive-detail-content" ng-controller="FormulaController as vm">
-      <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
-        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
-          <i class="fa fa-close"></i>Need to Upload Data Before.
-        </span>
+  <md-dialog-content style="min-width: 500px;" layout-padding>
+    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
+      <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+        <i class="fa fa-close"></i>Need to Upload Data Before.
+      </span>
+    </div>
+    <div class="row">
+      <label class="col-lg-3 control-label">Method</label>
+      <div class="col-lg-9">
+        <select class="form-control" ng-model="vm.formula" style="font-size:12pt;">
+          <option value="Add">Add</option>
+          <option value="Sub">Sub</option>
+          <option value="Mult">Mult</option>
+          <option value="Div">Div</option>
+        </select>
       </div>
-      <div class="row">
-        <label class="col-lg-3 control-label">Method</label>
-        <div class="col-lg-9">
-          <select class="form-control" ng-model="vm.formula" style="font-size:12pt;">
-            <option value="Add">Add</option>
-            <option value="Sub">Sub</option>
-            <option value="Mult">Mult</option>
-            <option value="Div">Div</option>
-          </select>
-        </div>
+    </div>
+    <div class="row" style="padding-top:20px;">
+      <label class="col-lg-3 control-label" for="select"> Column </label>
+      <div class="col-lg-9">
+        <select class="form-control" ng-model="vm.target_column">
+          <option ng-repeat="column in vm.columns" value="{{$index}}">
+            {{column}}
+          </option>
+        </select>
       </div>
-      <div class="row" style="padding-top:20px;">
-        <label class="col-lg-3 control-label" for="select"> Column </label>
-        <div class="col-lg-9">
-          <select class="form-control" ng-model="vm.target_column">
-            <option ng-repeat="column in vm.columns" value="{{$index}}">
-              {{column}}
-            </option>
-          </select>
-        </div>
+    </div>
+    <div class="row" style="padding-top:20px;">
+      <label class="col-lg-3 control-label" for="select"> Constant</label>
+      <div class="col-lg-9">
+        <input class="form-control" type="text" placeholder="value" ng-model="vm.constant_number" />
       </div>
-      <div class="row" style="padding-top:20px;">
-        <label class="col-lg-3 control-label" for="select"> Constant</label>
-        <div class="col-lg-9">
-          <input class="form-control" type="text" placeholder="value" ng-model="vm.constant_number" />
-        </div>
-      </div>
-      <button class="btn btn-primary right" type="button" ng-click="vm.createNode()"> ADD </button>
     </div>
   </md-dialog-content>
+  <div class="md-actions">
+    <md-button class="md-primary" ng-click="vm.createNode()">Add</md-button>
+  </div>
 </md-dialog>

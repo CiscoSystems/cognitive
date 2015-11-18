@@ -5,79 +5,60 @@
     .controller('ExperimentController', ExperimentController);
 
   function ExperimentController (
-    $scope, $location, $modal, $log, $http, $mdDialog, $mdToast, UserService,
-    CognitiveComponentService, CognitiveWorkspaceService, FileInputService, MessageService) {
+    $scope, $location, $modal, $log, $http, $mdDialog, $mdToast, $timeout, UserService,
+    CognitiveComponentService, ExperimentService, FileInputService, MessageService) {
 
     var vm = this;
-    vm.components = CognitiveComponentService.getCognitiveComponents();
-    vm.detail_template_url = '';
-    vm.toggled_menu_idx = -1;
-    vm.workspaces = CognitiveWorkspaceService.getWorkspaces();
+    vm.loading = false;
 
     function initialize() {
+      vm.components = CognitiveComponentService.getCognitiveComponents();
+      vm.detail_template_url = '';
+      vm.toggled_menu_idx = -1;
       vm.experimentId = $location.search()['id'];
       vm.user = UserService.getCurrentUser();
 
       if (typeof (vm.experimentId) == 'string') {
-        $http.get('/api/v1/experiments/' + vm.experimentId)
-          .success(function(data,status, headers, config){
-            vm.workspaces.push({
-              id: data.id,
-              name: data.name,
-              nodes:[],
-              edges: [],
-              active: true
-            });
+        ExperimentService.get(vm.experimentId).then(
+          function(experiment){
+            ExperimentService.experiment = experiment;
+            ExperimentService.experiment['nodes'] = [];
+            ExperimentService.experiment['edges'] = [];
+            vm.experiment = ExperimentService.experiment;
         })
-        return;
-      }
-
-      if (vm.workspaces.length === 0) {
-        // Make default workspace
-        console.log(vm.user.id, vm.user.token)
-        $http.post("/api/v1/experiments/", {
-          name: "default",
-          user: vm.user.id,
-          token: vm.user.token
-        }).success(function (data, status, headers, config) {
-          console.log(data)
-          vm.workspaces.push({
-            id: data.id,
-            name: data.name,
-            nodes:[],
-            edges: [],
-            active: true
-          });
-        });
+      } else {
+        console.log('invalid access')
       }
     };
 
     vm.appendCognitiveNode = function (id, name, type, x, y) {
-      var workspace = vm.currentWorkspace();
+      //var workspace = vm.experiment;
+      var experiment = ExperimentService.experiment;
       x = parseInt(x);
       y = parseInt(y);
-      workspace.nodes.push({
-        id: id, workspace_id: workspace.id,
+      experiment.nodes.push({
+        id: id, workspace_id: experiment.id,
         name: name, type: type, x: x, y: y,
         focus: false, mouse: ""
       });
     }
 
     vm.currentWorkspace = function () {
-      return CognitiveWorkspaceService.getCurrentWorkspace();
+      return vm.experiment;
     };
 
     vm.getCurrentFocusNode = function () {
-      return CognitiveWorkspaceService.getCurrentFocusNode();
+      var exp = ExperimentService.experiment;
+      return exp.nodes.filter(function (node) { return node.focus; })[0];
     }
 
     vm.createEdge = function (workspace_id, src_node_id, dest_node_id) {
-      CognitiveWorkspaceService.getCurrentFocusNode();
+      ExperimentService.getFocusedNode();
       $scope.$apply();
     }
 
     vm.appendEdgeOnCurrentWorkspace = function (src_node_id, dest_node_id) {
-      return CognitiveWorkspaceService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
+      return ExperimentService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
     }
 
     vm.focusNode = {};
@@ -98,12 +79,9 @@
         locals: {user: vm.user},
         targetEvent: ev,
         clickOutsideToClose:true
-      })
-      .then(function(answer) {
-          console.log(answer);
-        }, function() {
-          console.log("some error");
-      });
+      }).then(function(answer) {
+        $mdDialog.close()
+      }, function() {});
     };
 
     vm.clickNone = function () {
@@ -114,28 +92,21 @@
     };
 
     vm.existFocusedNodeOnCurrentWorkspace = function () {
-        var workspace = vm.currentWorkspace();
-        return findFocusedNodeByWorkspace(workspace.id) !== null;
+        var workspace = vm.experiment;
+        return focusedNode() !== null;
     };
 
-    function findFocusedNodeByWorkspace(workspace_id) {
-      var workspace = vm.workspaces.filter(function (workspace) {
-        return workspace.id === workspace_id;
-      });
-      if (workspace.length === 0) {
-        return null;
-      }
-      var node = workspace[0].nodes.filter(function (node) {
-        return node.focus;
-      });
-      if (node.length == 0) {
-        return null;
-      }
+    function focusedNode() {
+      var node = vm.experiment.nodes.filter(
+        function (node) { return node.focus; });
+      if (node.length == 0) { return null; }
       return node[0];
     };
 
     vm.isActiveCognitiveNode = function (workspace_id, index) {
-        return vm.getNodeByWorkspaceAndIndex(workspace_id, index).focus;
+      var focused_node = focusedNode()
+      if (focused_node == null) return false;
+      return focused_node.id == index;
     };
 
     vm.clickCognitiveNode = function (event, workspace_id, index) {
@@ -147,7 +118,7 @@
         return;
       }
 
-      var current_focus_node = findFocusedNodeByWorkspace(workspace_id);
+      var current_focus_node = focusedNode();
 
       if (current_focus_node === null) {
         //vm.openRightMenu();
@@ -159,7 +130,7 @@
     };
 
     vm.getNodeByWorkspaceAndIndex = function (workspace_id, index) {
-      return CognitiveWorkspaceService.getNodeByWorkspaceAndIndex(workspace_id, index);
+      return ExperimentService.getNodeByWorkspaceAndIndex(workspace_id, index);
     };
 
     vm.mouseDownCognitiveNode = function (event, workspace_id, idx) {
@@ -197,8 +168,8 @@
     }
 
     vm.run = function () {
-      var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
-      var topology = CognitiveWorkspaceService.getTopology();
+      var workspace = vm.experiment;
+      var topology = ExperimentService.getTopology();
 
       if (topology === "") {
         $mdToast.show(
@@ -210,6 +181,7 @@
         return;
       }
 
+      vm.loading = true;
       $http.post("/api/v1/workflows/", {
         user_id: vm.user.id,
         token: vm.user.token,
@@ -218,6 +190,10 @@
       }).success(function (data, status, headers, config) {
         console.log(data);
       })
+      $timeout(function() {
+        vm.loading = false;
+      }, 3000);
+
     };
 
     var last = {
@@ -244,9 +220,8 @@
       }
 
     vm.show = function () {
-      var focused_node = CognitiveWorkspaceService.getCurrentFocus()
+      var focused_node = ExperimentService.getFocusedNode()
       if (focused_node == null) {
-        console.log("testtest")
         $mdToast.show(
           $mdToast.simple()
             .content('Error: A target component must be selected')
@@ -255,7 +230,7 @@
         );
         return;
       }
-      var workspace = CognitiveWorkspaceService.getCurrentWorkspace();
+      var workspace = vm.experiment;
 
       $http.get("/api/v1/results/?experiment=" + workspace.id + "&component_id=" + focused_node.id)
         .success(function (data, status, headers, config) {
@@ -298,8 +273,6 @@
             data.graph_data[i][1] = dataset;
           }
 
-          console.log(data.graph_data)
-
           var modal_instance = $modal.open({
             animation: true,
             templateUrl: '/static/app/experiment/result_modal.html',
@@ -318,39 +291,6 @@
 
     vm.save = function () {
       console.log("workspace save has not been implemented yet")
-    };
-
-    vm.open = function() {
-      var modal_instance = $modal.open({
-        animation: true,
-        templateUrl: '/static/app/experiment/workspace_modal.html',
-        controller: 'WorkspaceModalController',
-        controllerAs: 'vm',
-        size: '',
-        resolve: {
-          current_user: function(){
-            return vm.user;
-          }
-        }
-      });
-
-      modal_instance.result.then(function (res) {
-        switch (res.action) {
-          case "create":
-            vm.workspaces.push({
-              id: res.whiteboard.id, name: res.whiteboard.name, nodes:[], edges: [], active: true
-            });
-
-            break;
-          case "open":
-            vm.workspaces.push({
-              id: res.whiteboard.id, name: res.whiteboard.name, nodes:[], edges: [], active: true
-            });
-            break;
-          default:
-            break;
-        }
-      });
     };
 
     initialize();

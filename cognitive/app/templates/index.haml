@@ -11,6 +11,7 @@
     %link{href: '{% static "font-awesome/css/font-awesome.min.css" %}', rel: "stylesheet"}
     %link{href: '{% static "css/application.css" %}', rel: "stylesheet"}
     %link{href: '{% static "css/whiteboard.css" %}', rel: "stylesheet"}
+    %link{href: '{% static "css/_dialog.css" %}', rel: "stylesheet"}
     %link{href: '{% static "jquery-ui/themes/base/jquery-ui.min.css" %}', rel:"stylesheet"}
 
     %script{src: '{% static "jquery/dist/jquery.min.js" %}', type: "text/javascript"}
@@ -40,19 +41,17 @@
     %script{src: '{% static "app/experiment/plugin/formula/formula.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/introduction/introduction.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/machine_learning/machine_learning.service.js" %}', type: "text/javascript"}
-    %script{src: '{% static "app/experiment/plugin/metadata/metadata.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/missing_data_removal/missing_data_removal.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/normalization/normalization.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/projection/projection.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/row_addition/row_addition.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/plugin.service.js" %}', type: "text/javascript"}
-    %script{src: '{% static "app/experiment/workspace.service.js" %}', type: "text/javascript"}
+    %script{src: '{% static "app/experiment/experiment.service.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/directive/edge.directive.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/directive/node.directive.js" %}', type: "text/javascript"}
     %script{src: '{% static "jquery-ui/jquery-ui.min.js" %}', type: "text/javascript"}
     %script{src: '{% static "d3/d3.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/result_modal.controller.js" %}', type: "text/javascript"}
-    %script{src: '{% static "app/experiment/workspace_modal.controller.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/whiteboard/whiteboard.controller.js" %}', type: "text/javascript"}
     %script{src: '{% static "jquery-csv/src/jquery.csv.min.js" %}', type: "text/javascript"}
     %script{src: '{% static "app/experiment/plugin/duplication_removal/duplication_removal.controller.js" %}', type: "text/javascript"}

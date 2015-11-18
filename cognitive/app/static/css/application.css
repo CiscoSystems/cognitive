@@ -70,3 +70,13 @@ a:hover {
 .left {
     float: left;
 }
+
+/* whiteboard.html */
+.card-remove-button {
+    background: indianred;
+    text-align: center;
+    height: 36px;
+    font-size: 20pt;
+    padding-top: 5px;
+    color:white;
+}
