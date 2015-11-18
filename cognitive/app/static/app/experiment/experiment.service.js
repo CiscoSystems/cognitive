@@ -69,7 +69,7 @@
     }
 
     var nextNodeCoordination = function () {
-      var x = $('.detail').width() + (Math.random() * 300) - 300;
+      var x = (Math.random() * 300) - 300;
       var y = 50 + (Math.random() * 400);
       if (x > window.innerWidth - 350) {x = window.innerWidth - 500;}
       if (y > window.innerHeight) { y = window.innerHeight - 300;}

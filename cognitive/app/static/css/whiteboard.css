@@ -24,52 +24,9 @@ li.component {
     height: 100%;
 }
 
-.detail {
-    overflow: scroll;
-    float:left;
-    margin:0;
-    width: 30%;
-    position: fixed;
-    left: 275px;
-    top:68px;
-    background: white;
-    display:none;
-    height: calc(100% - 125px);
-    border-right: solid 1px gray;
-    padding: 0px 0 0px;
-    max-width: 600px;
-
-}
-
 .content {
     padding-left: 15px;
     padding-right: 45px;
-}
-
-.cognitive-detail {
-    padding-left: 15px;
-    padding-right: 45px;
-}
-
-.cognitive-detail-content {
-    padding-bottom: 100px;
-
-}
-
-.cognitive-detail-header {
-    border-bottom: solid 1px #eeeeee;
-    padding-left: 15px;
-    padding-right: 45px;
-}
-
-.cognitive-detail-body {
-    padding-top: 15px;
-    padding-left: 15px;
-    padding-right: 45px;
-}
-
-.cognitive-detail-footer {
-
 }
 
 .base-node:hover {

@@ -13,14 +13,10 @@
   </md-toolbar>
 
   <md-dialog-content layout-padding>
-    <div class="cognitive-detail-content">
-      <div class="cognitive-detail-body">
-        <div class="form-group" style="margin-top: 30px;">
-          <label class="col-lg-2 control-label" for="input-file"> File </label>
-          <div class="col-lg-10">
-            <input class="input-file" type="file" accept=".csv" onchange="angular.element(this).scope().uploadFile(event)">
-          </div>
-        </div>
+    <div class="form-group" style="margin-top: 30px;">
+      <label class="col-lg-2 control-label" for="input-file"> File </label>
+      <div class="col-lg-10">
+        <input class="input-file" type="file" accept=".csv" onchange="angular.element(this).scope().uploadFile(event)">
       </div>
     </div>
   </md-dialog-content>

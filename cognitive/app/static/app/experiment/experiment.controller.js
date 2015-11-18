@@ -5,16 +5,15 @@
     .controller('ExperimentController', ExperimentController);
 
   function ExperimentController (
-    $scope, $location, $modal, $log, $http, $mdDialog, $mdToast, $timeout, UserService,
-    CognitiveComponentService, ExperimentService, FileInputService, MessageService) {
+    $scope, $location, $modal, $http, $mdDialog, $mdToast, UserService,
+    WorkflowService, CognitiveComponentService, ExperimentService,
+    FileInputService, MessageService) {
 
     var vm = this;
     vm.loading = false;
 
     function initialize() {
       vm.components = CognitiveComponentService.getCognitiveComponents();
-      vm.detail_template_url = '';
-      vm.toggled_menu_idx = -1;
       vm.experimentId = $location.search()['id'];
       vm.user = UserService.getCurrentUser();
 
@@ -43,10 +42,6 @@
       });
     }
 
-    vm.currentWorkspace = function () {
-      return vm.experiment;
-    };
-
     vm.getCurrentFocusNode = function () {
       var exp = ExperimentService.experiment;
       return exp.nodes.filter(function (node) { return node.focus; })[0];
@@ -62,10 +57,6 @@
     }
 
     vm.focusNode = {};
-
-    vm.isActivated = function (index) {
-      return index === vm.toggled_menu_idx;
-    };
 
     vm.add = function () {
       vm.contacts.push(vm.contact);
@@ -89,11 +80,6 @@
       if (typeof current_node !== "undefined") {
         current_node.focus = false;
       }
-    };
-
-    vm.existFocusedNodeOnCurrentWorkspace = function () {
-        var workspace = vm.experiment;
-        return focusedNode() !== null;
     };
 
     function focusedNode() {
@@ -133,40 +119,6 @@
       return ExperimentService.getNodeByWorkspaceAndIndex(workspace_id, index);
     };
 
-    vm.mouseDownCognitiveNode = function (event, workspace_id, idx) {
-      vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse = "down";
-    };
-
-    vm.mouseMoveCognitiveNode = function (event, workspace_id, idx) {
-      switch (vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse) {
-        case "down":
-          vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse = "drag";
-          break;
-        case "drag":
-          vm.getNodeByWorkspaceAndIndex(workspace_id, idx).x = event.offsetX - 70;
-          vm.getNodeByWorkspaceAndIndex(workspace_id, idx).y = event.offsetY - 15;
-          break;
-      }
-    };
-
-    vm.mouseUpCognitiveNode = function (event, workspace_id, idx) {
-      switch (vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse) {
-        case "drag":
-          break;
-        case "down":
-          break;
-      }
-      vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse = "";
-    };
-
-    vm.mouseLeaveCognitiveNode = function (event, workspace_id, idx) {
-      switch (vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse) {
-        case "drag":
-          vm.getNodeByWorkspaceAndIndex(workspace_id, idx).mouse = "";
-          break;
-      }
-    }
-
     vm.run = function () {
       var workspace = vm.experiment;
       var topology = ExperimentService.getTopology();
@@ -182,18 +134,12 @@
       }
 
       vm.loading = true;
-      $http.post("/api/v1/workflows/", {
-        user_id: vm.user.id,
-        token: vm.user.token,
-        experiment: workspace.id,
-        graph_data: topology
-      }).success(function (data, status, headers, config) {
-        console.log(data);
-      })
-      $timeout(function() {
+      WorkflowService.create({
+        experiment: {id: workspace.id},
+        topology: topology
+      }).then(function(){
         vm.loading = false;
-      }, 3000);
-
+      });
     };
 
     var last = {
