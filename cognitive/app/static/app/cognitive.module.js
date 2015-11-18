@@ -7,12 +7,13 @@
     'cognitive.experiment',
     'ui.router',
     'ui.bootstrap',
-    'ngResource',
+    'ngAnimate',
+    'ngAria',
     'ngCookies',
+    'ngFileUpload',
     'ngMaterial',
     'ngMdIcons',
-    'ngAria',
-    'ngAnimate',
+    'ngResource',
   ]);
 
   angular.module('cognitive').config(CognitiveConfig);
@@ -33,12 +34,28 @@
             templateUrl: "/static/app/home/home.html"
           }
         }
-      }).state('whiteboard', {
+      }).state('dashboard', {
         url: "/whiteboard",
         templateUrl: "/",
         views: {
           "main": {
-            templateUrl: "/static/app/whiteboard/whiteboard.html"
+            templateUrl: "/static/app/whiteboard/whiteboard.html",
+          },
+        }
+      }).state('dashboard.experiment', {
+        url: "/experiment",
+        templateUrl: "/",
+        views: {
+          "content": {
+            templateUrl: "/static/app/whiteboard/experiment/experiment.html"
+          },
+        }
+      }).state('dashboard.data', {
+        url: "/data",
+        templateUrl: "/",
+        views: {
+          "content": {
+            templateUrl: "/static/app/whiteboard/data/data.html"
           },
         }
       }).state('experiment', {

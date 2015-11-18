@@ -5,7 +5,7 @@
 
   function DataInputController (
     $scope, ExperimentService,
-    FileInputService, UserService, $location, $mdDialog) {
+    FileInputService, UserService, $location, $mdDialog, DataService) {
 
     var vm = this;
     vm.user = UserService.getCurrentUser();
@@ -21,7 +21,6 @@
 
     $scope.createNode = function() {
       var workspace = ExperimentService.getCurrentWorkspace()
-
       FileInputService.createNode(
         vm.user.id, experiment_id,
         vm.user.token, file_name, file_body)

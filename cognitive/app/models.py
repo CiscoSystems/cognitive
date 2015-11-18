@@ -131,6 +131,17 @@ class User(models.Model):
         return self.token == token
 
 
+class Data(models.Model):
+    user = models.ForeignKey(User)
+    type = models.CharField(blank=False, null=False, max_length=50)
+    file_path = models.CharField(blank=True, null=True, max_length=50)
+    created_time = models.DateField(blank=True, null=True)
+    modified_time = models.DateField(blank=True, null=True)
+
+    class Meta:
+        ordering = ('-created_time',)
+
+
 class Experiment(models.Model):
     EXPERIMENT_STATUS = (
         ('Draft', ' Saved as draft'),

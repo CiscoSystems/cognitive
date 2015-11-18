@@ -162,10 +162,12 @@ BOWER_INSTALLED_APPS = (
     'angular-resource',
     'angular-ui-router',
     'bootstrap',
+    'ng-file-upload',
+    'underscore#~1.8.3',
     'd3#3.1.6',
     'font-awesome#4.4.0',
     'jquery',
     'jquery-csv',
     'jquery-ui',
-    'angular-cookies#1.4.7',
+    'angular-cookies#~1.4.7',
 )

@@ -19,7 +19,7 @@
 
       login_modal.result.then(function (result) {
         if (result.status == "success") {
-          $state.go("whiteboard");
+          $state.go("dashboard.experiment");
         }
       });
 

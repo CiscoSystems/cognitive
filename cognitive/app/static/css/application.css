@@ -71,6 +71,11 @@ a:hover {
     float: left;
 }
 
+/* header.html */
+md-toolbar.md-toolbar-nav {
+    background: steelblue;
+}
+
 /* whiteboard.html */
 .card-remove-button {
     background: indianred;
@@ -85,4 +90,46 @@ a:hover {
     width:90%;
     text-align: left;
     text-transform: none;
+}
+
+.md-content-dashboard {
+    height:calc(100vh - 64px);
+    background: whitesmoke;
+}
+
+/* whiteboard/data.html */
+.md-title-data {
+    padding-left: 20px;
+}
+
+.md-card-content-upload-button {
+  background: #318DAB;
+    color: white;
+}
+
+.fa-icon-data-upload{
+    font-size: 45pt;
+}
+
+.md-card-data-header {
+    background: rgba(17, 128, 0, 0.76);
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.md-card-data-header i {
+    color: white; font-size: 60pt;
+}
+
+.md-card-data-cotent {
+    text-align: right;
+}
+
+.md-card-data-cotent .file-name {
+    float: left;
+}
+
+.md-card-data-cotent .remove-button {
+    color: gray;
+    font-size: 18pt;
 }

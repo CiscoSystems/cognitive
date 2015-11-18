@@ -1,13 +1,12 @@
 <ng-include src="'static/app/common/header.html'"></ng-include>
-
 <section ng-controller="WhiteboardController as vm" layout="row" flex>
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
     <md-content layout-padding>
-      <md-button class="md-primary md-button-menu-content">
+      <md-button class="md-primary md-button-menu-content" ui-sref="dashboard.experiment">
         <i class="fa fa-flask"></i>
         Experiment
       </md-button>
-      <md-button class="md-primary md-button-menu-content">
+      <md-button class="md-primary md-button-menu-content" ui-sref="dashboard.data">
         <i class="fa fa-database"></i>
         Data
       </md-button>
@@ -16,39 +15,5 @@
       <!-- This is TODO -->
     </md-content>
   </md-sidenav>
-  <md-content flex>
-    <div layout="column" style="height:calc(100vh); background: whitesmoke;">
-      <md-content layout-padding layout="row" layout-align="center start" style="background: whitesmoke">
-        <md-content layout="column" flex="80" style="background: whitesmoke">
-          <md-card ng-click="vm.createExperiment($event)" flex layout="row" layout-align="start center">
-            <span style="background: #3F51B5;">
-              <ng-md-icon icon="add" style="fill: white" size="27pt" ></ng-md-icon>
-            </span>
-            <span flex="5"></span>
-            <span>Create Experiment</span>
-          </md-card>
-          <md-card ng-repeat="exp in vm.experiments"
-                   ng-click="vm.moveToExperiment($index)"
-                   layout="row" layout-align="start center" flex>
-            <span style="background: steelblue; padding: 5px;">
-              <ng-md-icon icon="now_widgets" style="fill: whitesmoke" size="20pt" ></ng-md-icon>
-            </span>
-            <span flex="5"></span>
-            <span flex="25">{{ exp.name }}</span>
-            <span flex="10">{{ exp.status }}</span>
-            <span flex="20"></span>
-            <span flex="20">
-              {{ exp.created_time }}
-            </span>
-            <span flex="5" class="card-remove-button" ng-click="vm.deleteExperiment(exp); $event.stopPropagation();">
-              <i class="fa fa-trash-o"></i>
-            </span>
-            <span flex="5" class="card-remove-button" style="background: cadetblue" ng-click="vm.editExperiment(exp); $event.stopPropagation();">
-              <i class="fa fa-pencil"></i>
-            </span>
-          </md-card>
-        </md-content>
-      </md-content>
-    </div>
-  </md-content>
+  <div ui-view="content" flex></div>
 </section>

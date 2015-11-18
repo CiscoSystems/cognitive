@@ -5,6 +5,7 @@ cognitive.egg-info/
 venv
 *.pyc
 *.tmp
+cognitive/app/uploads/*
 *.swp
 *.log
 *.tags
