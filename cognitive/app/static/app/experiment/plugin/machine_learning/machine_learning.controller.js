@@ -4,7 +4,7 @@
     .controller('MachineLearningController', MachineLearningController);
 
   function MachineLearningController (
-    UserService, ExperimentService,
+    UserService, WhiteboardService,
     MachineLearningService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
@@ -16,12 +16,17 @@
     vm.columns = parsed_file[0];
 
     vm.createNode = function() {
-      var workspace = ExperimentService.getCurrentWorkspace()
-      MachineLearningService.createNode(
-        vm.user.id, experiment_id, vm.user.token,
-        vm.algorithm,
-        vm.target,
-        vm.trainning_percentage);
+      MachineLearningService.create({
+        user_id: vm.user.id,
+        token: vm.user.token,
+        experiment: experiment_id,
+        model_type: vm.algorithm,
+        train_data_percentage: vm.trainning_percentage,
+        target_column: vm.target
+      }).then(function(response){
+        WhiteboardService.appendNode(
+          response.id, MachineLearningService.definition);
+      });
       $mdDialog.cancel();
     };
 

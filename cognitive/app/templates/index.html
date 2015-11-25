@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html ng-app="cognitive">
+  <head>
+    <meta charset="utf-8">
+    <title>Cognitive</title>
+    {% load staticfiles %}
+    <link href='{% static "img/favicon.png" %}' rel=icon" type="image/x-icon">
+    <link href='{% static "bootstrap/dist/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "angular-material/angular-material.min.css" %}' rel="stylesheet">
+    <link href='{% static "font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/application.css" %}' rel="stylesheet">
+    <link href='{% static "css/whiteboard.css" %}' rel="stylesheet">
+    <link href='{% static "css/_dialog.css" %}' rel="stylesheet">
+    <link href='{% static "jquery-ui/themes/base/jquery-ui.min.css" %}' rel=stylesheet">
+    <script src='{% static "jquery/dist/jquery.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular/angular.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "underscore/underscore-min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-material/angular-material.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-animate/angular-animate.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "ng-file-upload/ng-file-upload.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-material-icons/angular-material-icons.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-aria/angular-aria.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-resource/angular-resource.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "bootstrap/dist/js/bootstrap.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-ui-router/release/angular-ui-router.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-bootstrap/ui-bootstrap-tpls.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "angular-cookies/angular-cookies.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/home/home.module.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/home/home.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/whiteboard/whiteboard.module.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/experiment.module.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/experiment.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/cognitive.module.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/header.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/message.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/user.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/message.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/login_modal.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/data.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/workflow.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/common/experiments.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/duplication_removal/duplication_removal.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/file_input/file_input.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/formula/formula.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/introduction/introduction.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/machine_learning/machine_learning.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/missing_data_removal/missing_data_removal.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/normalization/normalization.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/projection/projection.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/row_addition/row_addition.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/plugin.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/whiteboard.service.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/directive/edge.directive.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/directive/node.directive.js" %}' type="text/javascript"></script>
+    <script src='{% static "jquery-ui/jquery-ui.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "d3/d3.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/result_modal.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/whiteboard/whiteboard.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/whiteboard/data/data.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "jquery-csv/src/jquery.csv.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/duplication_removal/duplication_removal.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/file_input/file_input.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/formula/formula.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/machine_learning/machine_learning.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/missing_data_removal/missing_data_removal.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/normalization/normalization.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/projection/projection.controller.js" %}' type="text/javascript"></script>
+    <script src='{% static "app/experiment/plugin/row_addition/row_addition.controller.js" %}' type="text/javascript"></script>
+  </head>
+  <body>
+    <md-content>
+      <div ui-view="main"></div>
+    </md-content>
+  </body>
+</html>

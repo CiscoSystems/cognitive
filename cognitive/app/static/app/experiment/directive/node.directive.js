@@ -4,7 +4,7 @@
     .directive('cognitiveNode', cognitiveNode);
 
   function cognitiveNode(
-    $compile, ExperimentService) {
+    $compile, WhiteboardService) {
 
     return {
       restrict: 'AEC',
@@ -100,7 +100,7 @@
         d3.event.stopPropagation();
         var close_icon = d3.select(this);
         var node_id = close_icon.attr('node');
-        ExperimentService.removeNode(node_id);
+        WhiteboardService.removeNode(node_id);
         $('#node-group-'+node_id).parent().remove();
       }
 
@@ -110,7 +110,7 @@
         var sy = parseInt(group.attr('y')) + parseInt(d3.event.dy);
         var node_id = d3.select(this).attr('node');
         var scope = angular.element(this).scope();
-        var node = ExperimentService
+        var node = WhiteboardService
           .experiment.nodes.filter(function(node){
             return node.id == node_id;
           })[0];
@@ -123,7 +123,7 @@
 
       function drawingConnection() {
         $('.tempolary-line').remove();
-        var workspace = ExperimentService.getCurrentWorkspace();
+        var workspace = WhiteboardService.getCurrentWorkspace();
         var start = d3.select(this);
         var current_x = d3.event.x;
         var current_y = d3.event.y;
@@ -159,7 +159,7 @@
           dest_node_id = t;
         }
 
-        ExperimentService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
+        WhiteboardService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
         scope.$apply();
 
         d3.select(this).classed('src', false);

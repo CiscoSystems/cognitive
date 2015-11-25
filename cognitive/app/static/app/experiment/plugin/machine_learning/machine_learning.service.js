@@ -1,42 +1,44 @@
 (function () {
-    'use strict';
-    angular.module('cognitive.experiment')
-        .factory('MachineLearningService', MachineLearningService);
+  'use strict';
+  angular.module('cognitive.experiment')
+    .factory('MachineLearningService', MachineLearningService);
 
-    function MachineLearningService(
-        $http, ExperimentService) {
+  function MachineLearningService($resource) {
 
-        var MachineLearningService = {};
-        var definition = {
-            name: "Machine Learning",
-            type: "machine_learning",
-            icon_class: "fa fa-spinner",
-            template: "/static/app/experiment/plugin/machine_learning/machine_learning.html"
-        };
+    var MachineLearningService = {};
 
-        var createNode = function(
-            user_id, experiment_id, token,
-            algorithm, target, trainning_percentage) {
-
-            $http.post('/api/v1/operations/machine_learning/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                model_type: algorithm,
-                train_data_percentage: trainning_percentage,
-                target_column: target
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
-        };
-
-        MachineLearningService = {
-            definition: definition,
-            createNode: createNode
-        };
-
-        return MachineLearningService;
+    MachineLearningService.definition = {
+      name: "Machine Learning",
+      type: "machine_learning",
+      icon_class: "fa fa-spinner",
+      template: "/static/app/experiment/plugin/machine_learning/machine_learning.html"
     };
+
+    var resource = $resource('machine_learning', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/machine_learning/:id' },
+      query: {
+        method:'GET',
+        url: '/api/v1/operations/machine_learning/',
+        isArray: true },
+      save: {
+        method: 'POST',
+        url: '/api/v1/operations/machine_learning/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/machine_learning/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/machine_learning/:id'
+      }
+    });
+
+    MachineLearningService.create = function (MachineLearning) {
+      return resource.save(MachineLearning).$promise;
+    }
+
+    return MachineLearningService;
+
+  };
 })();

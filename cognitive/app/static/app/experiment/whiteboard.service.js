@@ -1,68 +1,32 @@
 (function () {
   'use strict';
   angular.module('cognitive.experiment')
-    .factory("ExperimentService", ExperimentService);
+    .factory("WhiteboardService", WhiteboardService);
 
-  function ExperimentService($resource, $http, UserService) {
-    var ExperimentService = {}
-    var res = $resource('experiments', null, {
-      get: {
-        method: 'GET',
-        url: '/api/v1/experiments/:id' },
-      query: {
-        method:'GET',
-        url: '/api/v1/experiments/',
-        isArray: true },
-      save: {
-        method: 'POST',
-        url: '/api/v1/experiments/' },
-      update: {
-        method: 'PUT',
-        url: '/api/v1/experiments/:id' },
-      delete: {
-        method: 'DELETE',
-        url: '/api/v1/experiments/:id' }
-    });
+  function WhiteboardService($resource, $http, UserService) {
+    var WhiteboardService = {}
 
     var experiment = {};
-    ExperimentService.experiment = experiment;
-
-    var get = function(experiment_id) {
-      return res.get({ id: experiment_id }).$promise;
-    }
-    var query = function() { return res.query().$promise; }
-
-    var save = function(experiment) {
-      console.log(experiment)
-      return res.save(experiment).$promise;
-    }
-
-    var update = function (experiment) {
-      return res.update({id: experiment.id}, experiment).$promise;
-    }
-
-    var remove = function (experiment_id) {
-      return res.delete({id: experiment_id}).$promise;
-    }
+    WhiteboardService.experiment = experiment;
 
     var getCurrentWorkspace = function () {
-      if (typeof (ExperimentService.experiment.nodes) == 'undefined') {
-        ExperimentService.experiment['nodes'] = [];
+      if (typeof (WhiteboardService.experiment.nodes) == 'undefined') {
+        WhiteboardService.experiment['nodes'] = [];
       }
-      if (typeof (ExperimentService.experiment.edges) == 'undefined') {
-        ExperimentService.experiment['edges'] = [];
+      if (typeof (WhiteboardService.experiment.edges) == 'undefined') {
+        WhiteboardService.experiment['edges'] = [];
       }
-      return ExperimentService.experiment;
+      return WhiteboardService.experiment;
     };
 
     var appendNode = function (id, definition) {
       var workspace = getCurrentWorkspace();
       var xy = nextNodeCoordination()
-      if (typeof (ExperimentService.experiment.nodes) == 'undefined') {
-        ExperimentService.experiment['nodes'] = [];
+      if (typeof (WhiteboardService.experiment.nodes) == 'undefined') {
+        WhiteboardService.experiment['nodes'] = [];
       }
 
-      ExperimentService.experiment.nodes.push({
+      WhiteboardService.experiment.nodes.push({
         id: id, workspace_id: workspace.id,
         name: definition.name, type: definition.type, x: xy[0], y: xy[1],
         focus: false, mouse: ''});
@@ -169,12 +133,7 @@
 
     }
 
-    ExperimentService = {
-      query: query,
-      get: get,
-      save: save,
-      update: update,
-      remove: remove,
+    WhiteboardService = {
       getCurrentWorkspace: getCurrentWorkspace,
       appendNode: appendNode,
       nextNodeCoordination: nextNodeCoordination,
@@ -187,6 +146,6 @@
       getEdgesOfNode: getEdgesOfNode
     }
 
-    return ExperimentService;
+    return WhiteboardService;
   };
 })();

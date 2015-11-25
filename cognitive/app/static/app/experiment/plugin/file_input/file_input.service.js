@@ -3,8 +3,7 @@
   angular.module('cognitive.experiment')
     .factory('FileInputService', FileInputService);
 
-  function FileInputService (
-    $http, ExperimentService) {
+  function FileInputService ($http) {
     var FileInputService = {};
 
     var definition =  {

@@ -4,7 +4,7 @@
     .controller('RemoveDuplicateController', RemoveDuplicateController);
 
   function RemoveDuplicateController (
-    UserService, ExperimentService, DuplicateRemovalService,
+    UserService, WhiteboardService, DuplicateRemovalService,
     $location, $mdDialog) {
 
     var vm = this;
@@ -15,10 +15,17 @@
     vm.targets = [0];
 
     vm.createNode = function() {
-      var workspace = ExperimentService.getCurrentWorkspace()
-      DuplicateRemovalService.createNode(
-        vm.user.id, workspace.id,
-        vm.user.token, vm.targets);
+      var targets = "[" + vm.targets.toString() + "]";
+      DuplicateRemovalService.create({
+        user_id: vm.user.id,
+        token: vm.user.token,
+        experiment: experiment_id,
+        component_id: targets
+      }).then(function (response) {
+        WhiteboardService.appendNode(
+          response.id, DuplicateRemovalService.definition)
+      });
+
       $mdDialog.cancel();
     };
 

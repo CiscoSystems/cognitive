@@ -6,8 +6,8 @@
 
   function ExperimentController (
     $scope, $location, $modal, $http, $mdDialog, $mdToast, UserService,
-    WorkflowService, CognitiveComponentService, ExperimentService,
-    FileInputService, MessageService) {
+    WorkflowService, CognitiveComponentService, ExperimentsService,
+    WhiteboardService, FileInputService, MessageService) {
 
     var vm = this;
     vm.loading = false;
@@ -18,12 +18,12 @@
       vm.user = UserService.getCurrentUser();
 
       if (typeof (vm.experimentId) == 'string') {
-        ExperimentService.get(vm.experimentId).then(
+        ExperimentsService.get(vm.experimentId).then(
           function(experiment){
-            ExperimentService.experiment = experiment;
-            ExperimentService.experiment['nodes'] = [];
-            ExperimentService.experiment['edges'] = [];
-            vm.experiment = ExperimentService.experiment;
+            WhiteboardService.experiment = experiment;
+            WhiteboardService.experiment['nodes'] = [];
+            WhiteboardService.experiment['edges'] = [];
+            vm.experiment = WhiteboardService.experiment;
         })
       } else {
         console.log('invalid access')
@@ -32,7 +32,7 @@
 
     vm.appendCognitiveNode = function (id, name, type, x, y) {
       //var workspace = vm.experiment;
-      var experiment = ExperimentService.experiment;
+      var experiment = WhiteboardService.experiment;
       x = parseInt(x);
       y = parseInt(y);
       experiment.nodes.push({
@@ -43,17 +43,17 @@
     }
 
     vm.getCurrentFocusNode = function () {
-      var exp = ExperimentService.experiment;
+      var exp = WhiteboardService.experiment;
       return exp.nodes.filter(function (node) { return node.focus; })[0];
     }
 
     vm.createEdge = function (workspace_id, src_node_id, dest_node_id) {
-      ExperimentService.getFocusedNode();
+      WhiteboardService.getFocusedNode();
       $scope.$apply();
     }
 
     vm.appendEdgeOnCurrentWorkspace = function (src_node_id, dest_node_id) {
-      return ExperimentService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
+      return WhiteboardService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
     }
 
     vm.focusNode = {};
@@ -116,12 +116,12 @@
     };
 
     vm.getNodeByWorkspaceAndIndex = function (workspace_id, index) {
-      return ExperimentService.getNodeByWorkspaceAndIndex(workspace_id, index);
+      return WhiteboardService.getNodeByWorkspaceAndIndex(workspace_id, index);
     };
 
     vm.run = function () {
       var workspace = vm.experiment;
-      var topology = ExperimentService.getTopology();
+      var topology = WhiteboardService.getTopology();
 
       if (topology === "") {
         $mdToast.show(
@@ -166,7 +166,7 @@
       }
 
     vm.show = function () {
-      var focused_node = ExperimentService.getFocusedNode()
+      var focused_node = WhiteboardService.getFocusedNode()
       if (focused_node == null) {
         $mdToast.show(
           $mdToast.simple()

@@ -4,7 +4,7 @@
     .controller('NormalizationController', NormalizationController);
 
   function NormalizationController (
-    UserService, ExperimentService,
+    UserService, WhiteboardService,
     NormalizationService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
@@ -15,15 +15,23 @@
     vm.op_type = "";
 
     vm.createNode = function() {
-      var workspace = ExperimentService.getCurrentWorkspace()
-      NormalizationService.createNode(
-        vm.user.id, experiment_id, vm.user.token,
-        vm.component_type, vm.component_id, vm.op_type);
+      NormalizationService.create({
+        user_id: vm.user.id,
+        token: vm.user.token,
+        experiment: experiment_id,
+        component_type: vm.component_type,
+        component_id: vm.component_id,
+        op_type: vm.op_type
+      }).then(function(response){
+        WhiteboardService.appendNode(response.id, NormalizationService.definition)
+      });
+
       $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {
-        return (typeof(vm.columns) == "object") ? true : false;
-      }
+      return (typeof(vm.columns) == "object") ? true : false;
+    }
   };
+
 })();

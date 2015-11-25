@@ -1,40 +1,43 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular.module('cognitive.experiment')
-        .factory('DuplicateRemovalService', DuplicateRemovalService);
+  angular.module('cognitive.experiment')
+    .factory('DuplicateRemovalService', DuplicateRemovalService);
 
-    function DuplicateRemovalService (
-        $http, ExperimentService) {
+  function DuplicateRemovalService ($resource) {
+    var DuplicateRemovalService = {};
+    var resource = $resource('duplication_removal', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/duplication_removal/:id' },
+      query: {
+        method:'GET',
+        url: '/api/v1/operations/duplication_removal/',
+        isArray: true },
+      save: {
+        method: 'POST',
+        url: '/api/v1/operations/duplication_removal/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/duplication_removal/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/duplication_removal/:id'
+      }
+    });
 
-        var DuplicateRemovalService = {};
-        var definition = {
-            name:"Remove Duplicates",
-            type: "remove_column",
-            icon_class: "fa fa-cut",
-            template: "/static/app/experiment/plugin/duplication_removal/duplication_removal.html"
-        };
-
-        var createNode = function(user_id, experiment_id, token, targets) {
-            targets = "["+targets.toString()+"]";
-            console.log(targets)
-            $http.post('/api/v1/operations/remove_duplicates/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                component_id: targets
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
-        }
-
-        DuplicateRemovalService = {
-            definition: definition,
-            createNode: createNode
-        }
-
-        return DuplicateRemovalService;
+    DuplicateRemovalService.definition = {
+      name:"Remove Duplicates",
+      type: "remove_column",
+      icon_class: "fa fa-cut",
+      template: "/static/app/experiment/plugin/duplication_removal/duplication_removal.html"
     };
+
+    DuplicateRemovalService.create = function(targetColumn) {
+      return resource.save(targetColumn).$promise;
+    }
+
+    return DuplicateRemovalService;
+  };
+
 })();

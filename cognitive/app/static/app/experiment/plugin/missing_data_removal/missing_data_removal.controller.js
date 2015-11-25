@@ -4,7 +4,7 @@
     .controller('RemoveMissingValueController', RemoveMissingValueController);
 
   function RemoveMissingValueController (
-    UserService, ExperimentService,
+    UserService, WhiteboardService,
     MissingDataRemovalService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
@@ -13,15 +13,21 @@
     vm.method = "Replace_mean";
 
     vm.createNode = function() {
-      var workspace = ExperimentService.getCurrentWorkspace()
-      MissingDataRemovalService
-        .createNode(vm.user.id, experiment_id, vm.user.token, vm.method);
+      MissingDataRemovalService.create({
+        user_id: vm.user.id,
+        token: vm.user.token,
+        experiment: experiment_id,
+        op_action: vm.method,
+      }).then(function(response) {
+        WhiteboardService.appendNode(
+          response.id, MissingDataRemovalService.definition)
+      });
       $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {
-        return (typeof(vm.columns) == "object") ? true : false;
-      }
+      return (typeof(vm.columns) == "object") ? true : false;
+    }
   };
 
 })();

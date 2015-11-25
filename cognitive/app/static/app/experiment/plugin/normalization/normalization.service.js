@@ -1,38 +1,42 @@
 (function () {
-    'use strict';
-    angular.module('cognitive.experiment')
-        .factory('NormalizationService', NormalizationService);
+  'use strict';
+  angular.module('cognitive.experiment')
+    .factory('NormalizationService', NormalizationService);
 
-    function NormalizationService($http, ExperimentService) {
-        var NormalizationService = {};
-        var definition = {
-            name: "Normalization",
-            type:"normalization",
-            icon_class:"fa fa-align-center",
-            template: "/static/app/experiment/plugin/normalization/normalization.html"
-        }
+  function NormalizationService($resource) {
+    var NormalizationService = {};
+    var resource = $resource('normalization', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/normalization/:id' },
+      query: {
+        method:'GET',
+        url: '/api/v1/operations/normalization/',
+        isArray: true },
+      save: {
+        method: 'POST',
+        url: '/api/v1/operations/normalization/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/normalization/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/normalization/:id'
+      }
+    });
 
-        var createNode = function(
-            user_id, experiment_id, token, component_type, component_id, op_type) {
-            $http.post('/api/v1/operations/normalization/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                component_type: component_type,
-                component_id: component_id,
-                op_type: op_type
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
-        };
+    NormalizationService.definition = {
+      name: "Normalization",
+      type:"normalization",
+      icon_class:"fa fa-align-center",
+      template: "/static/app/experiment/plugin/normalization/normalization.html"
+    }
 
-        NormalizationService = {
-            definition: definition,
-            createNode: createNode
-        }
+    NormalizationService.create = function (normalization) {
+      return resource.save(normalization).$promise;
+    }
 
-        return NormalizationService;
-    };
+    return NormalizationService;
+  };
+
 })();

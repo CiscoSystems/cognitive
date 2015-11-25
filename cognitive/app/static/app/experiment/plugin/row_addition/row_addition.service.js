@@ -1,41 +1,42 @@
 (function () {
-    'use strict';
-    angular.module('cognitive.experiment')
-        .factory('RowAdditionService', RowAdditionService);
+  'use strict';
+  angular.module('cognitive.experiment')
+    .factory('RowAdditionService', RowAdditionService);
 
-    function RowAdditionService (
-        $http, ExperimentService) {
+  function RowAdditionService ($resource) {
+    var RowAdditionService = {};
+    var resource = $resource('row', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/row/:id' },
+      query: {
+        method:'GET',
+        url: '/api/v1/operations/row/',
+        isArray: true },
+      save: {
+        method: 'POST',
+        url: '/api/v1/operations/row/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/row/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/row/:id'
+      }
+    });
 
-        var RowAdditionService = {};
-        var definition = {
-            name: "Add Row",
-            icon_class:"fa fa-list-ol",
-            type: "add_row",
-            template: "/static/app/experiment/plugin/row_addition/row_addition.html"
-        }
+    RowAdditionService.definition = {
+      name: "Add Row",
+      icon_class:"fa fa-list-ol",
+      type: "add_row",
+      template: "/static/app/experiment/plugin/row_addition/row_addition.html"
+    }
 
-        var createNode = function(user_id, experiment_id, token, values) {
-            console.log(values);
-            values = "[" + values.toString() + "]";
-            console.log(values);
+    RowAdditionService.create = function (row) {
+      return resource.save(row).$promise;
+    }
 
-            $http.post('/api/v1/operations/row/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                row_values: values
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
-        };
+    return RowAdditionService;
+  };
 
-        RowAdditionService = {
-            definition: definition,
-            createNode: createNode
-        }
-
-        return RowAdditionService;
-    };
 })();

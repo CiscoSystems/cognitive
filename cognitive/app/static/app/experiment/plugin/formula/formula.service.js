@@ -1,40 +1,44 @@
 (function () {
-    'use strict';
-    angular.module('cognitive.experiment')
-        .factory('FormulaService', FormulaService);
+  'use strict';
+  angular.module('cognitive.experiment')
+    .factory('FormulaService', FormulaService);
 
-    function FormulaService (
-        $http, ExperimentService) {
+  function FormulaService ($resource) {
 
-        var FormulaService = {};
-        var definition = {
-            name: "Math formula",
-            type: "add_math_fomula",
-            icon_class: "fa fa-subscript",
-            template: "/static/app/experiment/plugin/formula/formula.html"
-        };
+    var FormulaService = {};
 
-        var createNode = function(user_id, experiment_id, token, formula, target_column, constant_number) {
-            $http.post('/api/v1/operations/math_formula/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                component_type: "Column",
-                component_id: target_column,
-                op_type: formula,  // Add or Sub, Mul, Div
-                op_constant: constant_number
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
-        };
-
-        FormulaService = {
-            definition: definition,
-            createNode: createNode
-        }
-
-        return FormulaService;
+    FormulaService.definition = {
+      name: "Math formula",
+      type: "add_math_fomula",
+      icon_class: "fa fa-subscript",
+      template: "/static/app/experiment/plugin/formula/formula.html"
     };
+
+    var resource = $resource('math_formula', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/math_formula/:id' },
+      query: {
+        method:'GET',
+        url: '/api/v1/operations/math_formula/',
+        isArray: true },
+      save: {
+        method: 'POST',
+        url: '/api/v1/operations/math_formula/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/math_formula/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/math_formula/:id'
+      }
+    });
+
+    FormulaService.create = function (mathFormula) {
+      return resource.save(mathFormula).$promise;
+    }
+
+    return FormulaService;
+  };
+
 })();

@@ -1,10 +1,10 @@
 (function () {
   'use strict';
   angular.module('cognitive.experiment')
-      .controller('AddRowController', AddRowController);
+    .controller('AddRowController', AddRowController);
 
   function AddRowController(
-    UserService, ExperimentService,
+    UserService, WhiteboardService,
     RowAdditionService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
@@ -19,8 +19,17 @@
     }
 
     vm.createNode = function() {
-      var workspace = ExperimentService.getCurrentWorkspace();
-      RowAdditionService.createNode(vm.user.id, experiment_id,  vm.user.token, vm.values);
+      var values = "[" + vm.values.toString() + "]";
+      RowAdditionService.create({
+        user_id: vm.user.id,
+        token: vm.user.token,
+        experiment: experiment_id,
+        row_values: values
+      }).then(function (response) {
+        WhiteboardService.appendNode(
+          response.id, RowAdditionService.definition)
+      });
+
       $mdDialog.cancel();
     };
 

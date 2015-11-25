@@ -20,8 +20,6 @@ from rest_framework import viewsets
 
 from pandas import datetime
 
-import urllib2
-
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 FILE_UPLOAD_DIR = os.path.join(PROJECT_PATH, 'cognitive/app/uploads/')
 

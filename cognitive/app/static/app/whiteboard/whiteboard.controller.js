@@ -9,14 +9,13 @@ var parsed_file = [];
   angular.module('cognitive.whiteboard')
     .controller('WhiteboardController', WhiteboardController)
 
-  function WhiteboardController(
-    $resource, $mdDialog, UserService, ExperimentService){
+  function WhiteboardController($mdDialog, UserService, ExperimentsService){
 
     var vm = this;
     vm.experiments = [];
 
     function initialize() {
-      ExperimentService.query().then(
+      ExperimentsService.query().then(
         function(experiments) {
           vm.experiments = experiments;
         });
@@ -31,7 +30,7 @@ var parsed_file = [];
       }).then(function(experimentInfo) {
         var currentUser = UserService.getCurrentUser();
 
-        ExperimentService.save({
+        ExperimentsService.save({
           name: experimentInfo['title'],
           user: currentUser['id'],
           token: currentUser['token']
@@ -52,7 +51,7 @@ var parsed_file = [];
         clickOutsideToClose: true
       }).then(function(experimentInfo) {
         var currentUser = UserService.getCurrentUser();
-        ExperimentService.update({
+        ExperimentsService.update({
           id: experiment.id,
           name: experimentInfo['title'],
           user: currentUser['id'],
@@ -62,7 +61,7 @@ var parsed_file = [];
         });
       });
 
-      ExperimentService.update(experiment).then(function (data) {
+      ExperimentsService.update(experiment).then(function (data) {
         vm.experiments[index] = data
       })
     }
@@ -79,7 +78,7 @@ var parsed_file = [];
           .cancel('Cancel')
       ).then(
         function(decision) {
-          ExperimentService.remove(experiment.id)
+          ExperimentsService.remove(experiment.id)
           vm.experiments.splice(index, 1);
         })
     }
