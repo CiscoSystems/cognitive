@@ -30,7 +30,7 @@
           .attr('ng-attr-y', '{{node.y}}')
           .attr('width', 180)
           .attr('height', 40)
-          .attr('class', "node base-node")
+          .attr('class', "node rect-node")
           .attr('stroke', "steelblue")
           .attr('stroke-width', "3");
 
@@ -48,17 +48,14 @@
           .attr('ng-attr-cy', '{{node.y}}')
           .attr('r', 5)
           .attr('ng-attr-node', '{{node.id}}')
-          .attr("class", "cognitive-node-input-circle")
+          .attr("class", "node-in")
           .attr('fill', 'white')
           .attr('stroke', 'gray')
           .style('stroke-width', 1)
           .on('mouseenter', connectionPointMouseEnter)
           .on('mouseover', connectionPointMouseOver)
-          .on('mousemove', connectionPointMouseMove)
           .on('mouseleave', connectionPointMouseLeave)
-          .on('mouseout', connectionPointMouseOut)
           .call(d3.behavior.drag()
-            .on("dragstart", prepareDrawingConnection)
             .on("drag", drawingConnection)
             .on("dragend", finishDrawingConnection));
 
@@ -77,17 +74,17 @@
           .attr('ng-attr-cy', '{{node.y + 40}}')
           .attr('r', 5 )
           .attr('ng-attr-node', '{{node.id}}')
-          .attr("class", "cognitive-node-output-circle")
+          .attr("class", "node-out")
           .attr('fill', 'white')
           .attr('stroke', 'gray')
           .style('stroke-width', 1)
           .on('mouseenter', connectionPointMouseEnter)
           .on('mouseover', connectionPointMouseOver)
-          .on('mousemove', connectionPointMouseMove)
+          //.on('mousemove', connectionPointMouseMove)
           .on('mouseleave', connectionPointMouseLeave)
-          .on('mouseout', connectionPointMouseOut)
+          //.on('mouseout', connectionPointMouseOut)
           .call(d3.behavior.drag()
-            .on("dragstart", prepareDrawingConnection)
+            //.on("dragstart", prepareDrawingConnection)
             .on("drag", drawingConnection)
             .on("dragend", finishDrawingConnection));
 
@@ -119,16 +116,13 @@
         scope.$apply();
       }
 
-      function prepareDrawingConnection(){}
-
       function drawingConnection() {
         $('.tempolary-line').remove();
-        var workspace = WhiteboardService.getCurrentWorkspace();
         var start = d3.select(this);
         var current_x = d3.event.x;
         var current_y = d3.event.y;
         var node = $("#node-group-" + start.attr('node'));
-        var g= d3.select($(".layer-4[workspace=" + workspace.id + "]")[0])
+        var g= d3.select($(".layer-4")[0])
           .append('g').attr('class', 'tempolary-line');
 
         g.append("line")
@@ -141,8 +135,10 @@
 
       function finishDrawingConnection() {
         $('.tempolary-line').remove();
+
         var scope = angular.element(this).scope();
         var dest = $(".focus")
+
         if (dest.length !== 1) {
           d3.select(this).classed('src', false);
           return;
@@ -150,16 +146,14 @@
 
         dest = d3.select(dest[0]);
 
-        var src_node_id = d3.select(this).attr('node');
-        var dest_node_id = dest.attr('node');
+        var srcNodeId = d3.select(this).attr('node');
+        var destNodeId = dest.attr('node');
 
-        if (dest.attr("class").match(/input/) == null) {
-          var t = src_node_id;
-          src_node_id = dest_node_id;
-          dest_node_id = t;
+        if (dest.attr("class").match(/node-in/) == null){
+          srcNodeId = [destNodeId, destNodeId = srcNodeId][0];
         }
 
-        WhiteboardService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
+        WhiteboardService.createEdge(srcNodeId, destNodeId);
         scope.$apply();
 
         d3.select(this).classed('src', false);
@@ -170,14 +164,13 @@
         d3.select(this).attr("r", 5).style('fill', '');
         d3.select($('.focus')[0]).classed('focus', false);
       }
-
-      function connectionPointMouseOut() {}
-
-      function connectionPointMouseMove() {}
-
-      function connectionPointMouseEnter(){}
-
       function connectionPointMouseOver() {
+        d3.select(this)
+          .attr('r', 10).classed('focus', true)
+          .style('fill', 'yellow');
+      }
+
+      function connectionPointMouseEnter() {
         d3.select(this)
           .attr('r', 10).classed('focus', true)
           .style('fill', 'yellow');

@@ -6,34 +6,31 @@
   function WhiteboardService($resource, $http, UserService) {
     var WhiteboardService = {}
 
-    var experiment = {};
-    WhiteboardService.experiment = experiment;
-
-    var getCurrentWorkspace = function () {
-      if (typeof (WhiteboardService.experiment.nodes) == 'undefined') {
-        WhiteboardService.experiment['nodes'] = [];
-      }
-      if (typeof (WhiteboardService.experiment.edges) == 'undefined') {
-        WhiteboardService.experiment['edges'] = [];
-      }
-      return WhiteboardService.experiment;
+    var experiment = {
+      nodes: [],
+      edges: []
     };
 
+    WhiteboardService.experiment = experiment;
+
     var appendNode = function (id, definition) {
-      var workspace = getCurrentWorkspace();
       var xy = nextNodeCoordination()
       if (typeof (WhiteboardService.experiment.nodes) == 'undefined') {
         WhiteboardService.experiment['nodes'] = [];
       }
 
       WhiteboardService.experiment.nodes.push({
-        id: id, workspace_id: workspace.id,
-        name: definition.name, type: definition.type, x: xy[0], y: xy[1],
-        focus: false, mouse: ''});
+        id: id,
+        name: definition.name,
+        type: definition.type,
+        x: xy[0], y: xy[1],
+        focus: false,
+        mouse: ''
+      });
     }
 
     var nextNodeCoordination = function () {
-      var x = (Math.random() * 300) - 300;
+      var x = (Math.random() * 300) + 280;
       var y = 50 + (Math.random() * 400);
       if (x > window.innerWidth - 350) {x = window.innerWidth - 500;}
       if (y > window.innerHeight) { y = window.innerHeight - 300;}
@@ -41,7 +38,7 @@
     }
 
     var getTopology = function () {
-      var experiment = getCurrentWorkspace()
+      var experiment = WhiteboardService.experiment;
       var start_node = experiment.nodes.filter(function(node) {
         return node.type === "file_input";
       })[0]
@@ -63,44 +60,23 @@
     }
 
     var getFocusedNode = function() {
-      var workspace = getCurrentWorkspace();
-      var nodes = workspace.nodes
+      var nodes = WhiteboardService.experiment.nodes
         .filter(function (node) {return node.focus;});
       return nodes[0];
     }
 
-    var createEdge = function (workspace_id, src_node_id, dest_node_id) {
-      var experiment = getCurrentWorkspace();
-      experiment.edges.push({
-        workspace_id: workspace_id,
-        from: src_node_id,
-        to: dest_node_id});
+    var createEdge = function (srcNodeId, destNodeId) {
+      WhiteboardService.experiment.edges.push({
+        from: srcNodeId,
+        to: destNodeId
+      });
     }
 
-    var appendEdgeOnCurrentWorkspace = function (src_node_id, dest_node_id) {
-      var workspace = getCurrentWorkspace();
-      return createEdge(workspace.id, src_node_id, dest_node_id);
-    }
-
-    var getNodeByWorkspaceAndIndex = function (workspace_id, index) {
-      var experiment = getCurrentWorkspace();
-      console.log(experiment);
-
-      return experiment.nodes.filter(function (node) {
+    var getNodeByIndex = function (index) {
+      return WhiteboardService.experiment.nodes.filter(function (node) {
         return node.id == index;
       })[0];
     };
-
-    var getWorkspaceById = function (workspace_id) {
-      return getCurrentWorkspace();
-    }
-
-    var getEdgesOfNode = function (node_id) {
-        var edges = getCurrentWorkspace().edges;
-        return edges.filter(function (edge) {
-            return edge.to === node_id || edge.from === node_id;
-        });
-    }
 
     var removeNode = function (node_id) {
       var user = UserService.getCurrentUser();
@@ -134,16 +110,13 @@
     }
 
     WhiteboardService = {
-      getCurrentWorkspace: getCurrentWorkspace,
       appendNode: appendNode,
       nextNodeCoordination: nextNodeCoordination,
       getTopology: getTopology,
       getFocusedNode: getFocusedNode,
-      getNodeByWorkspaceAndIndex: getNodeByWorkspaceAndIndex,
+      getNodeByIndex: getNodeByIndex,
       createEdge: createEdge,
-      appendEdgeOnCurrentWorkspace: appendEdgeOnCurrentWorkspace,
       removeNode: removeNode,
-      getEdgesOfNode: getEdgesOfNode
     }
 
     return WhiteboardService;

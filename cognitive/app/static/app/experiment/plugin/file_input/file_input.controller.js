@@ -8,15 +8,15 @@
     UserService, $location, $mdDialog, DataService) {
 
     var vm = this;
-    vm.user = UserService.getCurrentUser();
-    var experiment_id = $location.search()['id'];
 
-    $scope.createNode = function() {
+    vm.user = UserService.getCurrentUser();
+    vm.experiment_id = $location.search()['id'];
+
+    vm.createNode = function() {
       FileInputService.createNode(
-        vm.user.id, experiment_id,
+        vm.user.id, vm.experiment_id,
         vm.user.token, file_name, file_body)
         .success(function (data, status, headers, config) {
-        console.log(data);
         WhiteboardService.appendNode(data.id, FileInputService.definition)
         $mdDialog.cancel();
       });

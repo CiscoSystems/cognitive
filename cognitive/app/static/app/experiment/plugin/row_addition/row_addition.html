@@ -1,5 +1,5 @@
 <md-dialog ng-controller="AddRowController as vm" aria-label="RowAddition">
-  <md-toolbar>
+  <md-toolbar class="md-toolbar-primary">
     <div class="md-toolbar-tools">
       <h2>
         <i class="fa fa-list-ol"></i>
@@ -27,6 +27,7 @@
     </div>
   </md-dialog-content>
   <div class="md-actions">
-    <md-button class="md-primary" ng-click="vm.createNode()">Add</md-button>
+    <md-button class="md-primary md-raised"
+               ng-click="vm.createNode()">Add</md-button>
   </div>
 </md-dialog>

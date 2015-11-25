@@ -1,5 +1,5 @@
-<md-dialog aria-label="InputSource" ng-controller="DataInputController">
-  <md-toolbar>
+<md-dialog aria-label="InputSource" ng-controller="DataInputController as vm">
+  <md-toolbar class="md-toolbar-primary">
     <div class="md-toolbar-tools">
       <h2>
         <i class="fa fa-arrow-up"></i>
@@ -20,7 +20,7 @@
       </div>
     </div>
   </md-dialog-content>
-  <div class="md-actions">
-    <md-button class="md-primary" ng-click="createNode()">Add</md-button>
-  </div>
+  <md-dialog-actions>
+    <md-button class="md-primary md-raised" ng-click="vm.createNode()">Add</md-button>
+  </md-dialog-actions>
 </md-dialog>

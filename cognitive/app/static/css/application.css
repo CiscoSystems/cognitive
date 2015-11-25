@@ -1,5 +1,5 @@
 md-dialog {
-    border-radius: 0 !important;
+    border-radius: 0;
 }
 
 .cognitive-modal-window .modal-dialog {
@@ -132,4 +132,8 @@ md-toolbar.md-toolbar-nav {
 .md-card-data-cotent .remove-button {
     color: gray;
     font-size: 18pt;
+}
+
+md-toolbar.md-toolbar-primary {
+    background-color: steelblue;
 }

@@ -30,33 +30,10 @@
       }
     };
 
-    vm.appendCognitiveNode = function (id, name, type, x, y) {
-      //var workspace = vm.experiment;
-      var experiment = WhiteboardService.experiment;
-      x = parseInt(x);
-      y = parseInt(y);
-      experiment.nodes.push({
-        id: id, workspace_id: experiment.id,
-        name: name, type: type, x: x, y: y,
-        focus: false, mouse: ""
-      });
-    }
-
     vm.getCurrentFocusNode = function () {
       var exp = WhiteboardService.experiment;
       return exp.nodes.filter(function (node) { return node.focus; })[0];
     }
-
-    vm.createEdge = function (workspace_id, src_node_id, dest_node_id) {
-      WhiteboardService.getFocusedNode();
-      $scope.$apply();
-    }
-
-    vm.appendEdgeOnCurrentWorkspace = function (src_node_id, dest_node_id) {
-      return WhiteboardService.appendEdgeOnCurrentWorkspace(src_node_id, dest_node_id);
-    }
-
-    vm.focusNode = {};
 
     vm.add = function () {
       vm.contacts.push(vm.contact);
@@ -97,7 +74,7 @@
 
     vm.clickCognitiveNode = function (event, workspace_id, index) {
       event.stopPropagation();
-      var node = vm.getNodeByWorkspaceAndIndex(workspace_id, index);
+      var node = vm.getNodeByIndex(index);
       if (node.focus) {
         node.focus = false;
         //vm.closeRightMenu();
@@ -115,8 +92,8 @@
       node.focus = true;
     };
 
-    vm.getNodeByWorkspaceAndIndex = function (workspace_id, index) {
-      return WhiteboardService.getNodeByWorkspaceAndIndex(workspace_id, index);
+    vm.getNodeByIndex = function (index) {
+      return WhiteboardService.getNodeByIndex(index);
     };
 
     vm.run = function () {
@@ -233,10 +210,6 @@
             }
           });
         })
-    };
-
-    vm.save = function () {
-      console.log("workspace save has not been implemented yet")
     };
 
     initialize();

@@ -29,11 +29,11 @@ li.component {
     padding-right: 45px;
 }
 
-.base-node:hover {
+.rect-node:hover {
     fill: #ffd124;
 }
 
-.base-node {
+.rect-node {
     fill: white;
 }
 

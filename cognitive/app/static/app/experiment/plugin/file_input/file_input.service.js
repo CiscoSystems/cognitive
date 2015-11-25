@@ -3,8 +3,28 @@
   angular.module('cognitive.experiment')
     .factory('FileInputService', FileInputService);
 
-  function FileInputService ($http) {
+  function FileInputService ($http, $resource) {
     var FileInputService = {};
+
+    var resource = $resource('input', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/input/:id' },
+      query: {
+        method:'GET',
+        url: '/api/v1/operations/input/',
+        isArray: true },
+      save: {
+        method: 'POST',
+        url: '/api/v1/operations/input/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/input/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/input/:id'
+      }
+    });
 
     var definition =  {
       name:"File Input",
