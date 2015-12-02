@@ -34,14 +34,14 @@
     }
 
     var createNode = function(user_id, experiment_id, token, file_name, file_text) {
-      return $http.post('/api/v1/operations/input/', {
+      return resource.save({
         user_id: user_id,
         token: token,
         experiment: experiment_id,
         input_file: file_name,
         input_file_type: "csv",
         data_values: file_text
-      })
+      }).$promise;
     };
 
     // this is temporal implementation, will be removed to

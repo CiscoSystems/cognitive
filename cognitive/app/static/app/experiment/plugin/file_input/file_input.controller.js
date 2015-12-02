@@ -4,8 +4,7 @@
     .controller('DataInputController', DataInputController);
 
   function DataInputController (
-    $scope, WhiteboardService, FileInputService,
-    UserService, $location, $mdDialog, DataService) {
+    $scope, FileInputService, UserService, $location, $mdDialog) {
 
     var vm = this;
 
@@ -16,9 +15,11 @@
       FileInputService.createNode(
         vm.user.id, vm.experiment_id,
         vm.user.token, file_name, file_body)
-        .success(function (data, status, headers, config) {
-        WhiteboardService.appendNode(data.id, FileInputService.definition)
-        $mdDialog.cancel();
+      .then(function (response) {
+        $mdDialog.hide({
+          data: response,
+          definition: FileInputService.definition
+        });
       });
     };
 

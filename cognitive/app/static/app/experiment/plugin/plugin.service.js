@@ -1,35 +1,40 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular.module('cognitive.experiment')
-        .factory('CognitiveComponentService', CognitiveComponentService);
+  angular.module('cognitive.experiment')
+    .factory('CognitiveComponentService', CognitiveComponentService);
 
-    function CognitiveComponentService(
-        IntroductionService, FileInputService,
-        RowAdditionService, NormalizationService,
-        ProjectionService, DuplicateRemovalService,
-        MissingDataRemovalService,
-        FormulaService, MachineLearningService) {
+  function CognitiveComponentService(
+    IntroductionService, FileInputService,
+    RowAdditionService, NormalizationService,
+    ProjectionService, DuplicateRemovalService,
+    MissingDataRemovalService,
+    FormulaService, MachineLearningService) {
 
-        var CognitiveComponentService = {}
-        var components = [
-            IntroductionService.definition,
-            FileInputService.definition,
-            RowAdditionService.definition,
-            FormulaService.definition,
-            NormalizationService.definition,
-            ProjectionService.definition,
-            DuplicateRemovalService.definition,
-            MissingDataRemovalService.definition,
-            MachineLearningService.definition,
-        ];
+    var CognitiveComponentService = {};
 
-        CognitiveComponentService = {
-            getCognitiveComponents: function(){return components},
-            pushCognitiveComponent: function(component) {components.push(component)}
-        };
+    var components = [
+      IntroductionService.definition,
+      FileInputService.definition,
+      RowAdditionService.definition,
+      FormulaService.definition,
+      NormalizationService.definition,
+      ProjectionService.definition,
+      DuplicateRemovalService.definition,
+      MissingDataRemovalService.definition,
+      MachineLearningService.definition,
+    ];
 
-        return CognitiveComponentService;
+    CognitiveComponentService = {
+      getCognitiveComponents: function () {
+        return components
+      },
+      pushCognitiveComponent: function (component) {
+        components.push(component)
+      }
     };
+
+    return CognitiveComponentService;
+  };
 
 })();

@@ -4,8 +4,7 @@
     .controller("ProjectionController", ProjectionController);
 
   function ProjectionController(
-    UserService, WhiteboardService,
-    ProjectionService, $location, $mdDialog) {
+    UserService, ProjectionService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
@@ -20,10 +19,11 @@
         experiment: experiment_id,
         component_id: targets
       }).then(function (response) {
-        WhiteboardService.appendNode(
-          response.id, ProjectionService.definition)
+        $mdDialog.hide({
+          data: response,
+          definition: ProjectionService.definition
+        });
       });
-      $mdDialog.cancel();
     };
 
     vm.addTarget = function () {

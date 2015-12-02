@@ -17,17 +17,15 @@
         <i class="fa fa-close"></i>Need to Upload Data Before.
       </span>
     </div>
-    <div class="add_row_form" style="list-style:none; font-size: 18pt;">
-      <div class="add_row_form">
-        <li class="add-row-option" ng-repeat="column in vm.columns">
-          <p>{{column}}</p>
-          <input class="form-control" type="text" placeholder="value" ng-model="vm.values[$index]" />
-        </li>
-      </div>
-    </div>
+
+    <md-input-container ng-repeat="column in vm.columns" flex>
+      <label>{{ column }}</label>
+      <input ng-model="vm.values[$index]" />
+    </md-input-container>
+
   </md-dialog-content>
-  <div class="md-actions">
+  <md-dialog-actions>
     <md-button class="md-primary md-raised"
                ng-click="vm.createNode()">Add</md-button>
-  </div>
+  </md-dialog-actions>
 </md-dialog>

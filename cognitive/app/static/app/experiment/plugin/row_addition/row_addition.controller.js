@@ -4,8 +4,7 @@
     .controller('AddRowController', AddRowController);
 
   function AddRowController(
-    UserService, WhiteboardService,
-    RowAdditionService, $location, $mdDialog) {
+    UserService, RowAdditionService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
@@ -26,11 +25,11 @@
         experiment: experiment_id,
         row_values: values
       }).then(function (response) {
-        WhiteboardService.appendNode(
-          response.id, RowAdditionService.definition)
+        $mdDialog.hide({
+          data: response,
+          definition: RowAdditionService.definition
+        });
       });
-
-      $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {

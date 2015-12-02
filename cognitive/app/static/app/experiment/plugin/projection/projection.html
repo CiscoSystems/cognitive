@@ -12,28 +12,30 @@
     </div>
   </md-toolbar>
   <md-dialog-content style="min-width: 500px;" layout-padding>
-    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
-        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
-            <i class="fa fa-close"></i>Need to Upload Data Before.
-        </span>
-    </div>
-    <div class="form-group projection_form">
-      <div ng-repeat="target in vm.targets track by $index">
-        <select class="form-control" ng-model="vm.targets[$index]" type="number">
-          <option ng-repeat="column in vm.columns" value="{{$index}}">
-            {{column}}
-          </option>
-        </select>
-      </div>
-    </div>
+    <md-input-container ng-repeat="target in vm.targets track by $index">
+      <label>Column</label>
+      <md-select ng-model="vm.targets[$index]">
+        <md-option ng-repeat="column in vm.columns"
+                   value="{{$index}}">
+          {{column}}
+        </md-option>
+      </md-select>
+    </md-input-container>
     <div class="projection minus-bottom right">
       <i class="fa fa-minus minus-icon"></i>
     </div>
     <div class="projection plus-bottom right" ng-click="vm.addTarget()">
       <i class="fa fa-plus plus-icon"></i>
     </div>
+
+    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
+        <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
+            <i class="fa fa-close"></i>Need to Upload Data Before.
+        </span>
+    </div>
+
   </md-dialog-content>
-  <div class="md-actions">
-    <md-button class="md-primary" ng-click="vm.createNode()">Add</md-button>
-  </div>
+  <md-dialog-actions>
+    <md-button class="md-primary md-raised" ng-click="vm.createNode()">Add</md-button>
+  </md-dialog-actions>
 </md-dialog>

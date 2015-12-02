@@ -12,14 +12,20 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from ..models import Experiment, Component, Data_operation_type
+from ..models import Component
+from ..models import Data_operation_type
+from ..models import Experiment
 from ..serializers import ComponentSerializer
 from ..views import send_response
+import os
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
 from pandas import read_csv, datetime
 import json
 import urllib2
+
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+FILE_UPLOAD_DIR = os.path.join(PROJECT_PATH, 'cognitive/app/uploads/')
 
 MAX_COMPONENTS_PER_EXP = 100
 
@@ -127,6 +133,11 @@ class OperationViewSet(viewsets.ViewSet):
                     function_type='Create', function_arg='Table',
                     function_subtype='Input', function_subtype_arg=filename)
                 op.save()
+            # data = Data.objects.get(pk=1)
+            # op = Data_operation_type(
+            #     function_type='Create', function_arg='Column',
+            #     function_subtype='Input', function_subtype_arg=data.columns)
+            # op.save()
 
         elif operation == "machine_learning":
             print data["model_type"], data["train_data_percentage"], data["target_column"]

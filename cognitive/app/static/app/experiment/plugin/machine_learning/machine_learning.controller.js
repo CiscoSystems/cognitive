@@ -4,8 +4,7 @@
     .controller('MachineLearningController', MachineLearningController);
 
   function MachineLearningController (
-    UserService, WhiteboardService,
-    MachineLearningService, $location, $mdDialog) {
+    UserService, MachineLearningService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
 
@@ -23,11 +22,12 @@
         model_type: vm.algorithm,
         train_data_percentage: vm.trainning_percentage,
         target_column: vm.target
-      }).then(function(response){
-        WhiteboardService.appendNode(
-          response.id, MachineLearningService.definition);
+      }).then(function (response) {
+        $mdDialog.hide({
+          data: response,
+          definition: MachineLearningService.definition
+        });
       });
-      $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {

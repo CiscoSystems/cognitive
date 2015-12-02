@@ -6,7 +6,7 @@
     return {
       restrict: 'AEC',
       replace: 'true',
-      link: function(scope, element, attrs) {
+      link: function(scope, element) {
         d3.select(element[0]).append("line")
           .attr('ng-attr-x1', '{{vm.getNodeByIndex(edge.from).x + 90}}')
           .attr('ng-attr-y1', '{{vm.getNodeByIndex(edge.from).y + 43}}')

@@ -4,8 +4,7 @@
     .controller('RemoveMissingValueController', RemoveMissingValueController);
 
   function RemoveMissingValueController (
-    UserService, WhiteboardService,
-    MissingDataRemovalService, $location, $mdDialog) {
+    UserService, MissingDataRemovalService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
@@ -18,11 +17,12 @@
         token: vm.user.token,
         experiment: experiment_id,
         op_action: vm.method,
-      }).then(function(response) {
-        WhiteboardService.appendNode(
-          response.id, MissingDataRemovalService.definition)
+      }).then(function (response) {
+        $mdDialog.hide({
+          data: response,
+          definition: MissingDataRemovalService.definition
+        });
       });
-      $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {

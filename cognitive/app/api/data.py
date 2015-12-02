@@ -55,6 +55,7 @@ class DataViewSet(viewsets.ViewSet):
 
     def create(self, request):
         upload_file = request.FILES['file']
+        first_line = upload_file.readline().rstrip('\r\n')
         handle_uploaded_file(upload_file)
 
         data = request.DATA
@@ -62,6 +63,7 @@ class DataViewSet(viewsets.ViewSet):
             type="csv",
             file_path=str(upload_file),
             user=User.objects.get(pk=int(data["user_id"])),
+            columns=first_line,
             created_time=datetime.now(),
             modified_time=datetime.now())
         data_model.save()
@@ -75,7 +77,7 @@ class DataViewSet(viewsets.ViewSet):
         ---
         request_serializer: DataSerializer
         """
-        # serializer = None
+        serializer = None
         # data_model = Data.objects.get(pk=pk)
         # if request.DATA["type"] == "csv":
         #     file_path = "/tmp/" + request.DATA["filename"]

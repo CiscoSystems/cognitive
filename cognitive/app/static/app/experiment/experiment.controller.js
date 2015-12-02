@@ -7,7 +7,7 @@
   function ExperimentController (
     $scope, $location, $modal, $http, $mdDialog, $mdToast, UserService,
     WorkflowService, CognitiveComponentService, ExperimentsService,
-    WhiteboardService, FileInputService, MessageService) {
+    WhiteboardService, FileInputService) {
 
     var vm = this;
     vm.loading = false;
@@ -30,33 +30,19 @@
       }
     };
 
-    vm.getCurrentFocusNode = function () {
-      var exp = WhiteboardService.experiment;
-      return exp.nodes.filter(function (node) { return node.focus; })[0];
-    }
-
-    vm.add = function () {
-      vm.contacts.push(vm.contact);
-      vm.contact = "";
-    };
-
     vm.showComponentCreationDialog = function(ev, index) {
       $mdDialog.show({
-        controller: ComponentCreationDialogController,
         templateUrl: CognitiveComponentService.getCognitiveComponents()[index].template,
         locals: {user: vm.user},
         targetEvent: ev,
-        clickOutsideToClose:true
-      }).then(function(answer) {
-        $mdDialog.close()
+        clickOutsideToClose: true
+      }).then(function(result) {
+        WhiteboardService.appendNode(result.data.id, result.definition);
       }, function() {});
     };
 
     vm.clickNone = function () {
-      var current_node = vm.getCurrentFocusNode()
-      if (typeof current_node !== "undefined") {
-        current_node.focus = false;
-      }
+      WhiteboardService.clickBackground()
     };
 
     function focusedNode() {
@@ -66,26 +52,23 @@
       return node[0];
     };
 
-    vm.isActiveCognitiveNode = function (workspace_id, index) {
+    vm.isActiveNode = function (index) {
       var focused_node = focusedNode()
       if (focused_node == null) return false;
       return focused_node.id == index;
     };
 
-    vm.clickCognitiveNode = function (event, workspace_id, index) {
+    vm.clickNode = function (event, index) {
       event.stopPropagation();
-      var node = vm.getNodeByIndex(index);
+      var node = WhiteboardService.getNodeByIndex(index);
       if (node.focus) {
         node.focus = false;
-        //vm.closeRightMenu();
         return;
       }
 
       var current_focus_node = focusedNode();
 
-      if (current_focus_node === null) {
-        //vm.openRightMenu();
-      } else {
+      if (current_focus_node != null) {
         current_focus_node.focus = false;
       }
 
@@ -125,6 +108,7 @@
       left: false,
       right: true
     };
+
     $scope.toastPosition = angular.extend({},last);
     $scope.getToastPosition = function() {
       sanitizePosition();
@@ -159,7 +143,11 @@
         .success(function (data, status, headers, config) {
           console.log(data)
           if (data.status !== "success") {
-            MessageService.pushDangerMessage("No Input data or RUN is not executed")
+            $mdToast.show($mdToast.simple()
+              .content('Error: No Input data or RUN is not executed')
+              .position($scope.getToastPosition())
+              .hideDelay(3000)
+            );
             return;
           }
 
@@ -213,17 +201,6 @@
     };
 
     initialize();
-  };
-
-  angular.module('cognitive.experiment')
-    .controller('ComponentCreationDialogController', ComponentCreationDialogController);
-
-  function ComponentCreationDialogController($scope, $mdDialog, user) {
-    var vm = this;
-    $scope.user = user;
-    $scope.cancel = function() {
-      $mdDialog.cancel();
-    };
   };
 
 })();

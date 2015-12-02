@@ -164,7 +164,7 @@ BOWER_INSTALLED_APPS = (
     'bootstrap',
     'ng-file-upload',
     'underscore#~1.8.3',
-    'd3#3.1.6',
+    'd3#3.5.10',
     'font-awesome#4.4.0',
     'jquery',
     'jquery-csv',

@@ -6,12 +6,10 @@
   function WhiteboardService($resource, $http, UserService) {
     var WhiteboardService = {}
 
-    var experiment = {
+    WhiteboardService.experiment = {
       nodes: [],
       edges: []
     };
-
-    WhiteboardService.experiment = experiment;
 
     var appendNode = function (id, definition) {
       var xy = nextNodeCoordination()
@@ -80,10 +78,9 @@
 
     var removeNode = function (node_id) {
       var user = UserService.getCurrentUser();
-
-      var workspace = getCurrentWorkspace();
-      var nodes = workspace.nodes;
-      var edges = workspace.edges;
+      var experiment = WhiteboardService.experiment;
+      var nodes = experiment.nodes;
+      var edges = experiment.edges;
       var node_type;
 
       for (var i = 0; i < edges.length; ++i) {
@@ -106,7 +103,12 @@
       }).success(function (data, status, headers, config) {
         console.log(data);
       });
+    }
 
+    var clickBackground = function () {
+      _.each(WhiteboardService.experiment.nodes, function (node) {
+        node.focus = false;
+      })
     }
 
     WhiteboardService = {
@@ -117,6 +119,7 @@
       getNodeByIndex: getNodeByIndex,
       createEdge: createEdge,
       removeNode: removeNode,
+      clickBackground: clickBackground,
     }
 
     return WhiteboardService;

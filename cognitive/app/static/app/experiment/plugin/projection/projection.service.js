@@ -5,23 +5,23 @@
 
   function ProjectionService ($resource) {
     var ProjectionService = {};
-    var resource = $resource('normalization', null, {
+    var resource = $resource('projection', null, {
       get: {
         method: 'GET',
-        url: '/api/v1/operations/normalization/:id' },
+        url: '/api/v1/operations/projection/:id' },
       query: {
         method:'GET',
-        url: '/api/v1/operations/normalization/',
+        url: '/api/v1/operations/projection/',
         isArray: true },
       save: {
         method: 'POST',
-        url: '/api/v1/operations/normalization/' },
+        url: '/api/v1/operations/projection/' },
       update: {
         method: 'PUT',
-        url: '/api/v1/operations/normalization/:id' },
+        url: '/api/v1/operations/projection/:id' },
       delete: {
         method: 'DELETE',
-        url: '/api/v1/operations/normalization/:id'
+        url: '/api/v1/operations/projection/:id'
       }
     });
 

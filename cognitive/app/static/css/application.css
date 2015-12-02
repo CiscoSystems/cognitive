@@ -137,3 +137,12 @@ md-toolbar.md-toolbar-nav {
 md-toolbar.md-toolbar-primary {
     background-color: steelblue;
 }
+
+/* experiment.html */
+.experiment-content {
+    background: whitesmoke;
+}
+
+.experiment-sidebar {
+    background: whitesmoke;
+}

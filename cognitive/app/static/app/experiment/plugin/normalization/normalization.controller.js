@@ -4,8 +4,7 @@
     .controller('NormalizationController', NormalizationController);
 
   function NormalizationController (
-    UserService, WhiteboardService,
-    NormalizationService, $location, $mdDialog) {
+    UserService, NormalizationService, $location, $mdDialog) {
     var vm = this;
     var experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
@@ -22,11 +21,12 @@
         component_type: vm.component_type,
         component_id: vm.component_id,
         op_type: vm.op_type
-      }).then(function(response){
-        WhiteboardService.appendNode(response.id, NormalizationService.definition)
+      }).then(function (response) {
+        $mdDialog.hide({
+          data: response,
+          definition: NormalizationService.definition
+        });
       });
-
-      $mdDialog.cancel();
     };
 
     vm.uploadExist = function () {

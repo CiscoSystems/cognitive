@@ -135,6 +135,7 @@ class Data(models.Model):
     user = models.ForeignKey(User)
     type = models.CharField(blank=False, null=False, max_length=50)
     file_path = models.CharField(blank=True, null=True, max_length=50)
+    columns = models.CharField(blank=True, null=True, max_length=1024)
     created_time = models.DateField(blank=True, null=True)
     modified_time = models.DateField(blank=True, null=True)
 

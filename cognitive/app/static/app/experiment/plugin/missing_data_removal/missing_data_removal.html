@@ -12,32 +12,23 @@
     </div>
   </md-toolbar>
   <md-dialog-content style="min-width: 500px;" layout-padding>
+    <md-input-container flex>
+      <label>Method</label>
+      <md-select ng-model="vm.method">
+        <md-option value="Replace_mean">Replace_mean</md-option>
+        <md-option value="Replace_median">Replace_median</md-option>
+        <md-option value="Replace_mode">Replace_mode</md-option>
+        <md-option value="Drop_row">Drop_row</md-option>
+      </md-select>
+    </md-input-container>
+
     <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
       <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
         <i class="fa fa-close"></i>Need to Upload Data Before.
       </span>
     </div>
-    <div class="form-group">
-      <label class="col-lg-3 control-label" for="select"> Method </label>
-      <div class="col-lg-9">
-        <select class="form-control" ng-model="vm.method">
-          <option value="Replace_mean">
-            Replace_mean
-          </option>
-          <option value="Replace_median">
-            Replace_median
-          </option>
-          <option value="Replace_mode">
-            Replace_mode
-          </option>
-          <option value="Drop_row">
-            Drop_row
-          </option>
-        </select>
-      </div>
-    </div>
   </md-dialog-content>
-  <div class="md-actions">
-    <md-button class="md-primary" ng-click="vm.createNode()">Add</md-button>
-  </div>
+  <md-dialog-actions>
+    <md-button class="md-primary md-raised" ng-click="vm.createNode()">Add</md-button>
+  </md-dialog-actions>
 </md-dialog>

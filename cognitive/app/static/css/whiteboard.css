@@ -6,22 +6,20 @@ li.component {
 }
 
 .layer {
+    outline-width: 0;
     height: 100%;
     width: 100%;
 }
 
-.root {
-    position: relative;
-}
-
-.layer {
-    height: 100%;
-    width: 100%;
+g {
+    outline-width: 0;
 }
 
 .whiteboard-root {
-    width: 100%;
-    height: 100%;
+    position: relative;
+    outline-width: 0;
+    width:100%;
+    height:100%;
 }
 
 .content {
@@ -170,24 +168,7 @@ tr.result_row:hover {
     fill: #5edd73;
 }
 
-#layer-0 {
-    height: 100%;
-    width: 100%;
-}
-#layer-1 {
-    height: 100%;
-    width: 100%;
-}
-#layer-2 {
-    height: 100%;
-    width: 100%;
-}
-#layer-3 {
-    height: 100%;
-    width: 100%;
-}
-
-.card-content--svgboard {
+.card-content-svg-board {
     height: 100%;
     padding: 0;
 }
