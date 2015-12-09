@@ -4,13 +4,13 @@
     .controller('RemoveDuplicateController', RemoveDuplicateController);
 
   function RemoveDuplicateController (
-    UserService, DuplicateRemovalService, $location, $mdDialog) {
+    UserService, DuplicateRemovalService, $mdDialog, WhiteboardService) {
 
     var vm = this;
-    var experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
 
     vm.user = UserService.getCurrentUser();
-    vm.columns = parsed_file[0];
+    vm.columns = WhiteboardService.getDataFields();
     vm.targets = [0];
 
     vm.createNode = function() {

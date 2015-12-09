@@ -44,18 +44,9 @@
       }).$promise;
     };
 
-    // this is temporal implementation, will be removed to
-    // support for multiple input sources
-    var file_name = ""
-    var file_text = ""
-    var file_parsed_text = [];
-
     FileInputService = {
       definition: definition,
       createNode: createNode,
-      filename: file_name,
-      filetext: file_text,
-      parsedtext: file_parsed_text
     }
 
     return FileInputService;

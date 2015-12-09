@@ -1,4 +1,4 @@
-<md-dialog aria-label="InputSource" ng-controller="DataInputController as vm">
+<md-dialog ng-controller="DataInputController as vm" aria-label="DataInputSource" >
   <md-toolbar class="md-toolbar-primary">
     <div class="md-toolbar-tools">
       <h2>
@@ -14,7 +14,7 @@
 
   <md-dialog-content layout-padding>
     <div class="form-group" style="margin-top: 30px;">
-      <label class="col-lg-2 control-label" for="input-file"> File </label>
+      <label class="col-lg-2 control-label" for="input-file">File </label>
       <div class="col-lg-10">
         <input class="input-file" type="file" accept=".csv" onchange="angular.element(this).scope().uploadFile(event)">
       </div>

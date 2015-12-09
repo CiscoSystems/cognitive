@@ -4,11 +4,11 @@
     .controller("ProjectionController", ProjectionController);
 
   function ProjectionController(
-    UserService, ProjectionService, $location, $mdDialog) {
+    UserService, ProjectionService, $mdDialog, WhiteboardService) {
     var vm = this;
-    var experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
     vm.user = UserService.getCurrentUser();
-    vm.columns = parsed_file[0];
+    vm.columns = WhiteboardService.getDataFields();
     vm.targets = [0];
 
     vm.createNode = function() {
@@ -16,7 +16,7 @@
       ProjectionService.create({
         user_id: vm.user.id,
         token: vm.user.token,
-        experiment: experiment_id,
+        experiment: vm.experiment_id,
         component_id: targets
       }).then(function (response) {
         $mdDialog.hide({

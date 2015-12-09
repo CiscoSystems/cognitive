@@ -4,21 +4,21 @@
     .controller('MachineLearningController', MachineLearningController);
 
   function MachineLearningController (
-    UserService, MachineLearningService, $location, $mdDialog) {
+    UserService, MachineLearningService, $mdDialog, WhiteboardService) {
     var vm = this;
-    var experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
 
     vm.user = UserService.getCurrentUser();
     vm.algorithm = "Linear_SVM";
     vm.target = 0;
     vm.trainning_percentage = 10;
-    vm.columns = parsed_file[0];
+    vm.columns = WhiteboardService.getDataFields();
 
     vm.createNode = function() {
       MachineLearningService.create({
         user_id: vm.user.id,
         token: vm.user.token,
-        experiment: experiment_id,
+        experiment: vm.experiment_id,
         model_type: vm.algorithm,
         train_data_percentage: vm.trainning_percentage,
         target_column: vm.target

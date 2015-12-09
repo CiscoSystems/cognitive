@@ -11,6 +11,8 @@
       edges: []
     };
 
+    WhiteboardService.dataFields = []
+
     var appendNode = function (id, definition) {
       var xy = nextNodeCoordination()
       if (typeof (WhiteboardService.experiment.nodes) == 'undefined') {
@@ -111,6 +113,14 @@
       })
     }
 
+    var setDataFields = function (fields) {
+      WhiteboardService.dataFields = fields
+    }
+
+    var getDataFields = function (fields) {
+      return WhiteboardService.dataFields;
+    }
+
     WhiteboardService = {
       appendNode: appendNode,
       nextNodeCoordination: nextNodeCoordination,
@@ -120,6 +130,8 @@
       createEdge: createEdge,
       removeNode: removeNode,
       clickBackground: clickBackground,
+      setDataFields: setDataFields,
+      getDataFields: getDataFields,
     }
 
     return WhiteboardService;

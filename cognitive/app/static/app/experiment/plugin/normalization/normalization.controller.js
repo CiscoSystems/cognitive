@@ -4,11 +4,11 @@
     .controller('NormalizationController', NormalizationController);
 
   function NormalizationController (
-    UserService, NormalizationService, $location, $mdDialog) {
+    UserService, NormalizationService, $mdDialog, WhiteboardService) {
     var vm = this;
-    var experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
     vm.user = UserService.getCurrentUser();
-    vm.columns = parsed_file[0];
+    vm.columns = WhiteboardService.getDataFields();
     vm.component_type = "Column",
     vm.component_id = 0;
     vm.op_type = "";
@@ -17,7 +17,7 @@
       NormalizationService.create({
         user_id: vm.user.id,
         token: vm.user.token,
-        experiment: experiment_id,
+        experiment: vm.experiment_id,
         component_type: vm.component_type,
         component_id: vm.component_id,
         op_type: vm.op_type

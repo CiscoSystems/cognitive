@@ -3,18 +3,15 @@
   angular.module('cognitive.experiment')
     .controller('DataInputController', DataInputController);
 
-  function DataInputController (
-    $scope, FileInputService, UserService, $location, $mdDialog) {
-
+  function DataInputController ($scope, FileInputService, UserService, $mdDialog, WhiteboardService) {
     var vm = this;
-
     vm.user = UserService.getCurrentUser();
-    vm.experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
 
     vm.createNode = function() {
       FileInputService.createNode(
         vm.user.id, vm.experiment_id,
-        vm.user.token, file_name, file_body)
+        vm.user.token, vm.file_name, vm.file_body)
       .then(function (response) {
         $mdDialog.hide({
           data: response,
@@ -25,16 +22,15 @@
 
     $scope.uploadFile = function (event) {
       var file = event.target.files[0];
-      $scope.file_name = file.name;
+      vm.file_name = file.name;
       var reader = new FileReader();
       reader.onload = function (event) {
-        file_body = event.target.result;
-        $scope.file_body = file_body
-        parsed_file = $.csv.toArrays(file_body);
-        $scope.parsed_file = parsed_file
+        vm.file_body = event.target.result;
+        var parsed_file = $.csv.toArrays(vm.file_body);
+        WhiteboardService.setDataFields(parsed_file[0])
       };
       reader.readAsText(file);
-      file_name = file.name;
+      vm.file_name = file.name;
     }
   };
 

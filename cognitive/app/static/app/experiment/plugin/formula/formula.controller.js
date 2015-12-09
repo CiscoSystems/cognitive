@@ -4,12 +4,12 @@
     .controller('FormulaController', FormulaController);
 
   function FormulaController (
-    UserService, FormulaService, $location, $mdDialog) {
+    UserService, FormulaService, $mdDialog, WhiteboardService) {
     var vm = this;
-    var experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
 
     vm.user = UserService.getCurrentUser();
-    vm.columns = parsed_file[0];
+    vm.columns = WhiteboardService.getDataFields();
     vm.formula = "Add"
     vm.target_column = 0;
     vm.constant_number = 0;
@@ -18,7 +18,7 @@
       FormulaService.create({
         user_id: vm.user.id,
         token: vm.user.token,
-        experiment: experiment_id,
+        experiment: vm.experiment_id,
         component_type: "Column",
         component_id: vm.target_column,
         op_type: vm.formula,  // Add or Sub, Mul, Div

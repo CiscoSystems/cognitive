@@ -33,7 +33,6 @@
     vm.showComponentCreationDialog = function(ev, index) {
       $mdDialog.show({
         templateUrl: CognitiveComponentService.getCognitiveComponents()[index].template,
-        locals: {user: vm.user},
         targetEvent: ev,
         clickOutsideToClose: true
       }).then(function(result) {
@@ -141,7 +140,6 @@
 
       $http.get("/api/v1/results/?experiment=" + workspace.id + "&component_id=" + focused_node.id)
         .success(function (data, status, headers, config) {
-          console.log(data)
           if (data.status !== "success") {
             $mdToast.show($mdToast.simple()
               .content('Error: No Input data or RUN is not executed')

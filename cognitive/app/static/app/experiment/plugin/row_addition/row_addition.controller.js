@@ -4,11 +4,11 @@
     .controller('AddRowController', AddRowController);
 
   function AddRowController(
-    UserService, RowAdditionService, $location, $mdDialog) {
+    UserService, RowAdditionService, $mdDialog, WhiteboardService) {
     var vm = this;
-    var experiment_id = $location.search()['id'];
+    vm.experiment_id = WhiteboardService.experiment.id;
     vm.user = UserService.getCurrentUser();
-    vm.columns = parsed_file[0];
+    vm.columns = WhiteboardService.getDataFields();
     vm.values = [];
 
     if (typeof(vm.columns) == "function") {
@@ -22,7 +22,7 @@
       RowAdditionService.create({
         user_id: vm.user.id,
         token: vm.user.token,
-        experiment: experiment_id,
+        experiment: vm.experiment_id,
         row_values: values
       }).then(function (response) {
         $mdDialog.hide({

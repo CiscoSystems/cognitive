@@ -35,7 +35,6 @@
     }
 
     vm.removeData = function (index) {
-      console.log(index)
       var data_id = vm.dataList[index].id
       DataService.remove(data_id).then(
         function (response) {
