@@ -13,6 +13,7 @@
 # under the License.
 from models import Component
 from models import Data
+from models import DataOperationType
 from models import Experiment
 from models import User
 from models import Workflow
@@ -44,7 +45,24 @@ class DataSerializer(serializers.ModelSerializer):
         model = Data
 
 
+class DataOperationTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DataOperationType
+
+
 class ComponentSerializer(serializers.ModelSerializer):
+    # operation_type = DataOperationTypeSerializer()
+    # function_type='Update',
+    # function_arg=data["component_type"],
+    # function_subtype=data["op_type"],
+    # function_arg_id=data["component_id"],
+    # function_subtype_arg=data["op_constant"])
+
+    component_type = serializers.CharField(source='operation_type.function_arg')
+    component_id = serializers.CharField(source='operation_type.function_arg_id')
+    op_type = serializers.CharField(source='operation_type.function_subtype')
+    op_constant = serializers.CharField(source='operation_type.function_subtype_arg')
 
     class Meta:
         model = Component

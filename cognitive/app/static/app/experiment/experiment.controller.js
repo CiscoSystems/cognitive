@@ -4,13 +4,15 @@
   angular.module('cognitive.experiment')
     .controller('ExperimentController', ExperimentController);
 
-  function ExperimentController (
-    $scope, $location, $modal, $http, $mdDialog, $mdToast, UserService,
+  function ExperimentController(
+    $scope, $location, $modal, $http, $mdDialog, $mdToast, UserService, $mdSidenav,
     WorkflowService, CognitiveComponentService, ExperimentsService,
     WhiteboardService, FileInputService) {
 
     var vm = this;
     vm.loading = false;
+    vm.rightNavTemplateUrl = ""
+    vm.experiment = {nodes: [], edges: []};
 
     function initialize() {
       vm.components = CognitiveComponentService.getCognitiveComponents();
@@ -19,68 +21,153 @@
 
       if (typeof (vm.experimentId) == 'string') {
         ExperimentsService.get(vm.experimentId).then(
-          function(experiment){
-            WhiteboardService.experiment = experiment;
-            WhiteboardService.experiment['nodes'] = [];
-            WhiteboardService.experiment['edges'] = [];
-            vm.experiment = WhiteboardService.experiment;
-        })
+          function (experiment) {
+            vm.experiment = experiment;
+            vm.experiment['nodes'] = [];
+            vm.experiment['edges'] = [];
+          })
       } else {
         console.log('invalid access')
       }
     };
 
-    vm.showComponentCreationDialog = function(ev, index) {
+    vm.showComponentCreationDialog = function (ev, index) {
+      $location.search({id: vm.experimentId})
       $mdDialog.show({
         templateUrl: CognitiveComponentService.getCognitiveComponents()[index].template,
         targetEvent: ev,
         clickOutsideToClose: true
-      }).then(function(result) {
-        WhiteboardService.appendNode(result.data.id, result.definition);
-      }, function() {});
+      }).then(function (result) {
+        var xy = WhiteboardService.nextNodeCoordination()
+        vm.experiment.nodes.push({
+          id: result.data.id,
+          name: result.definition.name,
+          type: result.definition.type,
+          x: xy[0], y: xy[1],
+          focus: false,
+          mouse: ''
+        });
+      });
     };
 
     vm.clickNone = function () {
-      WhiteboardService.clickBackground()
+      //if (d3.event.defaultPrevented) return;
+      //vm.experiment['nodes'].forEach(function (node) {
+      //  node.focus = false;
+      //})
     };
 
     function focusedNode() {
-      var node = vm.experiment.nodes.filter(
-        function (node) { return node.focus; });
-      if (node.length == 0) { return null; }
-      return node[0];
+      return vm.experiment['nodes'].find(function (node) {
+        return node.focus
+      });
     };
 
     vm.isActiveNode = function (index) {
-      var focused_node = focusedNode()
-      if (focused_node == null) return false;
-      return focused_node.id == index;
+      return vm.experiment.nodes[index].focus;
     };
 
-    vm.clickNode = function (event, index) {
-      event.stopPropagation();
-      var node = WhiteboardService.getNodeByIndex(index);
+    vm.clickNode = function (nodeIndex, nodeId) {
+      var node = vm.experiment.nodes[nodeIndex];
       if (node.focus) {
         node.focus = false;
         return;
       }
 
-      var current_focus_node = focusedNode();
+      var currentActiveNode = focusedNode();
 
-      if (current_focus_node != null) {
-        current_focus_node.focus = false;
+      if (currentActiveNode != null) {
+        currentActiveNode.focus = false;
       }
 
-      node.focus = true;
+      vm.experiment.nodes[nodeIndex].focus = true;
+      vm.experiment.nodes[nodeIndex]['focus'] = true;
+
+      console.log(vm.experiment)
+      console.log(node.focus)
+      console.log(vm.experiment)
+
+      //$location.search({ id: vm.experimentId, node: node.id })
+
+      //vm.toggleRight(nodeIndex)
     };
 
-    vm.getNodeByIndex = function (index) {
-      return WhiteboardService.getNodeByIndex(index);
+    vm.clickCloseButton = function (nodeIndex, nodeId) {
+      event.stopPropagation();
+
+      var user = UserService.getCurrentUser(),
+        node = vm.experiment.nodes[nodeIndex],
+        node_type = node.type;
+
+      vm.experiment.edges.forEach(function (edge, i) {
+        if (edge.to == nodeId || edge.from == nodeId) {
+          vm.experiment.edges.splice(i, 1);
+        }
+      });
+
+      $http.delete('/api/v1/operations/' + node_type + '/' + nodeId, {
+        user_id: user.id, token: user.token
+      }).success(function (data) {
+        vm.experiment.nodes.splice(nodeIndex, 1);
+      });
+    }
+
+    vm.createEdge = function (srcNodeId, destNodeId) {
+      vm.experiment.edges.push({
+        from: srcNodeId,
+        to: destNodeId
+      });
+    }
+
+    vm.toggleRight = function (index) {
+      var node = vm.experiment.nodes[index]
+      var plugin = CognitiveComponentService.fetchDefinitionByType(node.type)
+
+      vm.component = plugin;
+      vm.component['index'] = index;
+      vm.component['id'] = node.id;
+      vm.rightNavTemplateUrl = plugin.template;
+      CognitiveComponentService.fetchNode(node.type, node.id)
+        .then(function (info) {
+          vm.nodeInfo = info;
+          console.log(vm.nodeInfo)
+          $mdSidenav('right').toggle().then(function () {
+          });
+        })
+    }
+
+    vm.getNodeById = function (index) {
+      return vm.experiment['nodes'].find(function (node) {
+        return node.id == index
+      });
     };
+
+    function getTopology() {
+      var start_node = _.find(vm.experiment.nodes, function (node) {
+        return node.type === "file_input";
+      });
+
+      var topology = ""
+      if (typeof start_node === "undefined") return "";
+      var s = start_node.id
+
+      while (true) {
+        var edge = vm.experiment.edges.filter(function (edge) {
+          return edge.from == s;
+        })
+        if (edge.length == 0) break;
+        topology += edge[0].from + ":" + edge[0].to + ",";
+        s = edge[0].to;
+      }
+
+      if (topology === "") return start_node.id.toString();
+      topology = topology.substr(0, topology.length - 1);
+      return topology;
+    }
 
     vm.run = function () {
       var workspace = vm.experiment;
-      var topology = WhiteboardService.getTopology();
+      var topology = getTopology();
 
       if (topology === "") {
         $mdToast.show(
@@ -96,7 +183,7 @@
       WorkflowService.create({
         experiment: {id: workspace.id},
         topology: topology
-      }).then(function(){
+      }).then(function () {
         vm.loading = false;
       });
     };
@@ -108,25 +195,27 @@
       right: true
     };
 
-    $scope.toastPosition = angular.extend({},last);
-    $scope.getToastPosition = function() {
+    $scope.toastPosition = angular.extend({}, last);
+    $scope.getToastPosition = function () {
       sanitizePosition();
       return Object.keys($scope.toastPosition)
-        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .filter(function (pos) {
+          return $scope.toastPosition[pos];
+        })
         .join(' ');
     };
 
     function sanitizePosition() {
-        var current = $scope.toastPosition;
-        if ( current.bottom && last.top ) current.top = false;
-        if ( current.top && last.bottom ) current.bottom = false;
-        if ( current.right && last.left ) current.left = false;
-        if ( current.left && last.right ) current.right = false;
-        last = angular.extend({},current);
-      }
+      var current = $scope.toastPosition;
+      if (current.bottom && last.top) current.top = false;
+      if (current.top && last.bottom) current.bottom = false;
+      if (current.right && last.left) current.left = false;
+      if (current.left && last.right) current.right = false;
+      last = angular.extend({}, current);
+    }
 
     vm.show = function () {
-      var focused_node = WhiteboardService.getFocusedNode()
+      var focused_node = _.find(vm.experiment.nodes, function (node) { return node.focus; });
       if (focused_node == null) {
         $mdToast.show(
           $mdToast.simple()
@@ -136,15 +225,14 @@
         );
         return;
       }
-      var workspace = vm.experiment;
 
-      $http.get("/api/v1/results/?experiment=" + workspace.id + "&component_id=" + focused_node.id)
+      $http.get("/api/v1/results/?experiment=" + vm.experiment.id + "&component_id=" + focused_node.id)
         .success(function (data, status, headers, config) {
           if (data.status !== "success") {
             $mdToast.show($mdToast.simple()
-              .content('Error: No Input data or RUN is not executed')
-              .position($scope.getToastPosition())
-              .hideDelay(3000)
+                .content('Error: No Input data or RUN is not executed')
+                .position($scope.getToastPosition())
+                .hideDelay(3000)
             );
             return;
           }

@@ -11,6 +11,10 @@ li.component {
     width: 100%;
 }
 
+g[cognitive-node].active > g.node-group > g > rect.node {
+    fill: #ceff00;
+}
+
 g {
     outline-width: 0;
 }
@@ -35,19 +39,11 @@ g {
     fill: white;
 }
 
-.clicked rect{
-    fill: #ceff00;
-}
-
 .cognitive-node.output-circle:hover {
     r: 10;
 }
 .cognitive-node.input-circle:hover {
     r: 10;
-}
-
-.node-group.active > rect {
-    fill: #ceff00;
 }
 
 .add_row_form {
@@ -179,12 +175,10 @@ tr.result_row:hover {
     left: 55%;
 }
 
-
 /*Width of Left Menu*/
 md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-active {
  min-width: 200px !important;
  width: 80vw !important;
- max-width: 200px !important;
 }
 md-list-item, md-list-item .md-list-item-inner {
  min-height: 25px !important;

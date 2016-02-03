@@ -4,17 +4,17 @@
     .controller('RemoveDuplicateController', RemoveDuplicateController);
 
   function RemoveDuplicateController (
-    UserService, DuplicateRemovalService, $mdDialog, WhiteboardService) {
+    $location, UserService, DuplicateRemovalService, $mdDialog, WhiteboardService) {
 
     var vm = this;
-    vm.experiment_id = WhiteboardService.experiment.id;
+    vm.experiment_id = $location.search()['id'];
 
     vm.user = UserService.getCurrentUser();
     vm.columns = WhiteboardService.getDataFields();
     vm.targets = [0];
 
     vm.createNode = function() {
-      var targets = "[" + vm.targets.toString() + "]";
+      var targets = '[' + vm.targets.toString() + ']';
 
       DuplicateRemovalService.create({
         user_id: vm.user.id,
@@ -34,7 +34,7 @@
     }
 
     vm.uploadExist = function () {
-      return (typeof(vm.columns) == "object") ? true : false;
+      return (typeof(vm.columns) == 'object') ? true : false;
     }
   };
 

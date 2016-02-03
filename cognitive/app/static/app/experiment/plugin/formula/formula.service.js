@@ -8,10 +8,10 @@
     var FormulaService = {};
 
     FormulaService.definition = {
-      name: "Math formula",
-      type: "add_math_fomula",
-      icon_class: "fa fa-subscript",
-      template: "/static/app/experiment/plugin/formula/formula.html"
+      name: 'Math formula',
+      type: 'add_math_fomula',
+      icon_class: 'fa fa-subscript',
+      template: '/static/app/experiment/plugin/formula/formula.html'
     };
 
     var resource = $resource('math_formula', null, {
@@ -36,6 +36,14 @@
 
     FormulaService.create = function (mathFormula) {
       return resource.save(mathFormula).$promise;
+    }
+
+    FormulaService.fetch = function(nodeId) {
+      return resource.get({id: nodeId}).$promise;
+    }
+
+    FormulaService.update = function (nodeId, mathFormula) {
+      return resource.update({id: nodeId}, mathFormula).$promise;
     }
 
     return FormulaService;

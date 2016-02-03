@@ -4,9 +4,9 @@
     .controller('RemoveMissingValueController', RemoveMissingValueController);
 
   function RemoveMissingValueController (
-    UserService, MissingDataRemovalService, $mdDialog, WhiteboardService) {
+    $location, UserService, MissingDataRemovalService, $mdDialog, WhiteboardService) {
     var vm = this;
-    vm.experiment_id = WhiteboardService.experiment.id;
+    vm.experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
     vm.columns = WhiteboardService.getDataFields();
     vm.method = "Replace_mean";

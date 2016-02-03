@@ -4,9 +4,9 @@
     .controller("ProjectionController", ProjectionController);
 
   function ProjectionController(
-    UserService, ProjectionService, $mdDialog, WhiteboardService) {
+    $location, UserService, ProjectionService, $mdDialog, WhiteboardService) {
     var vm = this;
-    vm.experiment_id = WhiteboardService.experiment.id;
+    vm.experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
     vm.columns = WhiteboardService.getDataFields();
     vm.targets = [0];

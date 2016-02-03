@@ -1,15 +1,15 @@
 (function () {
-  'use strict';
+  'use strict'
   angular.module('cognitive.experiment')
-    .controller('AddRowController', AddRowController);
+    .controller('AddRowController', AddRowController)
 
   function AddRowController(
-    UserService, RowAdditionService, $mdDialog, WhiteboardService) {
-    var vm = this;
-    vm.experiment_id = WhiteboardService.experiment.id;
-    vm.user = UserService.getCurrentUser();
-    vm.columns = WhiteboardService.getDataFields();
-    vm.values = [];
+    $location, UserService, RowAdditionService, $mdDialog, WhiteboardService) {
+    var vm = this
+    vm.experiment_id = $location.search()['id']
+    vm.user = UserService.getCurrentUser()
+    vm.columns = WhiteboardService.getDataFields()
+    vm.values = []
 
     if (typeof(vm.columns) == "function") {
       for (var i = 0; i < vm.columns.length; ++i) {
@@ -18,7 +18,7 @@
     }
 
     vm.createNode = function() {
-      var values = "[" + vm.values.toString() + "]";
+      var values = "[" + vm.values.toString() + "]"
       RowAdditionService.create({
         user_id: vm.user.id,
         token: vm.user.token,
@@ -28,12 +28,12 @@
         $mdDialog.hide({
           data: response,
           definition: RowAdditionService.definition
-        });
-      });
-    };
+        })
+      })
+    }
 
     vm.uploadExist = function () {
-      return (typeof(vm.columns) == "object") ? true : false;
+      return (typeof(vm.columns) == "object") ? true : false
     }
   };
 

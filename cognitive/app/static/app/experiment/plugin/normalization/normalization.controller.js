@@ -4,9 +4,9 @@
     .controller('NormalizationController', NormalizationController);
 
   function NormalizationController (
-    UserService, NormalizationService, $mdDialog, WhiteboardService) {
+    $location, UserService, NormalizationService, $mdDialog, WhiteboardService) {
     var vm = this;
-    vm.experiment_id = WhiteboardService.experiment.id;
+    vm.experiment_id = $location.search()['id'];
     vm.user = UserService.getCurrentUser();
     vm.columns = WhiteboardService.getDataFields();
     vm.component_type = "Column",

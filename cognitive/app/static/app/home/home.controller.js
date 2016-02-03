@@ -18,8 +18,8 @@
       });
 
       login_modal.result.then(function (result) {
-        if (result.status == "success") {
-          $state.go("dashboard.experiment");
+        if (result.status == 'success') {
+          $state.go('dashboard.experiment');
         }
       });
 

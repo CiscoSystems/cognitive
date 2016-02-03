@@ -24,46 +24,46 @@
     // To enable trailing slash on $resource urls
     $resourceProvider.defaults.stripTrailingSlashes = false;
 
-    $urlRouterProvider.otherwise("index");
+    $urlRouterProvider.otherwise('index');
     $stateProvider
       .state('index', {
-        url: "/index",
-        templateUrl: "/",
+        url: '/index',
+        templateUrl: '/',
         views: {
           main: {
-            templateUrl: "/static/app/home/home.html"
+            templateUrl: '/static/app/home/home.html'
           }
         }
       }).state('dashboard', {
-        url: "/whiteboard",
-        templateUrl: "/",
+        url: '/whiteboard',
+        templateUrl: '/',
         views: {
-          "main": {
-            templateUrl: "/static/app/whiteboard/whiteboard.html",
+          'main': {
+            templateUrl: '/static/app/whiteboard/whiteboard.html',
           },
         }
       }).state('dashboard.experiment', {
-        url: "/experiment",
-        templateUrl: "/",
+        url: '/experiment',
+        templateUrl: '/',
         views: {
-          "content": {
-            templateUrl: "/static/app/whiteboard/experiment/experiment.html"
+          content: {
+            templateUrl: '/static/app/whiteboard/experiment/experiment.html'
           },
         }
       }).state('dashboard.data', {
-        url: "/data",
-        templateUrl: "/",
+        url: '/data',
+        templateUrl: '/',
         views: {
-          "content": {
-            templateUrl: "/static/app/whiteboard/data/data.html"
+          content: {
+            templateUrl: '/static/app/whiteboard/data/data.html'
           },
         }
       }).state('experiment', {
-        url: "/experiment",
-        templateUrl: "/",
+        url: '/experiment',
+        templateUrl: '/',
         views: {
           main: {
-            templateUrl: "/static/app/experiment/experiment.html",
+            templateUrl: '/static/app/experiment/experiment.html',
           }
         }
       });

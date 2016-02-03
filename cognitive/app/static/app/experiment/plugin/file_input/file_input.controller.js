@@ -3,10 +3,10 @@
   angular.module('cognitive.experiment')
     .controller('DataInputController', DataInputController);
 
-  function DataInputController ($scope, FileInputService, UserService, $mdDialog, WhiteboardService) {
+  function DataInputController ($scope, $location, FileInputService, UserService, $mdDialog, WhiteboardService) {
     var vm = this;
     vm.user = UserService.getCurrentUser();
-    vm.experiment_id = WhiteboardService.experiment.id;
+    vm.experiment_id = $location.search()['id'];
 
     vm.createNode = function() {
       FileInputService.createNode(

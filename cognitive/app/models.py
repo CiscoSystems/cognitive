@@ -19,7 +19,7 @@ import string
 import random
 
 
-class Data_operation_type(models.Model):
+class DataOperationType(models.Model):
     FUNCTION_TYPE = (
         ('Create', 'Create a new type'),
         ('Update', 'Update a type'),
@@ -175,7 +175,7 @@ class Component(models.Model):
 
     experiment = models.ForeignKey(Experiment)
     status = models.CharField(max_length=50, choices=COMPONENT_STATUS, default='Draft')
-    operation_type = models.OneToOneField(Data_operation_type, blank=True, null=True)
+    operation_type = models.OneToOneField(DataOperationType, blank=True, null=True)
     created_time = models.DateField(blank=True, null=True)
     modified_time = models.DateField(blank=True, null=True)
     execution_start_time = models.DateField(blank=True, null=True)

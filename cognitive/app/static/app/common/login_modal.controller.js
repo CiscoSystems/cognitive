@@ -10,17 +10,17 @@
 
     vm.register_error = 0;
     vm.login_error = 0;
-    vm.message = "";
+    vm.message = '';
 
     vm.loginForm = {
-        username_or_email: "",
-        password: ""
+        username_or_email: '',
+        password: ''
     }
 
     vm.registerForm = {
-        username: "",
-        email: "",
-        password: ""
+        username: '',
+        email: '',
+        password: ''
     }
 
     vm.isRegisterError = function () {
@@ -35,7 +35,7 @@
       var userInfo = {username_or_email: username_or_email, password: password};
       UserService.login(userInfo).then(function(){
         if (UserService.isLoggedIn()) {
-          $modalInstance.close({ status: "success",});
+          $modalInstance.close({ status: 'success'});
           return;
         }
         vm.login_error = 1;

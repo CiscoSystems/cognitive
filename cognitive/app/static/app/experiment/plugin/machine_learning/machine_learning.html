@@ -11,49 +11,56 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content style="min-width: 500px;" layout-padding>
-    <md-input-container flex>
-      <label>Method</label>
-      <md-select ng-model="vm.algorithm">
-        <md-option value="Linear_SVM">Linear_SVM</md-option>
-        <md-option value="Nearest_Neighbours">Nearest_Neighbours</md-option>
-        <md-option value="Decision_Tree">Decision_Tree</md-option>
-        <md-option value="Random_Forest">Random_Forest</md-option>
-        <md-option value="Naive_Bayes">Naive_Bayes</md-option>
-      </md-select>
-    </md-input-container>
+  <md-dialog-content layout-padding>
+    <div class="md-dialog-content" style="min-width: 500px;">
+      <div flex>
+        <md-input-container>
+          <label>Method</label>
+          <md-select ng-model="vm.algorithm">
+            <md-option value="Linear_SVM">Linear_SVM</md-option>
+            <md-option value="Nearest_Neighbours">Nearest_Neighbours</md-option>
+            <md-option value="Decision_Tree">Decision_Tree</md-option>
+            <md-option value="Random_Forest">Random_Forest</md-option>
+            <md-option value="Naive_Bayes">Naive_Bayes</md-option>
+          </md-select>
+        </md-input-container>
+      </div>
 
-    <md-input-container flex>
-      <label>Target Column</label>
-      <md-select ng-model="vm.target">
-        <md-option ng-repeat="column in vm.columns"
-                   value="{{$index}}">
-          {{column}}
-        </md-option>
-      </md-select>
-    </md-input-container>
+      <div flex>
+        <md-input-container>
+          <label>Target Column</label>
+          <md-select ng-model="vm.target">
+            <md-option ng-repeat="column in vm.columns"
+                       value="{{$index}}">
+              {{ column }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
 
-    <md-input-container flex>
-      <label>Train Data Percentage</label>
-      <md-select ng-model="vm.trainning_percentage">
-        <md-option value="10"> 10</md-option>
-        <md-option value="20"> 20</md-option>
-        <md-option value="30"> 30</md-option>
-        <md-option value="40"> 40</md-option>
-        <md-option value="50"> 50</md-option>
-        <md-option value="60"> 60</md-option>
-        <md-option value="70"> 70</md-option>
-        <md-option value="80"> 80</md-option>
-        <md-option value="90"> 90</md-option>
-      </md-select>
-    </md-input-container>
+      <div flex>
+        <md-input-container style="width: 155px">
+          <label>Train Data Percentage</label>
+          <md-select ng-model="vm.trainning_percentage">
+            <md-option value="10"> 10</md-option>
+            <md-option value="20"> 20</md-option>
+            <md-option value="30"> 30</md-option>
+            <md-option value="40"> 40</md-option>
+            <md-option value="50"> 50</md-option>
+            <md-option value="60"> 60</md-option>
+            <md-option value="70"> 70</md-option>
+            <md-option value="80"> 80</md-option>
+            <md-option value="90"> 90</md-option>
+          </md-select>
+        </md-input-container>
+      </div>
 
-    <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;"  ng-hide="vm.uploadExist()">
+      <div style="height: 60px; width: 100%; padding-top: 20px; padding-left: 20px;" ng-hide="vm.uploadExist()">
       <span style="padding: 4px; background: #c43b27; color: white; font-size: 12pt; height: 200px;">
         <i class="fa fa-close"></i>Need to Upload Data Before.
       </span>
+      </div>
     </div>
-
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-primary md-raised" ng-click="vm.createNode()">Add</md-button>

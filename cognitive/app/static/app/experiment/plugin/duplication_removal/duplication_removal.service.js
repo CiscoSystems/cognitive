@@ -27,10 +27,10 @@
     });
 
     DuplicateRemovalService.definition = {
-      name:"Remove Duplicates",
-      type: "remove_column",
-      icon_class: "fa fa-cut",
-      template: "/static/app/experiment/plugin/duplication_removal/duplication_removal.html"
+      name: 'Remove Duplicates',
+      type: 'remove_column',
+      icon_class: 'fa fa-cut',
+      template: '/static/app/experiment/plugin/duplication_removal/duplication_removal.html'
     };
 
     DuplicateRemovalService.create = function(targetColumn) {

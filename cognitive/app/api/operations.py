@@ -13,7 +13,7 @@
 # under the License.
 
 from ..models import Component
-from ..models import Data_operation_type
+from ..models import DataOperationType
 from ..models import Experiment
 from ..serializers import ComponentSerializer
 from ..views import send_response
@@ -47,7 +47,7 @@ class OperationViewSet(viewsets.ViewSet):
     def set_operation(self, operation, data):
         if operation == 'math_formula':
             print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Update',
                 function_arg=data["component_type"],
                 function_subtype=data["op_type"],
@@ -57,7 +57,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'normalization':
             print data["component_type"], data["op_type"], data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Update',
                 function_arg=data["component_type"],
                 function_arg_id=data["component_id"],
@@ -67,7 +67,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'projection':
             print data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Filter',
                 function_arg='Table',
                 function_arg_id=data["component_id"],
@@ -76,7 +76,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'duplication_removal':
             print data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Filter',
                 function_arg='Table',
                 function_arg_id=data["component_id"],
@@ -85,7 +85,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'remove_missing':
             print data["op_action"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Filter',
                 function_arg='Table',
                 function_subtype='RemoveMissing',
@@ -94,7 +94,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'metadata':
             print data["column_type"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Update',
                 function_arg='Table',
                 function_subtype='Metadata',
@@ -103,7 +103,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'row':
             print data["row_values"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Create',
                 function_arg='Row',
                 function_subtype='Row',
@@ -118,7 +118,7 @@ class OperationViewSet(viewsets.ViewSet):
                 f = open(filename, 'w')
                 f.write(data["data_values"])
                 f.close()
-                op = Data_operation_type(
+                op = DataOperationType(
                     function_type='Create', function_arg='Table',
                     function_subtype='Input', function_subtype_arg=filename)
                 op.save()
@@ -129,12 +129,12 @@ class OperationViewSet(viewsets.ViewSet):
                 response = urllib2.urlopen(data["input_file"])
                 csv_data = read_csv(response)
                 csv_data.to_csv(filename, index=False)
-                op = Data_operation_type(
+                op = DataOperationType(
                     function_type='Create', function_arg='Table',
                     function_subtype='Input', function_subtype_arg=filename)
                 op.save()
             # data = Data.objects.get(pk=1)
-            # op = Data_operation_type(
+            # op = DataOperationType(
             #     function_type='Create', function_arg='Column',
             #     function_subtype='Input', function_subtype_arg=data.columns)
             # op.save()
@@ -144,7 +144,7 @@ class OperationViewSet(viewsets.ViewSet):
             arg = {
                 'train_data_percentage': data["train_data_percentage"],
                 'target_column': data["target_column"]}
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Create',
                 function_arg='Model',
                 function_arg_id=data["model_type"],

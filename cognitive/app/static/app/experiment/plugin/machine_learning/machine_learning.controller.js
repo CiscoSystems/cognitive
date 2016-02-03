@@ -4,12 +4,12 @@
     .controller('MachineLearningController', MachineLearningController);
 
   function MachineLearningController (
-    UserService, MachineLearningService, $mdDialog, WhiteboardService) {
+    $location, UserService, MachineLearningService, $mdDialog, WhiteboardService) {
     var vm = this;
-    vm.experiment_id = WhiteboardService.experiment.id;
+    vm.experiment_id = $location.search()['id'];
 
     vm.user = UserService.getCurrentUser();
-    vm.algorithm = "Linear_SVM";
+    vm.algorithm = 'Linear_SVM';
     vm.target = 0;
     vm.trainning_percentage = 10;
     vm.columns = WhiteboardService.getDataFields();
@@ -31,7 +31,7 @@
     };
 
     vm.uploadExist = function () {
-      return (typeof(vm.columns) == "object") ? true : false;
+      return (typeof(vm.columns) == 'object') ? true : false;
     }
   };
 })();

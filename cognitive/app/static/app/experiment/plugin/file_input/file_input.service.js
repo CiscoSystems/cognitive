@@ -27,10 +27,10 @@
     });
 
     var definition =  {
-      name:"File Input",
-      type:"file_input",
-      icon_class:"fa fa-arrow-up",
-      template: "/static/app/experiment/plugin/file_input/file_input.html"
+      name: 'File Input',
+      type: 'file_input',
+      icon_class: 'fa fa-arrow-up',
+      template: '/static/app/experiment/plugin/file_input/file_input.html'
     }
 
     var createNode = function(user_id, experiment_id, token, file_name, file_text) {
@@ -39,7 +39,7 @@
         token: token,
         experiment: experiment_id,
         input_file: file_name,
-        input_file_type: "csv",
+        input_file_type: 'csv',
         data_values: file_text
       }).$promise;
     };
