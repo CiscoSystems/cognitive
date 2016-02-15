@@ -1,16 +1,23 @@
 <md-toolbar class="md-toolbar-nav" ng-controller="HeaderController as vm" layout="row">
   <div class="md-toolbar-tools">
     <span flex="5"></span>
-    <span>
-      <a ui-sref="index">
-        <i class="fa fa-cube" style="padding:0;margin:0;"></i>
-        Cognitive
-      </a>
-    </span>
+    <md-button ng-click="vm.clickHome()">
+      <i class="fa fa-cube fa-fw"></i>Cognitive
+    </md-button>
     <span flex></span>
-    <span ng-show="vm.isLoggedIn()">
-      {{ vm.user.name }}
-    </span>
+    <md-menu md-position-mode="target" ng-show="vm.currentUser">
+      <md-button ng-click="$mdOpenMenu($event)">
+        <i class="fa fa-user fa-fw"></i>
+        {{ vm.currentUser.name }}
+      </md-button>
+
+      <md-menu-content width="3">
+        <md-menu-item>
+          <md-button ng-click="vm.logout()">Logout</md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
     <span flex="5"></span>
   </div>
 </md-toolbar>

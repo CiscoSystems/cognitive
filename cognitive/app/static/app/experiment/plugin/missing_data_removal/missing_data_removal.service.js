@@ -1,19 +1,21 @@
 (function () {
-  'use strict';
+  'use strict'
+
   angular.module('cognitive.experiment')
-    .factory('MissingDataRemovalService', MissingDataRemovalService);
+    .factory('MissingDataRemovalService', MissingDataRemovalService)
 
   function MissingDataRemovalService ($resource) {
-    var MissingDataRemovalService = {};
+    var MissingDataRemovalService = {}
+
     var resource = $resource('remove_missing', null, {
       get: {
         method: 'GET',
         url: '/api/v1/operations/remove_missing/:id' },
-      query: {
+      list: {
         method:'GET',
         url: '/api/v1/operations/remove_missing/',
         isArray: true },
-      save: {
+      create: {
         method: 'POST',
         url: '/api/v1/operations/remove_missing/' },
       update: {
@@ -23,20 +25,33 @@
         method: 'DELETE',
         url: '/api/v1/operations/remove_missing/:id'
       }
-    });
+    })
 
-    MissingDataRemovalService.definition = {
-      name: "Remove Missing Value",
-      type:"remove_missing_value",
-      icon_class:"fa fa-sliders",
-      template: "/static/app/experiment/plugin/missing_data_removal/missing_data_removal.html"
+    var definition = {
+      name: 'Empty Data Elimination',
+      type: 'remove_missing_value',
+      iconClass: 'fa fa-sliders',
+      template: '/static/app/experiment/plugin/missing_data_removal/missing_data_removal.html',
+      form: {
+        op_action: {
+          label: 'Method',
+          type: 'select',
+          options: {
+            Replace_mean: 'ReplaceByMean',
+            Replace_median: 'ReplaceByMedian',
+            Replace_mode: 'ReplaceByMode',
+            Drop_row: 'DropRow'
+          }
+        }
+      }
     }
 
-    MissingDataRemovalService.create = function(removeMethod) {
-      return resource.save(removeMethod).$promise;
+    MissingDataRemovalService = {
+      resource: resource,
+      definition: definition
     }
 
-    return MissingDataRemovalService;
-  };
+    return MissingDataRemovalService
+  }
 
-})();
+})()

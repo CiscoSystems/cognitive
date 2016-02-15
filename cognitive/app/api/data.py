@@ -11,14 +11,14 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
 import os.path
+from datetime import datetime
 
 from ..models import Data, User
 from ..serializers import DataSerializer
 from ..views import send_response
 from rest_framework import viewsets
-
-from pandas import datetime
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 FILE_UPLOAD_DIR = os.path.join(PROJECT_PATH, 'cognitive/app/uploads/')
@@ -58,7 +58,7 @@ class DataViewSet(viewsets.ViewSet):
         first_line = upload_file.readline().rstrip('\r\n')
         handle_uploaded_file(upload_file)
 
-        data = request.DATA
+        data = request.data
         data_model = Data(
             type="csv",
             file_path=str(upload_file),
@@ -79,10 +79,10 @@ class DataViewSet(viewsets.ViewSet):
         """
         serializer = None
         # data_model = Data.objects.get(pk=pk)
-        # if request.DATA["type"] == "csv":
-        #     file_path = "/tmp/" + request.DATA["filename"]
+        # if request.data["type"] == "csv":
+        #     file_path = "/tmp/" + request.data["filename"]
         #     f = open(file_path, 'w')
-        #     f.write(request.DATA["data_values"])
+        #     f.write(request.data["data_values"])
         #     f.close()
         #     data_model['type'] = "csv"
         #     data_model['file_path'] = file_path

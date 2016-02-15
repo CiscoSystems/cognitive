@@ -1,26 +1,29 @@
-(function() {
-  'use strict';
+(function () {
+  'use strict'
 
   angular.module('cognitive')
-    .controller('HeaderController', HeaderController);
+    .controller('HeaderController', HeaderController)
 
-  function HeaderController(UserService) {
-    var vm = this;
+  function HeaderController(UserService, $state) {
+    var vm = this
+    vm.currentUser = null
 
-    function initialize() {
-      if (!UserService.isLoggedIn()) { return; }
-      vm.user = UserService.getCurrentUser();
+    if (UserService.isLoggedIn()) {
+      vm.currentUser = UserService.getCurrentUser()
     }
 
-    vm.isLoggedIn = function(){
-      return UserService.isLoggedIn();
+    vm.clickHome = function () {
+      if (UserService.isLoggedIn()) {
+        $state.go('dashboard.experiment')
+      } else {
+        window.location.href = '/'
+      }
     }
 
-    vm.logout = function() {
-      UserService.logout();
+    vm.logout = function () {
+      UserService.logout()
+      window.location.href = '/'
     }
+  }
 
-    initialize();
-  };
-
-})();
+})()

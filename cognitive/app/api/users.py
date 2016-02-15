@@ -21,7 +21,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-
+from django.http import HttpResponse
 
 class UserViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny, ]
@@ -65,14 +65,14 @@ class UserViewSet(viewsets.ViewSet):
         ---
         request_serializer: UserSerializer
         """
-        # serializer = UserSerializer(data=request.DATA)
+        # serializer = UserSerializer(data=request.data)
         # if serializer.is_valid():
         #     serializer.save()
         # return send_response(request.method, serializer)
         try:
-            username = request.DATA.get('username')
-            email = request.DATA.get('email')
-            password = request.DATA.get('password')
+            username = request.data.get('username')
+            email = request.data.get('email')
+            password = request.data.get('password')
             if not User.validate(username, email, password):
                 return Response({'status': 'failure'})
             token = User.generate_token()
@@ -93,7 +93,7 @@ class UserViewSet(viewsets.ViewSet):
         request_serializer: UserSerializer
         """
         user = User.objects.get(pk=pk)
-        serializer = UserSerializer(user, data=request.DATA)
+        serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
         return send_response(request.method, serializer)
@@ -112,6 +112,7 @@ class UserViewSet(viewsets.ViewSet):
     # users/login?username_or_email=some_user_name&password=some_password
     @list_route(methods=["GET"])
     def login(self, request):
+        # TODO: Use oauth2 library
         try:
             username_or_email = request.GET.get('username_or_email')
             password = request.GET.get('password')
@@ -121,4 +122,4 @@ class UserViewSet(viewsets.ViewSet):
                 'email': user.email, 'token': user.token,
                 'status': 'success'})
         except:
-            return Response({'status': 'failure'})
+            return HttpResponse('Unauthorized', status=401)

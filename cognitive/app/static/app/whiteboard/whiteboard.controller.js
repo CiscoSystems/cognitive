@@ -24,7 +24,6 @@
         clickOutsideToClose: true
       }).then(function(experimentInfo) {
         var currentUser = UserService.getCurrentUser()
-
         ExperimentsService.save({
           name: experimentInfo['title'],
           user: currentUser['id'],

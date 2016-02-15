@@ -1,0 +1,8 @@
+.experiment-content {
+  background: whitesmoke;
+
+  .plugin-list {
+    height: calc(100vh - 224px);
+    overflow-x: scroll;
+  }
+}

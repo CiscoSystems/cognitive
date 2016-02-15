@@ -1,11 +1,11 @@
 (function () {
-  'use strict';
+  'use strict'
 
   angular.module('cognitive')
-    .factory('ExperimentsService', ExperimentsService);
+    .factory('ExperimentsService', ExperimentsService)
 
   function ExperimentsService($resource) {
-    ExperimentsService = {};
+    var ExperimentsService = {}
 
     var res = $resource('experiments', null, {
       get: {
@@ -24,27 +24,27 @@
       delete: {
         method: 'DELETE',
         url: '/api/v1/experiments/:id' }
-    });
+    })
 
     ExperimentsService.get = function(experiment_id) {
-      return res.get({ id: experiment_id }).$promise;
+      return res.get({ id: experiment_id }).$promise
     }
 
-    ExperimentsService.query = function() { return res.query().$promise; }
+    ExperimentsService.query = function() { return res.query().$promise }
 
     ExperimentsService.save = function(experiment) {
-      return res.save(experiment).$promise;
+      return res.save(experiment).$promise
     }
 
     ExperimentsService.update = function (experiment) {
-      return res.update({id: experiment.id}, experiment).$promise;
+      return res.update({id: experiment.id}, experiment).$promise
     }
 
     ExperimentsService.remove = function (experiment_id) {
-      return res.delete({id: experiment_id}).$promise;
+      return res.delete({id: experiment_id}).$promise
     }
 
-    return ExperimentsService;
+    return ExperimentsService
   }
 
 })()

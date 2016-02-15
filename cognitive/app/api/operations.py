@@ -20,7 +20,8 @@ from ..views import send_response
 import os
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
-from pandas import read_csv, datetime
+from pandas import read_csv
+from datetime import datetime
 import json
 import urllib2
 
@@ -177,7 +178,7 @@ class OperationViewSet(viewsets.ViewSet):
         ---
         request_serializer: ComponentSerializer
         """
-        data = json.loads(JSONRenderer().render(request.DATA))
+        data = json.loads(JSONRenderer().render(request.data))
 
         op = None  # TODO: [refactor] This value is probably not needed
 
@@ -189,9 +190,7 @@ class OperationViewSet(viewsets.ViewSet):
         print "Experiment ", exp_id, " Operation ", operation
         op = self.set_operation(operation, data)
 
-        component = Component(
-            experiment=exp, created_time=datetime.now(),
-            modified_time=datetime.now(), operation_type=op)
+        component = Component(experiment=exp, operation_type=op)
         component.save()
         serializer = ComponentSerializer(component)
         return send_response("GET", serializer)
@@ -202,7 +201,7 @@ class OperationViewSet(viewsets.ViewSet):
         ---
         request_serializer: ComponentSerializer
         """
-        data = json.loads(JSONRenderer().render(request.DATA))
+        data = json.loads(JSONRenderer().render(request.data))
 
         op = None  # TODO: [refactor] This value is probably not needed
 
@@ -211,7 +210,7 @@ class OperationViewSet(viewsets.ViewSet):
         op = self.set_operation(operation, data)
 
         comp = Component.objects.get(pk=pk)
-        serializer = ComponentSerializer(comp, data=request.DATA)
+        serializer = ComponentSerializer(comp, data=request.data)
         if serializer.is_valid():
             serializer.object.operation_type = op
             serializer.save()

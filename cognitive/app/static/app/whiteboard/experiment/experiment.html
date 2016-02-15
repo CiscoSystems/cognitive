@@ -1,35 +1,47 @@
-<md-content class="md-content-dashboard" flex>
-  <div layout="column">
-    <md-content layout-padding layout="row" layout-align="center start" style="background: whitesmoke">
-      <md-content layout="column" flex="80" style="background: whitesmoke">
-        <md-card ng-click="vm.createExperiment($event)" flex layout="row" layout-align="start center">
-          <span style="background: #3F51B5;">
-            <ng-md-icon icon="add" style="fill: white" size="27pt" ></ng-md-icon>
-          </span>
-          <span flex="5"></span>
-          <span>Create Experiment</span>
-        </md-card>
-        <md-card ng-repeat="exp in vm.experiments"
-                 ng-click="vm.moveToExperiment($index)"
-                 layout="row" layout-align="start center" flex>
-          <span style="background: steelblue; padding: 5px;">
-            <ng-md-icon icon="now_widgets" style="fill: whitesmoke" size="20pt" ></ng-md-icon>
-          </span>
-          <span flex="5"></span>
-          <span flex="25">{{ exp.name }}</span>
-          <span flex="10">{{ exp.status }}</span>
-          <span flex="20"></span>
-          <span flex="20">
-            {{ exp.created_time }}
-          </span>
-          <span flex="5" class="card-remove-button" ng-click="vm.deleteExperiment(exp); $event.stopPropagation();">
-            <i class="fa fa-trash-o"></i>
-          </span>
-          <span flex="5" class="card-remove-button" style="background: cadetblue" ng-click="vm.editExperiment(exp); $event.stopPropagation();">
-            <i class="fa fa-pencil"></i>
-          </span>
-        </md-card>
-      </md-content>
-    </md-content>
-  </div>
+<md-content class="dashboard-experiment" flex>
+  <md-card class="experiment-card" flex>
+    <md-card-title class="card-title">
+      <md-card-title-text>
+        <span class="md-headline"><i class="fa fa-flask"></i> Experiments</span>
+        <span class="md-subhead">All operations start here</span>
+      </md-card-title-text>
+      <div class="right-corner" layout="row" flex>
+        <div flex></div>
+        <div><i class="fa fa-search"></i><input type="text" class="search-form"/></div>
+        <md-button class="md-primary md-raised new-btn btn-square" ng-click="vm.createExperiment($event)">New</md-button>
+      </div>
+    </md-card-title>
+    <md-card-content class="card-content">
+      <table class="experiment-table">
+        <thead>
+          <tr>
+            <th class="checkbox-cell">
+              <md-checkbox></md-checkbox>
+            </th>
+            <th>Title</th>
+            <th>Environment</th>
+            <th>Created</th>
+            <th></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="exp in vm.experiments">
+            <td class="checkbox-cell"><md-checkbox></md-checkbox></td>
+            <td><a ng-click="vm.moveToExperiment($index)">{{ exp.name }}</a></td>
+            <td>Default</td>
+            <td>{{ exp.created_time }}</td>
+            <td>
+              <a ng-click="vm.editExperiment(exp);"><i class="fa fa-cog config-icon"></i></a>
+              <a ng-click="vm.deleteExperiment(exp)"><i class="fa fa-trash-o delete-icon"></i></a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div ng-if="vm.experiments.length == 0">
+        We need to make experiments
+      </div>
+    </md-card-content>
+  </md-card>
 </md-content>

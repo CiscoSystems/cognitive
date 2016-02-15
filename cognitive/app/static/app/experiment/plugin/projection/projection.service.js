@@ -1,19 +1,21 @@
 (function () {
-  'use strict';
+  'use strict'
+
   angular.module('cognitive.experiment')
     .factory('ProjectionService', ProjectionService)
 
   function ProjectionService ($resource) {
-    var ProjectionService = {};
+    var ProjectionService = {}
+
     var resource = $resource('projection', null, {
       get: {
         method: 'GET',
         url: '/api/v1/operations/projection/:id' },
-      query: {
+      list: {
         method:'GET',
         url: '/api/v1/operations/projection/',
         isArray: true },
-      save: {
+      create: {
         method: 'POST',
         url: '/api/v1/operations/projection/' },
       update: {
@@ -23,20 +25,27 @@
         method: 'DELETE',
         url: '/api/v1/operations/projection/:id'
       }
-    });
+    })
 
-    ProjectionService.definition = {
-      name: "Column Selection",
-      type: "projection",
-      icon_class:"fa fa-cogs",
-      template: "/static/app/experiment/plugin/projection/projection.html"
-    };
-
-    ProjectionService.create = function(projection) {
-      return resource.save(projection).$promise;
+    var definition = {
+      name: 'Projection',
+      type: 'projection',
+      iconClass:'fa fa-filter',
+      form: {
+        component_id: {
+          label: 'Target Schemas',
+          type: 'previousNodeSchemaIndexes',
+          is_array: true
+        }
+      }
     }
 
-    return ProjectionService;
-  };
+    ProjectionService = {
+      resource: resource,
+      definition: definition
+    }
 
-})();
+    return ProjectionService
+  }
+
+})()

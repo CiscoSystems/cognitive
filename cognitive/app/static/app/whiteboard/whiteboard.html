@@ -1,19 +1,18 @@
 <ng-include src="'static/app/common/header.html'"></ng-include>
+
 <section ng-controller="WhiteboardController as vm" layout="row" flex>
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-    <md-content layout-padding>
-      <md-button class="md-primary md-button-menu-content" ui-sref="dashboard.experiment">
-        <i class="fa fa-flask"></i>
-        Experiment
-      </md-button>
-      <md-button class="md-primary md-button-menu-content" ui-sref="dashboard.data">
-        <i class="fa fa-database"></i>
-        Data
-      </md-button>
-      <md-divider ></md-divider>
-      <md-subheader class="md-no-sticky">Recent Experiment</md-subheader>
-      <!-- This is TODO -->
-    </md-content>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+
+    <md-button class="md-primary md-button-menu-content" ui-sref="dashboard.experiment">
+      <i class="fa fa-flask"></i> Experiment
+    </md-button>
+    <md-divider></md-divider>
+    <!--<md-button class="md-primary md-button-menu-content" ui-sref="dashboard.data">
+      <i class="fa fa-database"></i> Dataset
+    </md-button>
+    <md-divider></md-divider>-->
+
   </md-sidenav>
+
   <div ui-view="content" flex></div>
 </section>

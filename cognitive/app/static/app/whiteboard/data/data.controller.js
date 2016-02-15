@@ -1,5 +1,5 @@
 (function() {
-  'use strict';
+  'use strict'
 
   angular.module('cognitive.whiteboard')
     .controller('DashboardDataController', DashboardDataController)
@@ -16,8 +16,8 @@
           id: info.id,
           file_path: info.file_path.replace(/[\/|]tmp\//g, ''),
           type: info.type,
-          user: info.user,
-          created_time: info.created_time}
+          created_time: info.created_time
+        }
       })
     })
 
@@ -31,14 +31,13 @@
             user: response.data['user'],
             created_time: response.data['created_time']
           })
-      })
+        })
     }
 
     vm.removeData = function (index) {
       var data_id = vm.dataList[index].id
-      DataService.remove(data_id).then(
-        function (response) {
-          vm.dataList.splice(index, 1);
+      DataService.remove(data_id).then(function () {
+        vm.dataList.splice(index, 1)
       })
     }
   }

@@ -14,3 +14,4 @@ cognitive/app/uploads/*
 *.sqlite3
 node_modules
 components
+cognitive/app/static/CACHE/

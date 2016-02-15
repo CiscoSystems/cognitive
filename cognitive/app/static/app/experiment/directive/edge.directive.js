@@ -1,7 +1,9 @@
 (function () {
-  'use strict';
+  'use strict'
+
   angular.module('cognitive.experiment')
-    .directive('cognitiveEdge', cognitiveEdge);
+    .directive('cognitiveEdge', cognitiveEdge)
+
   function cognitiveEdge($compile) {
     return {
       restrict: 'AEC',
@@ -13,10 +15,11 @@
           .attr('ng-attr-x2', '{{vm.getNodeById(edge.to).x + 90}}')
           .attr('ng-attr-y2', '{{vm.getNodeById(edge.to).y}}')
           .attr('stroke', 'gray')
-          .attr('stroke-width', 2);
-        element.removeAttr('cognitive-edge');
-        $compile(element)(scope);
+          .attr('stroke-width', 2)
+        element.removeAttr('cognitive-edge')
+        $compile(element)(scope)
       }
-    };
-  };
-})();
+    }
+  }
+
+})()

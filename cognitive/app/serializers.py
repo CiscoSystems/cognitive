@@ -21,7 +21,6 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         # fields = ['id','username','full_name']
@@ -38,15 +37,12 @@ class ExperimentSerializer(serializers.ModelSerializer):
         # write_only_fields = ('created_time', 'modified_time',
         #        'execution_start_time', 'execution_end_time', 'component_start_id')
 
-
 class DataSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Data
 
 
 class DataOperationTypeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = DataOperationType
 
@@ -69,6 +65,5 @@ class ComponentSerializer(serializers.ModelSerializer):
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Workflow

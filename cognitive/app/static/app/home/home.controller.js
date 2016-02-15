@@ -1,28 +1,22 @@
-(function() {
-  'use strict';
+(function () {
+  'use strict'
 
   angular.module('cognitive.home')
-    .controller('HomeController', HomeController);
+    .controller('HomeController', HomeController)
 
-  function HomeController($modal, $state){
-    var vm = this;
+  function HomeController($mdDialog, $state) {
+    var vm = this
 
-    vm.openLoginModal = function () {
-      var login_modal = $modal.open({
-        animation: true,
-        templateUrl: '/static/app/common/login_modal.html',
-        controller: 'LoginModalController',
+    vm.openLoginDialog = function () {
+      $mdDialog.show({
+        templateUrl: '/static/app/common/login_dialog.html',
+        controller: 'LoginDialogController',
         controllerAs: 'vm',
-        windowClass: 'login-modal-window',
-        resolve: {}
-      });
+        clickOutsideToClose: true
+      }).then(function(){
+        $state.go('dashboard.experiment')
+      })
+    }
+  }
 
-      login_modal.result.then(function (result) {
-        if (result.status == 'success') {
-          $state.go('dashboard.experiment');
-        }
-      });
-
-    };
-  };
-})();
+})()

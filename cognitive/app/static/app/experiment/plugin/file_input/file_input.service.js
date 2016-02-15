@@ -1,54 +1,67 @@
 (function () {
-  'use strict';
+  'use strict'
+
   angular.module('cognitive.experiment')
-    .factory('FileInputService', FileInputService);
+    .factory('FileInputService', FileInputService)
 
   function FileInputService ($http, $resource) {
-    var FileInputService = {};
+
+    var FileInputService = {}
 
     var resource = $resource('input', null, {
       get: {
         method: 'GET',
-        url: '/api/v1/operations/input/:id' },
-      query: {
+        url: '/api/v1/operations/input/:id'
+      },
+      list: {
         method:'GET',
         url: '/api/v1/operations/input/',
-        isArray: true },
-      save: {
+        isArray: true
+      },
+      create: {
         method: 'POST',
-        url: '/api/v1/operations/input/' },
+        url: '/api/v1/operations/input/'
+      },
       update: {
         method: 'PUT',
-        url: '/api/v1/operations/input/:id' },
+        url: '/api/v1/operations/input/:id'
+      },
       delete: {
         method: 'DELETE',
         url: '/api/v1/operations/input/:id'
       }
-    });
+    })
 
     var definition =  {
-      name: 'File Input',
+      name: 'Source Data',
       type: 'file_input',
-      icon_class: 'fa fa-arrow-up',
-      template: '/static/app/experiment/plugin/file_input/file_input.html'
+      iconClass: 'fa fa-database',
+      template: '/static/app/experiment/plugin/file_input/file_input.html',
+      form: {
+        input_file: {
+          type: 'file'
+        }
+      }
     }
 
     var createNode = function(user_id, experiment_id, token, file_name, file_text) {
-      return resource.save({
+      return FileInputService.resource.save({
         user_id: user_id,
         token: token,
         experiment: experiment_id,
         input_file: file_name,
         input_file_type: 'csv',
         data_values: file_text
-      }).$promise;
-    };
+      }).$promise
+    }
 
     FileInputService = {
       definition: definition,
-      createNode: createNode,
+      resource: resource,
+      createNode: createNode
     }
 
-    return FileInputService;
-  };
-})();
+    return FileInputService
+  }
+
+})()

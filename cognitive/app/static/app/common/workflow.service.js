@@ -1,12 +1,11 @@
 (function () {
-  'use strict';
+  'use strict'
 
   angular.module('cognitive')
-    .service('WorkflowService', WorkflowService);
+    .service('WorkflowService', WorkflowService)
 
   function WorkflowService($resource, UserService){
-    var WorkflowService = {};
-    var vm = this;
+    var WorkflowService = {}
     var resource = $resource('workflows', null, {
       get: {
         method: 'GET',
@@ -24,7 +23,7 @@
       remove: {
         method: 'DELETE',
         url: '/api/v1/workflows/:id' }
-    });
+    })
 
     WorkflowService.create = function(data) {
       var user = UserService.getCurrentUser()
@@ -36,7 +35,7 @@
       ).$promise
     }
 
-    return WorkflowService;
+    return WorkflowService
   }
 
 })()

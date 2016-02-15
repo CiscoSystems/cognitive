@@ -20,5 +20,11 @@
   "env": {
     "browser": true
   },
+  "globals": {
+    "angular": 1,
+    "d3": 1,
+    "$": 1,
+    "_": 1
+  },
   "extends": "eslint:recommended"
 }

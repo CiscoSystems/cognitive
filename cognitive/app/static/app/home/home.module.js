@@ -1,5 +1,6 @@
-(function() {
-    'use strict';
-    angular.module('cognitive.home',[]);
-})();
+(function () {
+  'use strict'
 
+  angular.module('cognitive.home', [])
+
+})()

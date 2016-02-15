@@ -1,51 +1,42 @@
 <ng-include src="'static/app/common/header.html'"></ng-include>
 
+<md-content class="experiment-content"
+            ng-controller="ExperimentController as vm"
+            layout="row">
 
-<md-content class="experiment-content" ng-controller="ExperimentController as vm" layout="row"
-            layout-align="center start">
-  <div class="experiment-sidebar" flex="20">
-    <md-card>
-      <md-card-content>
-        <md-list>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+    <md-content>
+      <md-list>
+        <md-list-item>
           <h2 class="md-headline">{{ vm.experiment.name }}</h2>
-        </md-list>
-      </md-card-content>
-    </md-card>
-    <md-card style="height: calc(100vh - 267px); overflow-y: scroll;">
-      <md-card-content>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Components</label>
-          <input ng-model="vm.searchComponents">
-        </md-input-container>
+        </md-list-item>
+      </md-list>
+      <md-divider></md-divider>
+      <md-list class="plugin-list">
+        <md-list-item ng-repeat="(key, desc) in vm.pluginList"
+                      ng-click="vm.showComponentCreationDialog($event, key)">
+          <span flex="20"><i class="{{ desc.iconClass }}"></i></span>
+          <span>{{ desc.name }}</span>
+        </md-list-item>
+      </md-list>
+      <md-divider></md-divider>
+      <md-list>
+        <md-list-item>
+          <md-button class="md-primary md-hue-1" ng-click="vm.run()">
+            <ng-md-icon icon="play_circle_outline" style="fill: steelblue;" size="27pt"></ng-md-icon>
+            <span>RUN</span>
+          </md-button>
+          <md-button class="md-primary md-hue-1" ng-click="vm.show()">
+            <ng-md-icon icon="equalizer" style="fill: steelblue;" size="27pt"></ng-md-icon>
+            <span>SHOW</span>
+          </md-button>
+        </md-list-item>
+      </md-list>
 
-        <md-list>
-          <md-divider></md-divider>
+    </md-content>
+  </md-sidenav>
 
-          <md-list-item class="md-line"
-                        layout-fill
-                        ng-repeat="component in vm.components | filter:vm.searchComponents"
-                        ng-click="vm.showComponentCreationDialog($event, $index)">
-            <span flex="20"><i class="{{ component.icon_class }}"></i></span>
-            <span>{{ component.name }}</span>
-            <md-divider></md-divider>
-          </md-list-item>
-
-        </md-list>
-      </md-card-content>
-    </md-card>
-    <md-card layout="row" layout-align="center center">
-      <md-button class="md-primary md-hue-1" ng-click="vm.run()">
-        <ng-md-icon icon="play_circle_outline" style="fill: steelblue;" size="27pt"></ng-md-icon>
-        <span>RUN</span>
-      </md-button>
-      <md-button class="md-primary md-hue-1" ng-click="vm.show()">
-        <ng-md-icon icon="equalizer" style="fill: steelblue;" size="27pt"></ng-md-icon>
-        <span>SHOW</span>
-      </md-button>
-    </md-card>
-  </div>
-
-  <div class="experiment-content" flex="80">
+  <div class="experiment-content" flex>
     <md-card style="height: calc(100vh - 80px);">
       <md-card-content class="card-content-svg-board">
         <div workspace="{{ vm.experiment.id }}" style="height: 100%;">
@@ -61,7 +52,7 @@
               <g ng-repeat="node in vm.experiment.nodes track by $index">
                 <g cognitive-node
                    ng-class="{ 'active' : vm.isActiveNode($index) }"
-                   click-node="vm.clickNode($index, node.id)"
+                   click-node="vm.clickNode($index)"
                    click-close-button="vm.clickCloseButton($index, node.id)"
                    create-edge="vm.createEdge"
                    node="node"></g>

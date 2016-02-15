@@ -1,44 +1,42 @@
-<md-content class="md-content-dashboard" ng-controller="DashboardDataController as vm">
-  <div layout-padding>
-    <md-card>
-      <h2 class="md-title md-title-data">
-        <i class="fa fa-database"></i> Data
-      </h2>
-
-      <md-card flex="20">
-        <md-card-content class="md-card-content-upload-button"
-                         ngf-select="vm.startUploadingFile()"
-                         ng-model="vm.uploadFile"
-                         ngf-multiple="multiple">
-          <h2>
-            <i class="fa fa-cloud-upload fa-icon-data-upload"></i>
-          </h2>
-          <span class="md-title right">Upload</span>
-        </md-card-content>
-      </md-card>
-
-      <md-divider></md-divider>
-
-      <div layout="row" layout-wrap>
-        <div flex="20" ng-repeat="data in vm.dataList">
-          <md-card>
-            <div class="md-card-data-header">
-              <h2>
-                <i class="fa fa-file-excel-o"></i>
-              </h2>
-            </div>
-            <md-card-content class="md-card-data-cotent">
-              <div class="file-name">
-                <span>{{ data.file_path }}</span>
-              </div>
-              <div class="remove-button">
-                <i class="fa fa-trash" ng-click="vm.removeData($index)"></i>
-              </div>
-
-            </md-card-content>
-          </md-card>
-        </div>
+<md-content class="dashboard-dataset">
+  <md-card class="dataset-card" ng-controller="DashboardDataController as vm">
+    <md-card-title class="card-title">
+      <md-card-title-text>
+        <span class="md-headline"><i class="fa fa-database"></i> Dataset</span>
+        <span class="md-subhead">Data sets can be uploaded and managed here</span>
+      </md-card-title-text>
+      <div class="right-corner" layout="row" flex>
+        <div flex></div>
+        <div><i class="fa fa-search"></i><input type="text" class="search-form"/></div>
+        <md-button class="md-primary md-raised new-btn btn-square"
+                   ngf-select="vm.startUploadingFile()"
+                   ng-model="vm.uploadFile"
+                   ngf-multiple="multiple">New</md-button>
       </div>
-    </md-card>
-  </div>
+    </md-card-title>
+    <md-card-content class="card-content">
+      <table class="dataset-table">
+        <thead>
+          <tr>
+            <th class="checkbox-cell">
+              <md-checkbox></md-checkbox>
+            </th>
+            <th>Name</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="data in vm.dataList">
+            <td class="checkbox-cell"><md-checkbox></md-checkbox></td>
+            <td>{{ data.file_path }}</td>
+            <td></td>
+            <td>
+              <i class="fa fa-trash delete-icon" ng-click="vm.removeData($index)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-card-content>
+  </md-card>
 </md-content>
