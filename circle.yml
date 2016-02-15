@@ -1,0 +1,19 @@
+machine:
+  python:
+    version: 2.7.10
+  node:
+    version: 5.1.0
+
+dependencies:
+  pre:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install -r test-requirements.txt
+    - npm install -g eslint
+
+test:
+  pre:
+    - eslint cognitive/app/static/app/
+  override:
+    - python manage.py test
+
