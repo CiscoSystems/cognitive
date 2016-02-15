@@ -21,7 +21,9 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^$', views.index),
     url(r'^api/v1/', include(urls)),
     url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 )

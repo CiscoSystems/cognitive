@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+    'oauth2_provider',
     'rest_framework',
     'rest_framework_swagger',
     'cognitive.app',
@@ -68,6 +69,28 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+#        'cognitive.authentication.cognitive_authentication.CognitiveAuthentication',
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    ),
+#    'PAGE_SIZE': 10
+ }
+
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
+
+COGNITIVE_CLIENT_ID = "Gbe1ZEIiHrtVVIojTqRCyV1tNeMMYC5kTMOHuMkQ"
+
+COGNITIVE_CLIENT_SECRET = "cRsoHn8Yh9a138aE3s9WBy8hsyclHEs1SQy4jui2x6BT5KWcmdhrQ7mqOcEk9IsR3QArU5u0FnansVWkCV3wbov5TwK76LGGcxDSftLvYEaTLYrVaxKDqgzMrScwZNKe"  
+
+OAUTH_URL = "http://localhost:8000/o/token/"
+
+AUTH_USER_MODEL = 'app.User'
 
 ROOT_URLCONF = 'cognitive.urls'
 

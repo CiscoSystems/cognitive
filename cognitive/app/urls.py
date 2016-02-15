@@ -15,6 +15,7 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
+from django.contrib import admin
 from view import view_user, view_exp, view_operation, view_workflow
 
 if settings.CLUSTER_TYPE == 'storm':

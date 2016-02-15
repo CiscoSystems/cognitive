@@ -13,7 +13,7 @@
 # under the License.
 
 from ..models import Experiment, Component, Data_operation_type
-from ..serializers import ComponentSerializer
+from ..serializers import *
 from ..views import send_response
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
@@ -38,16 +38,23 @@ MAX_COMPONENTS_PER_EXP = 100
 
 class OperationViewSet(viewsets.ViewSet):
 
-    def set_operation(self, operation, data):
+    def set_operation(self, operation, exp, data):
         if operation == 'math_formula':
             print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
-            op = Data_operation_type(
-                function_type='Update',
-                function_arg=data["component_type"],
-                function_subtype=data["op_type"],
-                function_arg_id=data["component_id"],
-                function_subtype_arg=data["op_constant"])
-            op.save()
+            #op = Data_operation_type(
+            #    function_type='Update',
+            #    function_arg=data["component_type"],
+            #    function_subtype=data["op_type"],
+            #    function_arg_id=data["component_id"],
+            #    function_subtype_arg=data["op_constant"])
+            #op.save()
+            component = MathFormula(
+                   experiment=exp, created_time=datetime.now(),
+                   modified_time=datetime.now(), component_type=data["component_type"],
+                   op_type = data["op_type"], component_id = data["component_id"],
+                   op_constant = data["op_constant"])
+            component.save()
+            op = MathFormulaSerializer(component)
 
         elif operation == 'normalization':
             print data["component_type"], data["op_type"], data["component_id"]
@@ -176,13 +183,15 @@ class OperationViewSet(viewsets.ViewSet):
         exp = Experiment.objects.get(pk=exp_id)
 
         print "Experiment ", exp_id, " Operation ", operation
-        op = self.set_operation(operation, data)
+        serializer = self.set_operation(operation, exp, data)
 
-        component = Component(
-            experiment=exp, created_time=datetime.now(),
-            modified_time=datetime.now(), operation_type=op)
-        component.save()
-        serializer = ComponentSerializer(component)
+        #component = Component(
+        #    experiment=exp, created_time=datetime.now(),
+        #    modified_time=datetime.now(), function_type = op.function_type,
+        #    function_arg = op.function_arg, function_arg_id = op.function_arg_id,
+        #    function_subtype = op.function_subtype, function_subtype_arg = op.function_subtype_arg)
+        #component.save()
+        #serializer = ComponentSerializer(component)
         return send_response("GET", serializer)
 
     def update(self, request, operation, pk=None):

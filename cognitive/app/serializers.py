@@ -13,20 +13,22 @@
 # under the License.
 
 from rest_framework import serializers
-from .models import User, Experiment, Component, Workflow
+#from django.contrib.auth.models import User
+from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
         model = User
-        # fields = ['id','username','full_name']
-
+        fields = ['id','username','password','email','first_name','last_name','token']
+        write_only_fields = ['password']
 
 class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
+        fields = ['id','name']
         # fields = ('created_time', 'modified_time',
         #        'execution_start_time', 'execution_end_time', 'component_start_id')
         # read_only_fields = ('created_time', 'modified_time',
@@ -39,6 +41,17 @@ class ComponentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Component
+
+
+class WorkflowSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Workflow
+
+class MathFormulaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MathFormula
 
 
 class WorkflowSerializer(serializers.ModelSerializer):

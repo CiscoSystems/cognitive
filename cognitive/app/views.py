@@ -28,15 +28,28 @@ def send_response(method, serializer):
         return Response(serializer.data)
     elif method == 'POST':
         if serializer.is_valid():
+            #serializer.data['status'] = 'success'
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif method == 'PUT':
         if serializer.is_valid():
+            #serializer.data['status'] = 'success'
             return Response(serializer.data)
         else:
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif method == 'DELETE':
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        data = {'status': 'success'}
+        return Response(data)
+
+def send_response_message(success,message):
+    if success:
+        data = {'status': 'success', 'message':message}
+        return Response(data)
+    else:
+        data = {'status': 'failure', 'message':message}
+        return Response(
+            data, status=status.HTTP_400_BAD_REQUEST)
+    

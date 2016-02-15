@@ -15,9 +15,9 @@
 from django.db import models
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
 import string
 import random
-
 
 class Data_operation_type(models.Model):
     FUNCTION_TYPE = (
@@ -67,68 +67,38 @@ class Data_operation_type(models.Model):
         return return_str
 
 
-class User(models.Model):
-    username = models.CharField(max_length=50)
-    full_name = models.CharField(max_length=50)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+class User(AbstractUser):
+    #username = models.CharField(max_length=50)
+    #email = models.CharField(max_length=100)
+    #password = models.CharField(max_length=100)
     token = models.CharField(max_length=100, blank=True, null=True)
-    max_experiments = models.IntegerField(default=50)
+    max_experiments = models.IntegerField(default=50, blank=True, null=True)
 
     def __str__(self):
         return self.username
 
-    @classmethod
-    def authenticate(cls, username_or_email, password):
-        try:
-            user = User.objects.get(username=username_or_email)
-        except:
-            try:
-                user = User.objects.get(email=username_or_email)
-            except:
-                return None
-        if not user.confirm_password(password):
-            return None
-        return user
-
-    @classmethod
-    def validate(cls, username, email, password):
+    #@classmethod
+    #def validate(cls, username, email, password):
+    def clean(self):
         err_msg = ""
-        if not username:
+        if not self.username:
             err_msg = "Empty username field"
-            raise ValidationError(err_msg)
-        if not password:
+        if not self.password:
             err_msg = "Empty password field"
-            raise ValidationError(err_msg)
-        if not email:
+        if not self.email:
             err_msg = "Empty email field"
-            raise ValidationError(err_msg)
-        validate_email(email)
-        if User.objects.filter(username=username).count() > 0:
+        try:
+            validate_email(self.email)
+        except ValidationError as e:
+            err_msg = "Invalid email format"
+        if User.objects.filter(username=self.username).count() > 0:
             err_msg = "Username already exists"
-            raise ValidationError(err_msg)
-        if User.objects.filter(email=email).count() > 0:
+        if User.objects.filter(email=self.email).count() > 0:
             err_msg = "Email already exists"
-            raise ValidationError(err_msg)
+        #Filter this into different error types
+        if err_msg:
+            raise Exception(err_msg)
         return True
-
-    def confirm_password(self, password):
-        # TODO: password must be encrypted
-        if self.password == password:
-            return True
-        else:
-            return False
-
-    # TODO: password encryption
-
-    @classmethod
-    def generate_token(cls):
-        def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-            return ''.join(random.choice(chars) for _ in range(size))
-        return id_generator()
-
-    def has_correct_token(self, token):
-        return self.token == token
 
 
 class Experiment(models.Model):
@@ -158,9 +128,9 @@ class Component(models.Model):
         ('Completed', 'Executed Successfully'),
     )
 
-    experiment = models.ForeignKey(Experiment)
+    experiment = models.ForeignKey(Experiment, related_name='components')
     status = models.CharField(max_length=50, choices=COMPONENT_STATUS, default='Draft')
-    operation_type = models.OneToOneField(Data_operation_type, blank=True, null=True)
+    #operation_type = models.OneToOneField(Data_operation_type, blank=True, null=True)
     created_time = models.DateField(blank=True, null=True)
     modified_time = models.DateField(blank=True, null=True)
     execution_start_time = models.DateField(blank=True, null=True)
@@ -168,7 +138,6 @@ class Component(models.Model):
     data_location = models.CharField(max_length=50, blank=True, null=True)
     preferred_data_location = models.CharField(max_length=50, blank=True, null=True)
     # component_id = models.IntegerField(blank=True, null=True)
-
 
 class Workflow(models.Model):
     experiment = models.OneToOneField(Experiment)
@@ -185,4 +154,50 @@ class MLearning(models.Model):
     experiment = models.ForeignKey(Experiment)
     model_type = models.CharField(max_length=50, choices=MODEL_TYPE)
     model_name = models.CharField(max_length=50)
-    model_parameters = models.CharField(max_length=50, blank=True, null=True)
+    #model_parameters = models.CharField(max_length=50, blank=True, null=True)
+
+class MathFormula(Component):
+    op_type = models.CharField(max_length=50)
+    op_constant = models.CharField(max_length=50)
+    component_type = models.CharField(max_length=50)
+    component_id = models.CharField(max_length=50)
+
+class Normalization(Component): 
+    op_type = models.CharField(max_length=50)
+    component_type = models.CharField(max_length=50)
+    component_id = models.CharField(max_length=50)
+
+class Projection(Component):
+    component_id = models.CharField(max_length=50)
+
+class RemoveDuplicates(Component):
+    component_id = models.CharField(max_length=50)
+
+class RemoveMissing(Component):
+    op_action = models.CharField(max_length=50)
+
+class ColumnMetadata(Component):
+    column_type = models.CharField(max_length=50)
+
+class InputSource(Component):
+    input_file = models.CharField(max_length=200)
+    input_file_type = models.CharField(max_length=200)
+    data_values = models.TextField()
+
+
+class LinearSVM(MLearning):
+    penalty = models.FloatField(default= 0.025)
+
+class NearestNeighbours(MLearning):
+    no_neighbours = models.IntegerField(default = 3)
+
+class DecisionTree(MLearning):
+    max_depth = models.IntegerField(default = 5)
+
+class RandomForest(MLearning):
+    max_depth = models.IntegerField(default = 5)
+    n_estimators = models.IntegerField(default = 10)
+    max_features = models.IntegerField(default = 1)
+
+class NaiveBayes(MLearning):
+    pass

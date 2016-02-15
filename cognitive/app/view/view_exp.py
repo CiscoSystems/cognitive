@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from ..models import Experiment
+from ..models import Experiment, User
 from ..serializers import ExperimentSerializer
 from ..views import send_response
 from rest_framework import viewsets
@@ -26,7 +26,7 @@ class ExperimentViewSet(viewsets.ViewSet):
         Lists all experiments for a particular user
         ---
         """
-        exp = Experiment.objects.all()
+        exp = Experiment.objects.filter(user=request.user)
         serializer = ExperimentSerializer(exp, many=True)
         return send_response(request.method, serializer)
 
@@ -35,8 +35,8 @@ class ExperimentViewSet(viewsets.ViewSet):
         Retrieve an experiment for a particular user
         ---
         """
-        exp = Experiment.objects.get(pk=pk)
-        serializer = ExperimentSerializer(exp)
+        exp = Experiment.objects.filter(pk=pk,user=request.user)
+        serializer = ExperimentSerializer(exp,many=True)
         return send_response(request.method, serializer)
 
     def create(self, request):
@@ -45,10 +45,12 @@ class ExperimentViewSet(viewsets.ViewSet):
         ---
         request_serializer: ExperimentSerializer
         """
+        user =  User.objects.get(username=request.user)
         serializer = ExperimentSerializer(data=request.DATA)
         if serializer.is_valid():
             serializer.object.created_time = datetime.now()
             serializer.object.modified_time = datetime.now()
+            serializer.object.user = user
             serializer.save()
         return send_response(request.method, serializer)
 
@@ -58,7 +60,7 @@ class ExperimentViewSet(viewsets.ViewSet):
         ---
         request_serializer: ExperimentSerializer
         """
-        exp = Experiment.objects.get(pk=pk)
+        exp = Experiment.objects.filter(pk=pk,user=request.user)
         serializer = ExperimentSerializer(exp, data=request.DATA)
         if serializer.is_valid():
             serializer.object.modified_time = datetime.now()
@@ -70,7 +72,7 @@ class ExperimentViewSet(viewsets.ViewSet):
         Delete an experiment for a particular user
         ---
         """
-        exp = Experiment.objects.get(pk=pk)
+        exp = Experiment.objects.filter(pk=pk,user=request.user)
         serializer = None
         exp.delete()
         return send_response(request.method, serializer)

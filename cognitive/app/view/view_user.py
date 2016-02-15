@@ -14,17 +14,25 @@
 
 
 from ..models import User
+#from django.contrib.auth.models import User
 from ..serializers import UserSerializer
-from ..views import send_response
-
+from ..views import send_response, send_response_message
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny,IsAdminUser
+from rest_framework.renderers import JSONRenderer
+from django.contrib.auth.hashers import make_password
+from django.conf import settings
+import requests
+import json
 
 
 class UserViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny, ]
+    #permission_classes = [IsAdminUser, ]
     """
     A simple ViewSet that for listing or retrieving users.
 
@@ -40,6 +48,7 @@ class UserViewSet(viewsets.ViewSet):
         'delete': 'destroy'
     })
     """
+
     def list(self, request):
         """
         Lists all users in the system
@@ -58,33 +67,28 @@ class UserViewSet(viewsets.ViewSet):
         serializer = UserSerializer(user)
         return send_response(request.method, serializer)
 
-    # this implementation is tempral for front end developers
     def create(self, request):
         """
         Create a new user in the system
         ---
         request_serializer: UserSerializer
         """
-        # serializer = UserSerializer(data=request.DATA)
-        # if serializer.is_valid():
-        #     serializer.save()
-        # return send_response(request.method, serializer)
         try:
-            username = request.DATA.get('username')
-            email = request.DATA.get('email')
-            password = request.DATA.get('password')
-            if not User.validate(username, email, password):
-                return Response({'status': 'failure'})
-            token = User.generate_token()
-            user = User(username=username, email=email,
-                        password=password, token=token)
-            user.save()
-            return Response({
-                'id': user.id, 'username': user.username,
-                'token': user.token, 'email': user.email,
-                'status': 'success'})
+            print request.DATA
+            data = json.loads(JSONRenderer().render(request.DATA))
+            password = data['password']
+            data['password'] = make_password(data['password'])
+ 
+            serializer = UserSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+            user = self.generate_access_token(data['username'], password)
+            serializer = UserSerializer(user)
+            if serializer.is_valid:
+                serializer.save()
+            return send_response("GET", serializer)
         except Exception as e:
-            return Response({'status': 'failure', 'message': str(e[0])})
+            return send_response_message(False,str(e[0]))
 
     def update(self, request, pk=None):
         """
@@ -108,17 +112,35 @@ class UserViewSet(viewsets.ViewSet):
         user.delete()
         return send_response(request.method, serializer)
 
-    # this implementation is temporal not to stop front end developers
-    # users/login?username_or_email=some_user_name&password=some_password
-    @list_route(methods=["GET"])
+    @list_route(methods=["POST"])
     def login(self, request):
         try:
-            username_or_email = request.GET.get('username_or_email')
-            password = request.GET.get('password')
-            user = User.authenticate(username_or_email, password)
-            return Response({
-                'id': user.id, 'username': user.username,
-                'email': user.email, 'token': user.token,
-                'status': 'success'})
+            username_or_email = request.POST.get('username_or_email')
+            password = request.POST.get('password')
+            print username_or_email, password 
+            user = self.generate_access_token(username_or_email, password)
+            serializer = UserSerializer(user)
+            if serializer.is_valid:
+                serializer.save()
+            return send_response("GET", serializer)
+        except Exception as e:
+            return Response({'status': 'failure','message':str(e[0])})
+
+    def generate_access_token(self,username_or_email, password):
+        print username_or_email, password
+        try:
+            user = User.objects.get(username=username_or_email)
+            username = user.username
         except:
-            return Response({'status': 'failure'})
+            try:
+                user = User.objects.get(email=username_or_email)
+                username = user.username
+            except:
+                return None
+        data = {'grant_type':'password','username':username,'password':password}
+        ret = requests.post(settings.OAUTH_URL,data,auth=(settings.COGNITIVE_CLIENT_ID,settings.COGNITIVE_CLIENT_SECRET))
+        print ret.json()
+        user.token = ret.json()['access_token']
+        user.save(update_fields=['token'])
+        print "saved"
+        return user
