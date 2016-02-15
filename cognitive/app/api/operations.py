@@ -12,28 +12,35 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from ..models import Experiment, Component, Data_operation_type
+from ..models import Component
+from ..models import DataOperationType
+from ..models import Experiment
 from ..serializers import ComponentSerializer
 from ..views import send_response
+import os
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
-from pandas import read_csv, datetime
+from pandas import read_csv
+from datetime import datetime
 import json
 import urllib2
+
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+FILE_UPLOAD_DIR = os.path.join(PROJECT_PATH, 'cognitive/app/uploads/')
 
 MAX_COMPONENTS_PER_EXP = 100
 
 #####
 # Operation      function_type function_arg function_subtype function_arg_id function_subtype_arg
-# mathformula       Update      {comp_type}  {op_type}        {comp_id}       {op_constant}
-# metadata          Update      Table        Metadata         -               {column_type}
-# normalization     Update      {comp_type}  Normalize        {comp_id}       {op_type}
-# projection        Filter      Table        Project          {comp_id}       -
-# remove_duplicates Filter      Table        RemoveDup        {comp_id}       -
-# remove_missing    Filter      Table        RemoveMissing    {comp_id}       {op_action}
-# row               Create      Row          Row              -               {row_values}
-# input             Create      Table        Input            -               {filename}
-# machine learning  Create      Model        {model_type}     {Train-test}    {ML arguments}
+# mathformula         Update      {comp_type}  {op_type}        {comp_id}       {op_constant}
+# metadata            Update      Table        Metadata         -               {column_type}
+# normalization       Update      {comp_type}  Normalize        {comp_id}       {op_type}
+# projection          Filter      Table        Project          {comp_id}       -
+# duplication_removal Filter      Table        RemoveDup        {comp_id}       -
+# remove_missing      Filter      Table        RemoveMissing    {comp_id}       {op_action}
+# row                 Create      Row          Row              -               {row_values}
+# input               Create      Table        Input            -               {filename}
+# machine learning    Create      Model        {model_type}     {Train-test}    {ML arguments}
 
 
 class OperationViewSet(viewsets.ViewSet):
@@ -41,7 +48,7 @@ class OperationViewSet(viewsets.ViewSet):
     def set_operation(self, operation, data):
         if operation == 'math_formula':
             print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Update',
                 function_arg=data["component_type"],
                 function_subtype=data["op_type"],
@@ -51,7 +58,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'normalization':
             print data["component_type"], data["op_type"], data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Update',
                 function_arg=data["component_type"],
                 function_arg_id=data["component_id"],
@@ -61,16 +68,16 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'projection':
             print data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Filter',
                 function_arg='Table',
                 function_arg_id=data["component_id"],
                 function_subtype='Project')
             op.save()
 
-        elif operation == 'remove_duplicates':
+        elif operation == 'duplication_removal':
             print data["component_id"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Filter',
                 function_arg='Table',
                 function_arg_id=data["component_id"],
@@ -79,7 +86,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'remove_missing':
             print data["op_action"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Filter',
                 function_arg='Table',
                 function_subtype='RemoveMissing',
@@ -88,7 +95,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'metadata':
             print data["column_type"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Update',
                 function_arg='Table',
                 function_subtype='Metadata',
@@ -97,7 +104,7 @@ class OperationViewSet(viewsets.ViewSet):
 
         elif operation == 'row':
             print data["row_values"]
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Create',
                 function_arg='Row',
                 function_subtype='Row',
@@ -112,7 +119,7 @@ class OperationViewSet(viewsets.ViewSet):
                 f = open(filename, 'w')
                 f.write(data["data_values"])
                 f.close()
-                op = Data_operation_type(
+                op = DataOperationType(
                     function_type='Create', function_arg='Table',
                     function_subtype='Input', function_subtype_arg=filename)
                 op.save()
@@ -123,17 +130,22 @@ class OperationViewSet(viewsets.ViewSet):
                 response = urllib2.urlopen(data["input_file"])
                 csv_data = read_csv(response)
                 csv_data.to_csv(filename, index=False)
-                op = Data_operation_type(
+                op = DataOperationType(
                     function_type='Create', function_arg='Table',
                     function_subtype='Input', function_subtype_arg=filename)
                 op.save()
+            # data = Data.objects.get(pk=1)
+            # op = DataOperationType(
+            #     function_type='Create', function_arg='Column',
+            #     function_subtype='Input', function_subtype_arg=data.columns)
+            # op.save()
 
         elif operation == "machine_learning":
             print data["model_type"], data["train_data_percentage"], data["target_column"]
             arg = {
                 'train_data_percentage': data["train_data_percentage"],
                 'target_column': data["target_column"]}
-            op = Data_operation_type(
+            op = DataOperationType(
                 function_type='Create',
                 function_arg='Model',
                 function_arg_id=data["model_type"],
@@ -166,7 +178,7 @@ class OperationViewSet(viewsets.ViewSet):
         ---
         request_serializer: ComponentSerializer
         """
-        data = json.loads(JSONRenderer().render(request.DATA))
+        data = json.loads(JSONRenderer().render(request.data))
 
         op = None  # TODO: [refactor] This value is probably not needed
 
@@ -178,9 +190,7 @@ class OperationViewSet(viewsets.ViewSet):
         print "Experiment ", exp_id, " Operation ", operation
         op = self.set_operation(operation, data)
 
-        component = Component(
-            experiment=exp, created_time=datetime.now(),
-            modified_time=datetime.now(), operation_type=op)
+        component = Component(experiment=exp, operation_type=op)
         component.save()
         serializer = ComponentSerializer(component)
         return send_response("GET", serializer)
@@ -191,7 +201,7 @@ class OperationViewSet(viewsets.ViewSet):
         ---
         request_serializer: ComponentSerializer
         """
-        data = json.loads(JSONRenderer().render(request.DATA))
+        data = json.loads(JSONRenderer().render(request.data))
 
         op = None  # TODO: [refactor] This value is probably not needed
 
@@ -200,7 +210,7 @@ class OperationViewSet(viewsets.ViewSet):
         op = self.set_operation(operation, data)
 
         comp = Component.objects.get(pk=pk)
-        serializer = ComponentSerializer(comp, data=request.DATA)
+        serializer = ComponentSerializer(comp, data=request.data)
         if serializer.is_valid():
             serializer.object.operation_type = op
             serializer.save()

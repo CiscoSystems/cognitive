@@ -1,41 +1,41 @@
 (function() {
-  'use strict';
-  angular.module('cognitive')
-    .service('UserService', UserService);
+  'use strict'
+
+  angular.module('cognitive').service('UserService', UserService)
 
   function UserService($cookies, $http){
-    var UserService = {};
+    // TODO: $http will be replaced by $resource
+
+    var UserService = {}
 
     UserService.login = function(userInfo) {
-      var username = userInfo['name'] || userInfo['email'] || userInfo['username_or_email'];
-      var password = userInfo['password'];
+      var username = userInfo['name'] || userInfo['email'] || userInfo['username_or_email']
+      var password = userInfo['password']
 
-      return $http.get("/api/v1/users/login?username_or_email=" + username + "&password=" + password)
-        .success(function (data, status, headers, config) {
-          if (data.status !== "success") {
-            $cookies.putObject('currentUser', {status: 'error'});
-            return;
+      return $http.get('/api/v1/users/login?username_or_email=' + username + '&password=' + password)
+        .success(function (data) {
+          if (data.status !== 'success') {
+            $cookies.putObject('currentUser', {status: 'error'})
+            return
           }
           $cookies.putObject('currentUser', {
             id: data.id,
             name: data.username,
-            token: data.token,
-            status: 'success'
-          });
+            token: data.token
+          })
         })
     }
 
     UserService.register = function(userInfo) {
       /* userInfo['username'] userInfo['email'] userInfo['password'] */
-      return $http.post("/api/v1/users/", userInfo)
-        .success(function (data, status, headers, config) {
-          if (data.status !== "success") { return; }
+      return $http.post('/api/v1/users/', userInfo)
+        .success(function (data) {
+          if (data.status !== 'success') { return }
           $cookies.putObject('currentUser', {
             id: data.id,
             name: data.username,
-            token: data.token,
-            status: 'success'
-          });
+            token: data.token
+          })
         })
     }
 
@@ -44,14 +44,14 @@
     }
 
     UserService.isLoggedIn = function() {
-      var currentUser = $cookies.getObject('currentUser');
-      return Boolean(currentUser) && currentUser['status'] == 'success';
+      var currentUser = $cookies.getObject('currentUser')
+      return Boolean(currentUser)
     }
 
     UserService.getCurrentUser = function() {
-      return $cookies.getObject('currentUser');
+      return $cookies.getObject('currentUser')
     }
 
-    return UserService;
+    return UserService
   }
-})();
+})()

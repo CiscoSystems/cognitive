@@ -19,7 +19,7 @@ import string
 import random
 
 
-class Data_operation_type(models.Model):
+class DataOperationType(models.Model):
     FUNCTION_TYPE = (
         ('Create', 'Create a new type'),
         ('Update', 'Update a type'),
@@ -131,6 +131,18 @@ class User(models.Model):
         return self.token == token
 
 
+class Data(models.Model):
+    user = models.ForeignKey(User)
+    type = models.CharField(blank=False, null=False, max_length=50)
+    file_path = models.CharField(blank=True, null=True, max_length=50)
+    columns = models.CharField(blank=True, null=True, max_length=1024)
+    created_time = models.TimeField(blank=True, null=True)
+    modified_time = models.TimeField(blank=True, null=True)
+
+    class Meta:
+        ordering = ('-created_time',)
+
+
 class Experiment(models.Model):
     EXPERIMENT_STATUS = (
         ('Draft', ' Saved as draft'),
@@ -142,10 +154,10 @@ class Experiment(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=50)
     status = models.CharField(max_length=50, choices=EXPERIMENT_STATUS, default='Draft')
-    created_time = models.DateField(blank=True, null=True)
-    modified_time = models.DateField(blank=True, null=True)
-    execution_start_time = models.DateField(blank=True, null=True)
-    execution_end_time = models.DateField(blank=True, null=True)
+    created_time = models.TimeField(blank=True, null=True)
+    modified_time = models.TimeField(blank=True, null=True)
+    execution_start_time = models.TimeField(blank=True, null=True)
+    execution_end_time = models.TimeField(blank=True, null=True)
     component_start_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -163,11 +175,11 @@ class Component(models.Model):
 
     experiment = models.ForeignKey(Experiment)
     status = models.CharField(max_length=50, choices=COMPONENT_STATUS, default='Draft')
-    operation_type = models.OneToOneField(Data_operation_type, blank=True, null=True)
-    created_time = models.DateField(blank=True, null=True)
-    modified_time = models.DateField(blank=True, null=True)
-    execution_start_time = models.DateField(blank=True, null=True)
-    execution_end_time = models.DateField(blank=True, null=True)
+    operation_type = models.OneToOneField(DataOperationType, blank=True, null=True)
+    created_time = models.TimeField(blank=True, null=True)
+    modified_time = models.TimeField(blank=True, null=True)
+    execution_start_time = models.TimeField(blank=True, null=True)
+    execution_end_time = models.TimeField(blank=True, null=True)
     data_location = models.CharField(max_length=50, blank=True, null=True)
     preferred_data_location = models.CharField(max_length=50, blank=True, null=True)
     # component_id = models.IntegerField(blank=True, null=True)

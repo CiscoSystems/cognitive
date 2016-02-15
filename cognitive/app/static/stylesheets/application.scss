@@ -1,0 +1,107 @@
+$defaultColor: #404040;
+$themeColor: #f44336;
+
+
+.md-dialog {
+  border-radius: 0;
+}
+
+.dialog-login {
+  width: 70%;
+
+  .tab-body {
+    padding-top: 30px;
+    min-height: 420px;
+  }
+}
+
+
+.btn-square {
+  border-radius: 0;
+}
+
+.icon-default {
+  fill: #f44336;
+}
+
+.cognitive-modal-window .modal-dialog {
+  width: 95%;
+}
+
+.section-home {
+  height: 400px;
+
+  .start-btn {
+    width: 250px;
+  }
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+/* whiteboard.html */
+.card-remove-button {
+  background: indianred;
+  text-align: center;
+  height: 36px;
+  font-size: 20pt;
+  padding-top: 5px;
+  color: white;
+}
+
+.md-button-menu-content {
+  width: 90%;
+  text-align: left;
+  text-transform: none;
+}
+
+/* whiteboard/data.html */
+.md-title-data {
+  padding-left: 20px;
+}
+
+.md-card-content-upload-button {
+  background: #318DAB;
+  color: white;
+}
+
+.fa-icon-data-upload {
+  font-size: 45pt;
+}
+
+.md-card-data-header {
+  background: rgba(17, 128, 0, 0.76);
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.md-card-data-header i {
+  color: white;
+  font-size: 60pt;
+}
+
+.md-card-data-cotent {
+  text-align: right;
+}
+
+.md-card-data-cotent .file-name {
+  float: left;
+}
+
+.md-card-data-cotent .remove-button {
+  color: gray;
+  font-size: 18pt;
+}
+
+md-toolbar.md-toolbar-primary {
+  background-color: steelblue;
+}

@@ -20,7 +20,6 @@ from datetime import datetime
 
 
 class ExperimentViewSet(viewsets.ViewSet):
-
     def list(self, request):
         """
         Lists all experiments for a particular user
@@ -45,11 +44,12 @@ class ExperimentViewSet(viewsets.ViewSet):
         ---
         request_serializer: ExperimentSerializer
         """
-        serializer = ExperimentSerializer(data=request.DATA)
+        serializer = ExperimentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.object.created_time = datetime.now()
-            serializer.object.modified_time = datetime.now()
+            serializer.created_time = datetime.now()
+            serializer.modified_time = datetime.now()
             serializer.save()
+
         return send_response(request.method, serializer)
 
     def update(self, request, pk=None):
@@ -59,7 +59,7 @@ class ExperimentViewSet(viewsets.ViewSet):
         request_serializer: ExperimentSerializer
         """
         exp = Experiment.objects.get(pk=pk)
-        serializer = ExperimentSerializer(exp, data=request.DATA)
+        serializer = ExperimentSerializer(exp, data=request.data)
         if serializer.is_valid():
             serializer.object.modified_time = datetime.now()
             serializer.save()

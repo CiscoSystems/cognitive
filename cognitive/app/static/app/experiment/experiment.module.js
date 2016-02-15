@@ -1,9 +1,6 @@
 (function () {
-  'use strict';
+  'use strict'
 
-  angular.module('cognitive.experiment', [
-    'ui.router',
-    'ui.bootstrap'
-  ]);
+  angular.module('cognitive.experiment', [])
 
-})();
+})()

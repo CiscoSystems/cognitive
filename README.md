@@ -79,6 +79,18 @@ For testing Javasctipt codes, use [Jasmine](http://jasmine.github.io/) by execut
 
 After the execution of Jasmine, you can get the results from http://localhost:8888
 
+- Check JavaScript Coding Convention
+
+Please install `eslint` using npm:
+```
+npm install eslint
+```
+
+Then execute:
+
+```
+eslint cognitive/app/static/app/
+```
 
 How to Contribute
 -----------------

@@ -1,38 +1,65 @@
 (function () {
-    'use strict';
-    angular.module('cognitive.experiment')
-        .factory('NormalizationService', NormalizationService);
+  'use strict'
 
-    function NormalizationService($http, ExperimentService) {
-        var NormalizationService = {};
-        var definition = {
-            name: "Normalization",
-            type:"normalization",
-            icon_class:"fa fa-align-center",
-            template: "/static/app/experiment/plugin/normalization/normalization.html"
+  angular.module('cognitive.experiment')
+    .factory('NormalizationService', NormalizationService)
+
+  function NormalizationService($resource) {
+    var NormalizationService = {}
+
+    var resource = $resource('normalization', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/normalization/:id' },
+      list: {
+        method:'GET',
+        url: '/api/v1/operations/normalization/',
+        isArray: true },
+      create: {
+        method: 'POST',
+        url: '/api/v1/operations/normalization/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/normalization/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/normalization/:id'
+      }
+    })
+
+    var definition = {
+      name: 'Normalization',
+      type: 'normalization',
+      iconClass: 'fa fa-align-center',
+      form: {
+        component_type: {
+          label: 'Type',
+          type: 'select',
+          options: {
+            Column: 'Column'
+          }
+        },
+        component_id: {
+          label: 'Target Schema',
+          type: 'previousNodeSchemaIndex',
+          options: {}
+        },
+        op_type: {
+          label: 'Method',
+          type: 'select',
+          options: {
+            0: 'Standard'
+          }
         }
+      }
+    }
 
-        var createNode = function(
-            user_id, experiment_id, token, component_type, component_id, op_type) {
-            $http.post('/api/v1/operations/normalization/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                component_type: component_type,
-                component_id: component_id,
-                op_type: op_type
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
-        };
+    NormalizationService = {
+      resource: resource,
+      definition: definition
+    }
 
-        NormalizationService = {
-            definition: definition,
-            createNode: createNode
-        }
+    return NormalizationService
+  }
 
-        return NormalizationService;
-    };
-})();
+})()

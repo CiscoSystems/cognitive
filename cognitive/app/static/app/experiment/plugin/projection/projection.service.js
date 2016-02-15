@@ -1,39 +1,51 @@
 (function () {
-    'use strict';
-    angular.module('cognitive.experiment')
-        .factory('ProjectionService', ProjectionService)
+  'use strict'
 
-    function ProjectionService (
-        $http, ExperimentService) {
+  angular.module('cognitive.experiment')
+    .factory('ProjectionService', ProjectionService)
 
-        var ProjectionService = {};
-        var definition = {
-            name: "Column Selection",
-            type: "projection",
-            icon_class:"fa fa-cogs",
-            template: "/static/app/experiment/plugin/projection/projection.html"
-        };
+  function ProjectionService ($resource) {
+    var ProjectionService = {}
 
-        var createNode = function(user_id, experiment_id, token, targets) {
-            targets = "["+targets.toString()+"]";
-            $http.post('/api/v1/operations/projection/', {
-                user_id: user_id,
-                token: token,
-                experiment: experiment_id,
-                component_id: targets
-            }).success(function (data, status, headers, config) {
-                console.log(data);
-                ExperimentService
-                    .appendNode(data.id, definition)
-            });
+    var resource = $resource('projection', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/operations/projection/:id' },
+      list: {
+        method:'GET',
+        url: '/api/v1/operations/projection/',
+        isArray: true },
+      create: {
+        method: 'POST',
+        url: '/api/v1/operations/projection/' },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/operations/projection/:id' },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/operations/projection/:id'
+      }
+    })
 
-        };
-
-        ProjectionService = {
-            definition: definition,
-            createNode: createNode
+    var definition = {
+      name: 'Projection',
+      type: 'projection',
+      iconClass:'fa fa-filter',
+      form: {
+        component_id: {
+          label: 'Target Schemas',
+          type: 'previousNodeSchemaIndexes',
+          is_array: true
         }
+      }
+    }
 
-        return ProjectionService;
-    };
-})();
+    ProjectionService = {
+      resource: resource,
+      definition: definition
+    }
+
+    return ProjectionService
+  }
+
+})()

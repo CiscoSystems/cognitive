@@ -34,8 +34,6 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_LOADERS = (
-    'hamlpy.template.loaders.HamlPyFilesystemLoader',
-    'hamlpy.template.loaders.HamlPyAppDirectoriesLoader',
     'django.template.loaders.eggs.Loader',
 )
 
@@ -52,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+    'compressor',
     'rest_framework',
     'rest_framework_swagger',
     'cognitive.app',
@@ -107,9 +106,12 @@ REDIS_PORT = "6379"
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    (os.path.join(PROJECT_ROOT + '/cognitive/app', "static")),
-]
+# STATICFILES_DIRS = [
+#     (os.path.join(PROJECT_ROOT + '/cognitive/app', "static")),
+# ]
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT + '/cognitive/app', "static")
+COMPRESS_ENABLED = True
 
 # Swagger Documentation Setting
 SWAGGER_SETTINGS = {
@@ -150,22 +152,32 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'djangobower.finders.BowerFinder',
+    'compressor.finders.CompressorFinder',
+
 )
 
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
 
 BOWER_INSTALLED_APPS = (
-    'angular#~1.4.6',
+    'angular#~1.4.7',
     'angular-bootstrap#~0.13.4',
-    'angular-material',
+    'angular-cookies#~1.4.7',
+    'angular-material#~1.0.0',
+    'angular-material-data-table',
     'angular-material-icons',
     'angular-resource',
     'angular-ui-router',
     'bootstrap',
-    'd3#3.1.6',
+    'd3#3.5.13',
+    'git@github.com:eslint/eslint.git#2.0.0-rc.0',
     'font-awesome#4.4.0',
     'jquery',
     'jquery-csv',
     'jquery-ui',
-    'angular-cookies#1.4.7',
+    'ng-file-upload',
+    'underscore#~1.8.3',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
 )

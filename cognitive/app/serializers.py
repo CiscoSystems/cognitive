@@ -11,13 +11,16 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-
+from models import Component
+from models import Data
+from models import DataOperationType
+from models import Experiment
+from models import User
+from models import Workflow
 from rest_framework import serializers
-from .models import User, Experiment, Component, Workflow
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         # fields = ['id','username','full_name']
@@ -34,14 +37,33 @@ class ExperimentSerializer(serializers.ModelSerializer):
         # write_only_fields = ('created_time', 'modified_time',
         #        'execution_start_time', 'execution_end_time', 'component_start_id')
 
+class DataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Data
+
+
+class DataOperationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DataOperationType
+
 
 class ComponentSerializer(serializers.ModelSerializer):
+    # operation_type = DataOperationTypeSerializer()
+    # function_type='Update',
+    # function_arg=data["component_type"],
+    # function_subtype=data["op_type"],
+    # function_arg_id=data["component_id"],
+    # function_subtype_arg=data["op_constant"])
+
+    component_type = serializers.CharField(source='operation_type.function_arg')
+    component_id = serializers.CharField(source='operation_type.function_arg_id')
+    op_type = serializers.CharField(source='operation_type.function_subtype')
+    op_constant = serializers.CharField(source='operation_type.function_subtype_arg')
 
     class Meta:
         model = Component
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Workflow

@@ -46,7 +46,7 @@ class WorkFlowViewSet(viewsets.ViewSet):
         ---
         request_serializer: WorkflowSerializer
         """
-        data = json.loads(JSONRenderer().render(request.DATA))
+        data = json.loads(JSONRenderer().render(request.data))
         exp_id = int(data["experiment"])
         exp = Experiment.objects.get(pk=exp_id)
         print "Experiment ", exp_id, "graph_data ", data["graph_data"]
@@ -54,13 +54,13 @@ class WorkFlowViewSet(viewsets.ViewSet):
             workflow = exp.workflow
         except Workflow.DoesNotExist:
             print "Workflow is not yet created. Creating one"
-            serializer = WorkflowSerializer(data=request.DATA)
+            serializer = WorkflowSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
             return send_response(request.method, serializer)
         else:
             print "Workflow already exists. Modifying one"
-            serializer = WorkflowSerializer(workflow, data=request.DATA)
+            serializer = WorkflowSerializer(workflow, data=request.data)
             if serializer.is_valid():
                 serializer.save()
             return send_response(request.method, serializer)
@@ -72,7 +72,7 @@ class WorkFlowViewSet(viewsets.ViewSet):
         request_serializer: WorkflowSerializer
         """
         exp = Workflow.objects.get(pk=pk)
-        serializer = WorkflowSerializer(exp, data=request.DATA)
+        serializer = WorkflowSerializer(exp, data=request.data)
         if serializer.is_valid():
             serializer.save()
         return send_response(request.method, serializer)

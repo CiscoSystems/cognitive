@@ -20,7 +20,7 @@ from rest_framework.response import Response
 
 def index(request):
     return render_to_response(
-        'index.haml', context_instance=RequestContext(request))
+        'index.html', context_instance=RequestContext(request))
 
 
 def send_response(method, serializer):

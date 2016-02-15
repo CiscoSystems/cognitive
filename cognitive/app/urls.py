@@ -15,19 +15,25 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
-from view import view_user, view_exp, view_operation, view_workflow
+from api import users as api_users
+from api import data as api_data
+from api import experiments as api_experiments
+from api import operations as api_operations
+from api import workflows as api_workflow
+
 
 if settings.CLUSTER_TYPE == 'storm':
-    from view import view_result_storm as view_result
+    from api import results_storm as api_result
 else:
-    from view import view_result_local as view_result
+    from api import results_local as api_result
 
 router = DefaultRouter()
-router.register(r'users', view_user.UserViewSet, '')
-router.register(r'experiments', view_exp.ExperimentViewSet, '')
-router.register(r'workflows', view_workflow.WorkFlowViewSet, '')
-router.register(r'results', view_result.ResultViewSet, '')
-router.register(r'operations/(?P<operation>\w+)', view_operation.OperationViewSet, '')
+router.register(r'data', api_data.DataViewSet, '')
+router.register(r'experiments', api_experiments.ExperimentViewSet, '')
+router.register(r'operations/(?P<operation>\w+)', api_operations.OperationViewSet, '')
+router.register(r'results', api_result.ResultViewSet, '')
+router.register(r'users', api_users.UserViewSet, '')
+router.register(r'workflows', api_workflow.WorkFlowViewSet, '')
 
 
 urlpatterns = patterns(
