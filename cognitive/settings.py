@@ -159,22 +159,23 @@ STATICFILES_FINDERS = (
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
 
 BOWER_INSTALLED_APPS = (
-    'angular#~1.4.7',
+    'angular#~1.5.0',
     'angular-bootstrap#~0.13.4',
     'angular-cookies#~1.4.7',
-    'angular-material#~1.0.0',
+    'angular-material#~1.0.5',
     'angular-material-data-table',
     'angular-material-icons',
+    'angular-nvd3',
     'angular-resource',
     'angular-ui-router',
     'bootstrap',
     'd3#3.5.13',
-    'git@github.com:eslint/eslint.git#2.0.0-rc.0',
     'font-awesome#4.4.0',
     'jquery',
     'jquery-csv',
     'jquery-ui',
     'ng-file-upload',
+    'ngDraggable#0.1.8',
     'underscore#~1.8.3',
 )
 

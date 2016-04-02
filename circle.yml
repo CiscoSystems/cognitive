@@ -13,7 +13,7 @@ dependencies:
 
 test:
   pre:
-    - eslint cognitive/app/static/app/
+    - eslint cognitive/app/static/javascripts/
   override:
     - python manage.py test
 

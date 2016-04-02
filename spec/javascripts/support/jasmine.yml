@@ -7,13 +7,13 @@ src_files:
   - "cognitive/app/static/lib/js/angular-ui-router.min.js"
   - "cognitive/app/static/lib/js/ui-bootstrap-tpls-0.13.0.min.js"
   - "cognitive/app/static/lib/js/ngStorage.min.js"
-  - "cognitive/app/static/app/experiment/experiment.module.js"
-  - "cognitive/app/static/app/whiteboard/whiteboard.module.js"
-  - "cognitive/app/static/app/home/home.module.js"
-  - "cognitive/app/static/app/cognitive.module.js"
-  - "cognitive/app/static/app/**/*.router.js"
-  - "cognitive/app/static/app/**/*.service.js"
-  - "cognitive/app/static/app/**/*.controller.js"
+  - "cognitive/app/static/javascripts/experiment/experiment.module.js"
+  - "cognitive/app/static/javascripts/dashboard/dashboard.module.js"
+  - "cognitive/app/static/javascripts/home/home.module.js"
+  - "cognitive/app/static/javascripts/cognitive.module.js"
+  - "cognitive/app/static/javascripts/**/*.router.js"
+  - "cognitive/app/static/javascripts/**/*.service.js"
+  - "cognitive/app/static/javascripts/**/*.controller.js"
   - "cognitive/app/static/lib/js/angular-mocks.js"
 
 # stylesheets
@@ -34,7 +34,7 @@ helpers:
 # Return an array of filepaths relative to spec_dir to include.
 #
 spec_files:
-  - "cognitive/app/static/app/**/*[Ss]pec.js"
+  - "cognitive/app/static/javascripts/**/*[Ss]pec.js"
 
 # src_dir
 #

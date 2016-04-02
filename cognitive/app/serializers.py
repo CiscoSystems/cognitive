@@ -11,6 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+
 from models import Component
 from models import Data
 from models import DataOperationType
@@ -27,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Experiment
         # fields = ('created_time', 'modified_time',
@@ -36,6 +36,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         #        'execution_start_time', 'execution_end_time', 'component_start_id')
         # write_only_fields = ('created_time', 'modified_time',
         #        'execution_start_time', 'execution_end_time', 'component_start_id')
+
 
 class DataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,13 +56,15 @@ class ComponentSerializer(serializers.ModelSerializer):
     # function_arg_id=data["component_id"],
     # function_subtype_arg=data["op_constant"])
 
-    component_type = serializers.CharField(source='operation_type.function_arg')
-    component_id = serializers.CharField(source='operation_type.function_arg_id')
-    op_type = serializers.CharField(source='operation_type.function_subtype')
-    op_constant = serializers.CharField(source='operation_type.function_subtype_arg')
+    # component_type = serializers.CharField(source='operation_type.function_arg')
+    # component_id = serializers.CharField(source='operation_type.function_arg_id')
+    # op_type = serializers.CharField(source='operation_type.function_subtype')
+    # op_constant = serializers.CharField(source='operation_type.function_subtype_arg')
 
     class Meta:
         model = Component
+        depth = 1
+
 
 
 class WorkflowSerializer(serializers.ModelSerializer):

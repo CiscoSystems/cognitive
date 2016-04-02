@@ -1,0 +1,91 @@
+<md-dialog class="md-dialog dialog-login" aria-label="loginDialog" ng-cloak>
+  <md-dialog-content layout="row" layout-padding>
+    <md-content flex="60" style="background: whitesmoke">
+      <md-card layout-padding>
+        <p>This platform is under the development. We are appreciated to your ideas(especially for the backend), bug reports, pull requests... etc.
+        Please feel free to contact us. Thank you for your interested:)</p>
+      </md-card>
+      <md-card layout-padding>
+        <p>The documentation of REST APIs is available: <a href="/api/v1">http://localhost:8000/api/v1</a></p>
+        <p>These APIs are draft definitions, so be careful that these APIs are subject to change in the future commits</p>
+      </md-card>
+
+    </md-content>
+    <md-content flex="40">
+      <md-tabs md-border-bottom md-dynamic-height>
+        <md-tab>
+          <md-tab-label>Login</md-tab-label>
+          <md-tab-body layout-padding style="height: 500px">
+            <div class="tab-body">
+              <form layout="column" name="loginForm">
+                <md-input-container>
+                  <label>Username or Email</label>
+                  <input type="text" name="user_identifier"
+                         ng-model="vm.loginUser.username_or_email" required/>
+                  <div ng-messages="loginForm.user_identifier.$error">
+                    <div ng-message="required">Required</div>
+                  </div>
+                </md-input-container>
+                <md-input-container>
+                  <label>Password</label>
+                  <input type="password" name="password" ng-model="vm.loginUser.password" required/>
+                  <div ng-messages="loginForm.password.$error">
+                    <div ng-message="required">Required</div>
+                  </div>
+                </md-input-container>
+
+                <div layout="column" layout-padding ng-if="vm.signInFailure">
+                  <code>Invalid username or password, please reenter.</code>
+                </div>
+
+                <md-button class="md-raised md-primary btn-square" ng-click="vm.login()"
+                           ng-disabled="!loginForm.$valid" flex>Login
+                </md-button>
+              </form>
+            </div>
+          </md-tab-body>
+        </md-tab>
+        <md-tab>
+          <md-tab-label>Register</md-tab-label>
+          <md-tab-body layout-padding>
+            <div class="tab-body">
+              <form layout="column" name="signUpForm">
+                <md-input-container>
+                  <label>Username</label>
+                  <input type="text" name="username" ng-model="vm.registeringUser.name" required />
+                  <div ng-messages="signUpForm.username.$error">
+                    <div ng-message="required">Required</div>
+                  </div>
+                </md-input-container>
+                <md-input-container>
+                  <label>Email</label>
+                  <input required type="email" name="user_email" ng-model="vm.registeringUser.email" />
+                  <div ng-messages="signUpForm.user_email.$error" multiple md-auto-hide="false">
+                    <div ng-message="required">Required</div>
+                    <div ng-message="email">Invalid email address</div>
+                  </div>
+                </md-input-container>
+                <md-input-container>
+                  <label>Password</label>
+                  <input type="password" name="password"
+                         ng-model="vm.registeringUser.password" required />
+                  <div ng-messages="signUpForm.password.$error">
+                    <div ng-message="required">Required</div>
+                  </div>
+                </md-input-container>
+
+                <div layout="column" layout-padding ng-if="vm.signUpFailure">
+                  <code>Duplicated email or username</code>
+                </div>
+
+                <md-button class="md-raised md-primary btn-square" ng-click="vm.register()"
+                           ng-disabled="!signUpForm.$valid" flex>Register
+                </md-button>
+              </form>
+            </div>
+          </md-tab-body>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </md-dialog-content>
+</md-dialog>

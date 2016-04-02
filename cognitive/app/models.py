@@ -59,11 +59,11 @@ class DataOperationType(models.Model):
     def __str__(self):
         return_str = self.function_type + " " + self.function_arg + " "
         if self.function_arg_id is not None:
-            return_str = return_str + self.function_arg_id + " "
+            return_str = return_str + str(self.function_arg_id) + " "
         if self.function_subtype is not None:
             return_str = return_str + self.function_subtype + " "
         if self.function_subtype_arg is not None:
-            return_str = return_str + self.function_subtype_arg + " "
+            return_str = return_str + str(self.function_subtype_arg) + " "
         return return_str
 
 
@@ -136,8 +136,8 @@ class Data(models.Model):
     type = models.CharField(blank=False, null=False, max_length=50)
     file_path = models.CharField(blank=True, null=True, max_length=50)
     columns = models.CharField(blank=True, null=True, max_length=1024)
-    created_time = models.TimeField(blank=True, null=True)
-    modified_time = models.TimeField(blank=True, null=True)
+    created_time = models.DateTimeField(auto_now=True)
+    modified_time = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created_time',)
@@ -145,7 +145,7 @@ class Data(models.Model):
 
 class Experiment(models.Model):
     EXPERIMENT_STATUS = (
-        ('Draft', ' Saved as draft'),
+        ('Stop', ' Saved as stop'),
         ('InComplete', 'More information required'),
         ('InExecution', 'Execution started'),
         ('Error', ' Error when executed'),
@@ -153,11 +153,11 @@ class Experiment(models.Model):
     )
     user = models.ForeignKey(User)
     name = models.CharField(max_length=50)
-    status = models.CharField(max_length=50, choices=EXPERIMENT_STATUS, default='Draft')
-    created_time = models.TimeField(blank=True, null=True)
-    modified_time = models.TimeField(blank=True, null=True)
-    execution_start_time = models.TimeField(blank=True, null=True)
-    execution_end_time = models.TimeField(blank=True, null=True)
+    status = models.CharField(max_length=50, choices=EXPERIMENT_STATUS, default='Stop')
+    created_time = models.DateTimeField(auto_now=True)
+    modified_time = models.DateTimeField(auto_now=True)
+    execution_start_time = models.DateTimeField(blank=True, null=True)
+    execution_end_time = models.DateTimeField(blank=True, null=True)
     component_start_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -166,7 +166,7 @@ class Experiment(models.Model):
 
 class Component(models.Model):
     COMPONENT_STATUS = (
-        ('Draft', ' Saved as draft'),
+        ('Stop', ' Saved as stop'),
         ('InComplete', 'More information required'),
         ('InExecution', 'Execution started'),
         ('Error', ' Error when executed'),
@@ -174,12 +174,12 @@ class Component(models.Model):
     )
 
     experiment = models.ForeignKey(Experiment)
-    status = models.CharField(max_length=50, choices=COMPONENT_STATUS, default='Draft')
+    status = models.CharField(max_length=50, choices=COMPONENT_STATUS, default='Stop')
     operation_type = models.OneToOneField(DataOperationType, blank=True, null=True)
-    created_time = models.TimeField(blank=True, null=True)
-    modified_time = models.TimeField(blank=True, null=True)
-    execution_start_time = models.TimeField(blank=True, null=True)
-    execution_end_time = models.TimeField(blank=True, null=True)
+    created_time = models.DateTimeField(auto_now=True)
+    modified_time = models.DateTimeField(auto_now=True)
+    execution_start_time = models.DateTimeField(blank=True, null=True)
+    execution_end_time = models.DateTimeField(blank=True, null=True)
     data_location = models.CharField(max_length=50, blank=True, null=True)
     preferred_data_location = models.CharField(max_length=50, blank=True, null=True)
     # component_id = models.IntegerField(blank=True, null=True)

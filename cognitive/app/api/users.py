@@ -84,7 +84,7 @@ class UserViewSet(viewsets.ViewSet):
                 'token': user.token, 'email': user.email,
                 'status': 'success'})
         except Exception as e:
-            return Response({'status': 'failure', 'message': str(e[0])})
+            return Response({'status': 'failure', 'message': str(e[0])}, status=400)
 
     def update(self, request, pk=None):
         """

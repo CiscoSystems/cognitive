@@ -1,0 +1,43 @@
+<md-dialog ng-controller="ExperimentDialogController as vm"
+           class="experiment-creation-dialog"
+           md-theme="cognitive"
+           aria-label="experiment-creation-dialog"
+           ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Experiment</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="vm.close()" aria-label="Close dialog">
+        <ng-md-icon icon="close" class="icon-white"></ng-md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <form name="experimentCreationForm">
+      <div class="md-dialog-content" layout="column">
+        <div layout="row"  layout-align="center center" flex>
+          <span class="fa-stack main-icon">
+            <i class="fa fa-flask fa-stack-1x"></i>
+            <i class="fa fa-circle-o fa-stack-2x"></i>
+          </span>
+        </div>
+        <md-input-container>
+          <label>Title</label>
+          <input name="title" ng-model="vm.experimentInfo.title" required>
+          <div ng-messages="experimentCreationForm.title.$error">
+            <div ng-message="required">Required</div>
+          </div>
+        </md-input-container>
+        <md-button class="md-raised md-primary btn-square"
+                 ng-click="vm.create()"
+                 ng-disabled="!experimentCreationForm.$valid"
+                 flex>
+        Create
+      </md-button>
+    </div>
+    </form>
+  </md-dialog-content>
+
+</md-dialog>
+

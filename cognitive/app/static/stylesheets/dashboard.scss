@@ -5,67 +5,32 @@ md-content.md-cognitive-theme.dashboard-experiment {
   background-color: whitesmoke;
 }
 
+.experiment-chart-card {
+  .card-title {
+    border-bottom: solid 1px whitesmoke;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .card-content {
+    height: 300px;
+
+    .total-experiments-number {
+      text-align: center;
+      font-size: 200px;
+    }
+  }
+}
+
 .experiment-card {
   color: $defaultColor;
   .card-title {
     border-bottom: solid 1px whitesmoke;
-    margin-top: -10px;
-    .right-corner {
-      .fa-search {
-        font-size: 15pt;
-        color: darkgrey;
-        padding-right: 6px
-      }
-      .search-form {
-        height: 32px;
-        width: 240px;
-        margin-top: 18px;
-      }
-      .new-btn {
-        height: 18px;
-        margin-top: 14px;
-      }
+    padding-top: 4px;
+    padding-bottom: 4px;
+    .card-title-text {
+      padding-top: 8px;
     }
-  }
-  .card-content {
-    min-height: calc(100vh - 170px);
-  }
-}
-
-.experiment-table {
-  color: $defaultTableHeaderColor;
-  width: 100%;
-  margin-top: 20px;
-  text-align: center;
-  thead {
-    tr{
-      border: solid 1px whitesmoke;
-    }
-  }
-  .checkbox-cell {
-    padding-top: 15px;
-  }
-  tbody {
-   tr:hover {
-     background-color: #E0E0E0;
-   }
-  }
-  tr {
-    border-bottom: solid 1px whitesmoke;
-  }
-  th {
-    text-align: center;
-  }
-  td {
-    text-align: center;
-  }
-  .config-icon {
-    font-size: 18pt;
-    color: gray;
-  }
-  .delete-icon {
-    font-size: 18pt;
-    color: orangered;
   }
 }
 
@@ -133,4 +98,10 @@ md-content.md-cognitive-theme.dashboard-experiment {
   }
 }
 
-
+.experiment-creation-dialog {
+  border-radius: 0 !important;
+  .main-icon{
+    font-size: 7em;
+    color: #2196F3
+  }
+}

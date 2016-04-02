@@ -1,4 +1,4 @@
-![Alt tag](/doc/img/cognitive-icon-small.png?raw=true "Cognitive Icon") Cognitive [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+![Alt tag](/doc/img/cognitive-icon-small.png?raw=true "Cognitive Icon") Cognitive [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0) [![Circle CI](https://circleci.com/gh/CiscoSystems/cognitive.svg?style=svg)](https://circleci.com/gh/CiscoSystems/cognitive)
 =========
 
 Machine Learning as a Service (MLaaS)
@@ -19,7 +19,7 @@ Install all python packages listed in requirements file. Start your Django serve
         virtualenv venv
         source venv/bin/activate
         pip install -r requirements.txt
-        python manage.py syncdb
+        python manage.py migrate --run-syncdb
         python manage.py bower install
         python manage.py runserver <optional IP:PORT>
 
@@ -89,7 +89,7 @@ npm install eslint
 Then execute:
 
 ```
-eslint cognitive/app/static/app/
+eslint cognitive/app/static/javascripts/
 ```
 
 How to Contribute

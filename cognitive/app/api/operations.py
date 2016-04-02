@@ -47,111 +47,164 @@ class OperationViewSet(viewsets.ViewSet):
 
     def set_operation(self, operation, data):
         if operation == 'math_formula':
-            print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
-            op = DataOperationType(
-                function_type='Update',
-                function_arg=data["component_type"],
-                function_subtype=data["op_type"],
-                function_arg_id=data["component_id"],
-                function_subtype_arg=data["op_constant"])
-            op.save()
+            try:
+                print data["op_type"], data["op_constant"], data["component_type"], data["component_id"]
+                op = DataOperationType(
+                    function_type='Update',
+                    function_arg=data["component_type"],
+                    function_subtype=data["op_type"],
+                    function_arg_id=data["component_id"],
+                    function_subtype_arg=data["op_constant"])
+                op.save()
+            except KeyError:
+                op = DataOperationType(function_type='Update')
+                op.save()
 
         elif operation == 'normalization':
-            print data["component_type"], data["op_type"], data["component_id"]
-            op = DataOperationType(
-                function_type='Update',
-                function_arg=data["component_type"],
-                function_arg_id=data["component_id"],
-                function_subtype='Normalize',
-                function_subtype_arg=data["op_type"])
-            op.save()
+            try:
+                print data["component_type"], data["op_type"], data["component_id"]
+                op = DataOperationType(
+                    function_type='Update',
+                    function_arg=data["component_type"],
+                    function_arg_id=data["component_id"],
+                    function_subtype='Normalize',
+                    function_subtype_arg=data["op_type"])
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Update',
+                    function_subtype='Normalize')
+                op.save()
 
         elif operation == 'projection':
-            print data["component_id"]
-            op = DataOperationType(
-                function_type='Filter',
-                function_arg='Table',
-                function_arg_id=data["component_id"],
-                function_subtype='Project')
-            op.save()
+            try:
+                print data["component_id"]
+                op = DataOperationType(
+                    function_type='Filter',
+                    function_arg='Table',
+                    function_arg_id=data["component_id"],
+                    function_subtype='Project')
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Filter',
+                    function_arg='Table')
+                op.save()
 
         elif operation == 'duplication_removal':
-            print data["component_id"]
-            op = DataOperationType(
-                function_type='Filter',
-                function_arg='Table',
-                function_arg_id=data["component_id"],
-                function_subtype='RemoveDup')
-            op.save()
+            try:
+                print data["component_id"]
+                op = DataOperationType(
+                    function_type='Filter',
+                    function_arg='Table',
+                    function_arg_id=data["component_id"],
+                    function_subtype='RemoveDup')
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Filter',
+                    function_arg='Table',
+                    function_subtype='RemoveDup')
+                op.save()
 
         elif operation == 'remove_missing':
-            print data["op_action"]
-            op = DataOperationType(
-                function_type='Filter',
-                function_arg='Table',
-                function_subtype='RemoveMissing',
-                function_subtype_arg=data["op_action"])
-            op.save()
+            try:
+                print data["op_action"]
+                op = DataOperationType(
+                    function_type='Filter',
+                    function_arg='Table',
+                    function_subtype='RemoveMissing',
+                    function_subtype_arg=data["op_action"])
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Filter',
+                    function_arg='Table',
+                    function_subtype='RemoveMissing')
+                op.save()
 
         elif operation == 'metadata':
-            print data["column_type"]
-            op = DataOperationType(
-                function_type='Update',
-                function_arg='Table',
-                function_subtype='Metadata',
-                function_subtype_arg=data["column_type"])
-            op.save()
+            try:
+                print data["column_type"]
+                op = DataOperationType(
+                    function_type='Update',
+                    function_arg='Table',
+                    function_subtype='Metadata',
+                    function_subtype_arg=data["column_type"])
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Update',
+                    function_arg='Table',
+                    function_subtype='Metadata')
+                op.save()
 
         elif operation == 'row':
-            print data["row_values"]
-            op = DataOperationType(
-                function_type='Create',
-                function_arg='Row',
-                function_subtype='Row',
-                function_subtype_arg=data["row_values"])
-            op.save()
+            try:
+                print data["row_values"]
+                op = DataOperationType(
+                    function_type='Create',
+                    function_arg='Row',
+                    function_subtype='Row',
+                    function_subtype_arg=data["row_values"])
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Create',
+                    function_arg='Row',
+                    function_subtype='Row')
+                op.save()
 
         elif operation == 'input':
-            if data["input_file_type"] == "csv":
-                print data["input_file"], data["input_file_type"]
-                filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"]
-                print "Filename ", filename
-                f = open(filename, 'w')
-                f.write(data["data_values"])
-                f.close()
-                op = DataOperationType(
-                    function_type='Create', function_arg='Table',
-                    function_subtype='Input', function_subtype_arg=filename)
-                op.save()
+            try:
+                if data["input_file_type"] == "csv":
+                    print data["input_file"], data["input_file_type"]
+                    filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"]
+                    print "Filename ", filename
+                    f = open(filename, 'w')
+                    f.write(data["data_values"])
+                    f.close()
+                    op = DataOperationType(
+                        function_type='Create', function_arg='Table',
+                        function_subtype='Input', function_subtype_arg=filename)
+                    op.save()
 
-            elif data["input_file_type"] == "http":
-                filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"].split('/')[-1]
-                print "Filename ", filename
-                response = urllib2.urlopen(data["input_file"])
-                csv_data = read_csv(response)
-                csv_data.to_csv(filename, index=False)
+                elif data["input_file_type"] == "http":
+                    filename = "/tmp/" + str(data["experiment"]) + "_" + data["input_file"].split('/')[-1]
+                    print "Filename ", filename
+                    response = urllib2.urlopen(data["input_file"])
+                    csv_data = read_csv(response)
+                    csv_data.to_csv(filename, index=False)
+                    op = DataOperationType(
+                        function_type='Create', function_arg='Table',
+                        function_subtype='Input', function_subtype_arg=filename)
+                    op.save()
+            except KeyError:
                 op = DataOperationType(
-                    function_type='Create', function_arg='Table',
-                    function_subtype='Input', function_subtype_arg=filename)
+                    function_type='Create',
+                    function_arg='Table',
+                    function_subtype='Input')
                 op.save()
-            # data = Data.objects.get(pk=1)
-            # op = DataOperationType(
-            #     function_type='Create', function_arg='Column',
-            #     function_subtype='Input', function_subtype_arg=data.columns)
-            # op.save()
 
         elif operation == "machine_learning":
-            print data["model_type"], data["train_data_percentage"], data["target_column"]
-            arg = {
-                'train_data_percentage': data["train_data_percentage"],
-                'target_column': data["target_column"]}
-            op = DataOperationType(
-                function_type='Create',
-                function_arg='Model',
-                function_arg_id=data["model_type"],
-                function_subtype='Train-Test',
-                function_subtype_arg=json.dumps(arg))
-            op.save()
+            try:
+                print data["model_type"], data["train_data_percentage"], data["target_column"]
+                arg = {
+                    'train_data_percentage': data["train_data_percentage"],
+                    'target_column': data["target_column"]}
+                op = DataOperationType(
+                    function_type='Create',
+                    function_arg='Model',
+                    function_arg_id=data["model_type"],
+                    function_subtype='Train-Test',
+                    function_subtype_arg=json.dumps(arg))
+                op.save()
+            except KeyError:
+                op = DataOperationType(
+                    function_type='Create',
+                    function_arg='Model',
+                    function_subtype='Train-Test')
+                op.save()
         return op
 
     def list(self, request, operation):
@@ -170,6 +223,10 @@ class OperationViewSet(viewsets.ViewSet):
         """
         comp = Component.objects.get(pk=int(pk))
         serializer = ComponentSerializer(comp)
+        print serializer
+        print serializer.data
+
+
         return send_response(request.method, serializer)
 
     def create(self, request, operation):
@@ -208,12 +265,14 @@ class OperationViewSet(viewsets.ViewSet):
         exp_id = int(data["experiment"])
         print "Experiment ", exp_id, " Operation ", operation
         op = self.set_operation(operation, data)
-
         comp = Component.objects.get(pk=pk)
+        comp.operation_type = op
         serializer = ComponentSerializer(comp, data=request.data)
+        serializer.operation_type = op
         if serializer.is_valid():
-            serializer.object.operation_type = op
+            # serializer.operation_type = op
             serializer.save()
+        # TODO: response serializer.errors when is_valid() is False
         return send_response(request.method, serializer)
 
     def destroy(self, request, operation, pk=None):

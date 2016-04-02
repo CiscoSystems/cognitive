@@ -1,0 +1,119 @@
+<ng-include src="'static/javascripts/common/header.html'"></ng-include>
+
+<div ng-controller="ExperimentController as vm">
+  <md-toolbar class="md-menu-toolbar md-whiteframe-1dp">
+    <div class="md-toolbar-tools">
+      <div flex="10">
+        <md-button class="md-fab md-mini md-primary" ng-click="vm.linkToExperimentDashboard()">
+          <md-tooltip>Back</md-tooltip>
+          <md-icon md-font-icon="fa-angle-left" class="md-fa-icon fa"></md-icon>
+        </md-button>
+      </div>
+      <div>
+        <h2>{{ vm.experiment.name }}</h2>
+      </div>
+      <div flex></div>
+
+      <md-button class="md-fab md-mini md-primary" ng-disabled="true">
+        <md-tooltip>Save</md-tooltip>
+        <md-icon md-font-icon="fa-save" class="md-fa-icon fa"></md-icon>
+      </md-button>
+
+
+      <md-button class="md-fab md-mini md-primary" ng-click="vm.show()">
+        <md-tooltip>Chart</md-tooltip>
+        <md-icon md-font-icon="fa-pie-chart" class="md-fa-icon fa"></md-icon>
+      </md-button>
+
+
+      <md-button class="md-fab md-mini md-primary" ng-click="vm.run()">
+        <md-tooltip>Run</md-tooltip>
+        <md-icon md-font-icon="fa-play" class="md-fa-icon fa"></md-icon>
+      </md-button>
+      <div flex="5"></div>
+    </div>
+  </md-toolbar>
+
+  <div class="experiment-content" layout="row">
+
+    <md-card class="experiment-component-card">
+      <div class="card-header">
+        <span class="md-headline">Components</span>
+      </div>
+      <div layout="column" class="plugin-list">
+        <div class="btn btn-primary btn-square plugin-btn" ng-repeat="(key, desc) in vm.pluginList"
+             ng-drag="true" ng-drag-data="{{ {'pluginKey': key} }}">
+          <i class="{{ desc.iconClass }} fa-fw plugin-btn-icon"></i>
+          <span class="plugin-btn-text">{{ desc.name }}</span>
+        </div>
+      </div>
+    </md-card>
+
+    <div class="experiment-content" flex>
+      <md-card style="height: 60vh;">
+        <md-card-content class="card-content-svg-board"
+                         ng-drop="true" ng-drop-success="vm.pluginDropComplete($data)">
+          <div workspace="{{ vm.experiment.id }}" style="height: 100%;">
+            <svg class="whiteboard-root" ng-click="vm.clickNone()">
+              <g class="layer">
+                <g ng-repeat="edge in vm.experiment.edges">
+                  <g cognitive-edge edge="edge"
+                     node-by-index="vm.getNodeById">
+                  </g>
+                </g>
+              </g>
+              <g class="layer" workspace="{{ vm.experiment.id }}">
+                <g ng-repeat="node in vm.experiment.nodes track by $index">
+                  <g cognitive-node
+                     ng-class="{ 'active' : vm.isActiveNode($index) }"
+                     click-node="vm.clickNode($index)"
+                     click-close-button="vm.clickCloseButton($index, node.id)"
+                     create-edge="vm.createEdge"
+                     node="node"></g>
+                </g>
+              </g>
+              <g class="layer layer-3"></g>
+            </svg>
+          </div>
+          <div class="md-progress-circular--experiment" ng-show="vm.loading">
+            <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+
+  <div layout="row" flex>
+    <div flex style="border-right: solid 1px #cacacb; min-height: 40vh;">
+      <div flex>
+        <md-tabs md-border-bottom md-dynamic-height>
+            <md-tab>
+              <md-tab-label><i class="fa fa-info-circle"></i> Info</md-tab-label>
+              <md-tab-body>
+                <div flex layout-padding>
+                  <h2>Information</h2>
+                  <p>Currently experiments DOES NOT support for many features: <code>saving created workflows</code>,
+                  <code>real-time data processing</code>, <code>nice visualizations</code>, ... and so on.
+                  </p>
+                </div>
+              </md-tab-body>
+            </md-tab>
+            <md-tab>
+              <md-tab-label><i class="fa fa-cog"></i> Preferences</md-tab-label>
+              <md-tab-body>
+                <div flex layout-padding>
+                  <h2>Preferences</h2>
+                  <p>
+                    <code>This is not supported yet</code>
+                  </p>
+                </div>
+              </md-tab-body>
+            </md-tab>
+          </md-tabs>
+      </div>
+    </div>
+    <div flex>
+      <div ui-view="rightNav"></div>
+    </div>
+  </div>
+</div>

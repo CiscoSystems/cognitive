@@ -1,0 +1,116 @@
+<md-content ng-controller="DashboardExperimentController as vm"
+            class="dashboard-experiment" flex>
+
+  <div layout="row" layout-xs="column" layout-sm="column" flex>
+    <md-card class="experiment-chart-card" flex>
+      <md-card-title class="card-title">
+        <md-card-title-text>
+          <span class="md-headline">History</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content class="card-content">
+        <nvd3 options="vm.executionHistoryChartOptions" data="vm.executionHistoryChartData"></nvd3>
+      </md-card-content>
+    </md-card>
+
+    <md-card class="experiment-chart-card" flex>
+      <md-card-title class="card-title">
+        <md-card-title-text>
+          <span class="md-headline">Status</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content class="card-content">
+        <nvd3 options="vm.statusChartOptions" data="vm.statusChartData"></nvd3>
+      </md-card-content>
+    </md-card>
+
+    <md-card class="experiment-chart-card" flex>
+      <md-card-title class="card-title">
+        <md-card-title-text>
+          <span class="md-headline">Total</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content class="card-content">
+        <p class="total-experiments-number">
+          {{ vm.experiments.length }}
+        </p>
+      </md-card-content>
+    </md-card>
+  </div>
+
+  <md-card class="experiment-card" flex>
+    <md-card-title class="card-title" ng-hide="vm.selectedExperiments.length">
+      <md-card-title-text class="card-title-text">
+        <span class="md-headline">Experiments</span>
+      </md-card-title-text>
+      <span flex></span>
+      <md-button class="md-primary md-raised new-btn btn-square" ng-click="vm.createExperiment($event)">New</md-button>
+    </md-card-title>
+
+    <md-card-title class="card-title"
+                   ng-show="vm.selectedExperiments.length"
+                   style="background: #2196F3">
+      <md-card-title-text class="card-title-text">
+        <span class="md-headline"
+              style="height: 40px; color: white">
+          {{vm.selectedExperiments.length}} {{ vm.selectedExperiments.length > 1 ? 'items' : 'item' }} selected
+        </span>
+      </md-card-title-text>
+
+    </md-card-title>
+
+
+
+    <md-table-container>
+      <table md-table
+             md-row-select
+             multiple
+             ng-model="vm.selectedExperiments"
+             md-progress="vm.loading">
+        <thead md-head md-order="vm.experimentQuery.order" md-on-reorder="vm.getExperiment">
+          <tr md-row>
+            <th md-column><span>ID</span></th>
+            <th md-column md-order-by="nameToLower"><span>Title</span></th>
+            <th md-column>Status</th>
+            <th md-column>Created</th>
+            <th md-column></th>
+          </tr>
+        </thead>
+
+        <tbody md-body>
+          <tr md-row
+              md-select="experiment"
+              md-on-select="console.log('aaaa')"
+              ng-repeat="experiment in vm.experiments">
+            <td md-cell>{{ experiment.id }}</td>
+            <td md-cell>
+              <a ng-click="vm.linkToExperiment(experiment)">
+                {{ experiment.name }}
+              </a>
+            </td>
+            <td md-cell>
+              {{ experiment.status }}
+            </td>
+            <td md-cell>{{ experiment.created_time | date }}</td>
+            <td md-cell>
+              <a ng-click="vm.deleteExperiment(experiment)">
+                <i class="fa fa-trash-o delete-icon"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="vm.experimentQuery.limit"
+                         md-limit-options="[100, 200, 300]"
+                         md-page="vm.experimentQuery.page"
+                         md-total="{{ vm.experiments.length }}"
+                         md-on-paginate="vm.getExperiments"
+                         md-page-select
+                         style="color: gray"
+    >
+    </md-table-pagination>
+
+  </md-card>
+</md-content>

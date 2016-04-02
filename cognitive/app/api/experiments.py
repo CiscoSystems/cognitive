@@ -16,7 +16,6 @@ from ..models import Experiment
 from ..serializers import ExperimentSerializer
 from ..views import send_response
 from rest_framework import viewsets
-from datetime import datetime
 
 
 class ExperimentViewSet(viewsets.ViewSet):
@@ -46,8 +45,6 @@ class ExperimentViewSet(viewsets.ViewSet):
         """
         serializer = ExperimentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.created_time = datetime.now()
-            serializer.modified_time = datetime.now()
             serializer.save()
 
         return send_response(request.method, serializer)
@@ -61,7 +58,6 @@ class ExperimentViewSet(viewsets.ViewSet):
         exp = Experiment.objects.get(pk=pk)
         serializer = ExperimentSerializer(exp, data=request.data)
         if serializer.is_valid():
-            serializer.object.modified_time = datetime.now()
             serializer.save()
         return send_response(request.method, serializer)
 

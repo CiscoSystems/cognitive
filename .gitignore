@@ -12,6 +12,7 @@ cognitive/app/uploads/*
 .tags_sorted_by_file
 *.js.map
 *.sqlite3
+*.tar.gz
 node_modules
 components
 cognitive/app/static/CACHE/

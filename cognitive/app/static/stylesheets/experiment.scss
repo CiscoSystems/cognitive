@@ -1,8 +1,47 @@
 .experiment-content {
-  background: whitesmoke;
+  background: whitesmoke !important;
+}
+
+.experiment-component-card {
+
+  .card-header {
+    border-bottom: solid 1px whitesmoke;
+    color: #616161;
+    padding: 4px 4px 4px 20px;
+  }
 
   .plugin-list {
-    height: calc(100vh - 224px);
-    overflow-x: scroll;
+    padding-top: 10px;
+    .plugin-btn {
+      margin-bottom: 2px;
+      width: 95%;
+      text-align: left;
+      margin-right: auto;
+      margin-left: auto;
+
+      .plugin-btn-icon {
+        padding-top: 3px;
+      }
+
+      .plugin-btn-text {
+        padding-left: 2px;
+      }
+    }
   }
+}
+
+[ng-drag] {
+  cursor: move;
+}
+
+[ng-drag].drag-over {
+  border: solid 1px red;
+}
+
+[ng-drag].dragging {
+  opacity: 0.5;
+}
+
+[ng-drop].drag-enter {
+  border: solid 2px rgb(33,150,243);
 }

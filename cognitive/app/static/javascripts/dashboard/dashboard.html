@@ -1,0 +1,13 @@
+
+<ng-include src="'static/javascripts/common/header.html'"></ng-include>
+<div layout="column" flex>
+  <md-tabs md-border-bottom md-dynamic-height>
+      <md-tab>
+        <md-tab-label><i class="fa fa-flask"></i> Experiment</md-tab-label>
+      </md-tab>
+    </md-tabs>
+</div>
+
+<section ng-controller="DashboardController as vm" layout="row" flex>
+  <div ui-view="content" flex></div>
+</section>

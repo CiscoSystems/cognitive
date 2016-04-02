@@ -1,6 +1,9 @@
 $defaultColor: #404040;
 $themeColor: #f44336;
 
+.md-fa-icon {
+  height: auto;
+}
 
 .md-dialog {
   border-radius: 0;
@@ -21,7 +24,7 @@ $themeColor: #f44336;
 }
 
 .icon-default {
-  fill: #f44336;
+  fill: rgb(33,150,243);
 }
 
 .cognitive-modal-window .modal-dialog {
@@ -40,15 +43,7 @@ a:hover {
   text-decoration: none;
 }
 
-.right {
-  float: right;
-}
-
-.left {
-  float: left;
-}
-
-/* whiteboard.html */
+/* dashboard.html */
 .card-remove-button {
   background: indianred;
   text-align: center;
@@ -64,7 +59,7 @@ a:hover {
   text-transform: none;
 }
 
-/* whiteboard/data.html */
+/* dashboard/data.html */
 .md-title-data {
   padding-left: 20px;
 }
