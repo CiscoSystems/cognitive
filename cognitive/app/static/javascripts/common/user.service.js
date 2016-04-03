@@ -3,10 +3,39 @@
 
   angular.module('cognitive').service('UserService', UserService)
 
-  function UserService($cookies, $http){
+  function UserService($cookies, $http, $resource){
     // TODO: $http will be replaced by $resource
 
     var UserService = {}
+
+    var resource = $resource('users', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/users/:id'
+      },
+      query: {
+        method:'GET',
+        url: '/api/v1/users/',
+        isArray: true
+      },
+      save: {
+        method: 'POST',
+        url: '/api/v1/users/'
+      },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/users/:id'
+      },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/users/:id'
+      },
+      token: {
+        method: 'GET',
+        url: '/oauth/token/'
+      }
+    })
+
 
     UserService.login = function(userInfo) {
       var username = userInfo['name'] || userInfo['email'] || userInfo['username_or_email']
@@ -28,6 +57,7 @@
 
     UserService.register = function(userInfo) {
       /* userInfo['username'] userInfo['email'] userInfo['password'] */
+      console.log(userInfo)
       return $http.post('/api/v1/users/', userInfo)
         .success(function (data) {
           if (data.status !== 'success') {

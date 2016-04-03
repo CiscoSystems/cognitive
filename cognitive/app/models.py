@@ -13,6 +13,7 @@
 # under the License.
 
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import string
@@ -67,68 +68,32 @@ class DataOperationType(models.Model):
         return return_str
 
 
-class User(models.Model):
-    username = models.CharField(max_length=50)
-    full_name = models.CharField(max_length=50)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+class User(AbstractUser):
     token = models.CharField(max_length=100, blank=True, null=True)
     max_experiments = models.IntegerField(default=50)
 
     def __str__(self):
         return self.username
 
-    @classmethod
-    def authenticate(cls, username_or_email, password):
-        try:
-            user = User.objects.get(username=username_or_email)
-        except:
-            try:
-                user = User.objects.get(email=username_or_email)
-            except:
-                return None
-        if not user.confirm_password(password):
-            return None
-        return user
-
-    @classmethod
-    def validate(cls, username, email, password):
+    def clean(self):
         err_msg = ""
-        if not username:
+        if not self.username:
             err_msg = "Empty username field"
             raise ValidationError(err_msg)
-        if not password:
+        if not self.password:
             err_msg = "Empty password field"
             raise ValidationError(err_msg)
-        if not email:
+        if not self.email:
             err_msg = "Empty email field"
             raise ValidationError(err_msg)
-        validate_email(email)
-        if User.objects.filter(username=username).count() > 0:
+        validate_email(self.email)
+        if User.objects.filter(username=self.username).count() > 0:
             err_msg = "Username already exists"
             raise ValidationError(err_msg)
-        if User.objects.filter(email=email).count() > 0:
+        if User.objects.filter(email=self.email).count() > 0:
             err_msg = "Email already exists"
             raise ValidationError(err_msg)
         return True
-
-    def confirm_password(self, password):
-        # TODO: password must be encrypted
-        if self.password == password:
-            return True
-        else:
-            return False
-
-    # TODO: password encryption
-
-    @classmethod
-    def generate_token(cls):
-        def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-            return ''.join(random.choice(chars) for _ in range(size))
-        return id_generator()
-
-    def has_correct_token(self, token):
-        return self.token == token
 
 
 class Data(models.Model):

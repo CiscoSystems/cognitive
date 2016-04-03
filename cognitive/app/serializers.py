@@ -24,7 +24,8 @@ from rest_framework import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        # fields = ['id','username','full_name']
+        write_only_fields = ['password']
+        read_only_fields = ['id']
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
@@ -64,7 +65,6 @@ class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         depth = 1
-
 
 
 class WorkflowSerializer(serializers.ModelSerializer):

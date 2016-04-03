@@ -51,12 +51,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djangobower',
     'compressor',
+    # 'corsheaders',
+    'oauth2_provider',
     'rest_framework',
     'rest_framework_swagger',
     'cognitive.app',
 )
 
 MIDDLEWARE_CLASSES = (
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -180,4 +183,22 @@ BOWER_INSTALLED_APPS = (
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    ),
+}
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
+
+# COGNITIVE_CLIENT_ID = "Gbe1ZEIiHrtVVIojTqRCyV1tNeMMYC5kTMOHuMkQ"
+#
+# COGNITIVE_CLIENT_SECRET = "cRsoHn8Yh9a138aE3s9WBy8hsyclHEs1SQy4jui2x6BT5KWcmdhrQ7mqOcEk9IsR3QArU5u0FnansVWkCV3wbov5TwK76LGGcxDSftLvYEaTLYrVaxKDqgzMrScwZNKe"
+#
+# OAUTH_URL = "http://localhost:8000/oauth/token/"
+
+AUTH_USER_MODEL = 'app.User'
 

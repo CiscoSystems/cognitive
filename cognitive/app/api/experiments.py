@@ -15,6 +15,7 @@
 from ..models import Experiment
 from ..serializers import ExperimentSerializer
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 
 
 class ExperimentViewSet(viewsets.ModelViewSet):

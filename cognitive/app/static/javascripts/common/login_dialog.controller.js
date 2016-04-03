@@ -36,12 +36,13 @@
 
     vm.register = function () {
       UserService.register({
-        username: vm.registeringUser.name,
-        email: vm.registeringUser.email,
-        password: vm.registeringUser.password
+        "username": vm.registeringUser.name,
+        "email": vm.registeringUser.email,
+        "password": vm.registeringUser.password
       }).then(function () {
         $mdDialog.hide()
-      }).catch(function () {
+      }).catch(function (error) {
+        console.log(error)
         vm.signUpFailure = true
       })
     }
