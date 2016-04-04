@@ -10,7 +10,7 @@
     var resource = $resource('machine_learning', null, {
       get: {
         method: 'GET',
-        url: '/api/v1/operations/machine_learning/:id'
+        url: '/api/v1/operations/machine_learning/:id/'
       },
       list: {
         method:'GET',
@@ -23,11 +23,11 @@
       },
       update: {
         method: 'PUT',
-        url: '/api/v1/operations/machine_learning/:id'
+        url: '/api/v1/operations/machine_learning/:id/'
       },
       delete: {
         method: 'DELETE',
-        url: '/api/v1/operations/machine_learning/:id'
+        url: '/api/v1/operations/machine_learning/:id/'
       }
     })
 

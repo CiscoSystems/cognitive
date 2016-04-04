@@ -10,20 +10,23 @@
     var resource = $resource('normalization', null, {
       get: {
         method: 'GET',
-        url: '/api/v1/operations/normalization/:id' },
+        url: '/api/v1/operations/normalization/:id/'
+      },
       list: {
         method:'GET',
         url: '/api/v1/operations/normalization/',
         isArray: true },
       create: {
         method: 'POST',
-        url: '/api/v1/operations/normalization/' },
+        url: '/api/v1/operations/normalization/'
+      },
       update: {
         method: 'PUT',
-        url: '/api/v1/operations/normalization/:id' },
+        url: '/api/v1/operations/normalization/:id/'
+      },
       delete: {
         method: 'DELETE',
-        url: '/api/v1/operations/normalization/:id'
+        url: '/api/v1/operations/normalization/:id/'
       }
     })
 

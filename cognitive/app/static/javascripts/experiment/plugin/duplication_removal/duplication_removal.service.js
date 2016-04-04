@@ -10,20 +10,23 @@
     var resource = $resource('duplication_removal', null, {
       get: {
         method: 'GET',
-        url: '/api/v1/operations/duplication_removal/:id' },
+        url: '/api/v1/operations/duplication_removal/:id/'
+      },
       list: {
         method:'GET',
         url: '/api/v1/operations/duplication_removal/',
         isArray: true },
       create: {
         method: 'POST',
-        url: '/api/v1/operations/duplication_removal/' },
+        url: '/api/v1/operations/duplication_removal/'
+      },
       update: {
         method: 'PUT',
-        url: '/api/v1/operations/duplication_removal/:id' },
+        url: '/api/v1/operations/duplication_removal/:id/'
+      },
       delete: {
         method: 'DELETE',
-        url: '/api/v1/operations/duplication_removal/:id'
+        url: '/api/v1/operations/duplication_removal/:id/'
       }
     })
 

@@ -10,20 +10,24 @@
     var resource = $resource('remove_missing', null, {
       get: {
         method: 'GET',
-        url: '/api/v1/operations/remove_missing/:id' },
+        url: '/api/v1/operations/remove_missing/:id'
+      },
       list: {
         method:'GET',
         url: '/api/v1/operations/remove_missing/',
-        isArray: true },
+        isArray: true
+      },
       create: {
         method: 'POST',
-        url: '/api/v1/operations/remove_missing/' },
+        url: '/api/v1/operations/remove_missing/'
+      },
       update: {
         method: 'PUT',
-        url: '/api/v1/operations/remove_missing/:id' },
+        url: '/api/v1/operations/remove_missing/:id/'
+      },
       delete: {
         method: 'DELETE',
-        url: '/api/v1/operations/remove_missing/:id'
+        url: '/api/v1/operations/remove_missing/:id/'
       }
     })
 
