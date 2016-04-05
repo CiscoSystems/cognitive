@@ -7,7 +7,6 @@
   function cognitiveEdge($compile) {
     return {
       restrict: 'AEC',
-      replace: 'true',
       link: function(scope, element) {
         d3.select(element[0]).append('line')
           .attr('ng-attr-x1', '{{vm.getNodeById(edge.from).x + 90}}')

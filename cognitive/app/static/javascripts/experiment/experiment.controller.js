@@ -17,6 +17,10 @@
     vm.experimentId = $stateParams['experimentId']
     vm.user = UserService.getCurrentUser()
 
+    // TODO: Make better directives for abstracting graph operations
+    vm.sourcePoint = null
+    vm.targetPoint = null
+
     if (typeof (vm.experimentId) == 'string') {
       ExperimentsService.get(vm.experimentId).then(
         function (experiment) {
@@ -120,31 +124,6 @@
 
       var node = vm.experiment.nodes[nodeIndex]
       $state.go('experiment.node', { nodeId: node.id })
-
-      //node.id
-      //console.log(vm.experiment.nodes[nodeIndex])
-      //
-      //var scope = $scope.$new()
-      //scope.pluginKey = key
-      //scope.experimentId = vm.experimentId
-
-      //$mdDialog.show({
-      //  templateUrl: 'static/javascripts/experiment/plugin/plugin_form.html',
-      //  scope: scope,
-      //  targetEvent: ev,
-      //  clickOutsideToClose: true
-      //}).then(function (result) {
-      //  var xy = WhiteboardService.nextNodeCoordination()
-      //  vm.experiment.nodes.push({
-      //    id: result.data.id,
-      //    name: result.definition.name,
-      //    type: result.definition.type,
-      //    x: xy[0], y: xy[1],
-      //    focus: false,
-      //    mouse: ''
-      //  })
-      //})
-
     }
 
     vm.clickCloseButton = function (nodeIndex, nodeId) {

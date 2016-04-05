@@ -1,32 +1,30 @@
 (function () {
   'use strict'
-  angular.module('cognitive.experiment')
-    .directive('cognitiveNode', cognitiveNode)
 
-  function cognitiveNode() {
+  angular.module('cognitive.experiment')
+    .directive('vertex', ['vertexUtils', vertex])
+    .factory('vertexUtils', vertexUtils)
+
+  function vertex(vertexUtils) {
     return {
       restrict: 'EA',
-      replace: false,
       scope: {
         clickNode: '&',
         clickCloseButton: '&',
         createEdge: '=',
-        node: '='
+        node: '=',
+        sourcePoint: '=',
+        targetPoint: '='
       },
       link: function (scope, element) {
         var g = d3.select(element[0]).append('g')
+
+        scope.clickNode = scope.clickNode || function(){}
+
         g.attr('class', 'node-group')
           .attr('x', 0).attr('y', 0)
-          .call(d3.behavior.drag()
-            .on('dragstart', function () {
-              d3.event.sourceEvent.stopPropagation()
-            })
-            .on('drag', dragCognitiveNode))
-          .on('mouseenter', function () {
-            $('#close-icon-id-' + 1).css('display', 'block')
-            $('#edit-icon-id-' + 1).css('display', 'block')
-          })
           .on('click', scope.clickNode)
+          .call(d3.behavior.drag().on('drag', dragVertex))
 
         scope.render = function () {
           g.selectAll('g').remove()
@@ -58,36 +56,40 @@
             .attr('cy', scope.node.y)
             .attr('r', 5)
             .attr('node', scope.node.id)
-            .attr('class', 'node-in')
+            .attr('class', 'connection-point dataIn')
             .attr('fill', 'white')
             .attr('stroke', 'gray')
             .style('stroke-width', 1)
             .on('mouseenter', connectionPointMouseEnter)
-            .on('mouseleave', connectionPointMouseLeave)
+            .on('mouseout', connectionPointMouseLeave)
             .call(d3.behavior.drag()
               .on('dragstart', function () {
                 d3.event.sourceEvent.stopPropagation()
+                scope.sourcePoint = d3.select(this)
               })
               .on('drag', drawingConnection)
               .on('dragend', finishDrawingConnection))
+
 
           node_g.append('circle')
             .attr('cx', scope.node.x + 90)
             .attr('cy', scope.node.y + 40)
             .attr('r', 5)
             .attr('node', scope.node.id)
-            .attr('class', 'node-out')
+            .attr('class', 'connection-point dataOut')
             .attr('fill', 'white')
             .attr('stroke', 'gray')
             .style('stroke-width', 1)
             .on('mouseenter', connectionPointMouseEnter)
-            .on('mouseleave', connectionPointMouseLeave)
+            .on('mouseout', connectionPointMouseLeave)
             .call(d3.behavior.drag()
               .on('dragstart', function () {
                 d3.event.sourceEvent.stopPropagation()
+                scope.sourcePoint = d3.select(this)
               })
               .on('drag', drawingConnection)
               .on('dragend', finishDrawingConnection)
+
           )
 
           node_g.append('text')
@@ -105,52 +107,57 @@
           scope.render()
         }, true)
 
-
         function finishDrawingConnection() {
-          $('#tempolaryLine').remove()
-          var dest = $('.focus')
+          var sourceId = vertexUtils.nodeId(scope.sourcePoint)
+          var targetId = vertexUtils.nodeId(scope.targetPoint)
 
-          if (dest.length !== 1) {
-            d3.select(this).classed('src', false)
-            return
+          d3.select('#tempolaryLine').remove()
+
+          // If source node and destination node are the same, just return
+          if (sourceId == targetId) return
+
+          // Do not create an edge when the types of connection points (in, out) are the same
+          if (vertexUtils.isDataOutPoint(scope.sourcePoint)) {
+            if (vertexUtils.isDataInPoint(scope.targetPoint)) {
+              scope.createEdge(sourceId, targetId)
+            }
+          } else if (vertexUtils.isDataOutPoint(scope.targetPoint)) {
+            scope.createEdge(targetId, sourceId)
           }
+        }
 
-          dest = d3.select(dest[0])
+        function dragVertex() {
+          d3.event.sourceEvent.stopPropagation()
+          var group = d3.select(this)
+          scope.$apply(function() {
+            scope.node.x += parseInt(group.attr('x')) + parseInt(d3.event.dx)
+            scope.node.y += parseInt(group.attr('y')) + parseInt(d3.event.dy)
+          })
+        }
 
-          var srcNodeId = d3.select(this).attr('node')
-          var destNodeId = dest.attr('node')
+        function connectionPointMouseLeave() {
+          d3.select(this).attr('r', 5).style('fill', '')
+          d3.select('.focus').classed('focus', false)
+        }
 
-          if (dest.attr('class').match(/node-in/) == null) {
-            srcNodeId = [destNodeId, destNodeId = srcNodeId][0]
-          }
+        function connectionPointMouseEnter() {
+          d3.select(this)
+            .attr('r', 15)
+            .style('fill', 'yellow')
+            .classed('focus', true)
 
-          scope.createEdge(srcNodeId, destNodeId)
-          d3.select(this).classed('src', false)
+          scope.$apply(function() { scope.targetPoint = d3.select(this) }.call(this))
         }
       }
     }
 
-    function dragCognitiveNode() {
-      d3.event.sourceEvent.stopPropagation()
-      event.stopPropagation()
-      event.preventDefault()
-
-      var group = d3.select(this)
-      var sx = parseInt(group.attr('x')) + parseInt(d3.event.dx)
-      var sy = parseInt(group.attr('y')) + parseInt(d3.event.dy)
-      var scope = angular.element(this).scope()
-
-      scope.node.x += sx
-      scope.node.y += sy
-      scope.$apply()
-    }
-
     function drawingConnection() {
-      $('#tempolaryLine').remove()
+      d3.select('#tempolaryLine').remove()
+
       var start = d3.select(this)
       var current_x = d3.event.x
       var current_y = d3.event.y
-      var g = d3.select($('.layer-3')[0])
+      var g = d3.select('.temporary-layer')
         .append('g').attr('id', 'tempolaryLine')
 
       g.append('line')
@@ -158,18 +165,16 @@
         .attr('y1', parseInt(start.attr('cy')))
         .attr('x2', current_x + 1)
         .attr('y2', current_y + 1)
-        .attr('stroke', 'steelblue').attr('stroke-width', '2')
+        .attr('stroke', 'steelblue')
+        .attr('stroke-width', '2')
     }
+  }
 
-    function connectionPointMouseLeave() {
-      d3.select(this).attr('r', 5).style('fill', '')
-      d3.select($('.focus')[0]).classed('focus', false)
-    }
-
-    function connectionPointMouseEnter() {
-      d3.select(this)
-        .attr('r', 13).classed('focus', true)
-        .style('fill', 'yellow')
+  function vertexUtils() {
+    return {
+      isDataInPoint: function (d3Obj) { return (d3Obj.attr('class')).includes('dataIn') },
+      isDataOutPoint: function (d3Obj) { return (d3Obj.attr('class')).includes('dataOut') },
+      nodeId: function(d3Obj) { return parseInt(d3Obj.attr('node')) }
     }
   }
 

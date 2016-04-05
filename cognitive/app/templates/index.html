@@ -2,15 +2,16 @@
 <html ng-app="cognitive">
   <head>
     <meta charset="utf-8">
+    <title>Cognitive</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <title>Cognitive</title>
     {% load staticfiles %}
     <link href='{% static "images/favicon.png" %}' rel="shortcut icon" type="image/png"/>
     <link href='{% static "bootstrap/dist/css/bootstrap.min.css" %}' rel="stylesheet"/>
     <link href='{% static "angular-material/angular-material.min.css" %}' rel="stylesheet"/>
     <link href='{% static "font-awesome/css/font-awesome.min.css" %}' rel="stylesheet"/>
     <link href='{% static "angular-material-data-table/dist/md-data-table.min.css" %}' rel="stylesheet"/>
+    <link href='{% static "nvd3/build/nv.d3.css" %}' rel="stylesheet"/>
 
     {% load compress %}
     {% compress css %}
@@ -19,12 +20,6 @@
       <link rel="stylesheet" type="text/x-scss" href="{% static "stylesheets/whiteboard.scss" %}"/>
       <link rel="stylesheet" type="text/x-scss" href="{% static "stylesheets/experiment.scss" %}"/>
     {% endcompress %}
-
-
-    <link href='{% static "stylesheets/_dialog.css" %}' rel="stylesheet"/>
-    <link href='{% static "jquery-ui/themes/base/jquery-ui.min.css" %}' rel="stylesheet"/>
-    <link href='{% static "nvd3/build/nv.d3.css" %}' rel="stylesheet"/>
-
 
     <script src='{% static "jquery/dist/jquery.min.js" %}' type="text/javascript"></script>
     <script src='{% static "angular/angular.min.js" %}' type="text/javascript"></script>
@@ -64,8 +59,7 @@
     <script src='{% static "javascripts/experiment/plugin/plugin.service.js" %}' type="text/javascript"></script>
     <script src='{% static "javascripts/experiment/whiteboard.service.js" %}' type="text/javascript"></script>
     <script src='{% static "javascripts/experiment/directive/edge.directive.js" %}' type="text/javascript"></script>
-    <script src='{% static "javascripts/experiment/directive/node.directive.js" %}' type="text/javascript"></script>
-    <script src='{% static "jquery-ui/jquery-ui.min.js" %}' type="text/javascript"></script>
+    <script src='{% static "javascripts/experiment/directive/vertex.directive.js" %}' type="text/javascript"></script>
 
     <script src='{% static "d3/d3.min.js" %}' type="text/javascript"></script>
     <script src='{% static "nvd3/build/nv.d3.min.js" %}' type="text/javascript"></script>

@@ -153,7 +153,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'djangobower.finders.BowerFinder',
     'compressor.finders.CompressorFinder',
-
 )
 
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'components')
@@ -173,7 +172,6 @@ BOWER_INSTALLED_APPS = (
     'font-awesome#4.4.0',
     'jquery',
     'jquery-csv',
-    'jquery-ui',
     'ng-file-upload',
     'ngDraggable#0.1.8',
     'underscore#~1.8.3',

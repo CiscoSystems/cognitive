@@ -51,33 +51,29 @@
 
     <div class="experiment-content" flex>
       <md-card style="height: 60vh;">
-        <md-card-content class="card-content-svg-board"
+        <md-card-content class="md-card-content-whiteboard"
                          ng-drop="true" ng-drop-success="vm.pluginDropComplete($data)">
-          <div workspace="{{ vm.experiment.id }}" style="height: 100%;">
-            <svg class="whiteboard-root" ng-click="vm.clickNone()">
-              <g class="layer">
-                <g ng-repeat="edge in vm.experiment.edges">
-                  <g cognitive-edge edge="edge"
-                     node-by-index="vm.getNodeById">
-                  </g>
-                </g>
+
+          <svg class="whiteboard-root" ng-click="vm.clickNone()">
+
+            <g ng-repeat="edge in vm.experiment.edges">
+              <g cognitive-edge edge="edge"></g>
+            </g>
+
+            <g ng-repeat="node in vm.experiment.nodes track by $index">
+              <g vertex node="node"
+                 ng-class="{ 'active' : vm.isActiveNode($index) }"
+                 click-node="vm.clickNode($index)"
+                 click-close-button="vm.clickCloseButton($index, node.id)"
+                 create-edge="vm.createEdge"
+                 source-point="vm.sourcePoint"
+                 target-point="vm.targetPoint">
               </g>
-              <g class="layer" workspace="{{ vm.experiment.id }}">
-                <g ng-repeat="node in vm.experiment.nodes track by $index">
-                  <g cognitive-node
-                     ng-class="{ 'active' : vm.isActiveNode($index) }"
-                     click-node="vm.clickNode($index)"
-                     click-close-button="vm.clickCloseButton($index, node.id)"
-                     create-edge="vm.createEdge"
-                     node="node"></g>
-                </g>
-              </g>
-              <g class="layer layer-3"></g>
-            </svg>
-          </div>
-          <div class="md-progress-circular--experiment" ng-show="vm.loading">
-            <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
-          </div>
+            </g>
+
+            <g class="temporary-layer"></g>
+          </svg>
+
         </md-card-content>
       </md-card>
     </div>
