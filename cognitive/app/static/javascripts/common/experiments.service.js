@@ -7,7 +7,7 @@
   function ExperimentsService($resource) {
     var ExperimentsService = {}
 
-    var res = $resource('experiments', null, {
+    var resource = $resource('experiments', null, {
       get: {
         method: 'GET',
         url: '/api/v1/experiments/:id'
@@ -19,7 +19,8 @@
       },
       save: {
         method: 'POST',
-        url: '/api/v1/experiments/' },
+        url: '/api/v1/experiments/'
+      },
       update: {
         method: 'PUT',
         url: '/api/v1/experiments/:id'
@@ -31,21 +32,21 @@
     })
 
     ExperimentsService.get = function(experiment_id) {
-      return res.get({ id: experiment_id }).$promise
+      return resource.get({ id: experiment_id }).$promise
     }
 
-    ExperimentsService.query = function() { return res.query().$promise }
+    ExperimentsService.query = function(params) { return resource.query(params).$promise }
 
     ExperimentsService.save = function(experiment) {
-      return res.save(experiment).$promise
+      return resource.save(experiment).$promise
     }
 
     ExperimentsService.update = function (experiment) {
-      return res.update({id: experiment.id}, experiment).$promise
+      return resource.update({id: experiment.id}, experiment).$promise
     }
 
     ExperimentsService.remove = function (experiment_id) {
-      return res.delete({id: experiment_id}).$promise
+      return resource.delete({id: experiment_id}).$promise
     }
 
     return ExperimentsService
