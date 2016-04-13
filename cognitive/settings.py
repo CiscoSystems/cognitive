@@ -188,6 +188,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 OAUTH2_PROVIDER = {
@@ -200,5 +203,5 @@ OAUTH2_PROVIDER = {
 #
 # OAUTH_URL = "http://localhost:8000/oauth/token/"
 
+#  Reference: https://docs.djangoproject.com/en/1.9/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = 'app.User'
-

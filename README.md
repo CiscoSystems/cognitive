@@ -15,7 +15,7 @@ Install all python packages listed in requirements file. Start your Django serve
         virtualenv venv
         source venv/bin/activate
         pip install -r requirements.txt
-        python manage.py migrate --run-syncdb
+        python manage.py migrate
         python manage.py bower install
         python manage.py runserver <optional IP:PORT>
 

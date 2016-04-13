@@ -16,8 +16,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-import string
-import random
 
 
 class DataOperationType(models.Model):
@@ -76,23 +74,17 @@ class User(AbstractUser):
         return self.username
 
     def clean(self):
-        err_msg = ""
         if not self.username:
-            err_msg = "Empty username field"
-            raise ValidationError(err_msg)
+            raise ValidationError("Empty username field")
         if not self.password:
-            err_msg = "Empty password field"
-            raise ValidationError(err_msg)
+            raise ValidationError("Empty password field")
         if not self.email:
-            err_msg = "Empty email field"
-            raise ValidationError(err_msg)
+            raise ValidationError("Empty email field")
         validate_email(self.email)
         if User.objects.filter(username=self.username).count() > 0:
-            err_msg = "Username already exists"
-            raise ValidationError(err_msg)
+            raise ValidationError("Username already exists")
         if User.objects.filter(email=self.email).count() > 0:
-            err_msg = "Email already exists"
-            raise ValidationError(err_msg)
+            raise ValidationError("Email already exists")
         return True
 
 

@@ -55,10 +55,9 @@
         })
     }
 
-    UserService.register = function(userInfo) {
-      /* userInfo['username'] userInfo['email'] userInfo['password'] */
-      console.log(userInfo)
-      return $http.post('/api/v1/users/', userInfo)
+    UserService.register = function(params) {
+      /* params['username'] params['email'] params['password'] */
+      return $http.post('/api/v1/users/', params)
         .success(function (data) {
           if (data.status !== 'success') {
             return
