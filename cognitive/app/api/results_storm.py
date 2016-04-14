@@ -19,8 +19,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.core import serializers
 from collections import defaultdict
-# TODO: [refactor] this import statement should specify some file instead of '*'
-from pandas import *
+from pandas import read_csv
 import redis
 import threading
 import json

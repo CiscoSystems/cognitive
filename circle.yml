@@ -15,5 +15,6 @@ test:
   pre:
     - eslint cognitive/app/static/javascripts/
   override:
+    - tox -e pep8
     - python manage.py test
 

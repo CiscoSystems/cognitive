@@ -21,7 +21,6 @@ import os
 from rest_framework import viewsets
 from rest_framework.renderers import JSONRenderer
 from pandas import read_csv
-from datetime import datetime
 import json
 import urllib2
 
@@ -225,7 +224,6 @@ class OperationViewSet(viewsets.ViewSet):
         serializer = ComponentSerializer(comp)
         print serializer
         print serializer.data
-
 
         return send_response(request.method, serializer)
 
