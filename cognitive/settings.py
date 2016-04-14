@@ -194,14 +194,12 @@ REST_FRAMEWORK = {
 }
 
 OAUTH2_PROVIDER = {
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-}
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'},
 
-# COGNITIVE_CLIENT_ID = "Gbe1ZEIiHrtVVIojTqRCyV1tNeMMYC5kTMOHuMkQ"
-#
-# COGNITIVE_CLIENT_SECRET = "cRsoHn8Yh9a138aE3s9WBy8hsyclHEs1SQy4jui2x6BT5KWcmdhrQ7mqOcEk9IsR3QArU5u0FnansVWkCV3wbov5TwK76LGGcxDSftLvYEaTLYrVaxKDqgzMrScwZNKe"
-#
-# OAUTH_URL = "http://localhost:8000/oauth/token/"
+    # Accept Json messages on /oauth/token Endpoint
+    # Be careful of a known issue: https://github.com/evonove/django-oauth-toolkit/issues/296
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore'
+}
 
 #  Reference: https://docs.djangoproject.com/en/1.9/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = 'app.User'
