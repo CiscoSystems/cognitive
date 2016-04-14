@@ -18,8 +18,7 @@ from ..ml_models import Classifier
 from rest_framework import viewsets
 from django.http import HttpResponse
 from collections import Counter
-# TODO: [refactor] this import statement should specify needed file instead of '*'
-from pandas import *
+from pandas import read_csv, DataFrame
 import threading
 import json
 
@@ -112,10 +111,10 @@ class myThread(threading.Thread):
                                 input_data, model_type, train_data_percentage,
                                 input_features, target_feature)
                             output_data = classifier.learn()
-                        except ValueError as e:
+                        except ValueError:
                             status = "failure"
                             err_msg = " Invalid input for the model training"
-                        except KeyError as e:
+                        except KeyError:
                             status = "failure"
                             err_msg = target_feature + " column is not available for Model Training"
 
@@ -132,15 +131,15 @@ class myThread(threading.Thread):
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            #print "Column name ", column_name, " not present. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " not present. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
                             err_msg = column_name + " column is not available for current operation"
                         elif input_data[column_name].dtype == 'object':
-                            #print "Column name ", column_name, " is not integer/float. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " is not integer/float. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
-                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                            err_msg = " Invalid input in column " + column_name + " for the current operation"
                         else:
                             input_data[column_name] += constant_value
                     if op.function_subtype == 'Sub':
@@ -148,15 +147,15 @@ class myThread(threading.Thread):
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            #print "Column name ", column_name, " not present. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " not present. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
                             err_msg = column_name + " column is not available for current operation"
                         elif input_data[column_name].dtype == 'object':
-                            #print "Column name ", column_name, " is not integer/float. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " is not integer/float. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
-                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                            err_msg = " Invalid input in column " + column_name + " for the current operation"
                         else:
                             input_data[column_name] -= constant_value
                     if op.function_subtype == 'Mult':
@@ -164,15 +163,15 @@ class myThread(threading.Thread):
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            #print "Column name ", column_name, " not present. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " not present. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
                             err_msg = column_name + " column is not available for current operation"
                         elif input_data[column_name].dtype == 'object':
-                            #print "Column name ", column_name, " is not integer/float. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " is not integer/float. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
-                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                            err_msg = " Invalid input in column " + column_name + " for the current operation"
                         else:
                             input_data[column_name] *= constant_value
                     if op.function_subtype == 'Div':
@@ -180,15 +179,15 @@ class myThread(threading.Thread):
                         column_id = float(op.function_arg_id)
                         column_name = feature_names[column_id]
                         if column_name not in input_data:
-                            #print "Column name ", column_name, " not present. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " not present. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
                             err_msg = column_name + " column is not available for current operation"
                         elif input_data[column_name].dtype == 'object':
-                            #print "Column name ", column_name, " is not integer/float. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " is not integer/float. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
-                            err_msg = " Invalid input in column "+ column_name+ " for the current operation"
+                            err_msg = " Invalid input in column " + column_name + " for the current operation"
                         else:
                             input_data[column_name] /= constant_value
                     if op.function_subtype == 'Normalize':
@@ -196,8 +195,8 @@ class myThread(threading.Thread):
                         column_name = feature_names[column_id]
                         sum_array = input_data.sum(axis=0)
                         if column_name not in sum_array:
-                            #print "Column name ", column_name, " not present. Skipping"
-                            #continue  # throw error in module status
+                            # print "Column name ", column_name, " not present. Skipping"
+                            # continue  # throw error in module status
                             status = "failure"
                             err_msg = column_name + " column is not available for current operation"
                         else:
@@ -222,8 +221,8 @@ class myThread(threading.Thread):
                         for elem in column_id_list:
                             column_name = feature_names[elem]
                             if column_name not in input_data:
-                                #print "Column name ", column_name, " not present. Skipping"
-                                #continue  # throw error in module status
+                                # print "Column name ", column_name, " not present. Skipping"
+                                # continue  # throw error in module status
                                 status = "failure"
                                 err_msg = column_name + " column is not available for current operation"
                             else:
@@ -330,7 +329,7 @@ class myThread(threading.Thread):
                 if self.cache_results is True:
                     CACHE[self.experiment] = input_data
 
-                #print self.result
+                # print self.result
                 print self.result["status"]
                 print self.result["message"]
                 break

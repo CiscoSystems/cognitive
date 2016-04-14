@@ -19,9 +19,9 @@
             <div class="tab-body">
               <form layout="column" name="loginForm">
                 <md-input-container>
-                  <label>Username or Email</label>
+                  <label>Username</label>
                   <input type="text" name="user_identifier"
-                         ng-model="vm.loginUser.username_or_email" required/>
+                         ng-model="vm.loginUser.username" required/>
                   <div ng-messages="loginForm.user_identifier.$error">
                     <div ng-message="required">Required</div>
                   </div>

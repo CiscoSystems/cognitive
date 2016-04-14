@@ -1,57 +1,84 @@
-(function() {
+(function () {
   'use strict'
 
   angular.module('cognitive').service('UserService', UserService)
 
-  function UserService($cookies, $http){
-    // TODO: $http will be replaced by $resource
-
+  function UserService($cookies, $http, $resource, OAUTH_INFO) {
     var UserService = {}
 
-    UserService.login = function(userInfo) {
-      var username = userInfo['name'] || userInfo['email'] || userInfo['username_or_email']
-      var password = userInfo['password']
+    var resource = $resource('users', null, {
+      get: {
+        method: 'GET',
+        url: '/api/v1/users/:id'
+      },
+      query: {
+        method: 'GET',
+        url: '/api/v1/users/',
+        isArray: true
+      },
+      save: {
+        method: 'POST',
+        url: '/api/v1/users/'
+      },
+      update: {
+        method: 'PUT',
+        url: '/api/v1/users/:id'
+      },
+      delete: {
+        method: 'DELETE',
+        url: '/api/v1/users/:id'
+      },
+      me: {
+        method: 'GET',
+        url: '/api/v1/users/me'
+      },
+      token: {
+        method: 'POST',
+        url: '/oauth/token/',
+        headers: OAUTH_INFO.token_header
+      }
+    })
 
-      return $http.get('/api/v1/users/login?username_or_email=' + username + '&password=' + password)
-        .success(function (data) {
-          if (data.status !== 'success') {
-            $cookies.putObject('currentUser', {status: 'error'})
-            return
-          }
-          $cookies.putObject('currentUser', {
-            id: data.id,
-            name: data.username,
-            token: data.token
-          })
+    UserService.token = function(params) {
+      /* params['username'] params['password'] */
+      var _params = angular.merge({}, params, {grant_type: 'password'})
+      return resource.token(_params).$promise
+        .then(function (response) {
+          var _token = response['token_type'] + ' ' + response['access_token']
+          $http.defaults.headers.common['Authorization'] = _token
+          $cookies.putObject('oauthToken', {Authorization: _token})
         })
     }
 
-    UserService.register = function(userInfo) {
-      /* userInfo['username'] userInfo['email'] userInfo['password'] */
-      return $http.post('/api/v1/users/', userInfo)
-        .success(function (data) {
-          if (data.status !== 'success') {
-            return
-          }
-          $cookies.putObject('currentUser', {
-            id: data.id,
-            name: data.username,
-            token: data.token
-          })
-        })
+    UserService.me = function() {
+      return resource.me().$promise.then(function(response){
+        $cookies.putObject('me', response)
+      })
     }
 
-    UserService.logout = function() {
-      $cookies.remove('currentUser')
+    UserService.login = function (params) {
+      /* params['username'] params['password'] */
+      return UserService.token(params).then(UserService.me)
     }
 
-    UserService.isLoggedIn = function() {
-      var currentUser = $cookies.getObject('currentUser')
+    UserService.register = function (params) {
+      /* params['username'] params['email'] params['password'] */
+      return resource.save(params).$promise.then(function(response){
+        UserService.token(params).then(UserService.me)
+      })
+    }
+
+    UserService.logout = function () {
+      $cookies.remove('me')
+    }
+
+    UserService.isLoggedIn = function () {
+      var currentUser = $cookies.getObject('me')
       return Boolean(currentUser)
     }
 
-    UserService.getCurrentUser = function() {
-      return $cookies.getObject('currentUser')
+    UserService.getCurrentUser = function () {
+      return $cookies.getObject('me')
     }
 
     return UserService

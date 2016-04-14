@@ -13,8 +13,7 @@
 # under the License.
 
 from sklearn import cross_validation
-# TODO: [refactor] this import statesment should specify the file name instead of '*'
-from sklearn.metrics import *
+from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -50,11 +49,11 @@ class Classifier:
             features, labels, test_size=test_data_percentage, random_state=0)
         self.clf.fit(x_train, y_train)
         y_pred = self.clf.predict(x_test)
-        accuracy = round(accuracy_score(y_actual, y_pred), 2)
-        recall = round(recall_score(y_actual, y_pred), 2)
-        precision = round(precision_score(y_actual, y_pred), 2)
-        f1 = round(f1_score(y_actual, y_pred), 2)
-        mat = confusion_matrix(y_actual, y_pred)
+        accuracy = round(metrics.accuracy_score(y_actual, y_pred), 2)
+        recall = round(metrics.recall_score(y_actual, y_pred), 2)
+        precision = round(metrics.precision_score(y_actual, y_pred), 2)
+        f1 = round(metrics.f1_score(y_actual, y_pred), 2)
+        mat = metrics.confusion_matrix(y_actual, y_pred)
         true_positives = mat[1][1]
         false_positives = mat[0][1]
         true_negatives = mat[0][0]

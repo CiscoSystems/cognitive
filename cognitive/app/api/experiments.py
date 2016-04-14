@@ -11,13 +11,13 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-
 from ..models import Experiment
 from ..serializers import ExperimentSerializer
-from rest_framework import viewsets
+from rest_framework import permissions, viewsets
 
 
 class ExperimentViewSet(viewsets.ModelViewSet):
     serializer_class = ExperimentSerializer
     queryset = Experiment.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
     # TODO: Add pagination

@@ -11,7 +11,7 @@
     vm.signUpFailure = false
 
     vm.loginUser = {
-      username_or_email: null,
+      username: null,
       password: null
     }
 
@@ -23,7 +23,7 @@
 
     vm.login = function () {
       UserService.login({
-        username_or_email: vm.loginUser.username_or_email,
+        username: vm.loginUser.username,
         password: vm.loginUser.password
       }).then(function () {
         $mdDialog.hide()
@@ -41,7 +41,8 @@
         password: vm.registeringUser.password
       }).then(function () {
         $mdDialog.hide()
-      }).catch(function () {
+      }).catch(function (error) {
+        console.log(error)
         vm.signUpFailure = true
       })
     }

@@ -12,6 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from django.contrib.auth.hashers import make_password
 from models import Component
 from models import Data
 from models import DataOperationType
@@ -24,7 +25,12 @@ from rest_framework import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        # fields = ['id','username','full_name']
+        write_only_fields = ('password',)
+        read_only_fields = ('id',)
+
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return User.objects.create(**validated_data)
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
@@ -64,7 +70,6 @@ class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         depth = 1
-
 
 
 class WorkflowSerializer(serializers.ModelSerializer):

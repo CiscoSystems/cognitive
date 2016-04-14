@@ -7,6 +7,7 @@ django-bower==5.1.0
 django-compressor==2.0
 django-libsass==0.6
 django-mptt==0.6.1
+django-oauth-toolkit==0.10.0
 django-rest-swagger==0.3.5
 django-treebeard==2.0
 djangorestframework==3.3.2

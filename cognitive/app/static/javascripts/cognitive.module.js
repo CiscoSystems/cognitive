@@ -21,6 +21,21 @@
 
   angular.module('cognitive').config(CognitiveConfig)
 
+  angular.module('cognitive').constant('OAUTH_INFO', {
+    client_id:'UuGiXEm6FVAqeZr0tra1OEXv2WI8BhZPRbLKOSnY',
+    client_secret: '1rpAxKup939rfvuIj1vN4KRS7HafHw02gFIrKNloCTzPxeoBEKtYdu703P0XEpv6sUWNj4ZIQIRthxaT1WRJzlkxNqXcqjItNGxJuyhPTqMVkJRrdv4wjCS6HLRQAzeW',
+    token_header: {
+      Authorization: 'Basic VXVHaVhFbTZGVkFxZVpyMHRyYTFPRVh2MldJOEJoWlBSYkxLT1NuWToxcnBBeEt1cDkzOXJmdnVJajF2TjRLUlM3SGFmSHcwMmdGSXJLTmxvQ1R6UHhlb0JFS3RZZHU3MDNQMFhFcHY2c1VXTmo0WklRSVJ0aHhhVDFXUkp6bGt4TnFYY3FqSXROR3hKdXloUFRxTVZrSlJyZHY0d2pDUzZITFJRQXplVw=='
+    }
+  })
+
+  angular.module('cognitive').run(function($http, $cookies) {
+    var oauthToken = $cookies.getObject('oauthToken')
+    if (oauthToken != undefined || oauthToken != null) {
+      $http.defaults.headers.common['Authorization'] = oauthToken['Authorization']
+    }
+  })
+
   function CognitiveConfig($mdThemingProvider, $resourceProvider, $stateProvider, $urlRouterProvider) {
 
     $mdThemingProvider.theme('default').primaryPalette('blue')
