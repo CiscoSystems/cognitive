@@ -5,8 +5,6 @@ Machine Learning as a Service (MLaaS)
 
 ![Alt text](/doc/img/cognitive-demo-experiment.gif?raw=true "Cognitive Experiments Page")
 
-NOTE: *Do not have high expectations on this.* This is still in development.
-
 Installation
 ------------
 
