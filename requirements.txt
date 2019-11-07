@@ -9,7 +9,7 @@ django-libsass==0.6
 django-mptt==0.6.1
 django-rest-swagger==0.3.5
 django-treebeard==2.0
-djangorestframework==3.3.2
+djangorestframework==3.9.1
 Flask==0.10.1
 glob2==0.4.1
 gnureadline==6.3.3
