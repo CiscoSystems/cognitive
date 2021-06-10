@@ -1,7 +1,7 @@
 appnope==0.1.0
 CherryPy==3.8.2
 decorator==4.0.9
-Django==1.9.2
+Django==2.2.24
 django-appconf==1.0.1
 django-bower==5.1.0
 django-compressor==2.0
