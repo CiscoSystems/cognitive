@@ -16,3 +16,4 @@ cognitive/app/uploads/*
 node_modules
 components
 cognitive/app/static/CACHE/
+.git/
